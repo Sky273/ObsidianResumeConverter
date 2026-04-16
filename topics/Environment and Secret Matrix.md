@@ -1,0 +1,201 @@
+# Environment and Secret Matrix
+
+## Summary
+
+ResumeConverter has a mixed environment model:
+
+- some variables are hard requirements at backend startup
+- some only enable or disable integrations
+- some are build-time concerns for the frontend bundle
+- some are runtime concerns for backend/provider access
+
+The important operational rule is that not all missing envs fail in the same way.
+
+## Source of Truth by Runtime
+
+- non-Docker local runtime uses `/.env`
+- Docker build and runtime use `/.env.docker`
+- `/.env.example` is the template/reference, not the live source of truth
+
+This distinction matters because the frontend bundle can embed stale public env values if the image was not rebuilt.
+
+## Hard Startup Requirements
+
+The backend environment validation currently treats these as required:
+
+- `JWT_SECRET`
+- `POSTGRES_HOST`
+- `POSTGRES_DB`
+- `POSTGRES_USER`
+- `POSTGRES_PASSWORD`
+- `CSRF_SECRET`
+
+Additional production-critical rule:
+
+- `DEFAULT_ADMIN_PASSWORD` must be explicitly set to a strong non-default value in production
+
+Special case:
+
+- `PDF_SERVER_INTERNAL_TOKEN` is effectively required in production
+- outside production, its absence degrades internal PDF-generation routes rather than killing the whole app
+
+## Recommended But Not Mandatory At Boot
+
+The current validator treats several vars as recommended rather than strictly required:
+
+- `REFRESH_TOKEN_SECRET`
+- provider keys such as `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `GEMINI_API_KEY`, `HUGGINGFACE_API_KEY`, `DEEPSEEK_API_KEY`, `GLM_API_KEY`, `MINIMAX_API_KEY`
+- `CACHE_BACKEND`
+- `NODE_ENV`
+
+Operational consequence:
+
+- the app can boot without a given LLM provider key
+- but any feature routed to that provider will fail or degrade later at runtime
+
+## Build-Time Vs Runtime Variables
+
+### Build-time frontend variables
+
+The most important remembered example is Turnstile:
+
+- `VITE_TURNSTILE_SITE_KEY`
+- `CLOUDFLARE_TURNSTILE_SITE_KEY`
+
+These are frontend public variables. In Docker, they must be present at build time or the widget will not be embedded into the final assets.
+
+### Runtime backend variables
+
+Examples:
+
+- `TURNSTILE_SECRET_KEY`
+- `CLOUDFLARE_TURNSTILE_SECRET_KEY`
+- JWT / refresh / CSRF secrets
+- provider API keys
+- database credentials
+- `PDF_SERVER_INTERNAL_TOKEN`
+
+These are consumed by the backend process at runtime.
+
+## Secret Classes
+
+ResumeConverter secrets fall into a few useful buckets:
+
+### Identity and session
+
+- `JWT_SECRET`
+- `REFRESH_TOKEN_SECRET`
+- `CSRF_SECRET`
+
+These control token signing, rotation, and CSRF protection.
+
+### Database and persistence
+
+- `POSTGRES_HOST`
+- `POSTGRES_DB`
+- `POSTGRES_USER`
+- `POSTGRES_PASSWORD`
+
+These determine whether the app can boot and persist data at all.
+
+### Internal service boundary
+
+- `PDF_SERVER_INTERNAL_TOKEN`
+
+This protects the backend-to-PDF-server trust boundary.
+
+### External anti-abuse
+
+- `TURNSTILE_SECRET_KEY`
+- `CLOUDFLARE_TURNSTILE_SECRET_KEY`
+
+These control whether backend captcha verification can actually be enforced.
+
+### AI/provider access
+
+- `OPENAI_API_KEY`
+- `ANTHROPIC_API_KEY`
+- `GEMINI_API_KEY`
+- `HUGGINGFACE_API_KEY`
+- `DEEPSEEK_API_KEY`
+- `GLM_API_KEY`
+- `MINIMAX_API_KEY`
+
+These do not all need to exist simultaneously, but the configured runtime path must match what is actually available.
+
+### Billing and mail
+
+- Stripe secrets
+- OAuth secrets
+- `MAIL_TOKEN_ENCRYPTION_KEY`
+
+These protect payment and mail-related flows.
+
+## Placeholder and Weak-Secret Policy
+
+Environment validation rejects or warns on obvious placeholders.
+
+Important remembered rules:
+
+- placeholder-like JWT/CSRF secrets fail validation
+- weak default admin passwords fail validation in production
+- placeholder-like provider secrets may not block startup but still represent broken operational config
+
+The app therefore treats "example values left in env" as a real operational defect class.
+
+## Cache-Related Env Notes
+
+- `CACHE_BACKEND` supports `memory` or `redis`
+- a wrong value produces warnings
+- Redis selection changes the storage backend, not the core coherence model
+
+This means cache envs influence performance and storage shape, but not the underlying PostgreSQL-driven invalidation truth.
+
+## Failure Patterns Worth Remembering
+
+### App fails to start
+
+First suspects:
+
+- missing/weak `JWT_SECRET`
+- missing/weak `CSRF_SECRET`
+- missing DB credentials
+- weak `DEFAULT_ADMIN_PASSWORD` in production
+
+### Frontend widget missing but app boots
+
+First suspect:
+
+- missing or stale build-time public env, especially Turnstile site key
+
+### App boots but AI features fail
+
+First suspect:
+
+- provider key mismatch between configured provider/model and available env keys
+
+### PDF-related route fails while core app works
+
+First suspect:
+
+- missing or invalid `PDF_SERVER_INTERNAL_TOKEN`
+
+## Practical Rule For Future Changes
+
+When adding any integration or security-sensitive feature, document:
+
+1. whether its env is build-time or runtime
+2. whether missing config should fail boot or only disable the feature
+3. whether placeholder values should be treated as fatal or warning-only
+4. whether Docker needs an image rebuild or only a container restart
+
+## Related
+
+- [[topics/Docker Environment]]
+- [[topics/Turnstile]]
+- [[topics/LLM Control Plane]]
+- [[topics/Security and Compliance]]
+
+## Sources
+
+- [[raw/sources/2026-04-16-env-session-batch-state]]
