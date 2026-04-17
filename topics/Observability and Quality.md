@@ -65,6 +65,24 @@ The backend audit shows that the project already invested in:
   - a dedicated repo-root `tsconfig.e2e.json` covers `e2e/**/*.ts` and `playwright.config.ts`
   - `eslint.config.js` routes those files through that tsconfig instead of the generic TypeScript `projectService` lookup that previously failed to associate them with any project
   - the only remaining real lint defect was in `e2e/helpers/docx.ts`, where the control-character ASCII regex range was replaced with the equivalent Unicode `\p{ASCII}` form
+- As of 2026-04-17, the remaining public-route E2E flake was traced to auth bootstrap rather than route wiring:
+  - `AuthContext` blocks public rendering behind `restoreSession()` initialization
+  - `authService.restoreSession()` previously used raw `fetch()` calls to `/api/auth/me` and `/api/auth/refresh` without any timeout
+  - when those requests stalled in CI, `/welcome` stayed on the global auth spinner long enough for Playwright to miss the `/signin` and `/register` links
+  - the fix was to put a short explicit timeout around public auth bootstrap requests and fail closed to unauthenticated state instead of waiting indefinitely
+- As of 2026-04-17, the Playwright static build output is intentionally treated as generated state rather than source:
+  - `playwright.config.ts` and `scripts/start-playwright-webserver.mjs` point Vite output at `client/dist-e2e`
+  - `client/dist-e2e` is a disposable E2E build directory with hash-unstable bundle names
+  - the repository now ignores `client/dist-e2e/` and keeps it out of Git tracking to avoid noisy rebuild diffs
+- As of 2026-04-17, resume improvement is more resilient to weak/small-model structured-output failures:
+  - the improvement generation step already had JSON/plain-text fallback behavior
+  - the remaining hard failure point was the post-improvement persistence analysis, which could still abort the whole job on an invalid structured LLM response
+  - batch improvement processing now falls back to the analysis embedded in the improvement response when that post-analysis specifically fails with an invalid-response error
+  - this preserves the improved CV text and available structured metadata instead of losing the whole user action
+- As of 2026-04-17, public-home E2E startup is less sensitive to runtime settings latency:
+  - the `/welcome` route previously depended on the async public-home settings fetch before reliably rendering its public CTA links
+  - the client now enables the public-home shell optimistically on the first render of `/welcome`, then lets the runtime settings fetch reconcile afterwards
+  - this hardens Playwright navigation flows that click `/signin` and `/register` from the public landing page
 - The remaining CI warnings at this point are non-blocking:
   - GitHub Actions deprecation warnings around Node 20-based action runtimes
   - Node `DEP0040` warnings around `punycode` from transitive dependencies during validation runs
@@ -82,6 +100,9 @@ The backend audit shows that the project already invested in:
   - Chromium: `auth`, `public-navigation`, `admin-quality-pages`, `admin-crud-flows`, `resumes-adaptations-refresh` all green
   - Firefox: `auth`, `public-navigation`, `admin-quality-pages`, `admin-crud-flows` all green
 - Local ESLint on 2026-04-17: `node .\scripts\run-eslint.mjs e2e playwright.config.ts` green after the dedicated E2E tsconfig hookup
+- Targeted public-auth Playwright reruns on 2026-04-17 after the auth bootstrap timeout fix:
+  - Chromium: `e2e/auth.spec.ts` and `e2e/public-navigation.spec.ts` green
+  - Firefox: `e2e/auth.spec.ts` and `e2e/public-navigation.spec.ts` green
 - Remaining CI warnings are now mostly non-blocking dependency/platform notices unless a fresh GitHub run proves otherwise
 
 ## Related
