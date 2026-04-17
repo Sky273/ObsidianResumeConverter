@@ -810,3 +810,53 @@
   - extracted the shared load-current -> prepare -> persist -> response path for `PUT /api/settings/:id` and `POST /api/settings` into `server/routes/settings.routes.persistence.helpers.js`
   - kept `server/routes/settings.routes.js` focused on HTTP/auth, cache invalidation, and security logging
   - revalidated with `server/tests/routes/settings.routes.test.js` and ESLint on the touched settings route files
+- Investigated a real GitHub Actions `validate-core` failure on commit `9b88e0bc3c30df4c655df57f6886e67441518bc5`:
+  - confirmed the failure happened in `npm run migrate` during fresh-schema bootstrap, not in typecheck or test execution
+  - traced the root cause to `docker/schema.sql` being a modern `pg_dump` artifact containing `psql` meta-commands (`\restrict` / `\unrestrict`) that were executed through the Node `pg` driver
+  - added `sanitizeSqlForPgExecution(...)` in `server/scripts/dockerMigrate.helpers.js` and applied it in `server/scripts/docker-migrate.js` before executing SQL files
+  - added targeted coverage in `server/tests/scripts/dockerMigrate.helpers.test.js`
+  - revalidated with the targeted Vitest file, ESLint on the touched migration files, and a local `npm run migrate` that advanced past the previous schema bootstrap crash
+- Completed the fresh-schema migration fix path for GitHub CI:
+  - moved `ensureSchemaMigrationsTable()` behind the existing-schema branch so fresh bootstrap no longer collides with the canonical dump's own `schema_migrations` definition
+  - qualified migration bookkeeping against `public.schema_migrations` to avoid failures after the dump clears `search_path`
+  - reset `search_path` to `public` after each SQL-file execution so later bootstrap steps continue to resolve unqualified application tables
+  - revalidated on a throwaway PostgreSQL database with `npm run migrate` and then `npm run validate:core`, both passing end-to-end under CI-like env overrides
+- Reproduced and fixed the remaining GitHub-only PostgreSQL version mismatch:
+  - ran `npm run migrate` against a real local `postgres:16` Docker container to match GitHub Actions exactly
+  - confirmed the fresh-schema bootstrap still failed on `SET transaction_timeout = 0;`, which is emitted by the PostgreSQL 18 dump but rejected by Postgres 16
+  - updated `sanitizeSqlForPgExecution(...)` to strip that version-specific GUC before execution and added targeted test coverage
+  - revalidated with `npm run migrate` and `npm run validate:core` against the Postgres 16 container, both passing end-to-end
+- Fixed a cross-platform share-path validation gap revealed by GitHub CI:
+  - traced the failing `shareResume.service` test to `isManagedSharedPdfPath(...)` treating Windows absolute paths like `C:\temp\outside.pdf` as safe relative paths when running on Linux
+  - updated `server/services/shareResume.helpers.js` to reject Windows absolute paths even on POSIX runners before resolving them under the managed share directory
+  - added direct coverage in `server/tests/services/shareResume.helpers.test.js`
+  - revalidated with the targeted share service/helper Vitest files and ESLint on the touched files
+- Fixed the remaining cross-platform test assertions in `shareResume.service`:
+  - replaced Windows-only path expectations such as `uploads\\shared\\...` and absolute `C:\\...` paths with `path.join(...)` / `path.resolve(...)`
+  - kept the service behavior unchanged while making the share resume test suite stable on both Windows and Linux runners
+  - revalidated again with the targeted share service/helper Vitest files and ESLint
+- Updated CI state memory after the latest GitHub reruns:
+  - recorded that `validate-core` is green again after the migration bootstrap, share resume, and retry test-path fixes
+  - recorded the remaining non-blocking CI warnings: GitHub Actions Node 20 deprecation notices and Node `DEP0040` `punycode` warnings
+  - noted that `validate-e2e` was still in progress at the time of the update, so no durable E2E conclusion was captured yet
+- Reduced the remaining frontend warning noise that was still surfacing inside `validate-core`:
+  - stabilized `client/src/hooks/useScopedViewRefresh.ts` so identical scope subscriptions no longer cause repeated refresh wiring across renders
+  - removed the nested-button DOM violation in `client/src/components/ResumesPage/DealSection.tsx`
+  - replaced unstable `null`-based sidebar section keys with explicit ids in `client/src/components/Sidebar.tsx`
+  - filtered blank/duplicate grouped-tag render keys in `client/src/components/ResumesPage/DealsGroupedView.sections.tsx`
+  - revalidated with targeted client Vitest files, ESLint on the touched frontend files, and a full `node scripts/run-client-vitest.mjs run --config client/vitest.config.ts` pass (`129` files / `529` tests)
+- Investigated and fixed the remaining `validate:e2e` regressions from GitHub Actions:
+  - identified that fresh CI databases could start without any canonical `llm_settings` row, which broke three distinct E2E assumptions at once: public home routing, self-service auto-approval, and adaptation fixture creation
+  - updated `e2e/helpers/auth.ts` so Playwright bootstrap now ensures canonical settings exist with `public_home_enabled = true`, a deterministic non-empty `llm_model`, and cache invalidation after settings mutations
+  - changed `setSelfServiceRegistrationAutoApproval(...)` to create-or-update canonical settings instead of issuing an `UPDATE` that silently affects zero rows on fresh databases
+  - removed the stale hardcoded admin `firmId` from `e2e/admin-crud-flows.spec.ts` by deriving the active admin firm at runtime
+  - tightened stale Playwright expectations in `e2e/admin-quality-pages.spec.ts` and `e2e/auth.spec.ts` to match the current DOM/text contract
+  - revalidated with targeted Playwright runs:
+    - Chromium: `auth`, `public-navigation`, `admin-quality-pages`, `admin-crud-flows`, `resumes-adaptations-refresh`
+    - Firefox: `auth`, `public-navigation`, `admin-quality-pages`, `admin-crud-flows`
+  - all targeted reruns passed
+- Fixed E2E lint coverage so ESLint now passes on the Playwright suite:
+  - added repo-root `tsconfig.e2e.json` covering `e2e/**/*.ts` and `playwright.config.ts`
+  - updated `eslint.config.js` with a dedicated override so those files no longer fail TypeScript project resolution
+  - fixed the only remaining real lint error in `e2e/helpers/docx.ts` by replacing the control-character ASCII regex range with the equivalent Unicode `\p{ASCII}` form
+  - revalidated with `node .\scripts\run-eslint.mjs e2e playwright.config.ts`

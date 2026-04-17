@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "AGENTS.md",
+                "file": "topics/Priority Review 2026-04-17.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "AGENTS"
+              "title": "Priority Review 2026-04-17"
             }
           }
         ]
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "AGENTS.md",
+                "file": "topics/Priority Review 2026-04-17.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Rétrolien pour AGENTS"
+              "title": "Rétrolien pour Priority Review 2026-04-17"
             }
           },
           {
@@ -113,12 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "AGENTS.md",
+                "file": "topics/Priority Review 2026-04-17.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Liens sortants de AGENTS"
+              "title": "Liens sortants de Priority Review 2026-04-17"
             }
           },
           {
@@ -156,13 +156,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "AGENTS.md",
+                "file": "topics/Priority Review 2026-04-17.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Plan de AGENTS"
+              "title": "Plan de Priority Review 2026-04-17"
             }
           }
         ]
@@ -186,6 +186,7 @@
   },
   "active": "5116fc55ae2e3705",
   "lastOpenFiles": [
+    "AGENTS.md",
     "topics/Priority Review 2026-04-17.md",
     "topics/Application Release History.md",
     "raw/sources/2026-04-16-release-v1.9.1.md",
@@ -211,7 +212,6 @@
     "topics/AuthZ Decision Map.md",
     "topics/Runbooks Incident Ops.md",
     "topics/Provider Failure and Fallback Model.md",
-    "raw/sources/2026-04-16-settings-maintenance-persistence.md",
     "Sans titre.base",
     "Sans titre.canvas",
     "raw/sources",
