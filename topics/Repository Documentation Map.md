@@ -81,6 +81,17 @@ Not all Markdown files are equally authoritative. The most useful ones are the i
 
 - Whether some overlapping install material should be consolidated to reduce drift between `README.md`, `INSTALL.md`, and `docker/README.md`.
 
+## Recent Direction
+
+- `README.md` now points more explicitly to the canonical install/runtime docs:
+  - `INSTALL.md` for local install, configuration, and startup runbooks
+  - `docker/README.md` for Docker build/runtime behavior and `/.env.docker`
+- follow-up doc work should prefer reducing duplicated procedural text in `README.md` rather than adding more parallel setup instructions there.
+- `INSTALL.md` now also carries the local Playwright/PostgreSQL bootstrap rule of thumb:
+  - local E2E runs inherit the current `POSTGRES_*` environment
+  - `npm run migrate` and a valid PostgreSQL role/password are prerequisites for a meaningful local Playwright run
+- `docker/README.md` now explicitly declares itself the canonical Docker reference so future Docker-specific changes should land there first instead of re-expanding `README.md`.
+
 ## Related
 
 - [[overview]]

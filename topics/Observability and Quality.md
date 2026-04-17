@@ -91,6 +91,22 @@ The backend audit shows that the project already invested in:
   - password recovery was intermittently hanging on `page.goto(..., waitUntil: "load")`, while the page itself became usable earlier
   - the analysis/improve/export upload helper could try to set the file input before the second-step upload UI had fully mounted in Firefox
   - the targeted fix was to relax those navigations to `domcontentloaded` where appropriate and to explicitly wait for the file input before calling `setInputFiles(...)`
+- As of 2026-04-17, the E2E helper layer is more intentional about localized/public-shell selectors:
+  - `e2e/helpers/ui.ts` now centralizes the fragile localized regexes for signin, register, reset-password, improve, and list/by-deal view toggles
+  - public-entry links (`/signin`, `/register`) and list/by-deal mode switches now have shared helper wrappers rather than repeated ad hoc locators in specs
+  - this reduces flake risk from wording drift and makes public/auth specs align on the same selector contract
+- As of 2026-04-17, local Playwright startup is also less misleading when validating targeted specs:
+  - `playwright.config.ts` no longer reuses an arbitrary existing local server by default; reuse now requires `PLAYWRIGHT_REUSE_EXISTING_SERVER=true`
+  - this prevents targeted E2E runs from silently binding to a stale manual dev server and producing misleading pass/fail signals
+  - the webserver startup timeout was also raised to 180 seconds to better tolerate cold Windows bootstrap runs
+- As of 2026-04-17, proxy startup fails fast when PostgreSQL initialization fails:
+  - `server/config/lifecycle.js` now shuts the proxy down explicitly if `initializeDatabase()` returns false at startup
+  - this avoids the previous state where the process could stay partially alive without ever exposing `/health`, causing Playwright to report a generic health timeout instead of a real startup failure
+  - in practice, this makes local E2E bootstrap issues such as wrong PostgreSQL credentials surface immediately as startup defects rather than as misleading auth-spec failures
+- As of 2026-04-17, the Playwright webserver wrapper itself now performs an explicit PostgreSQL preflight before the frontend build:
+  - `scripts/start-playwright-webserver.mjs` checks the live connection using the current `POSTGRES_*` env values and fails early with an actionable message if authentication or connectivity is wrong
+  - this makes the most common local E2E bootstrap failure mode (`resume_user` password mismatch / wrong local DB target) obvious before the heavier Vite build step starts
+  - the wrapper health timeout was aligned upward as part of the same pass so cold bootstrap runs do not fail prematurely
 - As of 2026-04-17, the France market map regression is now explicitly locked by a component test:
   - `FranceMapCanvas` had a real lifecycle defect where MapLibre initialization could churn because the mount effect both created the map and depended on readiness/theme state
   - the runtime fix keeps initialization stable and leaves theme restyling to the dedicated style-sync effect
@@ -116,6 +132,9 @@ The backend audit shows that the project already invested in:
 - As of 2026-04-17, GitHub Actions is explicitly opted into Node 24-based JavaScript action runtimes via workflow env:
   - this removes the known deprecation path for `actions/checkout`, `actions/setup-node`, and `actions/upload-artifact` without changing the project runtime itself
   - the residual `punycode` warning remains transitive through `jsdom`/`whatwg-url` and `eslint`/`ajv` dependency chains, so it is tracked as dependency debt rather than an application defect
+- As of 2026-04-17, CI log noise from the transitive `DEP0040` `punycode` warning is now suppressed at workflow level:
+  - the project still carries that dependency debt transitively through `jsdom` and `eslint` chains
+  - the CI workflow now uses `NODE_OPTIONS=--disable-warning=DEP0040` so validation logs stay focused on actionable failures while leaving runtime behavior unchanged
 - The setup docs also define stable E2E reference flows:
   - `upload -> analysis`
   - `analysis -> improve -> export`

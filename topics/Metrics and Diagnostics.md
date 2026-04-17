@@ -94,6 +94,10 @@ This indicates that the team treats latency debugging as part of normal operatio
 - Metrics in ResumeConverter are productized operations tooling.
 - The dashboard mirrors real subsystems: OCR, cache, database, AI, profile matching, imports, cleanup.
 - Future changes should preserve both the APIs and the semantics of these metrics, because they are how the system explains itself in production.
+- As of 2026-04-17, improvement fallback diagnostics are more readable in the client:
+  - the improvement operations card already exposed `postAnalysisFallbackRuns`
+  - recent entries now also render the embedded-analysis fallback source and the `post-analysis` stage with human-readable labels instead of raw internal identifiers
+  - this makes the difference between generation fallback and persistence-analysis fallback easier to interpret during incident review
 
 ## Related
 

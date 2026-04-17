@@ -944,3 +944,18 @@
   - verified with explicit UTF-8 reads that the broad doc-encoding issue was overstated and mostly a terminal-display artifact
   - repaired the confirmed remaining corruption in `README.md` (Stripe doc link text plus Hugging Face French labels) and `ARCHITECTURE.md` (broken diagram arrows)
   - updated `topics/Repository Documentation Map` to record that the remaining documentation debt is now mostly wording/consolidation rather than encoding repair
+- Consolidated a few remaining quality priorities after the CI/runtime stabilization work:
+  - centralized fragile localized Playwright selectors in `e2e/helpers/ui.ts` for signin, register, reset-password, improve, and list/by-deal toggles
+  - migrated the affected public/auth/password-recovery/improvement/refresh specs onto those helpers to reduce wording-coupled flake risk
+  - made improvement metrics more operationally readable by translating `embedded-analysis-fallback` / `post-analysis` recent-entry details into human-readable labels in the client metrics card
+  - reduced CI warning noise by suppressing the transitive `DEP0040` `punycode` warning at workflow level while recording that the underlying dependency debt still exists
+  - clarified in `README.md` that `INSTALL.md` and `docker/README.md` are the canonical install/runtime docs to limit future documentation drift
+- Treated the lingering `auth.spec.ts` validation caveat by fixing the E2E bootstrap semantics rather than patching auth flows:
+  - identified that the apparent auth-spec instability could come from Playwright reusing an unrelated local server when `reuseExistingServer` was implicit
+  - changed Playwright to require `PLAYWRIGHT_REUSE_EXISTING_SERVER=true` before reusing a local server, and raised the startup timeout to 180 seconds for cold Windows runs
+  - changed proxy startup to fail fast when PostgreSQL initialization fails, so local DB credential problems now surface as explicit startup failures instead of generic Playwright `/health` timeouts
+- Continued that local-E2E/bootstrap cleanup with docs and preflight work:
+  - `scripts/start-playwright-webserver.mjs` now probes PostgreSQL before the frontend build and emits an actionable failure message when the local `POSTGRES_*` credentials are wrong
+  - `INSTALL.md` now records the local E2E bootstrap requirement (`npm run migrate` plus valid PostgreSQL credentials) instead of leaving Playwright behavior implicit
+  - `docker/README.md` now states clearly that it is the canonical Docker reference
+  - `client/src/i18n/locales/fr/metrics.json` received a last wording pass on several visible labels (`succès du cache`, `routes API les plus sollicitées`, `reçus / stockés en base`, `recherche de profils`, etc.)
