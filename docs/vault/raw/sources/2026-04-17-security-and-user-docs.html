@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>2026-04-16 Product Scope Priorities | ResumeConverter Vault</title>
-    <meta name="description" content="2026 04 16 Product Scope Priorities Source Type Project documentation source note. File C:\Users\mail\CascadeProjects\ResumeConverter\docs\PRODUCT SCOPE PRIORITIES.md Durable Facts">
+    <title>Source Note: Security and User Guide Docs | ResumeConverter Vault</title>
+    <meta name="description" content="Source Note: Security and User Guide Docs Scope Repository documents inspected: C:\Users\mail\CascadeProjects\ResumeConverter\SECURITY.md C:\Users\mail\CascadeProjects\ResumeConver">
     <link rel="stylesheet" href="../../../assets/site.css">
   </head>
   <body>
@@ -53,7 +53,7 @@
 <li><a href="2026-04-16-karpathy-codex-skill-install.html">Source Note</a></li>
 <li><a href="2026-04-16-karpathy-llm-wiki.html">2026-04-16 Karpathy LLM Wiki</a></li>
 <li><a href="2026-04-16-llm-call-resolution.html">Source Note: LLM call resolution according to configuration</a></li>
-<li><a class="active" href="2026-04-16-product-scope-priorities.html">2026-04-16 Product Scope Priorities</a></li>
+<li><a href="2026-04-16-product-scope-priorities.html">2026-04-16 Product Scope Priorities</a></li>
 <li><a href="2026-04-16-provider-failure-runbooks-authz.html">Source Note: provider failure, incident runbooks, and authorization map</a></li>
 <li><a href="2026-04-16-public-token-and-pdf-boundaries.html">Source Note: public token flows, PDF boundary, and header budget</a></li>
 <li><a href="2026-04-16-release-v1-9-1.html">Source Note</a></li>
@@ -66,7 +66,7 @@
 <li><a href="2026-04-17-installation-deployment-docs.html">Source Note: Installation and Deployment Docs</a></li>
 <li><a href="2026-04-17-ocr-and-llm-docs.html">Source Note: OCR and LLM Technical Docs</a></li>
 <li><a href="2026-04-17-repository-markdown-docs.html">Source Note: Repository Markdown Docs Inventory</a></li>
-<li><a href="2026-04-17-security-and-user-docs.html">Source Note: Security and User Guide Docs</a></li>
+<li><a class="active" href="2026-04-17-security-and-user-docs.html">Source Note: Security and User Guide Docs</a></li>
 </ul>
       </details>
     
@@ -149,14 +149,17 @@
         </nav>
       </aside>
       <main class="content">
-        <div class="content-meta">Source: <code>raw/sources/2026-04-16-product-scope-priorities.md</code></div>
-        <h1>2026-04-16 Product Scope Priorities</h1>
-<h2>Source Type</h2>
-<p>Project documentation source note.</p>
-<h2>File</h2>
-<ul><li><code>C:\Users\mail\CascadeProjects\ResumeConverter\docs\PRODUCT_SCOPE_PRIORITIES.md</code></li></ul>
-<h2>Durable Facts</h2>
-<ul><li>The core product nucleus is:</li><li>CV management and parsing</li><li>CV analysis, improvement, and adaptation</li><li>profile/mission matching</li><li>missions</li><li>candidate submission pipeline</li><li>minimal client and firm management required for matching</li><li>Security, OCR, templates, exports, observability, and backup are support capabilities for the nucleus.</li><li>Market radar, advanced ROME, deals, public sharing, extended mail, and advanced GDPR concerns are secondary scope and should be treated as extensions.</li><li>Roadmap decisions should favor the CV -&gt; analysis -&gt; matching -&gt; submission cycle.</li></ul>
+        <div class="content-meta">Source: <code>raw/sources/2026-04-17-security-and-user-docs.md</code></div>
+        <h1>Source Note: Security and User Guide Docs</h1>
+<h2>Scope</h2>
+<p>Repository documents inspected:</p>
+<ul><li><code>C:\Users\mail\CascadeProjects\ResumeConverter\SECURITY.md</code></li><li><code>C:\Users\mail\CascadeProjects\ResumeConverter\USER_GUIDE.md</code></li><li><code>C:\Users\mail\CascadeProjects\ResumeConverter\USER_GUIDE_EN.md</code></li></ul>
+<h2>Security Doc Highlights</h2>
+<ul><li>The repo <code>SECURITY.md</code> is a narrative security overview, not the canonical source of runtime truth.</li><li>It still confirms several durable security intentions:</li><li>JWT auth with explicit algorithm control</li><li>separate access/refresh handling</li><li>token invalidation/blacklist behavior</li><li>CSRF protection</li><li>firm-based access control</li><li>TOTP-based 2FA</li><li>CSP / Helmet / CORS / validation / sanitization layers</li><li>The role table in the repo security doc is simplified and should not be trusted alone for current authorization nuance.</li><li>The security doc contains legacy/stale formatting and mojibake, so it should be treated as corroborating evidence rather than sole authority.</li></ul>
+<h2>User Guide Highlights</h2>
+<ul><li><code>USER_GUIDE.md</code> and <code>USER_GUIDE_EN.md</code> are broad product walkthroughs, useful for understanding the functional surface exposed to end users.</li><li>Their chapter structure confirms the product’s intended visible surface across:</li><li>CV management</li><li>missions</li><li>profile matching</li><li>pipeline</li><li>adaptations</li><li>CRM / deals</li><li>email sending</li><li>market radar</li><li>AI assistant</li><li>administration</li><li>backup</li><li>GDPR</li><li>These guides are useful orientation material for user-facing flow understanding, but they are not sufficient for backend/runtime behavioral truth.</li></ul>
+<h2>Related</h2>
+<ul><li><a href="../../security.html">SECURITY</a></li><li><a href="../../topics/application-surface.html">topics/Application Surface</a></li><li><a href="../../topics/core-resume-workflows.html">topics/Core Resume Workflows</a></li><li><a href="../../topics/admin-and-operations.html">topics/Admin and Operations</a></li></ul>
       </main>
     </div>
   </body>

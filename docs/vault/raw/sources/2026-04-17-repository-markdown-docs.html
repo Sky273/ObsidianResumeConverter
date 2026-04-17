@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>2026-04-16 Product Scope Priorities | ResumeConverter Vault</title>
-    <meta name="description" content="2026 04 16 Product Scope Priorities Source Type Project documentation source note. File C:\Users\mail\CascadeProjects\ResumeConverter\docs\PRODUCT SCOPE PRIORITIES.md Durable Facts">
+    <title>Source Note: Repository Markdown Docs Inventory | ResumeConverter Vault</title>
+    <meta name="description" content="Source Note: Repository Markdown Docs Inventory Summary This note records the main Markdown documentation files present in the ResumeConverter repository as of 2026 04 17, with the">
     <link rel="stylesheet" href="../../../assets/site.css">
   </head>
   <body>
@@ -53,7 +53,7 @@
 <li><a href="2026-04-16-karpathy-codex-skill-install.html">Source Note</a></li>
 <li><a href="2026-04-16-karpathy-llm-wiki.html">2026-04-16 Karpathy LLM Wiki</a></li>
 <li><a href="2026-04-16-llm-call-resolution.html">Source Note: LLM call resolution according to configuration</a></li>
-<li><a class="active" href="2026-04-16-product-scope-priorities.html">2026-04-16 Product Scope Priorities</a></li>
+<li><a href="2026-04-16-product-scope-priorities.html">2026-04-16 Product Scope Priorities</a></li>
 <li><a href="2026-04-16-provider-failure-runbooks-authz.html">Source Note: provider failure, incident runbooks, and authorization map</a></li>
 <li><a href="2026-04-16-public-token-and-pdf-boundaries.html">Source Note: public token flows, PDF boundary, and header budget</a></li>
 <li><a href="2026-04-16-release-v1-9-1.html">Source Note</a></li>
@@ -65,7 +65,7 @@
 <li><a href="2026-04-16-upload-limits-and-email-flows.html">Source Note: upload/OCR pipeline, operational limits, and email flows</a></li>
 <li><a href="2026-04-17-installation-deployment-docs.html">Source Note: Installation and Deployment Docs</a></li>
 <li><a href="2026-04-17-ocr-and-llm-docs.html">Source Note: OCR and LLM Technical Docs</a></li>
-<li><a href="2026-04-17-repository-markdown-docs.html">Source Note: Repository Markdown Docs Inventory</a></li>
+<li><a class="active" href="2026-04-17-repository-markdown-docs.html">Source Note: Repository Markdown Docs Inventory</a></li>
 <li><a href="2026-04-17-security-and-user-docs.html">Source Note: Security and User Guide Docs</a></li>
 </ul>
       </details>
@@ -149,14 +149,26 @@
         </nav>
       </aside>
       <main class="content">
-        <div class="content-meta">Source: <code>raw/sources/2026-04-16-product-scope-priorities.md</code></div>
-        <h1>2026-04-16 Product Scope Priorities</h1>
-<h2>Source Type</h2>
-<p>Project documentation source note.</p>
-<h2>File</h2>
-<ul><li><code>C:\Users\mail\CascadeProjects\ResumeConverter\docs\PRODUCT_SCOPE_PRIORITIES.md</code></li></ul>
-<h2>Durable Facts</h2>
-<ul><li>The core product nucleus is:</li><li>CV management and parsing</li><li>CV analysis, improvement, and adaptation</li><li>profile/mission matching</li><li>missions</li><li>candidate submission pipeline</li><li>minimal client and firm management required for matching</li><li>Security, OCR, templates, exports, observability, and backup are support capabilities for the nucleus.</li><li>Market radar, advanced ROME, deals, public sharing, extended mail, and advanced GDPR concerns are secondary scope and should be treated as extensions.</li><li>Roadmap decisions should favor the CV -&gt; analysis -&gt; matching -&gt; submission cycle.</li></ul>
+        <div class="content-meta">Source: <code>raw/sources/2026-04-17-repository-markdown-docs.md</code></div>
+        <h1>Source Note: Repository Markdown Docs Inventory</h1>
+<h2>Summary</h2>
+<p>This note records the main Markdown documentation files present in the <code>ResumeConverter</code> repository as of 2026-04-17, with their purpose and durable relevance for future work.</p>
+<p>Repository root: <code>C:\Users\mail\CascadeProjects\ResumeConverter</code></p>
+<h2>Root Documentation</h2>
+<ul><li><code>README.md</code></li><li>product overview</li><li>current feature set</li><li>major runtime/provider surfaces</li><li>useful for high-level capability orientation</li><li><code>INSTALL.md</code></li><li>main installation and launch guide</li><li>local non-Docker setup</li><li>Docker deployment bootstrap</li><li>env configuration examples</li><li>backup and PRA procedures</li><li><code>INSTALL_PG.md</code></li><li>focused PostgreSQL client and migration setup</li><li>env examples for DB, LLM, cache, and Turnstile</li><li>concise bootstrap reference</li><li><code>ARCHITECTURE.md</code></li><li>repository architecture and operational metrics sections</li><li>useful as a narrative architecture snapshot, but contains some stale/legacy wording</li><li><code>SECURITY.md</code></li><li>consolidated security-oriented reference</li><li>should remain a primary source for security posture</li><li><code>USER_GUIDE.md</code></li><li>French end-user guide</li><li>broad functional walkthrough of the product</li><li><code>USER_GUIDE_EN.md</code></li><li>English end-user guide</li><li>same role as <code>USER_GUIDE.md</code> for English-speaking operators/users</li><li><code>CHANGELOG.md</code></li><li>release and version history</li><li><code>BACKEND_AUDIT_2026-04-04.md</code></li><li>point-in-time audit document</li><li>useful as historical evidence, not a canonical runtime source</li><li><code>security_best_practices_report.md</code></li><li>security review/report artifact</li><li>useful as historical guidance, not runtime truth</li><li><code>MEMORY_AUDIT.md</code></li><li>memory/vault maintenance artifact</li><li>relevant to agent workflow rather than application runtime</li><li><code>AGENTS.md</code></li><li>agent operating instructions for this repository</li><li>not product documentation, but a workflow control file</li></ul>
+<h2>Docker / Infra Documentation</h2>
+<ul><li><code>docker/README.md</code></li><li>Docker deployment reference</li><li><code>/.env.docker</code> contract</li><li>Docker build/runtime expectations</li><li>PostgreSQL and Redis container model</li><li>useful as the primary source for containerized deployment behavior</li></ul>
+<h2>Server-Side Technical Documentation</h2>
+<ul><li><code>server/OCR_PIPELINE.md</code></li><li>OCR module split</li><li>runtime backend policy</li><li>execution order and testing strategy</li><li>useful as a focused source for scanned-PDF behavior</li><li><code>server/DOCUMENT_PROCESSING_LIMITS.md</code></li><li>document-processing size and behavior constraints</li><li>useful for operational and ingestion limits</li><li><code>server/config/LLM_GOVERNANCE.md</code></li><li>prompt/contract governance model</li><li>links prompt IDs, versions, contracts, and validators</li><li>useful as a primary source for prompt versioning policy</li></ul>
+<h2>Frontend / Secondary Documentation</h2>
+<ul><li><code>client/src/i18n/README.md</code></li><li>i18n/localization reference</li><li>useful for translation structure and locale maintenance</li><li><code>client/public/CHANGELOG.md</code></li><li>public-facing changelog artifact</li><li>secondary to root <code>CHANGELOG.md</code></li></ul>
+<h2>Important Facts</h2>
+<ul><li><code>INSTALL.md</code> remains the broadest operational bootstrap document and includes:</li><li>local install</li><li>Docker install</li><li>env configuration</li><li>backups</li><li>PRA/recovery</li><li><code>docker/README.md</code> is the clearest source for the current Docker contract:</li><li>dedicated PostgreSQL container</li><li>dedicated Redis container</li><li><code>/.env.docker</code> as Docker source of truth</li><li><code>server/OCR_PIPELINE.md</code> and <code>server/config/LLM_GOVERNANCE.md</code> are high-signal technical docs that complement the broader install docs.</li><li>Several repo docs still contain visible mojibake or legacy-encoded French text, so they are useful as source material but should not be treated as encoding-quality exemplars.</li></ul>
+<h2>Recommended Priority Order</h2>
+<p>When ingesting repo docs for future sessions, prioritize:</p>
+<ol><li><code>README.md</code></li><li><code>INSTALL.md</code></li><li><code>docker/README.md</code></li><li><code>SECURITY.md</code></li><li><code>ARCHITECTURE.md</code></li><li><code>server/OCR_PIPELINE.md</code></li><li><code>server/config/LLM_GOVERNANCE.md</code></li><li><code>INSTALL_PG.md</code></li><li><code>USER_GUIDE.md</code></li><li><code>CHANGELOG.md</code></li></ol>
+<h2>Related</h2>
+<ul><li><a href="../../topics/repository-documentation-map.html">topics/Repository Documentation Map</a></li><li><a href="../../topics/architecture.html">topics/Architecture</a></li><li><a href="../../topics/docker-environment.html">topics/Docker Environment</a></li><li><a href="../../topics/upload-ocr-and-parsing-pipeline.html">topics/Upload OCR and Parsing Pipeline</a></li><li><a href="../../topics/llm-control-plane.html">topics/LLM Control Plane</a></li></ul>
       </main>
     </div>
   </body>

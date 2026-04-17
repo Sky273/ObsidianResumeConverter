@@ -179,6 +179,13 @@
   },
   "active": "5116fc55ae2e3705",
   "lastOpenFiles": [
+    "raw/sources/2026-04-17-ocr-and-llm-docs.md",
+    "raw/sources/2026-04-17-security-and-user-docs.md",
+    "raw/sources/2026-04-17-installation-deployment-docs.md",
+    "topics/Repository Documentation Map.md",
+    "raw/sources/2026-04-17-repository-markdown-docs.md",
+    "docs/vault/sans-titre.html",
+    "docs/vault/agents.html",
     "docs/index.html",
     "docs/vault/raw/sources/2026-04-16-upload-limits-and-email-flows.html",
     "docs/vault/raw/sources/2026-04-16-stripe-billing.html",
@@ -187,9 +194,6 @@
     "docs/vault/raw/sources/2026-04-16-settings-maintenance-persistence.html",
     "docs/vault/raw/sources/2026-04-16-security-layers.html",
     "docs/vault/raw/sources/2026-04-16-release-v1-9-1.html",
-    "docs/vault/raw/sources/2026-04-16-public-token-and-pdf-boundaries.html",
-    "docs/vault/raw/sources/2026-04-16-provider-failure-runbooks-authz.html",
-    "docs/vault/raw/sources/2026-04-16-product-scope-priorities.html",
     "topics/Priority Review 2026-04-17.md",
     "AGENTS.md",
     "topics/Application Release History.md",
@@ -211,10 +215,6 @@
     "raw/sources/2026-04-16-settings-scoring-and-api-surface.md",
     "topics/API Surface by Domain.md",
     "topics/Matching and Scoring Model.md",
-    "topics/Settings Field Reference.md",
-    "raw/sources/2026-04-16-provider-failure-runbooks-authz.md",
-    "topics/AuthZ Decision Map.md",
-    "topics/Runbooks Incident Ops.md",
     "Sans titre.canvas"
   ]
 }

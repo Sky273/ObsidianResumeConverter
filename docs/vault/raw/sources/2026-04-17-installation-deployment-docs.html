@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>2026-04-16 Product Scope Priorities | ResumeConverter Vault</title>
-    <meta name="description" content="2026 04 16 Product Scope Priorities Source Type Project documentation source note. File C:\Users\mail\CascadeProjects\ResumeConverter\docs\PRODUCT SCOPE PRIORITIES.md Durable Facts">
+    <title>Source Note: Installation and Deployment Docs | ResumeConverter Vault</title>
+    <meta name="description" content="Source Note: Installation and Deployment Docs Scope Repository documents inspected: C:\Users\mail\CascadeProjects\ResumeConverter\INSTALL.md C:\Users\mail\CascadeProjects\ResumeCon">
     <link rel="stylesheet" href="../../../assets/site.css">
   </head>
   <body>
@@ -53,7 +53,7 @@
 <li><a href="2026-04-16-karpathy-codex-skill-install.html">Source Note</a></li>
 <li><a href="2026-04-16-karpathy-llm-wiki.html">2026-04-16 Karpathy LLM Wiki</a></li>
 <li><a href="2026-04-16-llm-call-resolution.html">Source Note: LLM call resolution according to configuration</a></li>
-<li><a class="active" href="2026-04-16-product-scope-priorities.html">2026-04-16 Product Scope Priorities</a></li>
+<li><a href="2026-04-16-product-scope-priorities.html">2026-04-16 Product Scope Priorities</a></li>
 <li><a href="2026-04-16-provider-failure-runbooks-authz.html">Source Note: provider failure, incident runbooks, and authorization map</a></li>
 <li><a href="2026-04-16-public-token-and-pdf-boundaries.html">Source Note: public token flows, PDF boundary, and header budget</a></li>
 <li><a href="2026-04-16-release-v1-9-1.html">Source Note</a></li>
@@ -63,7 +63,7 @@
 <li><a href="2026-04-16-storage-dashboards-and-resume-model.html">Source Note: storage, dashboards, and resume domain model</a></li>
 <li><a href="2026-04-16-stripe-billing.html">Source Note: Stripe billing and firm credit purchases</a></li>
 <li><a href="2026-04-16-upload-limits-and-email-flows.html">Source Note: upload/OCR pipeline, operational limits, and email flows</a></li>
-<li><a href="2026-04-17-installation-deployment-docs.html">Source Note: Installation and Deployment Docs</a></li>
+<li><a class="active" href="2026-04-17-installation-deployment-docs.html">Source Note: Installation and Deployment Docs</a></li>
 <li><a href="2026-04-17-ocr-and-llm-docs.html">Source Note: OCR and LLM Technical Docs</a></li>
 <li><a href="2026-04-17-repository-markdown-docs.html">Source Note: Repository Markdown Docs Inventory</a></li>
 <li><a href="2026-04-17-security-and-user-docs.html">Source Note: Security and User Guide Docs</a></li>
@@ -149,14 +149,17 @@
         </nav>
       </aside>
       <main class="content">
-        <div class="content-meta">Source: <code>raw/sources/2026-04-16-product-scope-priorities.md</code></div>
-        <h1>2026-04-16 Product Scope Priorities</h1>
-<h2>Source Type</h2>
-<p>Project documentation source note.</p>
-<h2>File</h2>
-<ul><li><code>C:\Users\mail\CascadeProjects\ResumeConverter\docs\PRODUCT_SCOPE_PRIORITIES.md</code></li></ul>
-<h2>Durable Facts</h2>
-<ul><li>The core product nucleus is:</li><li>CV management and parsing</li><li>CV analysis, improvement, and adaptation</li><li>profile/mission matching</li><li>missions</li><li>candidate submission pipeline</li><li>minimal client and firm management required for matching</li><li>Security, OCR, templates, exports, observability, and backup are support capabilities for the nucleus.</li><li>Market radar, advanced ROME, deals, public sharing, extended mail, and advanced GDPR concerns are secondary scope and should be treated as extensions.</li><li>Roadmap decisions should favor the CV -&gt; analysis -&gt; matching -&gt; submission cycle.</li></ul>
+        <div class="content-meta">Source: <code>raw/sources/2026-04-17-installation-deployment-docs.md</code></div>
+        <h1>Source Note: Installation and Deployment Docs</h1>
+<h2>Scope</h2>
+<p>Repository documents inspected:</p>
+<ul><li><code>C:\Users\mail\CascadeProjects\ResumeConverter\INSTALL.md</code></li><li><code>C:\Users\mail\CascadeProjects\ResumeConverter\INSTALL_PG.md</code></li><li><code>C:\Users\mail\CascadeProjects\ResumeConverter\docker\README.md</code></li><li><code>C:\Users\mail\CascadeProjects\ResumeConverter\README.md</code></li></ul>
+<h2>Main Durable Facts</h2>
+<ul><li><code>INSTALL.md</code> is the broadest bootstrap/runbook document in the repository.</li><li>Local non-Docker runtime expects:</li><li>Node.js 18+</li><li>npm 9+</li><li>PostgreSQL 18+</li><li>Local OCR for scanned PDFs depends on system binaries in <code>PATH</code>:</li><li><code>tesseract</code></li><li><code>pdftoppm</code></li><li>Docker installs OCR and PDF-generation dependencies inside the image/runtime stack, including Tesseract, Poppler, and the Python OCR chain.</li><li>The project no longer expects schema initialization as a side effect of starting the web server.</li><li>The canonical startup migration path is explicit:</li><li><code>npm run migrate</code></li><li><code>migrate-server.bat</code></li><li><code>npm run docker-migrate</code></li><li><code>docker-migrate.bat</code></li><li><code>docker/README.md</code> describes the current container topology as:</li><li>dedicated PostgreSQL 18 container</li><li>dedicated Redis container</li><li>app container</li><li>Docker uses <code>/.env.docker</code> as the source of truth for build and runtime.</li><li>Frontend public env changes in Docker require an image rebuild because they are embedded at build time.</li><li>Windows helper scripts remain part of the normal operator workflow:</li><li><code>docker-build.bat</code></li><li><code>docker-run.bat</code></li><li><code>docker-stop.bat</code></li><li><code>docker-logs.bat</code></li><li><code>docker-shell.bat</code></li><li><code>docker-run.bat</code> is documented as requiring an Administrator terminal on Windows because it configures <code>netsh interface portproxy</code>.</li><li><code>INSTALL.md</code> includes PRA/backup guidance, making it more than a pure developer setup file.</li></ul>
+<h2>Important Caveat</h2>
+<ul><li>The installation docs still contain visible mojibake/legacy-encoded French text in places, so they are operationally useful but should not be used as encoding-quality references.</li></ul>
+<h2>Related</h2>
+<ul><li><a href="../../topics/docker-environment.html">topics/Docker Environment</a></li><li><a href="../../topics/environment-and-secret-matrix.html">topics/Environment and Secret Matrix</a></li><li><a href="../../topics/backup-and-disaster-recovery.html">topics/Backup and Disaster Recovery</a></li><li><a href="../../topics/upload-ocr-and-parsing-pipeline.html">topics/Upload OCR and Parsing Pipeline</a></li></ul>
       </main>
     </div>
   </body>

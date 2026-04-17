@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>2026-04-16 Product Scope Priorities | ResumeConverter Vault</title>
-    <meta name="description" content="2026 04 16 Product Scope Priorities Source Type Project documentation source note. File C:\Users\mail\CascadeProjects\ResumeConverter\docs\PRODUCT SCOPE PRIORITIES.md Durable Facts">
+    <title>Source Note: OCR and LLM Technical Docs | ResumeConverter Vault</title>
+    <meta name="description" content="Source Note: OCR and LLM Technical Docs Scope Repository documents inspected: C:\Users\mail\CascadeProjects\ResumeConverter\server\OCR PIPELINE.md C:\Users\mail\CascadeProjects\Res">
     <link rel="stylesheet" href="../../../assets/site.css">
   </head>
   <body>
@@ -53,7 +53,7 @@
 <li><a href="2026-04-16-karpathy-codex-skill-install.html">Source Note</a></li>
 <li><a href="2026-04-16-karpathy-llm-wiki.html">2026-04-16 Karpathy LLM Wiki</a></li>
 <li><a href="2026-04-16-llm-call-resolution.html">Source Note: LLM call resolution according to configuration</a></li>
-<li><a class="active" href="2026-04-16-product-scope-priorities.html">2026-04-16 Product Scope Priorities</a></li>
+<li><a href="2026-04-16-product-scope-priorities.html">2026-04-16 Product Scope Priorities</a></li>
 <li><a href="2026-04-16-provider-failure-runbooks-authz.html">Source Note: provider failure, incident runbooks, and authorization map</a></li>
 <li><a href="2026-04-16-public-token-and-pdf-boundaries.html">Source Note: public token flows, PDF boundary, and header budget</a></li>
 <li><a href="2026-04-16-release-v1-9-1.html">Source Note</a></li>
@@ -64,7 +64,7 @@
 <li><a href="2026-04-16-stripe-billing.html">Source Note: Stripe billing and firm credit purchases</a></li>
 <li><a href="2026-04-16-upload-limits-and-email-flows.html">Source Note: upload/OCR pipeline, operational limits, and email flows</a></li>
 <li><a href="2026-04-17-installation-deployment-docs.html">Source Note: Installation and Deployment Docs</a></li>
-<li><a href="2026-04-17-ocr-and-llm-docs.html">Source Note: OCR and LLM Technical Docs</a></li>
+<li><a class="active" href="2026-04-17-ocr-and-llm-docs.html">Source Note: OCR and LLM Technical Docs</a></li>
 <li><a href="2026-04-17-repository-markdown-docs.html">Source Note: Repository Markdown Docs Inventory</a></li>
 <li><a href="2026-04-17-security-and-user-docs.html">Source Note: Security and User Guide Docs</a></li>
 </ul>
@@ -149,14 +149,19 @@
         </nav>
       </aside>
       <main class="content">
-        <div class="content-meta">Source: <code>raw/sources/2026-04-16-product-scope-priorities.md</code></div>
-        <h1>2026-04-16 Product Scope Priorities</h1>
-<h2>Source Type</h2>
-<p>Project documentation source note.</p>
-<h2>File</h2>
-<ul><li><code>C:\Users\mail\CascadeProjects\ResumeConverter\docs\PRODUCT_SCOPE_PRIORITIES.md</code></li></ul>
-<h2>Durable Facts</h2>
-<ul><li>The core product nucleus is:</li><li>CV management and parsing</li><li>CV analysis, improvement, and adaptation</li><li>profile/mission matching</li><li>missions</li><li>candidate submission pipeline</li><li>minimal client and firm management required for matching</li><li>Security, OCR, templates, exports, observability, and backup are support capabilities for the nucleus.</li><li>Market radar, advanced ROME, deals, public sharing, extended mail, and advanced GDPR concerns are secondary scope and should be treated as extensions.</li><li>Roadmap decisions should favor the CV -&gt; analysis -&gt; matching -&gt; submission cycle.</li></ul>
+        <div class="content-meta">Source: <code>raw/sources/2026-04-17-ocr-and-llm-docs.md</code></div>
+        <h1>Source Note: OCR and LLM Technical Docs</h1>
+<h2>Scope</h2>
+<p>Repository documents inspected:</p>
+<ul><li><code>C:\Users\mail\CascadeProjects\ResumeConverter\server\OCR_PIPELINE.md</code></li><li><code>C:\Users\mail\CascadeProjects\ResumeConverter\server\DOCUMENT_PROCESSING_LIMITS.md</code></li><li><code>C:\Users\mail\CascadeProjects\ResumeConverter\server\config\LLM_GOVERNANCE.md</code></li></ul>
+<h2>OCR Documentation Highlights</h2>
+<ul><li><code>OCR_ADVANCED_BACKEND</code> defaults to <code>paddleocr</code>.</li><li>The design rule in the doc is to keep OCR logic inside focused services rather than letting <code>pdfTextExtraction.service.js</code> grow back into a monolith.</li></ul>
+<h2>Document Limits Highlights</h2>
+<ul><li><code>server/DOCUMENT_PROCESSING_LIMITS.md</code> is a precise technical source for current upload/extraction/export limits.</li><li>Important limits documented there include:</li><li>JSON / URL-encoded body limit: <code>50mb</code></li><li>extraction upload size: <code>50 MB</code></li><li>template extraction upload size: <code>10 MB</code></li><li>batch import max files: <code>200</code></li><li>batch import total request size: <code>250 MB</code></li><li>batch export synchronous max resumes: <code>100</code></li><li>max PDF page count: <code>50</code></li><li>max scanned pages sent to OCR: <code>10</code></li><li>OCR page time budget: <code>20,000 ms</code></li></ul>
+<h2>LLM Governance Highlights</h2>
+<ul><li><code>server/config/LLM_GOVERNANCE.md</code> documents the prompt/contract governance model.</li><li>Each prompt is expected to have:</li><li><code>id</code></li><li><code>version</code></li><li><code>domain</code></li><li><code>operation</code></li><li><code>contractId</code></li><li>Each contract is expected to have:</li><li><code>id</code></li><li><code>version</code></li><li><code>validatorModule</code></li><li><code>validatorExport</code></li><li>The current doc explicitly says semantic prompt changes should bump prompt version and JSON-structure changes should bump contract version.</li><li>The doc also notes current limits:</li><li>no DB persistence of prompt versions</li><li>no guaranteed recording of actual prompt version used per execution across all flows</li><li>no automatic migration of user-customized prompts</li></ul>
+<h2>Related</h2>
+<ul><li><a href="../../topics/upload-ocr-and-parsing-pipeline.html">topics/Upload OCR and Parsing Pipeline</a></li><li><a href="../../topics/operational-limits-matrix.html">topics/Operational Limits Matrix</a></li><li><a href="../../topics/llm-control-plane.html">topics/LLM Control Plane</a></li><li><a href="../../topics/observability-and-quality.html">topics/Observability and Quality</a></li></ul>
       </main>
     </div>
   </body>

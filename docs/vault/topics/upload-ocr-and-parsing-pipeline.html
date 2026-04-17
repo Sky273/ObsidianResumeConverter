@@ -63,6 +63,10 @@
 <li><a href="../raw/sources/2026-04-16-storage-dashboards-and-resume-model.html">Source Note: storage, dashboards, and resume domain model</a></li>
 <li><a href="../raw/sources/2026-04-16-stripe-billing.html">Source Note: Stripe billing and firm credit purchases</a></li>
 <li><a href="../raw/sources/2026-04-16-upload-limits-and-email-flows.html">Source Note: upload/OCR pipeline, operational limits, and email flows</a></li>
+<li><a href="../raw/sources/2026-04-17-installation-deployment-docs.html">Source Note: Installation and Deployment Docs</a></li>
+<li><a href="../raw/sources/2026-04-17-ocr-and-llm-docs.html">Source Note: OCR and LLM Technical Docs</a></li>
+<li><a href="../raw/sources/2026-04-17-repository-markdown-docs.html">Source Note: Repository Markdown Docs Inventory</a></li>
+<li><a href="../raw/sources/2026-04-17-security-and-user-docs.html">Source Note: Security and User Guide Docs</a></li>
 </ul>
       </details>
     
@@ -115,6 +119,7 @@
 <li><a href="product-scope-and-priorities.html">Product Scope and Priorities</a></li>
 <li><a href="provider-failure-and-fallback-model.html">Provider Failure and Fallback Model</a></li>
 <li><a href="public-token-flows.html">Public Token Flows</a></li>
+<li><a href="repository-documentation-map.html">Repository Documentation Map</a></li>
 <li><a href="resume-domain-model.html">Resume Domain Model</a></li>
 <li><a href="resume-presentation-and-templates.html">Resume Presentation and Templates</a></li>
 <li><a href="runbooks-incident-ops.html">Runbooks Incident Ops</a></li>
@@ -173,7 +178,7 @@
 <ul><li>preferred runtime uses native binaries such as <code>tesseract</code>, <code>pdftoppm</code>, and <code>pdfimages</code></li><li>OCR variants and scoring heuristics try multiple render/recognition strategies</li><li>advanced OCR backend support is enabled by default through <code>OCR_ADVANCED_BACKEND=paddleocr</code></li><li>JavaScript OCR exists as part of the service stack, but the best-quality path is still the native-tool chain</li></ul>
 <p>The vault should remember that OCR quality and throughput are strongly environment-dependent.</p>
 <p>Important runtime consequence:</p>
-<ul><li>the advanced OCR layer is now opt-out rather than opt-in</li><li>if Python or the advanced backend is unavailable, the extraction path degrades to CLI OCR and then to <code>tesseract.js</code></li><li>this default favors extraction quality over minimum runtime dependency footprint</li></ul>
+<ul><li>the advanced OCR layer is now opt-out rather than opt-in</li><li>if Python or the advanced backend is unavailable, the extraction path degrades to CLI OCR and then to <code>tesseract.js</code></li><li>this default favors extraction quality over minimum runtime dependency footprint</li><li>the repo’s focused OCR doc (<code>server/OCR_PIPELINE.md</code>) explicitly treats <code>pdfTextExtraction.service.js</code> as a document-level wrapper that should not grow back into a monolith</li></ul>
 <h2>Word Extraction Path</h2>
 <p>Typical DOC/DOCX flow:</p>
 <ul><li>convert Word to PDF</li><li>reuse the PDF OCR pipeline</li></ul>
@@ -196,6 +201,9 @@
 <p>The upload/extraction flow records metrics for:</p>
 <ul><li>upload activity</li><li>OCR activity</li><li>page count</li><li>OCR usage</li><li>average OCR confidence</li><li>extraction time</li><li>primary OCR engine/variant details when available</li></ul>
 <p>This makes extraction a diagnosable subsystem rather than a black box.</p>
+<h2>Effective Limits</h2>
+<p>The dedicated processing-limits doc is the sharpest source for current enforced boundaries. High-signal limits include:</p>
+<ul><li>extraction upload size: <code>50 MB</code></li><li>one uploaded file per direct extraction request</li><li>max PDF page count: <code>50</code></li><li>max scanned pages sent to OCR: <code>10</code></li><li>max render pixel budget per page: <code>20,000,000</code></li><li>max OCR variants explored per page: <code>18</code></li><li>max OCR time budget per page: <code>20,000 ms</code></li><li>max embedded images explored per page: <code>4</code></li><li>template extraction upload size: <code>10 MB</code></li><li>batch import max files: <code>200</code></li><li>batch import total upload size: <code>250 MB</code></li></ul>
 <h2>Failure Patterns</h2>
 <h3>PDF extraction refused immediately</h3>
 <p>First suspects:</p>
@@ -212,7 +220,7 @@
 <h2>Related</h2>
 <ul><li><a href="core-resume-workflows.html">topics/Core Resume Workflows</a></li><li><a href="operational-limits-matrix.html">topics/Operational Limits Matrix</a></li><li><a href="integrations.html">topics/Integrations</a></li><li><a href="metrics-and-diagnostics.html">topics/Metrics and Diagnostics</a></li></ul>
 <h2>Sources</h2>
-<ul><li><a href="../raw/sources/2026-04-16-upload-limits-and-email-flows.html">raw/sources/2026-04-16-upload-limits-and-email-flows</a></li></ul>
+<ul><li><a href="../raw/sources/2026-04-16-upload-limits-and-email-flows.html">raw/sources/2026-04-16-upload-limits-and-email-flows</a></li><li><a href="../raw/sources/2026-04-17-ocr-and-llm-docs.html">raw/sources/2026-04-17-ocr-and-llm-docs</a></li></ul>
       </main>
     </div>
   </body>

@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AuthZ Decision Map | ResumeConverter Vault</title>
-    <meta name="description" content="AuthZ Decision Map Summary ResumeConverter uses a small set of roles, but their effect is spread across backend middleware, firm scoped access checks, and frontend route guards. Th">
+    <title>Repository Documentation Map | ResumeConverter Vault</title>
+    <meta name="description" content="Repository Documentation Map Summary This page maps the main Markdown documentation files that live inside the ResumeConverter repository and records which ones matter most for fut">
     <link rel="stylesheet" href="../../assets/site.css">
   </head>
   <body>
@@ -89,7 +89,7 @@
 <li><a href="application-surface.html">Application Surface</a></li>
 <li><a href="architecture.html">Architecture</a></li>
 <li><a href="auth-and-access-model.html">Auth and Access Model</a></li>
-<li><a class="active" href="authz-decision-map.html">AuthZ Decision Map</a></li>
+<li><a href="authz-decision-map.html">AuthZ Decision Map</a></li>
 <li><a href="backup-and-disaster-recovery.html">Backup and Disaster Recovery</a></li>
 <li><a href="batch-job-state-machine.html">Batch Job State Machine</a></li>
 <li><a href="batch-jobs-and-long-running-workflows.html">Batch Jobs and Long-Running Workflows</a></li>
@@ -119,7 +119,7 @@
 <li><a href="product-scope-and-priorities.html">Product Scope and Priorities</a></li>
 <li><a href="provider-failure-and-fallback-model.html">Provider Failure and Fallback Model</a></li>
 <li><a href="public-token-flows.html">Public Token Flows</a></li>
-<li><a href="repository-documentation-map.html">Repository Documentation Map</a></li>
+<li><a class="active" href="repository-documentation-map.html">Repository Documentation Map</a></li>
 <li><a href="resume-domain-model.html">Resume Domain Model</a></li>
 <li><a href="resume-presentation-and-templates.html">Resume Presentation and Templates</a></li>
 <li><a href="runbooks-incident-ops.html">Runbooks Incident Ops</a></li>
@@ -149,51 +149,26 @@
         </nav>
       </aside>
       <main class="content">
-        <div class="content-meta">Source: <code>topics/AuthZ Decision Map.md</code></div>
-        <h1>AuthZ Decision Map</h1>
+        <div class="content-meta">Source: <code>topics/Repository Documentation Map.md</code></div>
+        <h1>Repository Documentation Map</h1>
 <h2>Summary</h2>
-<p>ResumeConverter uses a small set of roles, but their effect is spread across backend middleware, firm-scoped access checks, and frontend route guards.</p>
-<p>The durable distinction is:</p>
-<ul><li><code>admin</code>: superadmin/platform-wide authority</li><li><code>localAdmin</code>: firm manager authority</li><li><code>user</code> and <code>viewer</code>: non-manager firm users</li></ul>
-<h2>Backend Role Rules</h2>
-<h3><code>admin</code></h3>
-<ul><li>passes <code>requireAdmin</code></li><li>can cross firm boundaries</li><li>can access settings, metrics, backup, GDPR audit, market-radar collection, ROME collection, and firm management routes</li></ul>
-<h3><code>localAdmin</code></h3>
-<ul><li>does not pass <code>requireAdmin</code></li><li>does pass <code>requireUserManager</code></li><li>can manage firm-scoped management surfaces where routes use manager semantics instead of superadmin semantics</li><li>remains constrained by firm ownership checks</li></ul>
-<h3><code>user</code> / <code>viewer</code></h3>
-<ul><li>do not pass admin or manager middleware</li><li>can only act through normal authenticated business routes and their own firm-scoped data</li></ul>
-<h2>Backend Access Patterns</h2>
-<h3>Global/superadmin-only surfaces</h3>
-<p>Common examples:</p>
-<ul><li><code>/api/settings</code></li><li><code>/api/metrics</code></li><li><code>/api/backup</code></li><li><code>/api/admin/*</code></li><li>firm CRUD and firm-credit top-up routes</li><li>GDPR audit and mail-governance admin routes</li><li>market-radar and ROME collection/admin refresh routes</li></ul>
-<p>These consistently use <code>authenticateToken + requireAdmin</code>.</p>
-<h3>Manager surfaces</h3>
-<p>Manager semantics mean:</p>
-<ul><li><code>admin</code> and <code>localAdmin</code> are both allowed</li><li>non-managers are denied</li></ul>
-<p>The backend exposes this through <code>requireUserManager()</code> and related helpers.</p>
-<h3>Firm-scoped resource checks</h3>
-<p>Even after passing authentication, many routes still require:</p>
-<ul><li>same-firm ownership</li><li>same-firm cross-entity consistency</li></ul>
-<p>So role alone is not enough. Access is often <code>authenticated + role check + firm consistency</code>.</p>
-<h2>Frontend Route Guard Model</h2>
-<p>The SPA uses two main elevated guards:</p>
-<h3><code>AdminRoute</code></h3>
-<ul><li>only <code>user.role === 'admin'</code></li><li>used for settings, metrics, backup, jobs, security logs, and other superadmin pages</li></ul>
-<h3><code>ManagerRoute</code></h3>
-<ul><li>allows <code>admin</code> and <code>localAdmin</code></li><li>used for the admin workspace and template-management area</li></ul>
-<p>This means the frontend already reflects the same structural distinction as the backend: <code>localAdmin</code> is a manager, not a superadmin.</p>
-<h2>Important Mental Model</h2>
-<p>Do not think of <code>localAdmin</code> as <code>almost admin everywhere</code>.</p>
-<p>The closer model is:</p>
-<ul><li><code>admin</code> = platform/superadmin</li><li><code>localAdmin</code> = firm manager</li><li>many sensitive operational surfaces remain superadmin-only</li></ul>
-<h2>Common Pitfalls</h2>
-<ul><li>Seeing an admin-like screen in the SPA does not imply the backend route is superadmin-only or vice versa; verify both sides.</li><li>Firm-scoped helpers still matter for managers and normal users even after route-level role checks pass.</li><li>Some bugs that look like missing permissions are actually firm-mismatch failures rather than role failures.</li></ul>
-<h2>Practical Reading</h2>
-<ul><li>If the question is <code>who can operate the platform?</code>, start with <code>requireAdmin</code>.</li><li>If the question is <code>who can manage a firm surface?</code>, inspect <code>requireUserManager</code> plus firm checks.</li><li>If the question is <code>why can this user see the page but still fail the API call?</code>, compare frontend route guard vs backend middleware vs firm ownership validation.</li></ul>
+<p>This page maps the main Markdown documentation files that live inside the <code>ResumeConverter</code> repository and records which ones matter most for future engineering, operations, and agent work.</p>
+<h2>Current State</h2>
+<p>The repository contains a mix of:</p>
+<ul><li>canonical operational docs</li><li>product/user guides</li><li>targeted technical design notes</li><li>historical audits/reports</li><li>agent workflow control files</li></ul>
+<p>Not all Markdown files are equally authoritative. The most useful ones are the install/deployment, security, OCR, Docker, and prompt-governance documents.</p>
+<h2>Important Files</h2>
+<ul><li><code>README.md</code></li><li>best short product and capability overview</li><li><code>INSTALL.md</code></li><li>primary install/bootstrap/runbook document</li><li>includes local setup, Docker setup, env examples, backups, and PRA</li><li><code>INSTALL_PG.md</code></li><li>concise PostgreSQL/bootstrap companion</li><li>useful when the task is narrowly about DB setup or migrations</li><li><code>docker/README.md</code></li><li>primary source for Docker env/build/runtime behavior</li><li><code>SECURITY.md</code></li><li>primary security posture reference</li><li><code>ARCHITECTURE.md</code></li><li>broad architecture snapshot</li><li>useful, but should be cross-checked against code and vault topics</li><li><code>server/OCR_PIPELINE.md</code></li><li>focused source for OCR execution order and fallback strategy</li><li><code>server/DOCUMENT_PROCESSING_LIMITS.md</code></li><li>processing constraints and limits</li><li><code>server/config/LLM_GOVERNANCE.md</code></li><li>prompt/contract/versioning policy</li><li><code>USER_GUIDE.md</code></li><li>French user-facing walkthrough</li><li><code>USER_GUIDE_EN.md</code></li><li>English user-facing walkthrough</li><li><code>CHANGELOG.md</code></li><li>release history</li></ul>
+<h2>Usage Guidance</h2>
+<ul><li>For install or bootstrap questions, start with:</li><li><code>INSTALL.md</code></li><li><code>docker/README.md</code></li><li><code>INSTALL_PG.md</code></li><li>For security or access questions, start with:</li><li><code>SECURITY.md</code></li><li>For OCR/import behavior, start with:</li><li><code>server/OCR_PIPELINE.md</code></li><li><code>server/DOCUMENT_PROCESSING_LIMITS.md</code></li><li>For prompt/runtime governance, start with:</li><li><code>server/config/LLM_GOVERNANCE.md</code></li><li>For product walkthroughs or UI explanation, use:</li><li><code>README.md</code></li><li><code>USER_GUIDE.md</code></li><li><code>USER_GUIDE_EN.md</code></li></ul>
+<h2>Important Facts</h2>
+<ul><li><code>INSTALL.md</code> is currently the broadest operational doc in the repository.</li><li><code>docker/README.md</code> is a better source than older mental models for container topology because it reflects the current dedicated PostgreSQL and Redis layout.</li><li><code>INSTALL_PG.md</code> is useful but narrower and partially overlaps with <code>INSTALL.md</code>.</li><li><code>USER_GUIDE.md</code> and <code>USER_GUIDE_EN.md</code> are useful for understanding the intended functional surface from a user/operator point of view, especially for CRM, pipeline, matching, adaptations, radar, GDPR, and admin flows.</li><li><code>server/OCR_PIPELINE.md</code>, <code>server/DOCUMENT_PROCESSING_LIMITS.md</code>, and <code>server/config/LLM_GOVERNANCE.md</code> are the highest-signal technical markdown docs under <code>server/</code>.</li><li>Several repo docs still contain mojibake/legacy-encoded French text; treat them as informative source material, not as formatting/encoding exemplars.</li><li>Historical audit docs like <code>BACKEND_AUDIT_2026-04-04.md</code> and <code>security_best_practices_report.md</code> are evidence and guidance, not canonical runtime truth.</li></ul>
+<h2>Open Questions</h2>
+<ul><li>Whether the repository should eventually normalize the major Markdown docs to clean UTF-8 without BOM.</li><li>Whether some overlapping install material should be consolidated to reduce drift between <code>README.md</code>, <code>INSTALL.md</code>, and <code>docker/README.md</code>.</li></ul>
 <h2>Related</h2>
-<ul><li><a href="auth-and-access-model.html">topics/Auth and Access Model</a></li><li><a href="security-and-compliance.html">topics/Security and Compliance</a></li><li><a href="admin-and-operations.html">topics/Admin and Operations</a></li><li><a href="public-token-flows.html">topics/Public Token Flows</a></li><li><a href="business-objects-and-data-relationships.html">topics/Business Objects and Data Relationships</a></li></ul>
+<ul><li><a href="../overview.html">overview</a></li><li><a href="architecture.html">topics/Architecture</a></li><li><a href="docker-environment.html">topics/Docker Environment</a></li><li><a href="upload-ocr-and-parsing-pipeline.html">topics/Upload OCR and Parsing Pipeline</a></li><li><a href="llm-control-plane.html">topics/LLM Control Plane</a></li><li><a href="security-and-compliance.html">topics/Security and Compliance</a></li></ul>
 <h2>Sources</h2>
-<ul><li><a href="../raw/sources/2026-04-16-provider-failure-runbooks-authz.html">raw/sources/2026-04-16-provider-failure-runbooks-authz</a></li></ul>
+<ul><li><a href="../raw/sources/2026-04-17-repository-markdown-docs.html">raw/sources/2026-04-17-repository-markdown-docs</a></li><li><a href="../raw/sources/2026-04-17-installation-deployment-docs.html">raw/sources/2026-04-17-installation-deployment-docs</a></li><li><a href="../raw/sources/2026-04-17-security-and-user-docs.html">raw/sources/2026-04-17-security-and-user-docs</a></li><li><a href="../raw/sources/2026-04-17-ocr-and-llm-docs.html">raw/sources/2026-04-17-ocr-and-llm-docs</a></li></ul>
       </main>
     </div>
   </body>

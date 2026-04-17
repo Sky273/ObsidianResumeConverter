@@ -56,6 +56,7 @@
 - [[topics/Integrations]]: external providers and platform integrations used by the app.
 - [[topics/Observability and Quality]]: tests, CI, audits, metrics, and validation strategy.
 - [[topics/Codex Agent Tooling]]: local Codex skills and agent-side workflow tooling recorded for this project workspace.
+- [[topics/Repository Documentation Map]]: map of the main Markdown docs inside the repository and which ones are authoritative.
 - [[topics/Application Release History]]: durable memory of application-level release milestones and current version.
 - [[topics/Priority Review 2026-04-16]]: current top-priority review areas across operational safety, security boundaries, tooling, and maintainability.
 - [[topics/Priority Review 2026-04-17]]: refreshed whole-app priority review centered on backend decoupling, long-running workflow hardening, and scope discipline.
@@ -91,3 +92,7 @@
 - [[raw/sources/2026-04-16-provider-failure-runbooks-authz]]: source note for provider failure classification, recurring incident patterns, and role/authorization structure.
 - [[raw/sources/2026-04-16-settings-scoring-and-api-surface]]: source note for high-signal settings fields, scoring layers, and API domain grouping.
 - [[raw/sources/2026-04-16-storage-dashboards-and-resume-model]]: source note for file retention, operational views, and the layered resume object model.
+- [[raw/sources/2026-04-17-repository-markdown-docs]]: source note for the main Markdown documentation files currently present in the repository.
+- [[raw/sources/2026-04-17-installation-deployment-docs]]: source note for install, bootstrap, Docker, and deployment markdown docs in the repository.
+- [[raw/sources/2026-04-17-security-and-user-docs]]: source note for the repository security document and user guides.
+- [[raw/sources/2026-04-17-ocr-and-llm-docs]]: source note for OCR pipeline, document-processing limits, and LLM governance markdown docs.

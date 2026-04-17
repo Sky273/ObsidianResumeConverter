@@ -652,3 +652,4 @@ When changing ResumeConverter, verify:
 - [[raw/sources/2026-04-16-domain-model-and-control-plane]]
 - [[raw/sources/2026-04-16-cloudflare-turnstile-config]]
 - [[raw/sources/2026-04-16-security-layers]]
+- [[raw/sources/2026-04-17-security-and-user-docs]]

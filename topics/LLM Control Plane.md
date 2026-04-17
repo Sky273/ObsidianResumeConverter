@@ -33,6 +33,15 @@ The AI layer is governed centrally through settings, provider availability, cred
 - Default prompts exist in backend config and are surfaced through settings defaults.
 - Prompt text is not buried inside every feature route; there is an explicit attempt to centralize prompt governance.
 - This matters because several workflows share the same provider infrastructure but should remain behaviorally tunable without code edits.
+- The dedicated governance doc defines the intended contract between prompts and validators:
+  - each prompt should carry `id`, `version`, `domain`, `operation`, and `contractId`
+  - each output contract should carry `id`, `version`, `validatorModule`, and `validatorExport`
+  - semantic prompt changes should bump prompt version
+  - JSON output structure changes should bump contract version
+- The same doc also records current governance gaps:
+  - prompt/contract versions are not yet universally persisted in DB state
+  - execution metadata is not yet guaranteed to record the effective prompt version everywhere
+  - user-customized prompt migration is not automated
 
 ## Credit Governance
 
@@ -100,3 +109,4 @@ The closer model is:
 - [[raw/sources/2026-04-16-domain-model-and-control-plane]]
 - [[raw/sources/2026-04-16-llm-call-resolution]]
 - [[raw/sources/2026-04-16-provider-failure-runbooks-authz]]
+- [[raw/sources/2026-04-17-ocr-and-llm-docs]]

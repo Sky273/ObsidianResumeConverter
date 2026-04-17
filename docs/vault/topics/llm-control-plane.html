@@ -63,6 +63,10 @@
 <li><a href="../raw/sources/2026-04-16-storage-dashboards-and-resume-model.html">Source Note: storage, dashboards, and resume domain model</a></li>
 <li><a href="../raw/sources/2026-04-16-stripe-billing.html">Source Note: Stripe billing and firm credit purchases</a></li>
 <li><a href="../raw/sources/2026-04-16-upload-limits-and-email-flows.html">Source Note: upload/OCR pipeline, operational limits, and email flows</a></li>
+<li><a href="../raw/sources/2026-04-17-installation-deployment-docs.html">Source Note: Installation and Deployment Docs</a></li>
+<li><a href="../raw/sources/2026-04-17-ocr-and-llm-docs.html">Source Note: OCR and LLM Technical Docs</a></li>
+<li><a href="../raw/sources/2026-04-17-repository-markdown-docs.html">Source Note: Repository Markdown Docs Inventory</a></li>
+<li><a href="../raw/sources/2026-04-17-security-and-user-docs.html">Source Note: Security and User Guide Docs</a></li>
 </ul>
       </details>
     
@@ -115,6 +119,7 @@
 <li><a href="product-scope-and-priorities.html">Product Scope and Priorities</a></li>
 <li><a href="provider-failure-and-fallback-model.html">Provider Failure and Fallback Model</a></li>
 <li><a href="public-token-flows.html">Public Token Flows</a></li>
+<li><a href="repository-documentation-map.html">Repository Documentation Map</a></li>
 <li><a href="resume-domain-model.html">Resume Domain Model</a></li>
 <li><a href="resume-presentation-and-templates.html">Resume Presentation and Templates</a></li>
 <li><a href="runbooks-incident-ops.html">Runbooks Incident Ops</a></li>
@@ -153,7 +158,7 @@
 <h2>Provider Model</h2>
 <ul><li>The app supports several providers and provider-specific services.</li><li>Provider selection is normalized through backend settings and an LLM gateway.</li><li>Ollama is treated as an administrable provider with:</li><li>base URL normalization</li><li>configured URL enforcement</li><li>model discovery</li><li>selected-model validation</li><li>There is an admin test endpoint for validating the configured provider/model before persisting settings.</li><li>Runtime model availability can override a nominal configuration and redirect execution toward a fallback model.</li></ul>
 <h2>Prompt Governance</h2>
-<ul><li>Default prompts exist in backend config and are surfaced through settings defaults.</li><li>Prompt text is not buried inside every feature route; there is an explicit attempt to centralize prompt governance.</li><li>This matters because several workflows share the same provider infrastructure but should remain behaviorally tunable without code edits.</li></ul>
+<ul><li>Default prompts exist in backend config and are surfaced through settings defaults.</li><li>Prompt text is not buried inside every feature route; there is an explicit attempt to centralize prompt governance.</li><li>This matters because several workflows share the same provider infrastructure but should remain behaviorally tunable without code edits.</li><li>The dedicated governance doc defines the intended contract between prompts and validators:</li><li>each prompt should carry <code>id</code>, <code>version</code>, <code>domain</code>, <code>operation</code>, and <code>contractId</code></li><li>each output contract should carry <code>id</code>, <code>version</code>, <code>validatorModule</code>, and <code>validatorExport</code></li><li>semantic prompt changes should bump prompt version</li><li>JSON output structure changes should bump contract version</li><li>The same doc also records current governance gaps:</li><li>prompt/contract versions are not yet universally persisted in DB state</li><li>execution metadata is not yet guaranteed to record the effective prompt version everywhere</li><li>user-customized prompt migration is not automated</li></ul>
 <h2>Credit Governance</h2>
 <ul><li>AI costs are represented as per-action credit settings.</li><li>The settings layer exposes both credit cost and max-token parameters for actions such as:</li><li>chatbot message</li><li>resume AI modify</li><li>template extraction</li><li>resume analysis</li><li>resume improvement</li><li>resume adaptation</li><li>resume match</li><li>profile search</li><li>profile analysis</li><li>Recent hardening introduced upfront reservation for both long-running jobs and synchronous workflows.</li><li>Business tracing is carried separately through explicit <code>operationType</code> metadata sent into the shared LLM layer.</li><li>The intended model is:</li><li><code>actionType</code> = charging and reservation unit</li><li><code>operationType</code> = business tracing label</li><li>These are not always one-to-one. Some priced actions deliberately span several LLM sub-operations under one credit action.</li></ul>
 <h2>Timeout Governance</h2>
@@ -168,7 +173,7 @@
 <h2>Related</h2>
 <ul><li><a href="ai-credits.html">topics/AI Credits</a></li><li><a href="ai-operation-matrix.html">topics/AI Operation Matrix</a></li><li><a href="ai-timeouts.html">topics/AI Timeouts</a></li><li><a href="llm-call-resolution-and-runtime-selection.html">topics/LLM Call Resolution and Runtime Selection</a></li><li><a href="provider-failure-and-fallback-model.html">topics/Provider Failure and Fallback Model</a></li><li><a href="core-resume-workflows.html">topics/Core Resume Workflows</a></li><li><a href="batch-jobs-and-long-running-workflows.html">topics/Batch Jobs and Long-Running Workflows</a></li><li><a href="admin-and-operations.html">topics/Admin and Operations</a></li><li><a href="integrations.html">topics/Integrations</a></li></ul>
 <h2>Sources</h2>
-<ul><li><a href="../raw/session-notes/2026-04-16-memory-bootstrap.html">raw/session-notes/2026-04-16-memory-bootstrap</a></li><li><a href="../raw/sources/2026-04-16-functional-workflows.html">raw/sources/2026-04-16-functional-workflows</a></li><li><a href="../raw/sources/2026-04-16-domain-model-and-control-plane.html">raw/sources/2026-04-16-domain-model-and-control-plane</a></li><li><a href="../raw/sources/2026-04-16-llm-call-resolution.html">raw/sources/2026-04-16-llm-call-resolution</a></li><li><a href="../raw/sources/2026-04-16-provider-failure-runbooks-authz.html">raw/sources/2026-04-16-provider-failure-runbooks-authz</a></li></ul>
+<ul><li><a href="../raw/session-notes/2026-04-16-memory-bootstrap.html">raw/session-notes/2026-04-16-memory-bootstrap</a></li><li><a href="../raw/sources/2026-04-16-functional-workflows.html">raw/sources/2026-04-16-functional-workflows</a></li><li><a href="../raw/sources/2026-04-16-domain-model-and-control-plane.html">raw/sources/2026-04-16-domain-model-and-control-plane</a></li><li><a href="../raw/sources/2026-04-16-llm-call-resolution.html">raw/sources/2026-04-16-llm-call-resolution</a></li><li><a href="../raw/sources/2026-04-16-provider-failure-runbooks-authz.html">raw/sources/2026-04-16-provider-failure-runbooks-authz</a></li><li><a href="../raw/sources/2026-04-17-ocr-and-llm-docs.html">raw/sources/2026-04-17-ocr-and-llm-docs</a></li></ul>
       </main>
     </div>
   </body>

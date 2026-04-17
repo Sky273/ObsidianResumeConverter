@@ -17,6 +17,7 @@ For ResumeConverter, Docker uses `/.env.docker` as the source of truth.
 - The frontend build can drift from runtime env if the image is not rebuilt after public env changes.
 - The repo now has a local `AGENTS.md` that points ResumeConverter sessions to this vault as external memory.
 - The standard Docker workflow is centered on `docker-build.bat` and `docker-run.bat` on Windows.
+- The repository install and Docker docs make `INSTALL.md` and `docker/README.md` the primary operator references for bootstrap, deployment, and recovery.
 - The documented stack persists PostgreSQL data, uploads, and logs in local directories.
 - Docker bundles OCR and PDF-generation dependencies that non-Docker installs may need to provide manually.
 - Docker startup is expected to work with the explicit migration runner rather than hidden schema initialization in the web process.
@@ -88,6 +89,7 @@ For ResumeConverter, Docker uses `/.env.docker` as the source of truth.
   - it retries `docker-migrate` for a bounded period
   - it verifies bootstrap state before starting Supervisor
 - Docker helper scripts must not re-run `docker-migrate` after startup anymore; they should only wait for the app container to become `healthy`.
+- `docker-run.bat` is documented as requiring an Administrator terminal on Windows because it configures `netsh interface portproxy` for external access.
 
 ## Practical Performance Note
 
@@ -117,3 +119,4 @@ When troubleshooting Docker behavior:
 - [[raw/sources/2026-04-16-installation-and-bootstrap-docs]]
 - [[raw/sources/2026-04-16-cloudflare-turnstile-config]]
 - [[raw/sources/2026-04-16-cache-architecture]]
+- [[raw/sources/2026-04-17-installation-deployment-docs]]

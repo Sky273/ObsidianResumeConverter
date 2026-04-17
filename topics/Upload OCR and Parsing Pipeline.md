@@ -80,6 +80,7 @@ Important runtime consequence:
 - the advanced OCR layer is now opt-out rather than opt-in
 - if Python or the advanced backend is unavailable, the extraction path degrades to CLI OCR and then to `tesseract.js`
 - this default favors extraction quality over minimum runtime dependency footprint
+- the repo’s focused OCR doc (`server/OCR_PIPELINE.md`) explicitly treats `pdfTextExtraction.service.js` as a document-level wrapper that should not grow back into a monolith
 
 ## Word Extraction Path
 
@@ -142,6 +143,22 @@ The upload/extraction flow records metrics for:
 
 This makes extraction a diagnosable subsystem rather than a black box.
 
+## Effective Limits
+
+The dedicated processing-limits doc is the sharpest source for current enforced boundaries. High-signal limits include:
+
+- extraction upload size: `50 MB`
+- one uploaded file per direct extraction request
+- max PDF page count: `50`
+- max scanned pages sent to OCR: `10`
+- max render pixel budget per page: `20,000,000`
+- max OCR variants explored per page: `18`
+- max OCR time budget per page: `20,000 ms`
+- max embedded images explored per page: `4`
+- template extraction upload size: `10 MB`
+- batch import max files: `200`
+- batch import total upload size: `250 MB`
+
 ## Failure Patterns
 
 ### PDF extraction refused immediately
@@ -186,3 +203,4 @@ If a change touches ingestion, document:
 ## Sources
 
 - [[raw/sources/2026-04-16-upload-limits-and-email-flows]]
+- [[raw/sources/2026-04-17-ocr-and-llm-docs]]

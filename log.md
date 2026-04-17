@@ -1,5 +1,10 @@
 # Log
 
+## [2026-04-17] fix | preserve French UTF-8 fixtures in resume UI regression coverage
+
+- Cleaned the remaining French accent corruption in targeted client regression fixtures tied to resume entry and improvement flows.
+- Reaffirmed the repository rule to keep accented strings as UTF-8 without BOM in source and tests instead of ASCII fallbacks or mojibake.
+
 ## [2026-04-16] bootstrap | ResumeConverter external memory vault
 
 - Added a vault schema in `AGENTS.md`.
@@ -885,6 +890,31 @@
   - revalidated with:
     - `node .\node_modules\vitest\vitest.mjs run client\src\app\publicHomeSetting.test.tsx`
     - `node .\node_modules\@playwright\test\cli.js test e2e/public-navigation.spec.ts --project=chromium`
+- Stabilized the remaining reproduced Firefox E2E flakes by tightening test sequencing:
+  - updated `e2e/password-recovery.spec.ts` to use `page.goto(..., { waitUntil: 'domcontentloaded' })` on reset-password routes instead of waiting for the full `load` event
+  - updated `e2e/analysis-improve-export.spec.ts` to wait for the second-step upload file input before calling `setInputFiles(...)`
+  - revalidated with:
+    - `node .\node_modules\@playwright\test\cli.js test e2e/password-recovery.spec.ts --project=firefox`
+    - `node .\node_modules\@playwright\test\cli.js test e2e/analysis-improve-export.spec.ts --project=firefox`
+- Extended improvement observability to separate structured-output degradation modes:
+  - added `postAnalysisFallbackRuns` to the persisted/public improvement metrics surface alongside the existing `fallbackRuns`
+  - emit that counter from `server/services/batchJobsWorker/processors/improvement.js` when the improvement text is valid but the post-improvement persistence analysis falls back to the embedded analysis because the returned structured payload is invalid
+  - revalidated with `node .\node_modules\vitest\vitest.mjs run server\tests\services\batchJobsWorker.itemProcessors.test.js`
+- Fixed the France market map blinking/reload loop:
+  - traced the issue to `client/src/components/market/FranceMapCanvas.tsx`, where the MapLibre initialization effect depended on `mapReady` and `isDarkMode` even though that same effect created the map and flipped readiness state
+  - this could trigger repeated cleanup/recreation cycles and make the France map appear to flash or never settle during loading
+  - stabilized initialization by making the mount effect depend only on stable initialization inputs and by freezing the initial style in a ref, while leaving theme switches to the separate style-sync effect
+  - revalidated with:
+    - `node .\node_modules\vitest\vitest.mjs run --config client\vitest.config.ts client\src\components\market\useFranceMapData.test.ts client\src\components\market\useMarketTrendsDashboard.test.ts`
+    - `node .\scripts\run-eslint.mjs client\src\components\market\FranceMapCanvas.tsx`
+- Locked and extended the follow-up quality work around the France map and small-model fallback paths:
+  - added `client/src/components/market/FranceMapCanvas.test.tsx` to assert that MapLibre is initialized once and only restyled on theme changes
+  - simplified `FranceMapCanvas.tsx` by removing the redundant second MapLibre CSS import from the map-initialization effect; runtime CSS injection remains centralized in the dedicated style-loading effect
+  - added a downstream regression in `server/tests/services/resumeAdaptation.service.test.js` proving adaptation content prefers `improved_text` over `original_text`
+  - confirmed the touched files remain UTF-8 without BOM and revalidated with:
+    - `node .\node_modules\vitest\vitest.mjs run --config client\vitest.config.ts client\src\components\market\FranceMapCanvas.test.tsx client\src\components\market\useFranceMapData.test.ts client\src\components\market\useMarketTrendsDashboard.test.ts`
+    - `node .\node_modules\vitest\vitest.mjs run server\tests\services\resumeAdaptation.service.test.js server\tests\services\batchJobsWorker.itemProcessors.test.js`
+    - `node .\scripts\run-eslint.mjs client\src\components\market\FranceMapCanvas.tsx client\src\components\market\FranceMapCanvas.test.tsx server\services\batchJobsWorker\processors\improvement.js server\tests\services\resumeAdaptation.service.test.js`
 - Added a GitHub Pages showcase for the Obsidian vault:
   - added a static-site generator in `scripts/build-pages.mjs` that turns vault markdown into browsable HTML under `docs/`
   - added a dedicated Pages deployment workflow in `.github/workflows/github-pages.yml`
@@ -894,3 +924,19 @@
   - removed the last broken wiki-link in the generated site by exposing `AGENTS.md` as a published page
   - extended the static-site generator to publish non-markdown vault files (`.base`, `.canvas`) as plain-text pages
   - revalidated that the Pages output now exposes all supported vault source files with zero generated broken links
+- Completed a wider UTF-8-without-BOM cleanup for visible French strings across the application:
+  - corrected user-facing ASCII fallback text in CV improvement/adaptation flows, template extraction/preview, settings, metrics, users, editor controls, GDPR mail errors, and backup-failure email content
+  - kept only the intentionally corrupted string matchers used by LLM salvage/fallback code paths
+  - revalidated with targeted ESLint plus focused Vitest suites on resume analysis UI, metrics UI, and backend adaptation/improvement workers
+- Surfaced the improvement post-analysis fallback metric in the client and CI configuration:
+  - added `postAnalysisFallbackRuns` display and regression coverage in the metrics UI
+  - forced GitHub Actions JavaScript actions onto Node 24 in `.github/workflows/ci.yml`
+  - confirmed the remaining `punycode` warning is transitive dependency noise rather than app/runtime code
+- Catalogued the repository’s main Markdown documentation in the vault:
+  - added a raw source inventory for the main repo docs including `README.md`, `INSTALL.md`, `INSTALL_PG.md`, `SECURITY.md`, `ARCHITECTURE.md`, `USER_GUIDE.md`, Docker docs, OCR docs, and LLM governance docs
+  - added a synthesized page `topics/Repository Documentation Map` describing which Markdown files are authoritative for install, Docker, security, OCR, prompt governance, and user-facing guidance
+  - updated the vault index to expose this documentation map and its raw source note
+- Deepened the vault ingest of repository markdown docs by domain:
+  - added dedicated raw source notes for installation/deployment docs, security/user-guide docs, and OCR/LLM technical docs
+  - updated `topics/Docker Environment`, `topics/Upload OCR and Parsing Pipeline`, `topics/LLM Control Plane`, `SECURITY`, and `topics/Repository Documentation Map` with facts explicitly grounded in those repo markdown sources
+  - recorded that several repo docs remain useful operationally despite visible mojibake/legacy encoding in parts of the source text

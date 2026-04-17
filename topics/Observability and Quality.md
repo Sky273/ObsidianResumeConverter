@@ -79,13 +79,43 @@ The backend audit shows that the project already invested in:
   - the remaining hard failure point was the post-improvement persistence analysis, which could still abort the whole job on an invalid structured LLM response
   - batch improvement processing now falls back to the analysis embedded in the improvement response when that post-analysis specifically fails with an invalid-response error
   - this preserves the improved CV text and available structured metadata instead of losing the whole user action
+- As of 2026-04-17, improvement observability now distinguishes two different degradation modes:
+  - `fallbackRuns` continues to represent the original improvement-stage fallback where the model did not return usable structured JSON and the system salvaged plain text
+  - `postAnalysisFallbackRuns` now counts the narrower case where improvement generation succeeded but the follow-up persistence analysis returned an invalid structured payload, so the worker persisted the embedded improvement analysis instead
+  - the improvement metrics payload also records this path in recent entries with `source: embedded-analysis-fallback` and `stage: post-analysis`
 - As of 2026-04-17, public-home E2E startup is less sensitive to runtime settings latency:
   - the `/welcome` route previously depended on the async public-home settings fetch before reliably rendering its public CTA links
   - the client now enables the public-home shell optimistically on the first render of `/welcome`, then lets the runtime settings fetch reconcile afterwards
   - this hardens Playwright navigation flows that click `/signin` and `/register` from the public landing page
+- As of 2026-04-17, the remaining Firefox-only E2E flakes were narrowed further to test sequencing rather than product regressions:
+  - password recovery was intermittently hanging on `page.goto(..., waitUntil: "load")`, while the page itself became usable earlier
+  - the analysis/improve/export upload helper could try to set the file input before the second-step upload UI had fully mounted in Firefox
+  - the targeted fix was to relax those navigations to `domcontentloaded` where appropriate and to explicitly wait for the file input before calling `setInputFiles(...)`
+- As of 2026-04-17, the France market map regression is now explicitly locked by a component test:
+  - `FranceMapCanvas` had a real lifecycle defect where MapLibre initialization could churn because the mount effect both created the map and depended on readiness/theme state
+  - the runtime fix keeps initialization stable and leaves theme restyling to the dedicated style-sync effect
+  - the component also no longer re-imports the MapLibre CSS during map initialization; CSS injection stays centralized in the dedicated runtime-style effect
+  - `client/src/components/market/FranceMapCanvas.test.tsx` now asserts that theme changes restyle the existing map instance instead of recreating it
+- As of 2026-04-17, the small-model improvement fallback is now covered downstream in adaptation tests:
+  - resume adaptation already prefers `resume.improved_text` over `resume.original_text`
+  - `server/tests/services/resumeAdaptation.service.test.js` now asserts that mocked downstream adaptation content is built from `improved_text` when present
+  - this reduces the risk of silently validating only the persistence fallback while still regressing the user-visible adaptation path
+- As of 2026-04-17, French UI and regression fixtures are expected to stay as real UTF-8 text without BOM:
+  - accented strings in the resume-analysis and resume-improvement surfaces are preserved directly in source instead of being degraded to mojibake or ASCII fallbacks
+  - the targeted regression tests around resume entry, improvement, export, and improved-text editing now use the same preserved accented fixtures
+- As of 2026-04-17, the French accent cleanup was extended beyond the CV path into shared admin/editor surfaces:
+  - visible fallback strings were corrected in upload/extraction, settings, templates, users, metrics, backup-failure email content, GDPR mail errors, and Tiptap toolbar/table controls
+  - remaining mojibake-like patterns intentionally left in the codebase are compatibility matchers used to recognize corrupted LLM payloads or legacy malformed text during salvage/fallback processing
+  - the repository policy for user-visible French text is now explicit: keep direct accented UTF-8 text without BOM instead of ASCII approximations such as `modele`, `acces`, or `reinitialiser`
+- As of 2026-04-17, improvement fallback observability is now surfaced in the client metrics UI as well as the backend payload:
+  - `postAnalysisFallbackRuns` is exposed in the metrics types and displayed in the improvement operations card
+  - a dedicated client regression test now locks that rendering path so the post-analysis fallback counter cannot silently disappear during future refactors
 - The remaining CI warnings at this point are non-blocking:
   - GitHub Actions deprecation warnings around Node 20-based action runtimes
   - Node `DEP0040` warnings around `punycode` from transitive dependencies during validation runs
+- As of 2026-04-17, GitHub Actions is explicitly opted into Node 24-based JavaScript action runtimes via workflow env:
+  - this removes the known deprecation path for `actions/checkout`, `actions/setup-node`, and `actions/upload-artifact` without changing the project runtime itself
+  - the residual `punycode` warning remains transitive through `jsdom`/`whatwg-url` and `eslint`/`ajv` dependency chains, so it is tracked as dependency debt rather than an application defect
 - The setup docs also define stable E2E reference flows:
   - `upload -> analysis`
   - `analysis -> improve -> export`
