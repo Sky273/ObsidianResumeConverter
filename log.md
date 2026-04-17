@@ -940,3 +940,7 @@
   - added dedicated raw source notes for installation/deployment docs, security/user-guide docs, and OCR/LLM technical docs
   - updated `topics/Docker Environment`, `topics/Upload OCR and Parsing Pipeline`, `topics/LLM Control Plane`, `SECURITY`, and `topics/Repository Documentation Map` with facts explicitly grounded in those repo markdown sources
   - recorded that several repo docs remain useful operationally despite visible mojibake/legacy encoding in parts of the source text
+- Tightened the repository-doc encoding assessment and cleanup:
+  - verified with explicit UTF-8 reads that the broad doc-encoding issue was overstated and mostly a terminal-display artifact
+  - repaired the confirmed remaining corruption in `README.md` (Stripe doc link text plus Hugging Face French labels) and `ARCHITECTURE.md` (broken diagram arrows)
+  - updated `topics/Repository Documentation Map` to record that the remaining documentation debt is now mostly wording/consolidation rather than encoding repair

@@ -71,12 +71,14 @@ Not all Markdown files are equally authoritative. The most useful ones are the i
 - `INSTALL_PG.md` is useful but narrower and partially overlaps with `INSTALL.md`.
 - `USER_GUIDE.md` and `USER_GUIDE_EN.md` are useful for understanding the intended functional surface from a user/operator point of view, especially for CRM, pipeline, matching, adaptations, radar, GDPR, and admin flows.
 - `server/OCR_PIPELINE.md`, `server/DOCUMENT_PROCESSING_LIMITS.md`, and `server/config/LLM_GOVERNANCE.md` are the highest-signal technical markdown docs under `server/`.
-- Several repo docs still contain mojibake/legacy-encoded French text; treat them as informative source material, not as formatting/encoding exemplars.
+- The remaining repo-doc encoding debt is now narrow rather than systemic:
+  - `README.md` and `ARCHITECTURE.md` were repaired in place for the last confirmed mojibake/diagram corruption found during the 2026-04-17 pass.
+  - `INSTALL.md`, `INSTALL_PG.md`, `SECURITY.md`, and `USER_GUIDE_EN.md` read correctly as UTF-8 when inspected explicitly.
+  - future doc cleanup should focus on wording drift and consolidation, not broad re-encoding.
 - Historical audit docs like `BACKEND_AUDIT_2026-04-04.md` and `security_best_practices_report.md` are evidence and guidance, not canonical runtime truth.
 
 ## Open Questions
 
-- Whether the repository should eventually normalize the major Markdown docs to clean UTF-8 without BOM.
 - Whether some overlapping install material should be consolidated to reduce drift between `README.md`, `INSTALL.md`, and `docker/README.md`.
 
 ## Related
