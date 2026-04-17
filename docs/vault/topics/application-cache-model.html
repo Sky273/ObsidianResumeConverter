@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Application Cache Model | ResumeConverter Vault</title>
+    <meta name="description" content="Application Cache Model Summary ResumeConverter uses a scoped, versioned application cache. The key point is that cache correctness is not based only on TTL. It is based on scope v">
+    <link rel="stylesheet" href="../../assets/site.css">
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <a class="brand" href="../../index.html">
+          <span class="brand-mark">RC</span>
+          <span>
+            <strong>ResumeConverter Vault</strong>
+            <small>Obsidian knowledge showcase</small>
+          </span>
+        </a>
+        <nav class="nav">
+          
+      <details class="nav-folder" >
+        <summary>entities</summary>
+        <ul class="nav-list">
+<li><a href="../entities/resumeconverter.html">ResumeConverter</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" >
+        <summary>raw</summary>
+        
+      <details class="nav-folder" >
+        <summary>session-notes</summary>
+        <ul class="nav-list">
+<li><a href="../raw/session-notes/2026-04-16-memory-bootstrap.html">2026-04-16 Memory Bootstrap</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" >
+        <summary>sources</summary>
+        <ul class="nav-list">
+<li><a href="../raw/sources/2026-04-16-admin-ops-and-diagnostics.html">Source Note: admin control surfaces, backup, and diagnostics</a></li>
+<li><a href="../raw/sources/2026-04-16-backend-audit-and-quality.html">2026-04-16 Backend Audit and Quality</a></li>
+<li><a href="../raw/sources/2026-04-16-cache-architecture.html">Source Note: application cache architecture</a></li>
+<li><a href="../raw/sources/2026-04-16-cloudflare-turnstile-config.html">Source Note: Cloudflare and Turnstile configuration</a></li>
+<li><a href="../raw/sources/2026-04-16-codebase-structure.html">2026-04-16 Codebase Structure</a></li>
+<li><a href="../raw/sources/2026-04-16-domain-model-and-control-plane.html">Source Note: domain model, control plane, and secondary product modules</a></li>
+<li><a href="../raw/sources/2026-04-16-env-session-batch-state.html">Source Note: environment matrix, session lifecycle, and batch job state machine</a></li>
+<li><a href="../raw/sources/2026-04-16-functional-workflows.html">2026-04-16 Functional Workflows</a></li>
+<li><a href="../raw/sources/2026-04-16-installation-and-bootstrap-docs.html">Source Note: installation, bootstrap, and operations docs</a></li>
+<li><a href="../raw/sources/2026-04-16-karpathy-codex-skill-install.html">Source Note</a></li>
+<li><a href="../raw/sources/2026-04-16-karpathy-llm-wiki.html">2026-04-16 Karpathy LLM Wiki</a></li>
+<li><a href="../raw/sources/2026-04-16-llm-call-resolution.html">Source Note: LLM call resolution according to configuration</a></li>
+<li><a href="../raw/sources/2026-04-16-product-scope-priorities.html">2026-04-16 Product Scope Priorities</a></li>
+<li><a href="../raw/sources/2026-04-16-provider-failure-runbooks-authz.html">Source Note: provider failure, incident runbooks, and authorization map</a></li>
+<li><a href="../raw/sources/2026-04-16-public-token-and-pdf-boundaries.html">Source Note: public token flows, PDF boundary, and header budget</a></li>
+<li><a href="../raw/sources/2026-04-16-release-v1-9-1.html">Source Note</a></li>
+<li><a href="../raw/sources/2026-04-16-security-layers.html">Source Note: concrete security layers in the application</a></li>
+<li><a href="../raw/sources/2026-04-16-settings-maintenance-persistence.html">Source Note: settings, maintenance, and persistence</a></li>
+<li><a href="../raw/sources/2026-04-16-settings-scoring-and-api-surface.html">Source Note: settings fields, scoring, and API surface</a></li>
+<li><a href="../raw/sources/2026-04-16-storage-dashboards-and-resume-model.html">Source Note: storage, dashboards, and resume domain model</a></li>
+<li><a href="../raw/sources/2026-04-16-stripe-billing.html">Source Note: Stripe billing and firm credit purchases</a></li>
+<li><a href="../raw/sources/2026-04-16-upload-limits-and-email-flows.html">Source Note: upload/OCR pipeline, operational limits, and email flows</a></li>
+</ul>
+      </details>
+    
+<ul class="nav-list">
+<li><a href="../raw/readme.html">Raw Layer</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" open>
+        <summary>topics</summary>
+        <ul class="nav-list">
+<li><a href="admin-and-operations.html">Admin and Operations</a></li>
+<li><a href="ai-credits.html">AI Credits</a></li>
+<li><a href="ai-operation-matrix.html">AI Operation Matrix</a></li>
+<li><a href="ai-timeouts.html">AI Timeouts</a></li>
+<li><a href="api-surface-by-domain.html">API Surface by Domain</a></li>
+<li><a class="active" href="application-cache-model.html">Application Cache Model</a></li>
+<li><a href="application-release-history.html">Application Release History</a></li>
+<li><a href="application-surface.html">Application Surface</a></li>
+<li><a href="architecture.html">Architecture</a></li>
+<li><a href="auth-and-access-model.html">Auth and Access Model</a></li>
+<li><a href="authz-decision-map.html">AuthZ Decision Map</a></li>
+<li><a href="backup-and-disaster-recovery.html">Backup and Disaster Recovery</a></li>
+<li><a href="batch-job-state-machine.html">Batch Job State Machine</a></li>
+<li><a href="batch-jobs-and-long-running-workflows.html">Batch Jobs and Long-Running Workflows</a></li>
+<li><a href="business-objects-and-data-relationships.html">Business Objects and Data Relationships</a></li>
+<li><a href="clients-deals-missions-pipeline.html">Clients Deals Missions Pipeline</a></li>
+<li><a href="codex-agent-tooling.html">Codex Agent Tooling</a></li>
+<li><a href="core-resume-workflows.html">Core Resume Workflows</a></li>
+<li><a href="data-persistence-map.html">Data Persistence Map</a></li>
+<li><a href="docker-environment.html">Docker Environment</a></li>
+<li><a href="email-and-verification-flows.html">Email and Verification Flows</a></li>
+<li><a href="environment-and-secret-matrix.html">Environment and Secret Matrix</a></li>
+<li><a href="file-storage-and-retention-map.html">File Storage and Retention Map</a></li>
+<li><a href="header-size-budget.html">Header Size Budget</a></li>
+<li><a href="integrations.html">Integrations</a></li>
+<li><a href="llm-call-resolution-and-runtime-selection.html">LLM Call Resolution and Runtime Selection</a></li>
+<li><a href="llm-control-plane.html">LLM Control Plane</a></li>
+<li><a href="maintenance-and-cleanup-jobs.html">Maintenance and Cleanup Jobs</a></li>
+<li><a href="market-intelligence-and-reference-data.html">Market Intelligence and Reference Data</a></li>
+<li><a href="matching-and-scoring-model.html">Matching and Scoring Model</a></li>
+<li><a href="metrics-and-diagnostics.html">Metrics and Diagnostics</a></li>
+<li><a href="observability-and-quality.html">Observability and Quality</a></li>
+<li><a href="operational-dashboards-map.html">Operational Dashboards Map</a></li>
+<li><a href="operational-limits-matrix.html">Operational Limits Matrix</a></li>
+<li><a href="pdf-and-document-generation-boundary.html">PDF and Document Generation Boundary</a></li>
+<li><a href="priority-review-2026-04-16.html">Priority Review 2026-04-16</a></li>
+<li><a href="priority-review-2026-04-17.html">Priority Review 2026-04-17</a></li>
+<li><a href="product-scope-and-priorities.html">Product Scope and Priorities</a></li>
+<li><a href="provider-failure-and-fallback-model.html">Provider Failure and Fallback Model</a></li>
+<li><a href="public-token-flows.html">Public Token Flows</a></li>
+<li><a href="resume-domain-model.html">Resume Domain Model</a></li>
+<li><a href="resume-presentation-and-templates.html">Resume Presentation and Templates</a></li>
+<li><a href="runbooks-incident-ops.html">Runbooks Incident Ops</a></li>
+<li><a href="security-and-compliance.html">Security and Compliance</a></li>
+<li><a href="session-and-token-lifecycle.html">Session and Token Lifecycle</a></li>
+<li><a href="settings-and-governance-surfaces.html">Settings and Governance Surfaces</a></li>
+<li><a href="settings-catalog.html">Settings Catalog</a></li>
+<li><a href="settings-field-reference.html">Settings Field Reference</a></li>
+<li><a href="stripe-billing-and-firm-credit-purchase.html">Stripe Billing and Firm Credit Purchase</a></li>
+<li><a href="template-extraction-pipeline.html">Template Extraction Pipeline</a></li>
+<li><a href="turnstile.html">Turnstile</a></li>
+<li><a href="upload-ocr-and-parsing-pipeline.html">Upload OCR and Parsing Pipeline</a></li>
+</ul>
+      </details>
+    
+<ul class="nav-list">
+<li><a href="../2026-04-16.html">2026-04-16</a></li>
+<li><a href="../bienvenue.html">Bienvenue</a></li>
+<li><a href="../index.html">Index</a></li>
+<li><a href="../log.html">Log</a></li>
+<li><a href="../overview.html">Overview</a></li>
+<li><a href="../security.html">Security</a></li>
+</ul>
+        </nav>
+      </aside>
+      <main class="content">
+        <div class="content-meta">Source: <code>topics/Application Cache Model.md</code></div>
+        <h1>Application Cache Model</h1>
+<h2>Summary</h2>
+<p>ResumeConverter uses a scoped, versioned application cache. The key point is that cache correctness is not based only on TTL. It is based on scope versions stored in PostgreSQL and propagated through invalidation notifications.</p>
+<h2>Mental Model</h2>
+<p>The closest mental model is:</p>
+<ul><li>namespace-based cache</li><li>values stored in memory or Redis</li><li>cache entries versioned by logical scope</li><li>PostgreSQL used as the scope-version truth</li><li>PostgreSQL notifications used for cross-instance invalidation propagation</li></ul>
+<p>This is more sophisticated than a plain process-local TTL map.</p>
+<h2>Namespaces</h2>
+<p>The app defines dedicated cache namespaces for domains such as:</p>
+<ul><li>settings</li><li>templates</li><li>firms</li><li>clients</li><li>deals</li><li>users</li><li>missions</li><li>resumes</li><li>candidate pipeline</li><li>email templates</li><li>resume comments</li><li>backup settings</li><li>jobs</li><li>GDPR audit</li><li>tags</li><li>grouped views</li></ul>
+<p>This means caching is not accidental; it is designed per domain.</p>
+<h2>Scoped Versioning</h2>
+<p>Each logical cache entry belongs to a scope.</p>
+<p>The effective stored key is built from:</p>
+<ul><li>scope name</li><li>current scope version</li><li>logical key</li></ul>
+<p>Conceptually:</p>
+<ul><li><code>scope:v&amp;lt;version&amp;gt;:key</code></li></ul>
+<p>If the scope version changes, old entries become stale automatically because subsequent reads resolve to a new versioned key.</p>
+<h2>Scope Version Truth</h2>
+<p>Scope versions are stored in PostgreSQL in <code>public.cache_scope_versions</code>.</p>
+<p>This is important because:</p>
+<ul><li>the version truth is shared across instances</li><li>invalidation does not rely only on local process state</li><li>the cache can remain coherent in multi-instance deployments</li></ul>
+<h2>Invalidation Model</h2>
+<p>Invalidation works by:</p>
+<ol><li>bumping the scope version in PostgreSQL</li><li>publishing a notification on <code>cache_invalidations</code></li><li>letting local namespaces forget old entries for that scope</li><li>letting other instances receive the same invalidation payload through <code>LISTEN/NOTIFY</code></li></ol>
+<p>So the important behavior is not <code>delete this key from Redis</code> but <code>advance the scope version and notify everyone</code>.</p>
+<h2>Storage Backend vs Coherence Mechanism</h2>
+<p>These are different concerns.</p>
+<h3>Storage backend</h3>
+<p>The cache can store values in:</p>
+<ul><li>memory</li><li>Redis</li></ul>
+<h3>Coherence mechanism</h3>
+<p>Coherence is driven by:</p>
+<ul><li>PostgreSQL scope versions</li><li>PostgreSQL notifications</li></ul>
+<p>This distinction matters because Redis is optional, but the application cache model still exists without it.</p>
+<h2>Memory Mode</h2>
+<p>In memory mode, namespaces provide:</p>
+<ul><li>TTL-based expiry</li><li>periodic cleanup</li><li>max-size trimming</li></ul>
+<p>This keeps the local cache bounded even without Redis.</p>
+<h2>Redis Mode</h2>
+<p>In Redis mode:</p>
+<ul><li>Redis stores cached values</li><li>the app still uses the same scoped-version logic</li><li>the app still relies on PostgreSQL-backed invalidation/version truth</li></ul>
+<p>If Redis is configured but unavailable:</p>
+<ul><li>the effective backend falls back to memory</li><li>the application cache layer remains active</li></ul>
+<p>This fallback is intentional and visible in diagnostics.</p>
+<p>Recent decomposition work split Redis connection state out of the main cache service into a dedicated helper so cache namespace logic is less entangled with global Redis lifecycle bookkeeping. The remaining invalidation key composition and grouped-view invalidation helpers are also now isolated from the main service, which keeps namespace definitions and lifecycle code separate from key-set assembly logic.</p>
+<h2>Request Coalescing</h2>
+<p>The cache layer also avoids duplicate concurrent loads for the same versioned key through pending-load tracking.</p>
+<p>Practical effect:</p>
+<ul><li>if several requests miss the same key at the same moment</li><li>the loader runs once</li><li>the others await the same pending promise</li></ul>
+<p>This is an important performance characteristic, not just a convenience feature.</p>
+<h2>TTLs</h2>
+<p>TTL is still present, but it is not the whole model.</p>
+<p>Observed TTLs vary by namespace. Examples:</p>
+<ul><li>settings/templates: longer-lived</li><li>jobs/GDPR audit/grouped views: shorter-lived</li><li>resumes/missions/pipeline: medium-lived</li></ul>
+<p>TTL controls freshness over time, while scope-version invalidation controls correctness after mutations.</p>
+<h2>Route-Level Cache Bypass</h2>
+<p>Some routes support explicit cache bypass with:</p>
+<ul><li><code>refresh=1</code></li><li><code>refresh=true</code></li></ul>
+<p>This is useful for admin/debug/consistency-sensitive reads and is part of the intended cache contract.</p>
+<h2>Diagnostics</h2>
+<p>The cache layer exposes meaningful diagnostics, including:</p>
+<ul><li>configured backend</li><li>effective backend</li><li>connection state</li><li>fallback reason</li><li>cache hit/miss stats</li><li>per-namespace stats</li><li>application-cache active state</li></ul>
+<p>Recent decomposition note:</p>
+<ul><li><code>server/services/cache.service.js</code> now focuses more on cache registry composition, public namespaces, invalidation helpers, and exported operational APIs.</li><li>The memory/Redis namespace implementations and versioned-key machinery now live in <code>server/services/cacheNamespaces.service.js</code>.</li></ul>
+<p>This is why the metrics/admin surfaces can explain cache behavior in production.</p>
+<h2>Why This Matters</h2>
+<ul><li>The cache model is part of the architecture, not a transparent optimization.</li><li>Mutation flows are expected to invalidate by scope.</li><li>Multi-instance behavior depends on PostgreSQL notification wiring.</li><li>Redis should not be misunderstood as the only source of truth for cache correctness.</li></ul>
+<h2>Practical Reading</h2>
+<p>When cache behavior looks wrong, inspect in this order:</p>
+<ol><li>namespace and scope key used by the feature</li><li>whether invalidation was triggered</li><li>scope version state in PostgreSQL</li><li>whether notifications are being received</li><li>configured vs effective backend</li><li>whether the route bypassed cache with <code>refresh=1</code></li></ol>
+<h2>Related</h2>
+<ul><li><a href="docker-environment.html">topics/Docker Environment</a></li><li><a href="metrics-and-diagnostics.html">topics/Metrics and Diagnostics</a></li><li><a href="observability-and-quality.html">topics/Observability and Quality</a></li><li><a href="admin-and-operations.html">topics/Admin and Operations</a></li></ul>
+<h2>Sources</h2>
+<ul><li><a href="../raw/sources/2026-04-16-cache-architecture.html">raw/sources/2026-04-16-cache-architecture</a></li></ul>
+      </main>
+    </div>
+  </body>
+</html>

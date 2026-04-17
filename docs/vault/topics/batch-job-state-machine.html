@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Batch Job State Machine | ResumeConverter Vault</title>
+    <meta name="description" content="Batch Job State Machine Summary ResumeConverter batch jobs are persisted workflows with: a job level state item level states worker claiming semantics optional upfront AI credit re">
+    <link rel="stylesheet" href="../../assets/site.css">
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <a class="brand" href="../../index.html">
+          <span class="brand-mark">RC</span>
+          <span>
+            <strong>ResumeConverter Vault</strong>
+            <small>Obsidian knowledge showcase</small>
+          </span>
+        </a>
+        <nav class="nav">
+          
+      <details class="nav-folder" >
+        <summary>entities</summary>
+        <ul class="nav-list">
+<li><a href="../entities/resumeconverter.html">ResumeConverter</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" >
+        <summary>raw</summary>
+        
+      <details class="nav-folder" >
+        <summary>session-notes</summary>
+        <ul class="nav-list">
+<li><a href="../raw/session-notes/2026-04-16-memory-bootstrap.html">2026-04-16 Memory Bootstrap</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" >
+        <summary>sources</summary>
+        <ul class="nav-list">
+<li><a href="../raw/sources/2026-04-16-admin-ops-and-diagnostics.html">Source Note: admin control surfaces, backup, and diagnostics</a></li>
+<li><a href="../raw/sources/2026-04-16-backend-audit-and-quality.html">2026-04-16 Backend Audit and Quality</a></li>
+<li><a href="../raw/sources/2026-04-16-cache-architecture.html">Source Note: application cache architecture</a></li>
+<li><a href="../raw/sources/2026-04-16-cloudflare-turnstile-config.html">Source Note: Cloudflare and Turnstile configuration</a></li>
+<li><a href="../raw/sources/2026-04-16-codebase-structure.html">2026-04-16 Codebase Structure</a></li>
+<li><a href="../raw/sources/2026-04-16-domain-model-and-control-plane.html">Source Note: domain model, control plane, and secondary product modules</a></li>
+<li><a href="../raw/sources/2026-04-16-env-session-batch-state.html">Source Note: environment matrix, session lifecycle, and batch job state machine</a></li>
+<li><a href="../raw/sources/2026-04-16-functional-workflows.html">2026-04-16 Functional Workflows</a></li>
+<li><a href="../raw/sources/2026-04-16-installation-and-bootstrap-docs.html">Source Note: installation, bootstrap, and operations docs</a></li>
+<li><a href="../raw/sources/2026-04-16-karpathy-codex-skill-install.html">Source Note</a></li>
+<li><a href="../raw/sources/2026-04-16-karpathy-llm-wiki.html">2026-04-16 Karpathy LLM Wiki</a></li>
+<li><a href="../raw/sources/2026-04-16-llm-call-resolution.html">Source Note: LLM call resolution according to configuration</a></li>
+<li><a href="../raw/sources/2026-04-16-product-scope-priorities.html">2026-04-16 Product Scope Priorities</a></li>
+<li><a href="../raw/sources/2026-04-16-provider-failure-runbooks-authz.html">Source Note: provider failure, incident runbooks, and authorization map</a></li>
+<li><a href="../raw/sources/2026-04-16-public-token-and-pdf-boundaries.html">Source Note: public token flows, PDF boundary, and header budget</a></li>
+<li><a href="../raw/sources/2026-04-16-release-v1-9-1.html">Source Note</a></li>
+<li><a href="../raw/sources/2026-04-16-security-layers.html">Source Note: concrete security layers in the application</a></li>
+<li><a href="../raw/sources/2026-04-16-settings-maintenance-persistence.html">Source Note: settings, maintenance, and persistence</a></li>
+<li><a href="../raw/sources/2026-04-16-settings-scoring-and-api-surface.html">Source Note: settings fields, scoring, and API surface</a></li>
+<li><a href="../raw/sources/2026-04-16-storage-dashboards-and-resume-model.html">Source Note: storage, dashboards, and resume domain model</a></li>
+<li><a href="../raw/sources/2026-04-16-stripe-billing.html">Source Note: Stripe billing and firm credit purchases</a></li>
+<li><a href="../raw/sources/2026-04-16-upload-limits-and-email-flows.html">Source Note: upload/OCR pipeline, operational limits, and email flows</a></li>
+</ul>
+      </details>
+    
+<ul class="nav-list">
+<li><a href="../raw/readme.html">Raw Layer</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" open>
+        <summary>topics</summary>
+        <ul class="nav-list">
+<li><a href="admin-and-operations.html">Admin and Operations</a></li>
+<li><a href="ai-credits.html">AI Credits</a></li>
+<li><a href="ai-operation-matrix.html">AI Operation Matrix</a></li>
+<li><a href="ai-timeouts.html">AI Timeouts</a></li>
+<li><a href="api-surface-by-domain.html">API Surface by Domain</a></li>
+<li><a href="application-cache-model.html">Application Cache Model</a></li>
+<li><a href="application-release-history.html">Application Release History</a></li>
+<li><a href="application-surface.html">Application Surface</a></li>
+<li><a href="architecture.html">Architecture</a></li>
+<li><a href="auth-and-access-model.html">Auth and Access Model</a></li>
+<li><a href="authz-decision-map.html">AuthZ Decision Map</a></li>
+<li><a href="backup-and-disaster-recovery.html">Backup and Disaster Recovery</a></li>
+<li><a class="active" href="batch-job-state-machine.html">Batch Job State Machine</a></li>
+<li><a href="batch-jobs-and-long-running-workflows.html">Batch Jobs and Long-Running Workflows</a></li>
+<li><a href="business-objects-and-data-relationships.html">Business Objects and Data Relationships</a></li>
+<li><a href="clients-deals-missions-pipeline.html">Clients Deals Missions Pipeline</a></li>
+<li><a href="codex-agent-tooling.html">Codex Agent Tooling</a></li>
+<li><a href="core-resume-workflows.html">Core Resume Workflows</a></li>
+<li><a href="data-persistence-map.html">Data Persistence Map</a></li>
+<li><a href="docker-environment.html">Docker Environment</a></li>
+<li><a href="email-and-verification-flows.html">Email and Verification Flows</a></li>
+<li><a href="environment-and-secret-matrix.html">Environment and Secret Matrix</a></li>
+<li><a href="file-storage-and-retention-map.html">File Storage and Retention Map</a></li>
+<li><a href="header-size-budget.html">Header Size Budget</a></li>
+<li><a href="integrations.html">Integrations</a></li>
+<li><a href="llm-call-resolution-and-runtime-selection.html">LLM Call Resolution and Runtime Selection</a></li>
+<li><a href="llm-control-plane.html">LLM Control Plane</a></li>
+<li><a href="maintenance-and-cleanup-jobs.html">Maintenance and Cleanup Jobs</a></li>
+<li><a href="market-intelligence-and-reference-data.html">Market Intelligence and Reference Data</a></li>
+<li><a href="matching-and-scoring-model.html">Matching and Scoring Model</a></li>
+<li><a href="metrics-and-diagnostics.html">Metrics and Diagnostics</a></li>
+<li><a href="observability-and-quality.html">Observability and Quality</a></li>
+<li><a href="operational-dashboards-map.html">Operational Dashboards Map</a></li>
+<li><a href="operational-limits-matrix.html">Operational Limits Matrix</a></li>
+<li><a href="pdf-and-document-generation-boundary.html">PDF and Document Generation Boundary</a></li>
+<li><a href="priority-review-2026-04-16.html">Priority Review 2026-04-16</a></li>
+<li><a href="priority-review-2026-04-17.html">Priority Review 2026-04-17</a></li>
+<li><a href="product-scope-and-priorities.html">Product Scope and Priorities</a></li>
+<li><a href="provider-failure-and-fallback-model.html">Provider Failure and Fallback Model</a></li>
+<li><a href="public-token-flows.html">Public Token Flows</a></li>
+<li><a href="resume-domain-model.html">Resume Domain Model</a></li>
+<li><a href="resume-presentation-and-templates.html">Resume Presentation and Templates</a></li>
+<li><a href="runbooks-incident-ops.html">Runbooks Incident Ops</a></li>
+<li><a href="security-and-compliance.html">Security and Compliance</a></li>
+<li><a href="session-and-token-lifecycle.html">Session and Token Lifecycle</a></li>
+<li><a href="settings-and-governance-surfaces.html">Settings and Governance Surfaces</a></li>
+<li><a href="settings-catalog.html">Settings Catalog</a></li>
+<li><a href="settings-field-reference.html">Settings Field Reference</a></li>
+<li><a href="stripe-billing-and-firm-credit-purchase.html">Stripe Billing and Firm Credit Purchase</a></li>
+<li><a href="template-extraction-pipeline.html">Template Extraction Pipeline</a></li>
+<li><a href="turnstile.html">Turnstile</a></li>
+<li><a href="upload-ocr-and-parsing-pipeline.html">Upload OCR and Parsing Pipeline</a></li>
+</ul>
+      </details>
+    
+<ul class="nav-list">
+<li><a href="../2026-04-16.html">2026-04-16</a></li>
+<li><a href="../bienvenue.html">Bienvenue</a></li>
+<li><a href="../index.html">Index</a></li>
+<li><a href="../log.html">Log</a></li>
+<li><a href="../overview.html">Overview</a></li>
+<li><a href="../security.html">Security</a></li>
+</ul>
+        </nav>
+      </aside>
+      <main class="content">
+        <div class="content-meta">Source: <code>topics/Batch Job State Machine.md</code></div>
+        <h1>Batch Job State Machine</h1>
+<h2>Summary</h2>
+<p>ResumeConverter batch jobs are persisted workflows with:</p>
+<ul><li>a job-level state</li><li>item-level states</li><li>worker claiming semantics</li><li>optional upfront AI credit reservation</li><li>explicit settlement on completion, failure, or cancellation</li></ul>
+<p>This subsystem is the control plane for long-running resume and AI operations.</p>
+<h2>Job-Level Statuses</h2>
+<p>Current job statuses:</p>
+<ul><li><code>pending</code></li><li><code>processing</code></li><li><code>completed</code></li><li><code>failed</code></li><li><code>cancelled</code></li></ul>
+<p>Important behavior:</p>
+<ul><li>jobs are created as <code>pending</code></li><li>workers claim <code>pending</code> and even already-<code>processing</code> jobs using <code>FOR UPDATE SKIP LOCKED</code></li><li>terminal statuses are <code>completed</code>, <code>failed</code>, and <code>cancelled</code></li></ul>
+<h2>Item-Level Statuses</h2>
+<p>Current item statuses:</p>
+<ul><li><code>pending</code></li><li><code>processing</code></li><li><code>pending_name</code></li><li><code>success</code></li><li><code>error</code></li><li><code>skipped</code></li></ul>
+<p>Important nuance:</p>
+<ul><li><code>pending_name</code> means the worker hit a step that needs manual name input before the item can be resumed</li><li><code>skipped</code> is used when pending items are bypassed after job cancellation</li></ul>
+<h2>Job Creation Model</h2>
+<p>The subsystem supports several job types, including:</p>
+<ul><li><code>import</code></li><li><code>improve</code></li><li><code>adapt</code></li><li><code>match</code></li><li><code>profile-search</code></li><li><code>profile-analysis</code></li><li><code>deal-export</code></li></ul>
+<p>Collection jobs also exist, but some are self-managed and not processed by the standard worker loop:</p>
+<ul><li><code>collect-trends</code></li><li><code>collect-facts</code></li><li><code>collect-metiers</code></li></ul>
+<h2>Creation and Staging Sequence</h2>
+<p>Typical sequence:</p>
+<ol><li>create the <code>batch_jobs</code> row with status <code>pending</code></li><li>persist job options</li><li>add item rows to <code>batch_job_items</code></li><li>refresh <code>total_items</code></li><li>let the background worker claim and process the items</li></ol>
+<p>For uploads, item staging can include file blobs copied into <code>batch_job_items.file_data</code> before the worker processes them.</p>
+<h2>Worker Claiming Model</h2>
+<p>The worker runs on an interval and does not naively read all pending rows.</p>
+<p>Key behavior:</p>
+<ul><li>checks for pending jobs roughly every 5 seconds</li><li>claims up to 5 jobs using <code>FOR UPDATE SKIP LOCKED</code></li><li>claims up to <code>BATCH_SIZE</code> items per job using <code>FOR UPDATE SKIP LOCKED</code></li><li>marks claimed items <code>processing</code> before actual execution</li><li>processes item chunks in parallel up to <code>WORKER_EXECUTION_CONCURRENCY</code></li></ul>
+<p>This avoids duplicate processing when multiple worker passes overlap.</p>
+<h2>State Progression</h2>
+<p>Typical happy-path progression:</p>
+<ol><li>export generation may happen before final completion when requested</li><li>credit reservation is settled if one exists</li></ol>
+<h2>Cancellation Model</h2>
+<p>Cancelling a job:</p>
+<ul><li>sets the job status to <code>cancelled</code></li><li>marks still-<code>pending</code> items as <code>skipped</code></li><li>leaves already-running work to be reconciled by worker lifecycle logic</li></ul>
+<p>The worker explicitly checks whether the job remained cancelled after processing or after errors, and settles credits accordingly.</p>
+<p>This means cancellation is not only a UI flag; it also triggers reconciliation logic.</p>
+<h2>Failure Model</h2>
+<p>Two major failure classes exist:</p>
+<h3>Item-level failure</h3>
+<ul><li>individual item ends as <code>error</code></li><li>job may still continue processing other items</li><li>final job outcome becomes <code>failed</code> if any item errored</li></ul>
+<h3>Job-level failure or processing exception</h3>
+<ul><li>worker catches an exception while processing the job</li><li>job is marked <code>failed</code> unless it was already cancelled</li><li>credit settlement still runs if a reservation exists</li></ul>
+<h2>Pending Name Interruption</h2>
+<p><code>pending_name</code> is a special interruption state:</p>
+<ul><li>item cannot continue automatically</li><li>pending analysis/text is stored in <code>pending_data</code></li><li>user can resume the item later by providing a candidate name</li><li>resumed item is moved back to <code>pending</code> so the worker can pick it up again</li></ul>
+<p>This is an important product behavior because not every interruption is a hard failure.</p>
+<h2>Credits and Settlement</h2>
+<p>Batch jobs can carry <code>options.creditReservation</code>.</p>
+<p>Current model:</p>
+<ol><li>reservation is computed upfront from job type and planned item count</li><li>reservation is persisted in job options</li><li>item processing marks actual AI action consumption in <code>pending_data.creditUsage</code></li><li>settlement compares reserved units vs consumed units</li><li>unused credits are refunded</li><li>reservation is marked with <code>settledAt</code></li></ol>
+<p>The worker also scans for cancelled jobs that still need settlement.</p>
+<p>This means the credit model is tied directly to the job state machine, not bolted on afterward.</p>
+<h2>File Payload Lifecycle</h2>
+<p>For upload-heavy jobs:</p>
+<ul><li>file blobs may be staged in <code>batch_job_items.file_data</code></li><li>worker can fetch file payloads on demand instead of loading everything eagerly</li><li>processed file blobs can later be cleared</li><li>bulk cleanup exists for processed items</li></ul>
+<p>This matters for DB size, worker memory behavior, and recovery after failures.</p>
+<h2>Completion Semantics</h2>
+<p>A job is considered complete only when:</p>
+<ul><li>it has items</li><li>every item is in a terminal state: <code>success</code>, <code>error</code>, or <code>skipped</code></li></ul>
+<p>If there are no items yet, the job is not complete.</p>
+<p>This is important because item staging and job creation are separate steps.</p>
+<h2>Operational Diagnostics Worth Remembering</h2>
+<p>The worker maintains runtime diagnostics such as:</p>
+<ul><li>initialized vs not</li><li>running vs stopped</li><li>shutting down vs normal</li><li>active processing count</li><li>whether the polling interval is active</li></ul>
+<p>These values are useful when a job appears stuck but the issue is really in worker lifecycle state.</p>
+<h2>Typical Failure Patterns</h2>
+<h3>Job stays <code>pending</code></h3>
+<p>First suspects:</p>
+<ul><li>worker not started</li><li>batch schema missing</li><li>item staging never completed</li></ul>
+<h3>Job stays <code>processing</code></h3>
+<p>First suspects:</p>
+<ul><li>worker crashed mid-flight</li><li>some items never reached a terminal state</li><li>export generation is still pending</li></ul>
+<h3>Credits reserved but not released</h3>
+<p>First suspects:</p>
+<ul><li>settlement not yet run</li><li>cancelled job still awaiting reconciliation</li><li>reservation persisted but not marked <code>settledAt</code></li></ul>
+<h2>Related</h2>
+<ul><li><a href="batch-jobs-and-long-running-workflows.html">topics/Batch Jobs and Long-Running Workflows</a></li><li><a href="ai-credits.html">topics/AI Credits</a></li><li><a href="core-resume-workflows.html">topics/Core Resume Workflows</a></li><li><a href="metrics-and-diagnostics.html">topics/Metrics and Diagnostics</a></li></ul>
+<h2>Sources</h2>
+<ul><li><a href="../raw/sources/2026-04-16-env-session-batch-state.html">raw/sources/2026-04-16-env-session-batch-state</a></li></ul>
+      </main>
+    </div>
+  </body>
+</html>

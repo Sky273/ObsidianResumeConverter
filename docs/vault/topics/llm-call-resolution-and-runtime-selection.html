@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>LLM Call Resolution and Runtime Selection | ResumeConverter Vault</title>
+    <meta name="description" content="LLM Call Resolution and Runtime Selection Summary In ResumeConverter, an LLM call is resolved through configuration before any provider adapter is invoked. The application does not">
+    <link rel="stylesheet" href="../../assets/site.css">
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <a class="brand" href="../../index.html">
+          <span class="brand-mark">RC</span>
+          <span>
+            <strong>ResumeConverter Vault</strong>
+            <small>Obsidian knowledge showcase</small>
+          </span>
+        </a>
+        <nav class="nav">
+          
+      <details class="nav-folder" >
+        <summary>entities</summary>
+        <ul class="nav-list">
+<li><a href="../entities/resumeconverter.html">ResumeConverter</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" >
+        <summary>raw</summary>
+        
+      <details class="nav-folder" >
+        <summary>session-notes</summary>
+        <ul class="nav-list">
+<li><a href="../raw/session-notes/2026-04-16-memory-bootstrap.html">2026-04-16 Memory Bootstrap</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" >
+        <summary>sources</summary>
+        <ul class="nav-list">
+<li><a href="../raw/sources/2026-04-16-admin-ops-and-diagnostics.html">Source Note: admin control surfaces, backup, and diagnostics</a></li>
+<li><a href="../raw/sources/2026-04-16-backend-audit-and-quality.html">2026-04-16 Backend Audit and Quality</a></li>
+<li><a href="../raw/sources/2026-04-16-cache-architecture.html">Source Note: application cache architecture</a></li>
+<li><a href="../raw/sources/2026-04-16-cloudflare-turnstile-config.html">Source Note: Cloudflare and Turnstile configuration</a></li>
+<li><a href="../raw/sources/2026-04-16-codebase-structure.html">2026-04-16 Codebase Structure</a></li>
+<li><a href="../raw/sources/2026-04-16-domain-model-and-control-plane.html">Source Note: domain model, control plane, and secondary product modules</a></li>
+<li><a href="../raw/sources/2026-04-16-env-session-batch-state.html">Source Note: environment matrix, session lifecycle, and batch job state machine</a></li>
+<li><a href="../raw/sources/2026-04-16-functional-workflows.html">2026-04-16 Functional Workflows</a></li>
+<li><a href="../raw/sources/2026-04-16-installation-and-bootstrap-docs.html">Source Note: installation, bootstrap, and operations docs</a></li>
+<li><a href="../raw/sources/2026-04-16-karpathy-codex-skill-install.html">Source Note</a></li>
+<li><a href="../raw/sources/2026-04-16-karpathy-llm-wiki.html">2026-04-16 Karpathy LLM Wiki</a></li>
+<li><a href="../raw/sources/2026-04-16-llm-call-resolution.html">Source Note: LLM call resolution according to configuration</a></li>
+<li><a href="../raw/sources/2026-04-16-product-scope-priorities.html">2026-04-16 Product Scope Priorities</a></li>
+<li><a href="../raw/sources/2026-04-16-provider-failure-runbooks-authz.html">Source Note: provider failure, incident runbooks, and authorization map</a></li>
+<li><a href="../raw/sources/2026-04-16-public-token-and-pdf-boundaries.html">Source Note: public token flows, PDF boundary, and header budget</a></li>
+<li><a href="../raw/sources/2026-04-16-release-v1-9-1.html">Source Note</a></li>
+<li><a href="../raw/sources/2026-04-16-security-layers.html">Source Note: concrete security layers in the application</a></li>
+<li><a href="../raw/sources/2026-04-16-settings-maintenance-persistence.html">Source Note: settings, maintenance, and persistence</a></li>
+<li><a href="../raw/sources/2026-04-16-settings-scoring-and-api-surface.html">Source Note: settings fields, scoring, and API surface</a></li>
+<li><a href="../raw/sources/2026-04-16-storage-dashboards-and-resume-model.html">Source Note: storage, dashboards, and resume domain model</a></li>
+<li><a href="../raw/sources/2026-04-16-stripe-billing.html">Source Note: Stripe billing and firm credit purchases</a></li>
+<li><a href="../raw/sources/2026-04-16-upload-limits-and-email-flows.html">Source Note: upload/OCR pipeline, operational limits, and email flows</a></li>
+</ul>
+      </details>
+    
+<ul class="nav-list">
+<li><a href="../raw/readme.html">Raw Layer</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" open>
+        <summary>topics</summary>
+        <ul class="nav-list">
+<li><a href="admin-and-operations.html">Admin and Operations</a></li>
+<li><a href="ai-credits.html">AI Credits</a></li>
+<li><a href="ai-operation-matrix.html">AI Operation Matrix</a></li>
+<li><a href="ai-timeouts.html">AI Timeouts</a></li>
+<li><a href="api-surface-by-domain.html">API Surface by Domain</a></li>
+<li><a href="application-cache-model.html">Application Cache Model</a></li>
+<li><a href="application-release-history.html">Application Release History</a></li>
+<li><a href="application-surface.html">Application Surface</a></li>
+<li><a href="architecture.html">Architecture</a></li>
+<li><a href="auth-and-access-model.html">Auth and Access Model</a></li>
+<li><a href="authz-decision-map.html">AuthZ Decision Map</a></li>
+<li><a href="backup-and-disaster-recovery.html">Backup and Disaster Recovery</a></li>
+<li><a href="batch-job-state-machine.html">Batch Job State Machine</a></li>
+<li><a href="batch-jobs-and-long-running-workflows.html">Batch Jobs and Long-Running Workflows</a></li>
+<li><a href="business-objects-and-data-relationships.html">Business Objects and Data Relationships</a></li>
+<li><a href="clients-deals-missions-pipeline.html">Clients Deals Missions Pipeline</a></li>
+<li><a href="codex-agent-tooling.html">Codex Agent Tooling</a></li>
+<li><a href="core-resume-workflows.html">Core Resume Workflows</a></li>
+<li><a href="data-persistence-map.html">Data Persistence Map</a></li>
+<li><a href="docker-environment.html">Docker Environment</a></li>
+<li><a href="email-and-verification-flows.html">Email and Verification Flows</a></li>
+<li><a href="environment-and-secret-matrix.html">Environment and Secret Matrix</a></li>
+<li><a href="file-storage-and-retention-map.html">File Storage and Retention Map</a></li>
+<li><a href="header-size-budget.html">Header Size Budget</a></li>
+<li><a href="integrations.html">Integrations</a></li>
+<li><a class="active" href="llm-call-resolution-and-runtime-selection.html">LLM Call Resolution and Runtime Selection</a></li>
+<li><a href="llm-control-plane.html">LLM Control Plane</a></li>
+<li><a href="maintenance-and-cleanup-jobs.html">Maintenance and Cleanup Jobs</a></li>
+<li><a href="market-intelligence-and-reference-data.html">Market Intelligence and Reference Data</a></li>
+<li><a href="matching-and-scoring-model.html">Matching and Scoring Model</a></li>
+<li><a href="metrics-and-diagnostics.html">Metrics and Diagnostics</a></li>
+<li><a href="observability-and-quality.html">Observability and Quality</a></li>
+<li><a href="operational-dashboards-map.html">Operational Dashboards Map</a></li>
+<li><a href="operational-limits-matrix.html">Operational Limits Matrix</a></li>
+<li><a href="pdf-and-document-generation-boundary.html">PDF and Document Generation Boundary</a></li>
+<li><a href="priority-review-2026-04-16.html">Priority Review 2026-04-16</a></li>
+<li><a href="priority-review-2026-04-17.html">Priority Review 2026-04-17</a></li>
+<li><a href="product-scope-and-priorities.html">Product Scope and Priorities</a></li>
+<li><a href="provider-failure-and-fallback-model.html">Provider Failure and Fallback Model</a></li>
+<li><a href="public-token-flows.html">Public Token Flows</a></li>
+<li><a href="resume-domain-model.html">Resume Domain Model</a></li>
+<li><a href="resume-presentation-and-templates.html">Resume Presentation and Templates</a></li>
+<li><a href="runbooks-incident-ops.html">Runbooks Incident Ops</a></li>
+<li><a href="security-and-compliance.html">Security and Compliance</a></li>
+<li><a href="session-and-token-lifecycle.html">Session and Token Lifecycle</a></li>
+<li><a href="settings-and-governance-surfaces.html">Settings and Governance Surfaces</a></li>
+<li><a href="settings-catalog.html">Settings Catalog</a></li>
+<li><a href="settings-field-reference.html">Settings Field Reference</a></li>
+<li><a href="stripe-billing-and-firm-credit-purchase.html">Stripe Billing and Firm Credit Purchase</a></li>
+<li><a href="template-extraction-pipeline.html">Template Extraction Pipeline</a></li>
+<li><a href="turnstile.html">Turnstile</a></li>
+<li><a href="upload-ocr-and-parsing-pipeline.html">Upload OCR and Parsing Pipeline</a></li>
+</ul>
+      </details>
+    
+<ul class="nav-list">
+<li><a href="../2026-04-16.html">2026-04-16</a></li>
+<li><a href="../bienvenue.html">Bienvenue</a></li>
+<li><a href="../index.html">Index</a></li>
+<li><a href="../log.html">Log</a></li>
+<li><a href="../overview.html">Overview</a></li>
+<li><a href="../security.html">Security</a></li>
+</ul>
+        </nav>
+      </aside>
+      <main class="content">
+        <div class="content-meta">Source: <code>topics/LLM Call Resolution and Runtime Selection.md</code></div>
+        <h1>LLM Call Resolution and Runtime Selection</h1>
+<h2>Summary</h2>
+<p>In ResumeConverter, an LLM call is resolved through configuration before any provider adapter is invoked. The application does not simply call one provider directly from each feature. It computes the effective provider, effective model, effective parameters, and only then dispatches through the gateway.</p>
+<h2>Resolution Flow</h2>
+<p>The runtime path is broadly:</p>
+<ol><li>load canonical LLM settings</li><li>determine configured provider</li><li>determine requested or configured model</li><li>normalize model for that provider</li><li>check runtime availability and possible fallback</li><li>merge effective model parameters and per-call overrides</li><li>dispatch through the provider gateway</li><li>normalize the response into the expected caller shape</li><li>sanitize provider-auth/configuration errors when needed</li></ol>
+<h2>Settings Source</h2>
+<p>Business flows typically start from <code>getLLMSettings()</code>.</p>
+<p>Important behavior:</p>
+<ul><li>settings are cached</li><li>if fresh DB retrieval fails, stale cached settings may still be used</li><li>this makes the LLM layer more resilient to transient settings-read failures</li></ul>
+<h2>Provider Resolution</h2>
+<p>The configured provider comes from settings. If nothing explicit is set, the system falls back to the default provider model pair.</p>
+<p>Observed provider defaults include:</p>
+<ul><li><code>openai</code> -&gt; <code>gpt-4o</code></li><li><code>anthropic</code> -&gt; <code>claude-3-5-sonnet-20241022</code></li><li><code>huggingface</code> -&gt; <code>MiniMaxAI/MiniMax-M2.7</code></li><li><code>gemma</code> -&gt; <code>gemma-4-31b-it</code></li><li><code>deepseek</code> -&gt; <code>deepseek-chat</code></li><li><code>glm</code> -&gt; <code>glm-5.1</code></li><li><code>minimax</code> -&gt; <code>MiniMax-M2.7</code></li><li><code>ollama</code> -&gt; no fixed hosted default</li></ul>
+<h2>Model Normalization</h2>
+<p>Model names are not used naively.</p>
+<p>The runtime can normalize or alias model identifiers depending on provider. Examples:</p>
+<ul><li>Hugging Face aliases normalize to canonical model IDs</li><li>some Gemma aliases collapse to the currently supported default</li><li>provider-aware heuristics detect whether a model string looks like OpenAI, Anthropic, DeepSeek, Gemma, GLM, MiniMax, Hugging Face, or an Ollama-style local model</li></ul>
+<h2>Runtime Availability and Fallback</h2>
+<p>The application persists a runtime availability state for models.</p>
+<p>This means:</p>
+<ul><li>a model can be temporarily marked unavailable</li><li>the unavailability can expire after a TTL</li><li>a fallback model can be chosen automatically</li></ul>
+<p>Examples of provider-specific fallback behavior include:</p>
+<ul><li>DeepSeek <code>deepseek-reasoner</code> -&gt; <code>deepseek-chat</code></li><li>GLM <code>glm-5.1</code> -&gt; <code>glm-5</code></li><li>OpenAI higher-tier models -&gt; smaller siblings</li><li>Anthropic higher-tier models -&gt; lower siblings</li><li>MiniMax <code>-highspeed</code> -&gt; non-highspeed equivalent</li></ul>
+<p>This makes provider/model selection dynamic rather than static.</p>
+<h2>Parameter Resolution</h2>
+<p>Once provider and model are resolved, the app computes effective parameters by combining:</p>
+<ul><li>stored admin-configured model parameters</li><li>per-call overrides such as:</li><li>temperature</li><li>top-p</li><li>max tokens</li><li>response format</li></ul>
+<p>This is why two calls to the <code>same provider</code> may still behave differently depending on the control-plane configuration.</p>
+<h2>Provider Gateway</h2>
+<p>Dispatch is registry-driven in the gateway.</p>
+<p>The registry maps provider names to:</p>
+<ul><li>chat adapter</li><li>vision adapter</li></ul>
+<p>Important implication:</p>
+<ul><li>not all providers support vision in this integration</li><li>unsupported provider/vision combinations fail explicitly rather than silently degrading</li></ul>
+<h2>Response Shape</h2>
+<p>Business-facing provider calls are normalized back into an OpenAI-compatible response shape for callers.</p>
+<p>That is important because:</p>
+<ul><li>feature code does not need to deeply understand each provider response format</li><li>routing can change while preserving a stable internal contract</li></ul>
+<h2>Error Normalization</h2>
+<p>Certain provider errors are classified as non-retryable, especially authentication/configuration failures.</p>
+<p>Instead of surfacing raw provider text such as token/auth issues, the app normalizes them into a cleaner operational message indicating that the AI provider is misconfigured or its token expired.</p>
+<p>This is both a UX and a security/sanitization behavior.</p>
+<h2>Timeout Behavior</h2>
+<p>Provider calls inherit the application-level LLM timeout policy unless a longer explicit timeout is supplied.</p>
+<p>In practice, the LLM layer is expected to obey the standardized timeout model already documented in the vault.</p>
+<h2>Why This Matters</h2>
+<ul><li>Debugging an LLM issue requires looking at configuration resolution, not only the feature route.</li><li>A feature may <code>call OpenAI</code> in concept while actually being redirected to another provider/model due to settings, aliases, availability state, or fallback rules.</li><li>Provider issues, settings drift, and runtime availability state can all change behavior without any feature-code change.</li></ul>
+<h2>Practical Reading</h2>
+<p>When an AI behavior looks surprising, inspect in this order:</p>
+<ol><li>current canonical settings</li><li>configured provider and model</li><li>availability flags and runtime-unavailable state</li><li>effective parameter overrides</li><li>provider-specific adapter behavior</li><li>credit and timeout policy</li></ol>
+<h2>Related</h2>
+<ul><li><a href="llm-control-plane.html">topics/LLM Control Plane</a></li><li><a href="ai-credits.html">topics/AI Credits</a></li><li><a href="ai-timeouts.html">topics/AI Timeouts</a></li><li><a href="integrations.html">topics/Integrations</a></li><li><a href="settings-and-governance-surfaces.html">topics/Settings and Governance Surfaces</a></li></ul>
+<h2>Sources</h2>
+<ul><li><a href="../raw/sources/2026-04-16-llm-call-resolution.html">raw/sources/2026-04-16-llm-call-resolution</a></li></ul>
+      </main>
+    </div>
+  </body>
+</html>

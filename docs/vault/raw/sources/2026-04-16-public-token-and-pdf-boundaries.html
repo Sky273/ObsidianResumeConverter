@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Source Note: public token flows, PDF boundary, and header budget | ResumeConverter Vault</title>
+    <meta name="description" content="Source Note: public token flows, PDF boundary, and header budget Purpose Capture three operational/design topics that matter for future changes: public tokenized routes the main ba">
+    <link rel="stylesheet" href="../../../assets/site.css">
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <a class="brand" href="../../../index.html">
+          <span class="brand-mark">RC</span>
+          <span>
+            <strong>ResumeConverter Vault</strong>
+            <small>Obsidian knowledge showcase</small>
+          </span>
+        </a>
+        <nav class="nav">
+          
+      <details class="nav-folder" >
+        <summary>entities</summary>
+        <ul class="nav-list">
+<li><a href="../../entities/resumeconverter.html">ResumeConverter</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" open>
+        <summary>raw</summary>
+        
+      <details class="nav-folder" >
+        <summary>session-notes</summary>
+        <ul class="nav-list">
+<li><a href="../session-notes/2026-04-16-memory-bootstrap.html">2026-04-16 Memory Bootstrap</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" open>
+        <summary>sources</summary>
+        <ul class="nav-list">
+<li><a href="2026-04-16-admin-ops-and-diagnostics.html">Source Note: admin control surfaces, backup, and diagnostics</a></li>
+<li><a href="2026-04-16-backend-audit-and-quality.html">2026-04-16 Backend Audit and Quality</a></li>
+<li><a href="2026-04-16-cache-architecture.html">Source Note: application cache architecture</a></li>
+<li><a href="2026-04-16-cloudflare-turnstile-config.html">Source Note: Cloudflare and Turnstile configuration</a></li>
+<li><a href="2026-04-16-codebase-structure.html">2026-04-16 Codebase Structure</a></li>
+<li><a href="2026-04-16-domain-model-and-control-plane.html">Source Note: domain model, control plane, and secondary product modules</a></li>
+<li><a href="2026-04-16-env-session-batch-state.html">Source Note: environment matrix, session lifecycle, and batch job state machine</a></li>
+<li><a href="2026-04-16-functional-workflows.html">2026-04-16 Functional Workflows</a></li>
+<li><a href="2026-04-16-installation-and-bootstrap-docs.html">Source Note: installation, bootstrap, and operations docs</a></li>
+<li><a href="2026-04-16-karpathy-codex-skill-install.html">Source Note</a></li>
+<li><a href="2026-04-16-karpathy-llm-wiki.html">2026-04-16 Karpathy LLM Wiki</a></li>
+<li><a href="2026-04-16-llm-call-resolution.html">Source Note: LLM call resolution according to configuration</a></li>
+<li><a href="2026-04-16-product-scope-priorities.html">2026-04-16 Product Scope Priorities</a></li>
+<li><a href="2026-04-16-provider-failure-runbooks-authz.html">Source Note: provider failure, incident runbooks, and authorization map</a></li>
+<li><a class="active" href="2026-04-16-public-token-and-pdf-boundaries.html">Source Note: public token flows, PDF boundary, and header budget</a></li>
+<li><a href="2026-04-16-release-v1-9-1.html">Source Note</a></li>
+<li><a href="2026-04-16-security-layers.html">Source Note: concrete security layers in the application</a></li>
+<li><a href="2026-04-16-settings-maintenance-persistence.html">Source Note: settings, maintenance, and persistence</a></li>
+<li><a href="2026-04-16-settings-scoring-and-api-surface.html">Source Note: settings fields, scoring, and API surface</a></li>
+<li><a href="2026-04-16-storage-dashboards-and-resume-model.html">Source Note: storage, dashboards, and resume domain model</a></li>
+<li><a href="2026-04-16-stripe-billing.html">Source Note: Stripe billing and firm credit purchases</a></li>
+<li><a href="2026-04-16-upload-limits-and-email-flows.html">Source Note: upload/OCR pipeline, operational limits, and email flows</a></li>
+</ul>
+      </details>
+    
+<ul class="nav-list">
+<li><a href="../readme.html">Raw Layer</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" >
+        <summary>topics</summary>
+        <ul class="nav-list">
+<li><a href="../../topics/admin-and-operations.html">Admin and Operations</a></li>
+<li><a href="../../topics/ai-credits.html">AI Credits</a></li>
+<li><a href="../../topics/ai-operation-matrix.html">AI Operation Matrix</a></li>
+<li><a href="../../topics/ai-timeouts.html">AI Timeouts</a></li>
+<li><a href="../../topics/api-surface-by-domain.html">API Surface by Domain</a></li>
+<li><a href="../../topics/application-cache-model.html">Application Cache Model</a></li>
+<li><a href="../../topics/application-release-history.html">Application Release History</a></li>
+<li><a href="../../topics/application-surface.html">Application Surface</a></li>
+<li><a href="../../topics/architecture.html">Architecture</a></li>
+<li><a href="../../topics/auth-and-access-model.html">Auth and Access Model</a></li>
+<li><a href="../../topics/authz-decision-map.html">AuthZ Decision Map</a></li>
+<li><a href="../../topics/backup-and-disaster-recovery.html">Backup and Disaster Recovery</a></li>
+<li><a href="../../topics/batch-job-state-machine.html">Batch Job State Machine</a></li>
+<li><a href="../../topics/batch-jobs-and-long-running-workflows.html">Batch Jobs and Long-Running Workflows</a></li>
+<li><a href="../../topics/business-objects-and-data-relationships.html">Business Objects and Data Relationships</a></li>
+<li><a href="../../topics/clients-deals-missions-pipeline.html">Clients Deals Missions Pipeline</a></li>
+<li><a href="../../topics/codex-agent-tooling.html">Codex Agent Tooling</a></li>
+<li><a href="../../topics/core-resume-workflows.html">Core Resume Workflows</a></li>
+<li><a href="../../topics/data-persistence-map.html">Data Persistence Map</a></li>
+<li><a href="../../topics/docker-environment.html">Docker Environment</a></li>
+<li><a href="../../topics/email-and-verification-flows.html">Email and Verification Flows</a></li>
+<li><a href="../../topics/environment-and-secret-matrix.html">Environment and Secret Matrix</a></li>
+<li><a href="../../topics/file-storage-and-retention-map.html">File Storage and Retention Map</a></li>
+<li><a href="../../topics/header-size-budget.html">Header Size Budget</a></li>
+<li><a href="../../topics/integrations.html">Integrations</a></li>
+<li><a href="../../topics/llm-call-resolution-and-runtime-selection.html">LLM Call Resolution and Runtime Selection</a></li>
+<li><a href="../../topics/llm-control-plane.html">LLM Control Plane</a></li>
+<li><a href="../../topics/maintenance-and-cleanup-jobs.html">Maintenance and Cleanup Jobs</a></li>
+<li><a href="../../topics/market-intelligence-and-reference-data.html">Market Intelligence and Reference Data</a></li>
+<li><a href="../../topics/matching-and-scoring-model.html">Matching and Scoring Model</a></li>
+<li><a href="../../topics/metrics-and-diagnostics.html">Metrics and Diagnostics</a></li>
+<li><a href="../../topics/observability-and-quality.html">Observability and Quality</a></li>
+<li><a href="../../topics/operational-dashboards-map.html">Operational Dashboards Map</a></li>
+<li><a href="../../topics/operational-limits-matrix.html">Operational Limits Matrix</a></li>
+<li><a href="../../topics/pdf-and-document-generation-boundary.html">PDF and Document Generation Boundary</a></li>
+<li><a href="../../topics/priority-review-2026-04-16.html">Priority Review 2026-04-16</a></li>
+<li><a href="../../topics/priority-review-2026-04-17.html">Priority Review 2026-04-17</a></li>
+<li><a href="../../topics/product-scope-and-priorities.html">Product Scope and Priorities</a></li>
+<li><a href="../../topics/provider-failure-and-fallback-model.html">Provider Failure and Fallback Model</a></li>
+<li><a href="../../topics/public-token-flows.html">Public Token Flows</a></li>
+<li><a href="../../topics/resume-domain-model.html">Resume Domain Model</a></li>
+<li><a href="../../topics/resume-presentation-and-templates.html">Resume Presentation and Templates</a></li>
+<li><a href="../../topics/runbooks-incident-ops.html">Runbooks Incident Ops</a></li>
+<li><a href="../../topics/security-and-compliance.html">Security and Compliance</a></li>
+<li><a href="../../topics/session-and-token-lifecycle.html">Session and Token Lifecycle</a></li>
+<li><a href="../../topics/settings-and-governance-surfaces.html">Settings and Governance Surfaces</a></li>
+<li><a href="../../topics/settings-catalog.html">Settings Catalog</a></li>
+<li><a href="../../topics/settings-field-reference.html">Settings Field Reference</a></li>
+<li><a href="../../topics/stripe-billing-and-firm-credit-purchase.html">Stripe Billing and Firm Credit Purchase</a></li>
+<li><a href="../../topics/template-extraction-pipeline.html">Template Extraction Pipeline</a></li>
+<li><a href="../../topics/turnstile.html">Turnstile</a></li>
+<li><a href="../../topics/upload-ocr-and-parsing-pipeline.html">Upload OCR and Parsing Pipeline</a></li>
+</ul>
+      </details>
+    
+<ul class="nav-list">
+<li><a href="../../2026-04-16.html">2026-04-16</a></li>
+<li><a href="../../bienvenue.html">Bienvenue</a></li>
+<li><a href="../../index.html">Index</a></li>
+<li><a href="../../log.html">Log</a></li>
+<li><a href="../../overview.html">Overview</a></li>
+<li><a href="../../security.html">Security</a></li>
+</ul>
+        </nav>
+      </aside>
+      <main class="content">
+        <div class="content-meta">Source: <code>raw/sources/2026-04-16-public-token-and-pdf-boundaries.md</code></div>
+        <h1>Source Note: public token flows, PDF boundary, and header budget</h1>
+<h2>Purpose</h2>
+<p>Capture three operational/design topics that matter for future changes:</p>
+<ul><li>public tokenized routes</li><li>the main-backend to PDF-server boundary</li><li>why a small HTTP header budget should be preserved</li></ul>
+<h2>Files inspected</h2>
+<ul><li><code>server/routes/share.routes.js</code></li><li><code>server/routes/consent.routes.js</code></li><li><code>server/utils/pdfServerAuth.js</code></li><li><code>server/config/routeRegistry/proxyRoutes.js</code></li><li><code>pdf-server/server.cjs</code></li><li><code>pdf-server/lib/requestGuards.cjs</code></li></ul>
+<h2>Durable facts</h2>
+<h3>Public token flows</h3>
+<ul><li>Public consent routes exist:</li><li><code>GET /api/consent/respond/:token</code></li><li><code>POST /api/consent/respond/:token</code></li><li>Public share routes exist:</li><li><code>GET /api/share/pdf/:token</code></li><li><code>GET /api/share/file/:token</code></li><li>Share tokens are format-validated before lookup.</li><li>Public routes return only narrow artifacts or actions, not full authenticated access.</li><li>Authenticated routes still own generation, status, resend, and revocation behavior.</li></ul>
+<h3>PDF/document generation boundary</h3>
+<ul><li>Main backend proxies <code>/generate-pdf</code> and <code>/generate-docx</code>.</li><li>PDF server requires <code>x-internal-service-token</code>.</li><li>Shared secret is <code>PDF_SERVER_INTERNAL_TOKEN</code>.</li><li>Both backend and PDF server treat missing/weak internal token as a real configuration problem.</li><li>Main backend validates PDF server URL against trusted-internal-service rules.</li><li>PDF server guards requests with:</li><li>request body size limit</li><li>HTML size limit</li><li>stylesheet size limit</li><li>fragment size limit for <code>headerContent</code> and <code>footerContent</code></li><li>dangerous HTML rejection</li><li>dangerous CSS rejection</li><li>external-resource rejection in content fragments</li><li>timeout, rate-limit, concurrency, and output-size checks</li><li>Debug context includes:</li><li>request ID</li><li>html length</li><li>stylesheet length</li><li>header length</li><li>footer length</li></ul>
+<h3>Header-size budget</h3>
+<ul><li>The app uses cookie auth (<code>accessToken</code>, <code>refreshToken</code>) and CSRF tokens, which already consume part of the request-header budget.</li><li>The app also uses request IDs and internal proxy headers.</li><li>Large document payloads are intentionally carried in JSON request bodies, not headers.</li><li>There is no single code-enforced global <code>4 KB</code> header limit in the app, but keeping request headers under roughly 4 KB is a sound operational budget because:</li><li>proxies/load balancers often have stricter header constraints than local dev</li><li>cookie-based auth makes header growth cumulative</li><li>large headers tend to fail as transport errors rather than business errors</li></ul>
+<h2>Interpretation</h2>
+<ul><li>Public token flows are best understood as capability-based access, not anonymous access.</li><li>The PDF server is a guarded internal execution service, not a generic rendering helper.</li><li>Header size discipline is a cross-cutting reliability rule that becomes more important in a cookie-authenticated, proxy-heavy architecture.</li></ul>
+      </main>
+    </div>
+  </body>
+</html>

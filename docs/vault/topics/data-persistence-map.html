@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Data Persistence Map | ResumeConverter Vault</title>
+    <meta name="description" content="Data Persistence Map Summary ResumeConverter persists several different classes of state: tenant and identity truth candidate and delivery truth commercial truth AI control plane t">
+    <link rel="stylesheet" href="../../assets/site.css">
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <a class="brand" href="../../index.html">
+          <span class="brand-mark">RC</span>
+          <span>
+            <strong>ResumeConverter Vault</strong>
+            <small>Obsidian knowledge showcase</small>
+          </span>
+        </a>
+        <nav class="nav">
+          
+      <details class="nav-folder" >
+        <summary>entities</summary>
+        <ul class="nav-list">
+<li><a href="../entities/resumeconverter.html">ResumeConverter</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" >
+        <summary>raw</summary>
+        
+      <details class="nav-folder" >
+        <summary>session-notes</summary>
+        <ul class="nav-list">
+<li><a href="../raw/session-notes/2026-04-16-memory-bootstrap.html">2026-04-16 Memory Bootstrap</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" >
+        <summary>sources</summary>
+        <ul class="nav-list">
+<li><a href="../raw/sources/2026-04-16-admin-ops-and-diagnostics.html">Source Note: admin control surfaces, backup, and diagnostics</a></li>
+<li><a href="../raw/sources/2026-04-16-backend-audit-and-quality.html">2026-04-16 Backend Audit and Quality</a></li>
+<li><a href="../raw/sources/2026-04-16-cache-architecture.html">Source Note: application cache architecture</a></li>
+<li><a href="../raw/sources/2026-04-16-cloudflare-turnstile-config.html">Source Note: Cloudflare and Turnstile configuration</a></li>
+<li><a href="../raw/sources/2026-04-16-codebase-structure.html">2026-04-16 Codebase Structure</a></li>
+<li><a href="../raw/sources/2026-04-16-domain-model-and-control-plane.html">Source Note: domain model, control plane, and secondary product modules</a></li>
+<li><a href="../raw/sources/2026-04-16-env-session-batch-state.html">Source Note: environment matrix, session lifecycle, and batch job state machine</a></li>
+<li><a href="../raw/sources/2026-04-16-functional-workflows.html">2026-04-16 Functional Workflows</a></li>
+<li><a href="../raw/sources/2026-04-16-installation-and-bootstrap-docs.html">Source Note: installation, bootstrap, and operations docs</a></li>
+<li><a href="../raw/sources/2026-04-16-karpathy-codex-skill-install.html">Source Note</a></li>
+<li><a href="../raw/sources/2026-04-16-karpathy-llm-wiki.html">2026-04-16 Karpathy LLM Wiki</a></li>
+<li><a href="../raw/sources/2026-04-16-llm-call-resolution.html">Source Note: LLM call resolution according to configuration</a></li>
+<li><a href="../raw/sources/2026-04-16-product-scope-priorities.html">2026-04-16 Product Scope Priorities</a></li>
+<li><a href="../raw/sources/2026-04-16-provider-failure-runbooks-authz.html">Source Note: provider failure, incident runbooks, and authorization map</a></li>
+<li><a href="../raw/sources/2026-04-16-public-token-and-pdf-boundaries.html">Source Note: public token flows, PDF boundary, and header budget</a></li>
+<li><a href="../raw/sources/2026-04-16-release-v1-9-1.html">Source Note</a></li>
+<li><a href="../raw/sources/2026-04-16-security-layers.html">Source Note: concrete security layers in the application</a></li>
+<li><a href="../raw/sources/2026-04-16-settings-maintenance-persistence.html">Source Note: settings, maintenance, and persistence</a></li>
+<li><a href="../raw/sources/2026-04-16-settings-scoring-and-api-surface.html">Source Note: settings fields, scoring, and API surface</a></li>
+<li><a href="../raw/sources/2026-04-16-storage-dashboards-and-resume-model.html">Source Note: storage, dashboards, and resume domain model</a></li>
+<li><a href="../raw/sources/2026-04-16-stripe-billing.html">Source Note: Stripe billing and firm credit purchases</a></li>
+<li><a href="../raw/sources/2026-04-16-upload-limits-and-email-flows.html">Source Note: upload/OCR pipeline, operational limits, and email flows</a></li>
+</ul>
+      </details>
+    
+<ul class="nav-list">
+<li><a href="../raw/readme.html">Raw Layer</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" open>
+        <summary>topics</summary>
+        <ul class="nav-list">
+<li><a href="admin-and-operations.html">Admin and Operations</a></li>
+<li><a href="ai-credits.html">AI Credits</a></li>
+<li><a href="ai-operation-matrix.html">AI Operation Matrix</a></li>
+<li><a href="ai-timeouts.html">AI Timeouts</a></li>
+<li><a href="api-surface-by-domain.html">API Surface by Domain</a></li>
+<li><a href="application-cache-model.html">Application Cache Model</a></li>
+<li><a href="application-release-history.html">Application Release History</a></li>
+<li><a href="application-surface.html">Application Surface</a></li>
+<li><a href="architecture.html">Architecture</a></li>
+<li><a href="auth-and-access-model.html">Auth and Access Model</a></li>
+<li><a href="authz-decision-map.html">AuthZ Decision Map</a></li>
+<li><a href="backup-and-disaster-recovery.html">Backup and Disaster Recovery</a></li>
+<li><a href="batch-job-state-machine.html">Batch Job State Machine</a></li>
+<li><a href="batch-jobs-and-long-running-workflows.html">Batch Jobs and Long-Running Workflows</a></li>
+<li><a href="business-objects-and-data-relationships.html">Business Objects and Data Relationships</a></li>
+<li><a href="clients-deals-missions-pipeline.html">Clients Deals Missions Pipeline</a></li>
+<li><a href="codex-agent-tooling.html">Codex Agent Tooling</a></li>
+<li><a href="core-resume-workflows.html">Core Resume Workflows</a></li>
+<li><a class="active" href="data-persistence-map.html">Data Persistence Map</a></li>
+<li><a href="docker-environment.html">Docker Environment</a></li>
+<li><a href="email-and-verification-flows.html">Email and Verification Flows</a></li>
+<li><a href="environment-and-secret-matrix.html">Environment and Secret Matrix</a></li>
+<li><a href="file-storage-and-retention-map.html">File Storage and Retention Map</a></li>
+<li><a href="header-size-budget.html">Header Size Budget</a></li>
+<li><a href="integrations.html">Integrations</a></li>
+<li><a href="llm-call-resolution-and-runtime-selection.html">LLM Call Resolution and Runtime Selection</a></li>
+<li><a href="llm-control-plane.html">LLM Control Plane</a></li>
+<li><a href="maintenance-and-cleanup-jobs.html">Maintenance and Cleanup Jobs</a></li>
+<li><a href="market-intelligence-and-reference-data.html">Market Intelligence and Reference Data</a></li>
+<li><a href="matching-and-scoring-model.html">Matching and Scoring Model</a></li>
+<li><a href="metrics-and-diagnostics.html">Metrics and Diagnostics</a></li>
+<li><a href="observability-and-quality.html">Observability and Quality</a></li>
+<li><a href="operational-dashboards-map.html">Operational Dashboards Map</a></li>
+<li><a href="operational-limits-matrix.html">Operational Limits Matrix</a></li>
+<li><a href="pdf-and-document-generation-boundary.html">PDF and Document Generation Boundary</a></li>
+<li><a href="priority-review-2026-04-16.html">Priority Review 2026-04-16</a></li>
+<li><a href="priority-review-2026-04-17.html">Priority Review 2026-04-17</a></li>
+<li><a href="product-scope-and-priorities.html">Product Scope and Priorities</a></li>
+<li><a href="provider-failure-and-fallback-model.html">Provider Failure and Fallback Model</a></li>
+<li><a href="public-token-flows.html">Public Token Flows</a></li>
+<li><a href="resume-domain-model.html">Resume Domain Model</a></li>
+<li><a href="resume-presentation-and-templates.html">Resume Presentation and Templates</a></li>
+<li><a href="runbooks-incident-ops.html">Runbooks Incident Ops</a></li>
+<li><a href="security-and-compliance.html">Security and Compliance</a></li>
+<li><a href="session-and-token-lifecycle.html">Session and Token Lifecycle</a></li>
+<li><a href="settings-and-governance-surfaces.html">Settings and Governance Surfaces</a></li>
+<li><a href="settings-catalog.html">Settings Catalog</a></li>
+<li><a href="settings-field-reference.html">Settings Field Reference</a></li>
+<li><a href="stripe-billing-and-firm-credit-purchase.html">Stripe Billing and Firm Credit Purchase</a></li>
+<li><a href="template-extraction-pipeline.html">Template Extraction Pipeline</a></li>
+<li><a href="turnstile.html">Turnstile</a></li>
+<li><a href="upload-ocr-and-parsing-pipeline.html">Upload OCR and Parsing Pipeline</a></li>
+</ul>
+      </details>
+    
+<ul class="nav-list">
+<li><a href="../2026-04-16.html">2026-04-16</a></li>
+<li><a href="../bienvenue.html">Bienvenue</a></li>
+<li><a href="../index.html">Index</a></li>
+<li><a href="../log.html">Log</a></li>
+<li><a href="../overview.html">Overview</a></li>
+<li><a href="../security.html">Security</a></li>
+</ul>
+        </nav>
+      </aside>
+      <main class="content">
+        <div class="content-meta">Source: <code>topics/Data Persistence Map.md</code></div>
+        <h1>Data Persistence Map</h1>
+<h2>Summary</h2>
+<p>ResumeConverter persists several different classes of state:</p>
+<ul><li>tenant and identity truth</li><li>candidate and delivery truth</li><li>commercial truth</li><li>AI control-plane truth</li><li>operational/compliance truth</li><li>temporary processing artifacts</li></ul>
+<p>Understanding which table family owns which truth is more useful than memorizing the whole schema.</p>
+<h2>Tenant and Identity Truth</h2>
+<h3>Core tables</h3>
+<ul><li><code>firms</code></li><li><code>users</code></li></ul>
+<h3>Role</h3>
+<ul><li><code>firms</code> is the top-level tenant anchor.</li><li><code>users</code> carries authenticated actors, roles, and firm attachment.</li><li>Many other tables derive ownership and authorization from these two anchors.</li></ul>
+<h2>Candidate and Resume Truth</h2>
+<h3>Core tables</h3>
+<ul><li><code>resumes</code></li><li><code>resume_versions</code></li><li><code>resume_adaptations</code></li><li><code>resume_comments</code></li><li><code>resume_submissions</code></li><li><code>templates</code></li></ul>
+<h3>Role</h3>
+<ul><li><code>resumes</code> is the durable candidate asset.</li><li>Versions and adaptations capture history and mission-specific derivations.</li><li>Templates persist presentation/rendering behavior rather than candidate content itself.</li><li>Submissions connect resumes into downstream client and mission workflows.</li></ul>
+<h2>Async and Processing Truth</h2>
+<h3>Core tables</h3>
+<ul><li><code>batch_jobs</code></li><li><code>batch_job_items</code></li></ul>
+<h3>Role</h3>
+<ul><li>These tables persist long-running workflow state.</li><li>They are the durable source of truth for job/item status, retries, results, staged metadata, and cleanup eligibility.</li><li>They are not just an execution queue; they are part of the audit trail of asynchronous work.</li></ul>
+<h2>Commercial and Delivery Truth</h2>
+<h3>Core tables</h3>
+<ul><li><code>clients</code></li><li><code>client_contacts</code></li><li><code>deals</code></li><li><code>deal_resumes</code></li><li><code>missions</code></li><li><code>candidate_pipeline</code></li><li><code>pipeline_history</code></li><li><code>pipeline_interviews</code></li></ul>
+<h3>Role</h3>
+<ul><li>These tables represent the business-development side and the candidate-delivery side of the product.</li><li>They connect firms, clients, opportunities, missions, and resume progression into one tenant-scoped graph.</li></ul>
+<h2>AI Control Plane and Credit Truth</h2>
+<h3>Core tables</h3>
+<ul><li><code>llm_settings</code></li><li><code>firm_credit_transactions</code></li></ul>
+<h3>Role</h3>
+<ul><li><code>llm_settings</code> is the durable source of truth for provider/model/prompt/weight behavior.</li><li><code>firm_credit_transactions</code> is the ledger for reservation, consumption, refund, and purchase effects.</li><li>Firm-level available balance lives with the firm, while the ledger explains how that balance moved.</li></ul>
+<h2>Account Token and Mail Truth</h2>
+<h3>Core tables</h3>
+<ul><li><code>password_reset_tokens</code></li><li><code>email_verification_tokens</code></li><li><code>user_mail_tokens</code></li><li><code>user_calendar_tokens</code></li><li><code>user_blacklist</code></li><li><code>email_templates</code></li></ul>
+<h3>Role</h3>
+<ul><li>These tables support account recovery, verification, mail integration, calendar integration, and outbound communication governance.</li><li>They are operational/security state, not core candidate business objects.</li></ul>
+<h2>Compliance and Audit Truth</h2>
+<h3>Core tables</h3>
+<ul><li><code>firm_gdpr_mail_tokens</code></li><li><code>global_gdpr_mail_token</code></li><li><code>gdpr_audit_log</code></li></ul>
+<h3>Role</h3>
+<ul><li>These tables support GDPR mail flows, auditability, and long-tail compliance operations.</li><li>They matter even when they are not visible in the primary product UI.</li></ul>
+<h2>Backup and Ops Truth</h2>
+<h3>Core tables</h3>
+<ul><li><code>backup_settings</code></li><li><code>backup_history</code></li><li><code>cache_scope_versions</code></li></ul>
+<h3>Role</h3>
+<ul><li><code>backup_settings</code> and <code>backup_history</code> capture recovery configuration and execution history.</li><li><code>cache_scope_versions</code> is not cached data; it is a durable coherence primitive used to invalidate cache scopes safely across instances.</li></ul>
+<h2>Temporary or Derived Artifacts</h2>
+<p>These are not the main persistent truths even if they may be stored for a while:</p>
+<ul><li>upload staging files</li><li>OCR temp artifacts</li><li>batch export files</li><li>shared PDF/original-file artifacts</li><li>in-memory or Redis cache entries</li></ul>
+<p>These artifacts are expected to be recreated, expired, or purged. The truth usually lives in PostgreSQL rows plus source files under managed storage.</p>
+<h2>Practical Reading</h2>
+<ul><li>For authorization bugs, start with <code>firms</code> and <code>users</code>.</li><li>For candidate-history bugs, start with <code>resumes</code>, versions, adaptations, and submissions.</li><li>For async failures, start with <code>batch_jobs</code> and <code>batch_job_items</code>.</li><li>For AI behavior changes, start with <code>llm_settings</code> and <code>firm_credit_transactions</code>.</li><li>For cleanup/recovery issues, distinguish durable truth from purgeable artifacts.</li></ul>
+<h2>Related</h2>
+<ul><li><a href="business-objects-and-data-relationships.html">topics/Business Objects and Data Relationships</a></li><li><a href="batch-jobs-and-long-running-workflows.html">topics/Batch Jobs and Long-Running Workflows</a></li><li><a href="batch-job-state-machine.html">topics/Batch Job State Machine</a></li><li><a href="settings-catalog.html">topics/Settings Catalog</a></li><li><a href="backup-and-disaster-recovery.html">topics/Backup and Disaster Recovery</a></li><li><a href="application-cache-model.html">topics/Application Cache Model</a></li></ul>
+<h2>Sources</h2>
+<ul><li><a href="../raw/sources/2026-04-16-settings-maintenance-persistence.html">raw/sources/2026-04-16-settings-maintenance-persistence</a></li></ul>
+      </main>
+    </div>
+  </body>
+</html>

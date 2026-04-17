@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Docker Environment | ResumeConverter Vault</title>
+    <meta name="description" content="Docker Environment Summary For ResumeConverter, Docker uses /.env.docker as the source of truth. Current State Docker compose runtime loads /.env.docker. Docker helper scripts were">
+    <link rel="stylesheet" href="../../assets/site.css">
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <a class="brand" href="../../index.html">
+          <span class="brand-mark">RC</span>
+          <span>
+            <strong>ResumeConverter Vault</strong>
+            <small>Obsidian knowledge showcase</small>
+          </span>
+        </a>
+        <nav class="nav">
+          
+      <details class="nav-folder" >
+        <summary>entities</summary>
+        <ul class="nav-list">
+<li><a href="../entities/resumeconverter.html">ResumeConverter</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" >
+        <summary>raw</summary>
+        
+      <details class="nav-folder" >
+        <summary>session-notes</summary>
+        <ul class="nav-list">
+<li><a href="../raw/session-notes/2026-04-16-memory-bootstrap.html">2026-04-16 Memory Bootstrap</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" >
+        <summary>sources</summary>
+        <ul class="nav-list">
+<li><a href="../raw/sources/2026-04-16-admin-ops-and-diagnostics.html">Source Note: admin control surfaces, backup, and diagnostics</a></li>
+<li><a href="../raw/sources/2026-04-16-backend-audit-and-quality.html">2026-04-16 Backend Audit and Quality</a></li>
+<li><a href="../raw/sources/2026-04-16-cache-architecture.html">Source Note: application cache architecture</a></li>
+<li><a href="../raw/sources/2026-04-16-cloudflare-turnstile-config.html">Source Note: Cloudflare and Turnstile configuration</a></li>
+<li><a href="../raw/sources/2026-04-16-codebase-structure.html">2026-04-16 Codebase Structure</a></li>
+<li><a href="../raw/sources/2026-04-16-domain-model-and-control-plane.html">Source Note: domain model, control plane, and secondary product modules</a></li>
+<li><a href="../raw/sources/2026-04-16-env-session-batch-state.html">Source Note: environment matrix, session lifecycle, and batch job state machine</a></li>
+<li><a href="../raw/sources/2026-04-16-functional-workflows.html">2026-04-16 Functional Workflows</a></li>
+<li><a href="../raw/sources/2026-04-16-installation-and-bootstrap-docs.html">Source Note: installation, bootstrap, and operations docs</a></li>
+<li><a href="../raw/sources/2026-04-16-karpathy-codex-skill-install.html">Source Note</a></li>
+<li><a href="../raw/sources/2026-04-16-karpathy-llm-wiki.html">2026-04-16 Karpathy LLM Wiki</a></li>
+<li><a href="../raw/sources/2026-04-16-llm-call-resolution.html">Source Note: LLM call resolution according to configuration</a></li>
+<li><a href="../raw/sources/2026-04-16-product-scope-priorities.html">2026-04-16 Product Scope Priorities</a></li>
+<li><a href="../raw/sources/2026-04-16-provider-failure-runbooks-authz.html">Source Note: provider failure, incident runbooks, and authorization map</a></li>
+<li><a href="../raw/sources/2026-04-16-public-token-and-pdf-boundaries.html">Source Note: public token flows, PDF boundary, and header budget</a></li>
+<li><a href="../raw/sources/2026-04-16-release-v1-9-1.html">Source Note</a></li>
+<li><a href="../raw/sources/2026-04-16-security-layers.html">Source Note: concrete security layers in the application</a></li>
+<li><a href="../raw/sources/2026-04-16-settings-maintenance-persistence.html">Source Note: settings, maintenance, and persistence</a></li>
+<li><a href="../raw/sources/2026-04-16-settings-scoring-and-api-surface.html">Source Note: settings fields, scoring, and API surface</a></li>
+<li><a href="../raw/sources/2026-04-16-storage-dashboards-and-resume-model.html">Source Note: storage, dashboards, and resume domain model</a></li>
+<li><a href="../raw/sources/2026-04-16-stripe-billing.html">Source Note: Stripe billing and firm credit purchases</a></li>
+<li><a href="../raw/sources/2026-04-16-upload-limits-and-email-flows.html">Source Note: upload/OCR pipeline, operational limits, and email flows</a></li>
+</ul>
+      </details>
+    
+<ul class="nav-list">
+<li><a href="../raw/readme.html">Raw Layer</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" open>
+        <summary>topics</summary>
+        <ul class="nav-list">
+<li><a href="admin-and-operations.html">Admin and Operations</a></li>
+<li><a href="ai-credits.html">AI Credits</a></li>
+<li><a href="ai-operation-matrix.html">AI Operation Matrix</a></li>
+<li><a href="ai-timeouts.html">AI Timeouts</a></li>
+<li><a href="api-surface-by-domain.html">API Surface by Domain</a></li>
+<li><a href="application-cache-model.html">Application Cache Model</a></li>
+<li><a href="application-release-history.html">Application Release History</a></li>
+<li><a href="application-surface.html">Application Surface</a></li>
+<li><a href="architecture.html">Architecture</a></li>
+<li><a href="auth-and-access-model.html">Auth and Access Model</a></li>
+<li><a href="authz-decision-map.html">AuthZ Decision Map</a></li>
+<li><a href="backup-and-disaster-recovery.html">Backup and Disaster Recovery</a></li>
+<li><a href="batch-job-state-machine.html">Batch Job State Machine</a></li>
+<li><a href="batch-jobs-and-long-running-workflows.html">Batch Jobs and Long-Running Workflows</a></li>
+<li><a href="business-objects-and-data-relationships.html">Business Objects and Data Relationships</a></li>
+<li><a href="clients-deals-missions-pipeline.html">Clients Deals Missions Pipeline</a></li>
+<li><a href="codex-agent-tooling.html">Codex Agent Tooling</a></li>
+<li><a href="core-resume-workflows.html">Core Resume Workflows</a></li>
+<li><a href="data-persistence-map.html">Data Persistence Map</a></li>
+<li><a class="active" href="docker-environment.html">Docker Environment</a></li>
+<li><a href="email-and-verification-flows.html">Email and Verification Flows</a></li>
+<li><a href="environment-and-secret-matrix.html">Environment and Secret Matrix</a></li>
+<li><a href="file-storage-and-retention-map.html">File Storage and Retention Map</a></li>
+<li><a href="header-size-budget.html">Header Size Budget</a></li>
+<li><a href="integrations.html">Integrations</a></li>
+<li><a href="llm-call-resolution-and-runtime-selection.html">LLM Call Resolution and Runtime Selection</a></li>
+<li><a href="llm-control-plane.html">LLM Control Plane</a></li>
+<li><a href="maintenance-and-cleanup-jobs.html">Maintenance and Cleanup Jobs</a></li>
+<li><a href="market-intelligence-and-reference-data.html">Market Intelligence and Reference Data</a></li>
+<li><a href="matching-and-scoring-model.html">Matching and Scoring Model</a></li>
+<li><a href="metrics-and-diagnostics.html">Metrics and Diagnostics</a></li>
+<li><a href="observability-and-quality.html">Observability and Quality</a></li>
+<li><a href="operational-dashboards-map.html">Operational Dashboards Map</a></li>
+<li><a href="operational-limits-matrix.html">Operational Limits Matrix</a></li>
+<li><a href="pdf-and-document-generation-boundary.html">PDF and Document Generation Boundary</a></li>
+<li><a href="priority-review-2026-04-16.html">Priority Review 2026-04-16</a></li>
+<li><a href="priority-review-2026-04-17.html">Priority Review 2026-04-17</a></li>
+<li><a href="product-scope-and-priorities.html">Product Scope and Priorities</a></li>
+<li><a href="provider-failure-and-fallback-model.html">Provider Failure and Fallback Model</a></li>
+<li><a href="public-token-flows.html">Public Token Flows</a></li>
+<li><a href="resume-domain-model.html">Resume Domain Model</a></li>
+<li><a href="resume-presentation-and-templates.html">Resume Presentation and Templates</a></li>
+<li><a href="runbooks-incident-ops.html">Runbooks Incident Ops</a></li>
+<li><a href="security-and-compliance.html">Security and Compliance</a></li>
+<li><a href="session-and-token-lifecycle.html">Session and Token Lifecycle</a></li>
+<li><a href="settings-and-governance-surfaces.html">Settings and Governance Surfaces</a></li>
+<li><a href="settings-catalog.html">Settings Catalog</a></li>
+<li><a href="settings-field-reference.html">Settings Field Reference</a></li>
+<li><a href="stripe-billing-and-firm-credit-purchase.html">Stripe Billing and Firm Credit Purchase</a></li>
+<li><a href="template-extraction-pipeline.html">Template Extraction Pipeline</a></li>
+<li><a href="turnstile.html">Turnstile</a></li>
+<li><a href="upload-ocr-and-parsing-pipeline.html">Upload OCR and Parsing Pipeline</a></li>
+</ul>
+      </details>
+    
+<ul class="nav-list">
+<li><a href="../2026-04-16.html">2026-04-16</a></li>
+<li><a href="../bienvenue.html">Bienvenue</a></li>
+<li><a href="../index.html">Index</a></li>
+<li><a href="../log.html">Log</a></li>
+<li><a href="../overview.html">Overview</a></li>
+<li><a href="../security.html">Security</a></li>
+</ul>
+        </nav>
+      </aside>
+      <main class="content">
+        <div class="content-meta">Source: <code>topics/Docker Environment.md</code></div>
+        <h1>Docker Environment</h1>
+<h2>Summary</h2>
+<p>For ResumeConverter, Docker uses <code>/.env.docker</code> as the source of truth.</p>
+<h2>Current State</h2>
+<ul><li>Docker compose runtime loads <code>/.env.docker</code>.</li><li>Docker helper scripts were aligned to read <code>/.env.docker</code>.</li><li><code>/.env</code> remains the non-Docker local environment file.</li><li><code>.env.docker</code> is expected to exist before Docker image build.</li></ul>
+<h2>Important Facts</h2>
+<ul><li>Mixing <code>/.env</code> and <code>/.env.docker</code> caused confusion and stale behavior.</li><li>The frontend build can drift from runtime env if the image is not rebuilt after public env changes.</li><li>The repo now has a local <code>AGENTS.md</code> that points ResumeConverter sessions to this vault as external memory.</li><li>The standard Docker workflow is centered on <code>docker-build.bat</code> and <code>docker-run.bat</code> on Windows.</li><li>The documented stack persists PostgreSQL data, uploads, and logs in local directories.</li><li>Docker bundles OCR and PDF-generation dependencies that non-Docker installs may need to provide manually.</li><li>Docker startup is expected to work with the explicit migration runner rather than hidden schema initialization in the web process.</li><li>Docker helper scripts no longer re-run <code>docker-migrate</code> after container startup. The app entrypoint is now the single owner of Docker schema bootstrap.</li><li>The Docker stack no longer embeds PostgreSQL or Redis inside the application image. The standard local topology is now:</li><li><code>resumeconverter-app</code></li><li><code>resumeconverter-postgres</code></li><li><code>resumeconverter-redis</code></li><li>The application image still keeps <code>postgresql-client-18</code> because Docker bootstrap, health checks, and backup tooling rely on <code>pg_isready</code>, <code>psql</code>, and <code>pg_dump</code>, but the PostgreSQL server itself now lives in the dedicated Compose service.</li><li>The Dockerfile now uses a multi-stage build:</li><li>builder stage installs JavaScript dependencies, builds the frontend bundle, then prunes devDependencies</li><li>runtime stage receives only the pruned <code>node_modules</code>, server code, PDF server code, scripts, and built <code>client/dist</code></li><li>This change materially reduces the final image size because the image no longer carries the full <code>npm ci</code> layer with frontend/test/lint tooling.</li><li>Turnstile public-key changes require a rebuild because the Docker build injects the key into the frontend bundle.</li><li>Cache backend selection in Docker is distinct from cache coherence: Redis can be selected as storage, but PostgreSQL-backed scope versioning and notifications still drive invalidation correctness.</li><li>In some Docker/network environments, plain HTTP access to Ubuntu or PGDG APT mirrors is blocked and the base <code>ubuntu:22.04</code> image can also lack usable CA roots for the very first HTTPS <code>apt-get update</code>.</li><li>The Dockerfile now bootstraps APT in two phases:</li><li>force Ubuntu and PGDG repositories to HTTPS</li><li>temporarily disable HTTPS peer/host verification only until <code>ca-certificates</code> is installed, then remove that bootstrap override before the rest of the package installation continues</li><li>Existing PostgreSQL volumes created by the previous all-in-one container layout can keep an older password hash for the <code>resumeconverter</code> role. The Docker helper scripts now resynchronize that role password inside <code>resumeconverter-postgres</code> before treating the stack as ready.</li><li>On Windows, <code>POSTGRES_PASSWORD</code> can legitimately contain <code>!</code>. The standard startup path therefore must not rely on raw batch <code>docker exec ... ALTER ROLE ... '!password!'</code> interpolation, because <code>cmd.exe</code> delayed expansion can corrupt the value before it reaches PostgreSQL.</li></ul>
+<h2>Build Failure Pattern</h2>
+<ul><li>Symptom: Docker build fails early on <code>apt-get update</code> or the first <code>apt-get install</code> with exit code <code>100</code>.</li><li>Typical causes in this repo:</li><li>HTTP mirror access refused</li><li>HTTPS mirror handshake rejected because the base image does not yet have a usable certificate chain</li><li>Current mitigation lives directly in <code>Dockerfile</code>, so this failure should now be treated as infra drift only if it reappears after a fresh rebuild.</li></ul>
+<h2>Build Model</h2>
+<ul><li>The Docker build is now intentionally split between a <code>builder</code> stage and a <code>runtime</code> stage.</li><li><code>builder</code> responsibilities:</li><li>install full JavaScript dependency graph with <code>npm ci --legacy-peer-deps</code></li><li>build the frontend bundle</li><li>prune devDependencies with <code>npm prune --omit=dev --legacy-peer-deps</code></li><li><code>runtime</code> responsibilities:</li><li>install only system runtime packages</li><li>copy the pruned <code>node_modules</code></li><li>copy <code>server</code>, <code>pdf-server</code>, <code>scripts</code>, markdown guides, and built <code>client/dist</code></li><li>Operational consequence:</li><li>frontend/test/lint/build tooling no longer ships in the final app image</li><li>runtime behavior stays the same from the operator point of view</li><li>Measured effect during the 2026-04-16 Docker refactor:</li><li>app image dropped from about <code>1.78 GB</code> to about <code>1.46 GB</code></li><li>Remaining heavy runtime contributors are still:</li><li>PaddleOCR / PaddlePaddle</li><li>LibreOffice / Pandoc</li><li>Google Chrome</li></ul>
+<h2>Startup Behavior</h2>
+<ul><li>This sequencing avoids a common failure mode on reused PostgreSQL volumes where the application starts before the role password has been repaired, then loops on <code>password authentication failed</code>.</li><li>Stopping and removing the previous <code>app</code> container before the PostgreSQL sync is important because <code>restart: unless-stopped</code> can otherwise let the old app container auto-restart too early, race the password repair, and keep the new startup stuck in repeated <code>docker-migrate</code> auth failures while the health check stays <code>starting</code>.</li><li>Password repair is now delegated to <code>docker/sync-postgres-role-password.ps1</code> on Windows so the critical secret never passes through fragile batch interpolation. The helper does two things before returning success:</li><li><code>ALTER ROLE ... PASSWORD ...</code></li><li>a real TCP login check against <code>127.0.0.1:5432</code> inside <code>resumeconverter-postgres</code></li><li>This extra verification matters because a successful <code>ALTER ROLE</code> alone is not enough if the supplied value was mangled before reaching PostgreSQL; startup should only continue once authenticated TCP login with the target password actually works.</li><li>The app entrypoint is now the single owner of Docker schema bootstrap:</li><li>it retries <code>docker-migrate</code> for a bounded period</li><li>it verifies bootstrap state before starting Supervisor</li><li>Docker helper scripts must not re-run <code>docker-migrate</code> after startup anymore; they should only wait for the app container to become <code>healthy</code>.</li></ul>
+<h2>Practical Performance Note</h2>
+<ul><li>PostgreSQL still uses a Windows bind mount at <code>./data/postgresql</code> in the standard local Compose topology.</li><li>This is acceptable for persistence and operator transparency, but it is slower than a Docker-managed named volume on Docker Desktop.</li><li>If startup latency or I/O performance remains a problem, the next infrastructure optimization should be migrating PostgreSQL data storage from the bind mount to a named Docker volume.</li></ul>
+<h2>Operational Rule</h2>
+<p>When troubleshooting Docker behavior:</p>
+<ol><li>inspect <code>/.env.docker</code></li><li>inspect the build helper scripts</li><li>verify whether the image was rebuilt</li><li>only then inspect container runtime env</li></ol>
+<h2>Related</h2>
+<ul><li><a href="environment-and-secret-matrix.html">topics/Environment and Secret Matrix</a></li><li><a href="turnstile.html">topics/Turnstile</a></li><li><a href="ai-timeouts.html">topics/AI Timeouts</a></li><li><a href="../entities/resumeconverter.html">entities/ResumeConverter</a></li></ul>
+<h2>Sources</h2>
+<ul><li><a href="../raw/session-notes/2026-04-16-memory-bootstrap.html">raw/session-notes/2026-04-16-memory-bootstrap</a></li><li><a href="../raw/sources/2026-04-16-installation-and-bootstrap-docs.html">raw/sources/2026-04-16-installation-and-bootstrap-docs</a></li><li><a href="../raw/sources/2026-04-16-cloudflare-turnstile-config.html">raw/sources/2026-04-16-cloudflare-turnstile-config</a></li><li><a href="../raw/sources/2026-04-16-cache-architecture.html">raw/sources/2026-04-16-cache-architecture</a></li></ul>
+      </main>
+    </div>
+  </body>
+</html>

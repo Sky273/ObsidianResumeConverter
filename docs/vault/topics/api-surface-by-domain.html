@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>API Surface by Domain | ResumeConverter Vault</title>
+    <meta name="description" content="API Surface by Domain Summary The backend has many routes, but a small number of domains matter for orientation. This note maps the API by business or operational domain rather tha">
+    <link rel="stylesheet" href="../../assets/site.css">
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <a class="brand" href="../../index.html">
+          <span class="brand-mark">RC</span>
+          <span>
+            <strong>ResumeConverter Vault</strong>
+            <small>Obsidian knowledge showcase</small>
+          </span>
+        </a>
+        <nav class="nav">
+          
+      <details class="nav-folder" >
+        <summary>entities</summary>
+        <ul class="nav-list">
+<li><a href="../entities/resumeconverter.html">ResumeConverter</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" >
+        <summary>raw</summary>
+        
+      <details class="nav-folder" >
+        <summary>session-notes</summary>
+        <ul class="nav-list">
+<li><a href="../raw/session-notes/2026-04-16-memory-bootstrap.html">2026-04-16 Memory Bootstrap</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" >
+        <summary>sources</summary>
+        <ul class="nav-list">
+<li><a href="../raw/sources/2026-04-16-admin-ops-and-diagnostics.html">Source Note: admin control surfaces, backup, and diagnostics</a></li>
+<li><a href="../raw/sources/2026-04-16-backend-audit-and-quality.html">2026-04-16 Backend Audit and Quality</a></li>
+<li><a href="../raw/sources/2026-04-16-cache-architecture.html">Source Note: application cache architecture</a></li>
+<li><a href="../raw/sources/2026-04-16-cloudflare-turnstile-config.html">Source Note: Cloudflare and Turnstile configuration</a></li>
+<li><a href="../raw/sources/2026-04-16-codebase-structure.html">2026-04-16 Codebase Structure</a></li>
+<li><a href="../raw/sources/2026-04-16-domain-model-and-control-plane.html">Source Note: domain model, control plane, and secondary product modules</a></li>
+<li><a href="../raw/sources/2026-04-16-env-session-batch-state.html">Source Note: environment matrix, session lifecycle, and batch job state machine</a></li>
+<li><a href="../raw/sources/2026-04-16-functional-workflows.html">2026-04-16 Functional Workflows</a></li>
+<li><a href="../raw/sources/2026-04-16-installation-and-bootstrap-docs.html">Source Note: installation, bootstrap, and operations docs</a></li>
+<li><a href="../raw/sources/2026-04-16-karpathy-codex-skill-install.html">Source Note</a></li>
+<li><a href="../raw/sources/2026-04-16-karpathy-llm-wiki.html">2026-04-16 Karpathy LLM Wiki</a></li>
+<li><a href="../raw/sources/2026-04-16-llm-call-resolution.html">Source Note: LLM call resolution according to configuration</a></li>
+<li><a href="../raw/sources/2026-04-16-product-scope-priorities.html">2026-04-16 Product Scope Priorities</a></li>
+<li><a href="../raw/sources/2026-04-16-provider-failure-runbooks-authz.html">Source Note: provider failure, incident runbooks, and authorization map</a></li>
+<li><a href="../raw/sources/2026-04-16-public-token-and-pdf-boundaries.html">Source Note: public token flows, PDF boundary, and header budget</a></li>
+<li><a href="../raw/sources/2026-04-16-release-v1-9-1.html">Source Note</a></li>
+<li><a href="../raw/sources/2026-04-16-security-layers.html">Source Note: concrete security layers in the application</a></li>
+<li><a href="../raw/sources/2026-04-16-settings-maintenance-persistence.html">Source Note: settings, maintenance, and persistence</a></li>
+<li><a href="../raw/sources/2026-04-16-settings-scoring-and-api-surface.html">Source Note: settings fields, scoring, and API surface</a></li>
+<li><a href="../raw/sources/2026-04-16-storage-dashboards-and-resume-model.html">Source Note: storage, dashboards, and resume domain model</a></li>
+<li><a href="../raw/sources/2026-04-16-stripe-billing.html">Source Note: Stripe billing and firm credit purchases</a></li>
+<li><a href="../raw/sources/2026-04-16-upload-limits-and-email-flows.html">Source Note: upload/OCR pipeline, operational limits, and email flows</a></li>
+</ul>
+      </details>
+    
+<ul class="nav-list">
+<li><a href="../raw/readme.html">Raw Layer</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" open>
+        <summary>topics</summary>
+        <ul class="nav-list">
+<li><a href="admin-and-operations.html">Admin and Operations</a></li>
+<li><a href="ai-credits.html">AI Credits</a></li>
+<li><a href="ai-operation-matrix.html">AI Operation Matrix</a></li>
+<li><a href="ai-timeouts.html">AI Timeouts</a></li>
+<li><a class="active" href="api-surface-by-domain.html">API Surface by Domain</a></li>
+<li><a href="application-cache-model.html">Application Cache Model</a></li>
+<li><a href="application-release-history.html">Application Release History</a></li>
+<li><a href="application-surface.html">Application Surface</a></li>
+<li><a href="architecture.html">Architecture</a></li>
+<li><a href="auth-and-access-model.html">Auth and Access Model</a></li>
+<li><a href="authz-decision-map.html">AuthZ Decision Map</a></li>
+<li><a href="backup-and-disaster-recovery.html">Backup and Disaster Recovery</a></li>
+<li><a href="batch-job-state-machine.html">Batch Job State Machine</a></li>
+<li><a href="batch-jobs-and-long-running-workflows.html">Batch Jobs and Long-Running Workflows</a></li>
+<li><a href="business-objects-and-data-relationships.html">Business Objects and Data Relationships</a></li>
+<li><a href="clients-deals-missions-pipeline.html">Clients Deals Missions Pipeline</a></li>
+<li><a href="codex-agent-tooling.html">Codex Agent Tooling</a></li>
+<li><a href="core-resume-workflows.html">Core Resume Workflows</a></li>
+<li><a href="data-persistence-map.html">Data Persistence Map</a></li>
+<li><a href="docker-environment.html">Docker Environment</a></li>
+<li><a href="email-and-verification-flows.html">Email and Verification Flows</a></li>
+<li><a href="environment-and-secret-matrix.html">Environment and Secret Matrix</a></li>
+<li><a href="file-storage-and-retention-map.html">File Storage and Retention Map</a></li>
+<li><a href="header-size-budget.html">Header Size Budget</a></li>
+<li><a href="integrations.html">Integrations</a></li>
+<li><a href="llm-call-resolution-and-runtime-selection.html">LLM Call Resolution and Runtime Selection</a></li>
+<li><a href="llm-control-plane.html">LLM Control Plane</a></li>
+<li><a href="maintenance-and-cleanup-jobs.html">Maintenance and Cleanup Jobs</a></li>
+<li><a href="market-intelligence-and-reference-data.html">Market Intelligence and Reference Data</a></li>
+<li><a href="matching-and-scoring-model.html">Matching and Scoring Model</a></li>
+<li><a href="metrics-and-diagnostics.html">Metrics and Diagnostics</a></li>
+<li><a href="observability-and-quality.html">Observability and Quality</a></li>
+<li><a href="operational-dashboards-map.html">Operational Dashboards Map</a></li>
+<li><a href="operational-limits-matrix.html">Operational Limits Matrix</a></li>
+<li><a href="pdf-and-document-generation-boundary.html">PDF and Document Generation Boundary</a></li>
+<li><a href="priority-review-2026-04-16.html">Priority Review 2026-04-16</a></li>
+<li><a href="priority-review-2026-04-17.html">Priority Review 2026-04-17</a></li>
+<li><a href="product-scope-and-priorities.html">Product Scope and Priorities</a></li>
+<li><a href="provider-failure-and-fallback-model.html">Provider Failure and Fallback Model</a></li>
+<li><a href="public-token-flows.html">Public Token Flows</a></li>
+<li><a href="resume-domain-model.html">Resume Domain Model</a></li>
+<li><a href="resume-presentation-and-templates.html">Resume Presentation and Templates</a></li>
+<li><a href="runbooks-incident-ops.html">Runbooks Incident Ops</a></li>
+<li><a href="security-and-compliance.html">Security and Compliance</a></li>
+<li><a href="session-and-token-lifecycle.html">Session and Token Lifecycle</a></li>
+<li><a href="settings-and-governance-surfaces.html">Settings and Governance Surfaces</a></li>
+<li><a href="settings-catalog.html">Settings Catalog</a></li>
+<li><a href="settings-field-reference.html">Settings Field Reference</a></li>
+<li><a href="stripe-billing-and-firm-credit-purchase.html">Stripe Billing and Firm Credit Purchase</a></li>
+<li><a href="template-extraction-pipeline.html">Template Extraction Pipeline</a></li>
+<li><a href="turnstile.html">Turnstile</a></li>
+<li><a href="upload-ocr-and-parsing-pipeline.html">Upload OCR and Parsing Pipeline</a></li>
+</ul>
+      </details>
+    
+<ul class="nav-list">
+<li><a href="../2026-04-16.html">2026-04-16</a></li>
+<li><a href="../bienvenue.html">Bienvenue</a></li>
+<li><a href="../index.html">Index</a></li>
+<li><a href="../log.html">Log</a></li>
+<li><a href="../overview.html">Overview</a></li>
+<li><a href="../security.html">Security</a></li>
+</ul>
+        </nav>
+      </aside>
+      <main class="content">
+        <div class="content-meta">Source: <code>topics/API Surface by Domain.md</code></div>
+        <h1>API Surface by Domain</h1>
+<h2>Summary</h2>
+<p>The backend has many routes, but a small number of domains matter for orientation. This note maps the API by business or operational domain rather than by file.</p>
+<h2>Platform and Session</h2>
+<ul><li><code>/health</code></li><li><code>/api/auth</code></li><li><code>/api/2fa</code></li></ul>
+<h3>Role</h3>
+<ul><li>health and diagnostics entry points</li><li>sign-in, refresh, logout, registration, account/session lifecycle</li><li>two-factor setup and verification</li></ul>
+<h2>Settings and Control Plane</h2>
+<ul><li><code>/api/settings</code></li><li><code>/api/llm</code></li></ul>
+<h3>Role</h3>
+<ul><li>AI/provider/prompt/weight/credit control plane</li><li>LLM admin/runtime support endpoints</li></ul>
+<h2>Resume Core</h2>
+<ul><li><code>/api/resumes</code></li><li><code>/api/templates</code></li><li><code>/api/share</code></li><li><code>/api/submissions</code></li></ul>
+<h3>Role</h3>
+<ul><li>CV CRUD, upload, analysis, improvement, export-oriented behavior</li><li>template management and extraction</li><li>public share token generation and access</li><li>submission workflows around resumes</li></ul>
+<h2>Mission and Adaptation</h2>
+<ul><li><code>/api/missions</code></li><li><code>/api/adaptations</code></li><li><code>/api/pipeline</code></li></ul>
+<h3>Role</h3>
+<ul><li>mission CRUD and ownership</li><li>adaptation creation and mission-fit artifacts</li><li>candidate progression and interview pipeline</li></ul>
+<h2>Commercial Domain</h2>
+<ul><li><code>/api/clients</code></li><li><code>/api/deals</code></li></ul>
+<h3>Role</h3>
+<ul><li>client/company records</li><li>contacts/opportunities and linkage to missions/resumes</li></ul>
+<h2>Async and Export Domain</h2>
+<ul><li><code>/api/batch-jobs</code></li><li><code>/api/batch-export</code></li></ul>
+<h3>Role</h3>
+<ul><li>long-running workflow creation, tracking, cancellation, and result retrieval</li><li>bulk export orchestration</li></ul>
+<h2>Admin and Tenant Governance</h2>
+<ul><li><code>/api/admin</code></li><li><code>/api/firms</code></li><li><code>/api/users</code></li><li><code>/api/tags</code></li><li><code>/api/email-templates</code></li></ul>
+<h3>Role</h3>
+<ul><li>platform diagnostics/admin tools</li><li>tenant and firm governance</li><li>user management</li><li>controlled taxonomy</li><li>communication-template governance</li></ul>
+<h2>Compliance and Communication</h2>
+<ul><li><code>/api/consent</code></li><li><code>/api/gdpr/mail</code></li><li><code>/api/gdpr-audit</code></li><li><code>/api/mail</code></li><li><code>/api/calendar</code></li></ul>
+<h3>Role</h3>
+<ul><li>GDPR consent flows and public responses</li><li>GDPR mail integration and auditability</li><li>outbound mail and calendar integrations</li></ul>
+<h2>Billing and Credits</h2>
+<ul><li><code>/api/billing</code></li></ul>
+<h3>Role</h3>
+<ul><li>Stripe checkout and firm-credit purchase flow when billing is enabled</li></ul>
+<h2>Observability and Operations</h2>
+<ul><li><code>/api/metrics</code></li><li><code>/api/backup</code></li></ul>
+<h3>Role</h3>
+<ul><li>metrics and operational telemetry</li><li>backup configuration, runs, and recovery-oriented operations</li></ul>
+<h2>Market and Reference Data</h2>
+<ul><li><code>/api/market-radar</code></li><li><code>/api/rome</code></li></ul>
+<h3>Role</h3>
+<ul><li>market-intelligence collection/refresh</li><li>metiers and reference data</li></ul>
+<h2>Chatbot</h2>
+<ul><li><code>/api/chatbot</code></li></ul>
+<h3>Role</h3>
+<ul><li>conversation-style AI assistance with credit enforcement and provider routing</li></ul>
+<h2>Why This Matters</h2>
+<ul><li>Most navigation questions can be answered from domain ownership instead of route-file names.</li><li>Many incidents are easier to isolate once the failing path is mapped to the right domain family.</li></ul>
+<h2>Related</h2>
+<ul><li><a href="application-surface.html">topics/Application Surface</a></li><li><a href="core-resume-workflows.html">topics/Core Resume Workflows</a></li><li><a href="admin-and-operations.html">topics/Admin and Operations</a></li><li><a href="authz-decision-map.html">topics/AuthZ Decision Map</a></li></ul>
+<h2>Sources</h2>
+<ul><li><a href="../raw/sources/2026-04-16-settings-scoring-and-api-surface.html">raw/sources/2026-04-16-settings-scoring-and-api-surface</a></li></ul>
+      </main>
+    </div>
+  </body>
+</html>

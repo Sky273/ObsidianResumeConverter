@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Template Extraction Pipeline | ResumeConverter Vault</title>
+    <meta name="description" content="Template Extraction Pipeline Summary Template extraction now follows a hybrid pipeline centered on deterministic PDF layout recovery before any LLM normalization. Current State Ent">
+    <link rel="stylesheet" href="../../assets/site.css">
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <a class="brand" href="../../index.html">
+          <span class="brand-mark">RC</span>
+          <span>
+            <strong>ResumeConverter Vault</strong>
+            <small>Obsidian knowledge showcase</small>
+          </span>
+        </a>
+        <nav class="nav">
+          
+      <details class="nav-folder" >
+        <summary>entities</summary>
+        <ul class="nav-list">
+<li><a href="../entities/resumeconverter.html">ResumeConverter</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" >
+        <summary>raw</summary>
+        
+      <details class="nav-folder" >
+        <summary>session-notes</summary>
+        <ul class="nav-list">
+<li><a href="../raw/session-notes/2026-04-16-memory-bootstrap.html">2026-04-16 Memory Bootstrap</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" >
+        <summary>sources</summary>
+        <ul class="nav-list">
+<li><a href="../raw/sources/2026-04-16-admin-ops-and-diagnostics.html">Source Note: admin control surfaces, backup, and diagnostics</a></li>
+<li><a href="../raw/sources/2026-04-16-backend-audit-and-quality.html">2026-04-16 Backend Audit and Quality</a></li>
+<li><a href="../raw/sources/2026-04-16-cache-architecture.html">Source Note: application cache architecture</a></li>
+<li><a href="../raw/sources/2026-04-16-cloudflare-turnstile-config.html">Source Note: Cloudflare and Turnstile configuration</a></li>
+<li><a href="../raw/sources/2026-04-16-codebase-structure.html">2026-04-16 Codebase Structure</a></li>
+<li><a href="../raw/sources/2026-04-16-domain-model-and-control-plane.html">Source Note: domain model, control plane, and secondary product modules</a></li>
+<li><a href="../raw/sources/2026-04-16-env-session-batch-state.html">Source Note: environment matrix, session lifecycle, and batch job state machine</a></li>
+<li><a href="../raw/sources/2026-04-16-functional-workflows.html">2026-04-16 Functional Workflows</a></li>
+<li><a href="../raw/sources/2026-04-16-installation-and-bootstrap-docs.html">Source Note: installation, bootstrap, and operations docs</a></li>
+<li><a href="../raw/sources/2026-04-16-karpathy-codex-skill-install.html">Source Note</a></li>
+<li><a href="../raw/sources/2026-04-16-karpathy-llm-wiki.html">2026-04-16 Karpathy LLM Wiki</a></li>
+<li><a href="../raw/sources/2026-04-16-llm-call-resolution.html">Source Note: LLM call resolution according to configuration</a></li>
+<li><a href="../raw/sources/2026-04-16-product-scope-priorities.html">2026-04-16 Product Scope Priorities</a></li>
+<li><a href="../raw/sources/2026-04-16-provider-failure-runbooks-authz.html">Source Note: provider failure, incident runbooks, and authorization map</a></li>
+<li><a href="../raw/sources/2026-04-16-public-token-and-pdf-boundaries.html">Source Note: public token flows, PDF boundary, and header budget</a></li>
+<li><a href="../raw/sources/2026-04-16-release-v1-9-1.html">Source Note</a></li>
+<li><a href="../raw/sources/2026-04-16-security-layers.html">Source Note: concrete security layers in the application</a></li>
+<li><a href="../raw/sources/2026-04-16-settings-maintenance-persistence.html">Source Note: settings, maintenance, and persistence</a></li>
+<li><a href="../raw/sources/2026-04-16-settings-scoring-and-api-surface.html">Source Note: settings fields, scoring, and API surface</a></li>
+<li><a href="../raw/sources/2026-04-16-storage-dashboards-and-resume-model.html">Source Note: storage, dashboards, and resume domain model</a></li>
+<li><a href="../raw/sources/2026-04-16-stripe-billing.html">Source Note: Stripe billing and firm credit purchases</a></li>
+<li><a href="../raw/sources/2026-04-16-upload-limits-and-email-flows.html">Source Note: upload/OCR pipeline, operational limits, and email flows</a></li>
+</ul>
+      </details>
+    
+<ul class="nav-list">
+<li><a href="../raw/readme.html">Raw Layer</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" open>
+        <summary>topics</summary>
+        <ul class="nav-list">
+<li><a href="admin-and-operations.html">Admin and Operations</a></li>
+<li><a href="ai-credits.html">AI Credits</a></li>
+<li><a href="ai-operation-matrix.html">AI Operation Matrix</a></li>
+<li><a href="ai-timeouts.html">AI Timeouts</a></li>
+<li><a href="api-surface-by-domain.html">API Surface by Domain</a></li>
+<li><a href="application-cache-model.html">Application Cache Model</a></li>
+<li><a href="application-release-history.html">Application Release History</a></li>
+<li><a href="application-surface.html">Application Surface</a></li>
+<li><a href="architecture.html">Architecture</a></li>
+<li><a href="auth-and-access-model.html">Auth and Access Model</a></li>
+<li><a href="authz-decision-map.html">AuthZ Decision Map</a></li>
+<li><a href="backup-and-disaster-recovery.html">Backup and Disaster Recovery</a></li>
+<li><a href="batch-job-state-machine.html">Batch Job State Machine</a></li>
+<li><a href="batch-jobs-and-long-running-workflows.html">Batch Jobs and Long-Running Workflows</a></li>
+<li><a href="business-objects-and-data-relationships.html">Business Objects and Data Relationships</a></li>
+<li><a href="clients-deals-missions-pipeline.html">Clients Deals Missions Pipeline</a></li>
+<li><a href="codex-agent-tooling.html">Codex Agent Tooling</a></li>
+<li><a href="core-resume-workflows.html">Core Resume Workflows</a></li>
+<li><a href="data-persistence-map.html">Data Persistence Map</a></li>
+<li><a href="docker-environment.html">Docker Environment</a></li>
+<li><a href="email-and-verification-flows.html">Email and Verification Flows</a></li>
+<li><a href="environment-and-secret-matrix.html">Environment and Secret Matrix</a></li>
+<li><a href="file-storage-and-retention-map.html">File Storage and Retention Map</a></li>
+<li><a href="header-size-budget.html">Header Size Budget</a></li>
+<li><a href="integrations.html">Integrations</a></li>
+<li><a href="llm-call-resolution-and-runtime-selection.html">LLM Call Resolution and Runtime Selection</a></li>
+<li><a href="llm-control-plane.html">LLM Control Plane</a></li>
+<li><a href="maintenance-and-cleanup-jobs.html">Maintenance and Cleanup Jobs</a></li>
+<li><a href="market-intelligence-and-reference-data.html">Market Intelligence and Reference Data</a></li>
+<li><a href="matching-and-scoring-model.html">Matching and Scoring Model</a></li>
+<li><a href="metrics-and-diagnostics.html">Metrics and Diagnostics</a></li>
+<li><a href="observability-and-quality.html">Observability and Quality</a></li>
+<li><a href="operational-dashboards-map.html">Operational Dashboards Map</a></li>
+<li><a href="operational-limits-matrix.html">Operational Limits Matrix</a></li>
+<li><a href="pdf-and-document-generation-boundary.html">PDF and Document Generation Boundary</a></li>
+<li><a href="priority-review-2026-04-16.html">Priority Review 2026-04-16</a></li>
+<li><a href="priority-review-2026-04-17.html">Priority Review 2026-04-17</a></li>
+<li><a href="product-scope-and-priorities.html">Product Scope and Priorities</a></li>
+<li><a href="provider-failure-and-fallback-model.html">Provider Failure and Fallback Model</a></li>
+<li><a href="public-token-flows.html">Public Token Flows</a></li>
+<li><a href="resume-domain-model.html">Resume Domain Model</a></li>
+<li><a href="resume-presentation-and-templates.html">Resume Presentation and Templates</a></li>
+<li><a href="runbooks-incident-ops.html">Runbooks Incident Ops</a></li>
+<li><a href="security-and-compliance.html">Security and Compliance</a></li>
+<li><a href="session-and-token-lifecycle.html">Session and Token Lifecycle</a></li>
+<li><a href="settings-and-governance-surfaces.html">Settings and Governance Surfaces</a></li>
+<li><a href="settings-catalog.html">Settings Catalog</a></li>
+<li><a href="settings-field-reference.html">Settings Field Reference</a></li>
+<li><a href="stripe-billing-and-firm-credit-purchase.html">Stripe Billing and Firm Credit Purchase</a></li>
+<li><a class="active" href="template-extraction-pipeline.html">Template Extraction Pipeline</a></li>
+<li><a href="turnstile.html">Turnstile</a></li>
+<li><a href="upload-ocr-and-parsing-pipeline.html">Upload OCR and Parsing Pipeline</a></li>
+</ul>
+      </details>
+    
+<ul class="nav-list">
+<li><a href="../2026-04-16.html">2026-04-16</a></li>
+<li><a href="../bienvenue.html">Bienvenue</a></li>
+<li><a href="../index.html">Index</a></li>
+<li><a href="../log.html">Log</a></li>
+<li><a href="../overview.html">Overview</a></li>
+<li><a href="../security.html">Security</a></li>
+</ul>
+        </nav>
+      </aside>
+      <main class="content">
+        <div class="content-meta">Source: <code>topics/Template Extraction Pipeline.md</code></div>
+        <h1>Template Extraction Pipeline</h1>
+<h2>Summary</h2>
+<p>Template extraction now follows a hybrid pipeline centered on deterministic PDF layout recovery before any LLM normalization.</p>
+<h2>Current State</h2>
+<ul><li>Entry route: <code>POST /api/templates/extract-from-cv</code></li><li>Supported inputs:</li><li>PDF</li><li>DOCX</li><li>DOC</li><li>Main implementation files:</li><li><code>server/routes/templates/extraction/handlers.js</code></li><li><code>server/routes/templates/extraction/extractors.js</code></li><li><code>server/routes/templates/extraction/pdfLayoutTemplateBuilder.js</code></li><li><code>server/services/templateExtraction.service.js</code></li></ul>
+<h2>Pipeline</h2>
+<ul><li>PDF uses binary signature validation.</li><li>DOCX uses strict OOXML validation with <code>[Content_Types].xml</code>, <code>_rels/.rels</code>, and a declared main document part.</li><li>DOC uses legacy OLE signature validation.</li></ul>
+<ul><li>PDF enters the layout pipeline directly.</li><li>DOCX and DOC are first converted to PDF through LibreOffice using <code>convertWordBufferToPdfBuffer(...)</code>.</li><li>This means non-PDF sources now share the same downstream layout recovery path as PDFs.</li></ul>
+<ul><li>The first PDF page is parsed with <code>pdfjs-dist</code>.</li><li>Text items are normalized into positioned lines.</li><li>Lines are split heuristically into:</li><li>header</li><li>content</li><li>footer</li><li>A CSS-backed intermediate HTML representation is generated:</li><li><code>pageHtml</code></li><li><code>headerHtml</code></li><li><code>contentHtml</code></li><li><code>footerHtml</code></li><li><code>stylesheet</code></li></ul>
+<ul><li>Generated HTML fragments are sanitized with <code>sanitizeDocumentHtmlContent(...)</code>.</li><li>Generated CSS is sanitized with <code>sanitizeDocumentStylesheet(...)</code>.</li><li>LLM output is sanitized again before returning the extracted template.</li></ul>
+<ul><li>The LLM no longer starts from a raw binary or document view only.</li><li>It receives:</li><li>full intermediate HTML</li><li>pre-split header/content/footer fragments</li><li>extracted stylesheet</li><li>extracted image context</li><li>extracted style hints when available</li><li>The LLM's job is mainly to:</li><li>remove personal data</li><li>preserve style and layout intent</li><li>produce reusable placeholders</li><li>output the final template JSON</li><li>if this LLM normalization fails while a good PDF layout is already available, the server now falls back to a deterministic layout-based template instead of failing the extraction outright</li></ul>
+<ul><li>Backend post-processing ensures the final body still contains:</li><li><code>-name-</code></li><li><code>-title-</code></li><li><code>-content-</code></li><li>If the model omits one, a bounded fallback block is inserted.</li><li>Backend post-processing now also strips candidate-specific text that the model may still leak into the template body:</li><li>first visible identity block is normalized to <code>-name-</code></li><li>next visible role/title block is normalized to <code>-title-</code></li><li>remaining visible CV text is removed so the reusable body collapses to the structural placeholder <code>-content-</code></li><li>This means the extraction contract no longer relies only on prompt compliance; the server forcibly normalizes the returned HTML into a reusable template shape.</li></ul>
+<ul><li>The extracted template now carries:</li><li><code>extractionConfidence</code></li><li><code>extractionReview</code></li><li><code>extractionConfidence</code> contains:</li><li>numeric score</li><li>qualitative level (<code>low</code>, <code>medium</code>, <code>high</code>)</li><li>reasons</li><li><code>extractionReview</code> contains:</li><li>extraction method</li><li>text length</li><li>image count</li><li>layout metrics</li><li>intermediate <code>headerHtml</code>, <code>contentHtml</code>, <code>footerHtml</code>, and layout stylesheet when available</li><li>These metadata are exposed to the frontend so weak extractions can be reviewed before template reuse.</li></ul>
+<ul><li>The extraction modal no longer stops at a static preview.</li><li>Operators can now edit, before creation:</li><li>template name</li><li>description</li><li>final header HTML</li><li>final body HTML</li><li>final footer HTML</li><li>final stylesheet</li><li>The modal can also re-apply the detected structural fragments directly from <code>extractionReview</code>.</li><li>The edited result is what gets transferred into the template-creation page.</li></ul>
+<ul><li>Template extraction is an AI-governed action, not an unmetered side path.</li><li>The route reserves credits through the same AI credit framework used by other business operations, under action type <code>template.extract</code>.</li><li>The action cost and max-token budget are configurable through the canonical LLM settings surface:</li><li><code>aiCreditTemplateExtract</code></li><li><code>aiMaxTokensTemplateExtract</code></li><li>The underlying LLM calls are now tagged with explicit operation types so provider-gateway logs and runtime classification stay aligned with other AI actions.</li><li>The extraction path also benefits from the standard backend LLM timeout floor:</li><li>the extraction service still passes its own shorter HTML normalization timeout value for local intent and logging</li><li>but the shared LLM facade now clamps legacy <code>callLLM</code> / <code>callLLMWithVision</code> requests to at least the platform-wide <code>LLM_OPERATION_TIMEOUT_MS</code> baseline (15 minutes), matching other LLM business flows</li></ul>
+<ul><li>The extraction endpoint is expected to answer in JSON, including upload failures.</li><li>The frontend extraction client now sends <code>Accept: application/json</code> explicitly.</li><li>The frontend no longer assumes that every non-2xx response is JSON:</li><li>HTML error pages from proxy/auth/static fallbacks are converted into a readable error message</li><li>invalid non-JSON success payloads are rejected as an invalid extraction response instead of surfacing <code>Unexpected token &amp;lt;</code></li><li>This hardens the extraction modal against infrastructure or middleware responses that bypass the normal API payload shape.</li></ul>
+<h2>Fallback Model</h2>
+<ul><li>Primary path:</li><li><code>PDF -&amp;gt; layout HTML/CSS -&amp;gt; sanitized fragments -&amp;gt; LLM</code></li><li>Office path:</li><li><code>DOC/DOCX -&amp;gt; LibreOffice PDF -&amp;gt; layout HTML/CSS -&amp;gt; sanitized fragments -&amp;gt; LLM</code></li><li>Layout failure handling:</li><li>if layout recovery succeeds but LLM normalization fails or times out, a deterministic fallback template is generated from the recovered layout fragments</li><li>this fallback preserves:</li><li>stylesheet hints</li><li>header/footer structure with text stripped</li><li><code>-logo-</code> in the header when an image region is detected there</li><li>the reusable body placeholder contract <code>-name-</code>, <code>-title-</code>, <code>-content-</code></li><li>If structured PDF layout is too sparse:</li><li>fallback to vision extraction from a rendered first-page image</li><li>first-page image rendering is now done server-side with <code>pdfjs-dist</code> + <code>canvas</code>, not with <code>puppeteer</code></li><li>If vision also fails but plain text exists:</li><li>fallback to legacy text-only template extraction</li></ul>
+<h2>Important Facts</h2>
+<ul><li>Template extraction is now biased toward deterministic preprocessing rather than pure model inference.</li><li>The first page is treated as the canonical style carrier for template extraction.</li><li>DOCX-specific media and style hints are still harvested when possible, then merged into the PDF-centered path.</li><li>The returned extraction method is now a meaningful runtime signal:</li><li><code>office-pdf-layout-html</code></li><li><code>pdf-layout-html</code></li><li><code>pdf-vision-fallback</code></li><li><code>pdf-text-fallback</code></li><li>The frontend preview modal can now surface extraction confidence and the intermediate fragments used to build the template.</li><li>The frontend preview modal now acts as a review workstation:</li><li>live preview of the corrected template</li><li>direct replacement of final fragments with detected ones</li><li>extraction diagnostics for text density, visual blocks, and image regions</li><li>Confidence is now part of the extraction contract:</li><li>layout-based extraction trends higher when text density and section detection are strong</li><li>vision fallback is weaker than structural PDF recovery</li><li>text fallback is the least reliable path</li><li>The extraction result now carries enough intermediate state to diagnose bad output without replaying the whole extraction job.</li><li>PDF layout recovery now includes a lightweight pass over PDF drawing operators to recover:</li><li>large filled rectangles that likely represent section backgrounds or separators</li><li>image paint regions that approximate logo and illustration placement</li><li>The vision fallback no longer depends on a browser runtime:</li><li>no <code>puppeteer</code> launch</li><li>no browser-side PDF rendering step</li><li>fewer environment-specific failures when only the PDF-to-HTML pipeline is needed</li><li>A concrete observed failure mode is now documented:</li><li>some PDFs reach stable layout extraction in under a second</li><li>but the downstream provider-normalization step can still fail because of upstream provider instability or provider-side rate limiting</li><li>the deterministic layout fallback exists specifically to avoid turning that provider failure into a full extraction failure</li><li>The frontend extraction flow is now resilient to non-JSON responses and should surface an actionable error instead of a raw JSON parse failure.</li><li>The final extracted template body is now intentionally opinionated:</li><li>candidate identity collapses to <code>-name-</code></li><li>candidate role collapses to <code>-title-</code></li><li>the rest of the resume body collapses to <code>-content-</code></li><li>Header/footer branding can remain when it represents template chrome rather than candidate content.</li></ul>
+<h2>Improvement Ideas</h2>
+<ul><li>Recover vector shapes and block backgrounds from PDF operators, not only text positions.</li><li>Persist layout metrics in diagnostics to compare extraction quality over time.</li><li>Add a review UI that shows:</li><li>intermediate layout HTML</li><li>sanitized fragments</li><li>final normalized template</li><li>Allow operator-side correction of detected <code>header/content/footer</code> boundaries before final template save.</li><li>Replace approximate image-region recovery with image-content plus exact positioning where the PDF source makes it available.</li></ul>
+<h2>Related</h2>
+<ul><li><a href="resume-presentation-and-templates.html">topics/Resume Presentation and Templates</a></li><li><a href="pdf-and-document-generation-boundary.html">topics/PDF and Document Generation Boundary</a></li><li><a href="upload-ocr-and-parsing-pipeline.html">topics/Upload OCR and Parsing Pipeline</a></li><li><a href="observability-and-quality.html">topics/Observability and Quality</a></li></ul>
+<h2>Sources</h2>
+<ul><li><code>server/routes/templates/extraction/handlers.js</code></li><li><code>server/routes/templates/extraction/extractors.js</code></li><li><code>server/routes/templates/extraction/pdfLayoutTemplateBuilder.js</code></li><li><code>server/services/templateExtraction.service.js</code></li></ul>
+      </main>
+    </div>
+  </body>
+</html>

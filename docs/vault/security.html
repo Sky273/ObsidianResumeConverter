@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Security | ResumeConverter Vault</title>
+    <meta name="description" content="Security Purpose This document is the consolidated security reference for ResumeConverter inside the vault. It is not meant to replace the repository's own SECURITY.md; it extracts">
+    <link rel="stylesheet" href="../assets/site.css">
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <a class="brand" href="../index.html">
+          <span class="brand-mark">RC</span>
+          <span>
+            <strong>ResumeConverter Vault</strong>
+            <small>Obsidian knowledge showcase</small>
+          </span>
+        </a>
+        <nav class="nav">
+          
+      <details class="nav-folder" >
+        <summary>entities</summary>
+        <ul class="nav-list">
+<li><a href="entities/resumeconverter.html">ResumeConverter</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" >
+        <summary>raw</summary>
+        
+      <details class="nav-folder" >
+        <summary>session-notes</summary>
+        <ul class="nav-list">
+<li><a href="raw/session-notes/2026-04-16-memory-bootstrap.html">2026-04-16 Memory Bootstrap</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" >
+        <summary>sources</summary>
+        <ul class="nav-list">
+<li><a href="raw/sources/2026-04-16-admin-ops-and-diagnostics.html">Source Note: admin control surfaces, backup, and diagnostics</a></li>
+<li><a href="raw/sources/2026-04-16-backend-audit-and-quality.html">2026-04-16 Backend Audit and Quality</a></li>
+<li><a href="raw/sources/2026-04-16-cache-architecture.html">Source Note: application cache architecture</a></li>
+<li><a href="raw/sources/2026-04-16-cloudflare-turnstile-config.html">Source Note: Cloudflare and Turnstile configuration</a></li>
+<li><a href="raw/sources/2026-04-16-codebase-structure.html">2026-04-16 Codebase Structure</a></li>
+<li><a href="raw/sources/2026-04-16-domain-model-and-control-plane.html">Source Note: domain model, control plane, and secondary product modules</a></li>
+<li><a href="raw/sources/2026-04-16-env-session-batch-state.html">Source Note: environment matrix, session lifecycle, and batch job state machine</a></li>
+<li><a href="raw/sources/2026-04-16-functional-workflows.html">2026-04-16 Functional Workflows</a></li>
+<li><a href="raw/sources/2026-04-16-installation-and-bootstrap-docs.html">Source Note: installation, bootstrap, and operations docs</a></li>
+<li><a href="raw/sources/2026-04-16-karpathy-codex-skill-install.html">Source Note</a></li>
+<li><a href="raw/sources/2026-04-16-karpathy-llm-wiki.html">2026-04-16 Karpathy LLM Wiki</a></li>
+<li><a href="raw/sources/2026-04-16-llm-call-resolution.html">Source Note: LLM call resolution according to configuration</a></li>
+<li><a href="raw/sources/2026-04-16-product-scope-priorities.html">2026-04-16 Product Scope Priorities</a></li>
+<li><a href="raw/sources/2026-04-16-provider-failure-runbooks-authz.html">Source Note: provider failure, incident runbooks, and authorization map</a></li>
+<li><a href="raw/sources/2026-04-16-public-token-and-pdf-boundaries.html">Source Note: public token flows, PDF boundary, and header budget</a></li>
+<li><a href="raw/sources/2026-04-16-release-v1-9-1.html">Source Note</a></li>
+<li><a href="raw/sources/2026-04-16-security-layers.html">Source Note: concrete security layers in the application</a></li>
+<li><a href="raw/sources/2026-04-16-settings-maintenance-persistence.html">Source Note: settings, maintenance, and persistence</a></li>
+<li><a href="raw/sources/2026-04-16-settings-scoring-and-api-surface.html">Source Note: settings fields, scoring, and API surface</a></li>
+<li><a href="raw/sources/2026-04-16-storage-dashboards-and-resume-model.html">Source Note: storage, dashboards, and resume domain model</a></li>
+<li><a href="raw/sources/2026-04-16-stripe-billing.html">Source Note: Stripe billing and firm credit purchases</a></li>
+<li><a href="raw/sources/2026-04-16-upload-limits-and-email-flows.html">Source Note: upload/OCR pipeline, operational limits, and email flows</a></li>
+</ul>
+      </details>
+    
+<ul class="nav-list">
+<li><a href="raw/readme.html">Raw Layer</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" >
+        <summary>topics</summary>
+        <ul class="nav-list">
+<li><a href="topics/admin-and-operations.html">Admin and Operations</a></li>
+<li><a href="topics/ai-credits.html">AI Credits</a></li>
+<li><a href="topics/ai-operation-matrix.html">AI Operation Matrix</a></li>
+<li><a href="topics/ai-timeouts.html">AI Timeouts</a></li>
+<li><a href="topics/api-surface-by-domain.html">API Surface by Domain</a></li>
+<li><a href="topics/application-cache-model.html">Application Cache Model</a></li>
+<li><a href="topics/application-release-history.html">Application Release History</a></li>
+<li><a href="topics/application-surface.html">Application Surface</a></li>
+<li><a href="topics/architecture.html">Architecture</a></li>
+<li><a href="topics/auth-and-access-model.html">Auth and Access Model</a></li>
+<li><a href="topics/authz-decision-map.html">AuthZ Decision Map</a></li>
+<li><a href="topics/backup-and-disaster-recovery.html">Backup and Disaster Recovery</a></li>
+<li><a href="topics/batch-job-state-machine.html">Batch Job State Machine</a></li>
+<li><a href="topics/batch-jobs-and-long-running-workflows.html">Batch Jobs and Long-Running Workflows</a></li>
+<li><a href="topics/business-objects-and-data-relationships.html">Business Objects and Data Relationships</a></li>
+<li><a href="topics/clients-deals-missions-pipeline.html">Clients Deals Missions Pipeline</a></li>
+<li><a href="topics/codex-agent-tooling.html">Codex Agent Tooling</a></li>
+<li><a href="topics/core-resume-workflows.html">Core Resume Workflows</a></li>
+<li><a href="topics/data-persistence-map.html">Data Persistence Map</a></li>
+<li><a href="topics/docker-environment.html">Docker Environment</a></li>
+<li><a href="topics/email-and-verification-flows.html">Email and Verification Flows</a></li>
+<li><a href="topics/environment-and-secret-matrix.html">Environment and Secret Matrix</a></li>
+<li><a href="topics/file-storage-and-retention-map.html">File Storage and Retention Map</a></li>
+<li><a href="topics/header-size-budget.html">Header Size Budget</a></li>
+<li><a href="topics/integrations.html">Integrations</a></li>
+<li><a href="topics/llm-call-resolution-and-runtime-selection.html">LLM Call Resolution and Runtime Selection</a></li>
+<li><a href="topics/llm-control-plane.html">LLM Control Plane</a></li>
+<li><a href="topics/maintenance-and-cleanup-jobs.html">Maintenance and Cleanup Jobs</a></li>
+<li><a href="topics/market-intelligence-and-reference-data.html">Market Intelligence and Reference Data</a></li>
+<li><a href="topics/matching-and-scoring-model.html">Matching and Scoring Model</a></li>
+<li><a href="topics/metrics-and-diagnostics.html">Metrics and Diagnostics</a></li>
+<li><a href="topics/observability-and-quality.html">Observability and Quality</a></li>
+<li><a href="topics/operational-dashboards-map.html">Operational Dashboards Map</a></li>
+<li><a href="topics/operational-limits-matrix.html">Operational Limits Matrix</a></li>
+<li><a href="topics/pdf-and-document-generation-boundary.html">PDF and Document Generation Boundary</a></li>
+<li><a href="topics/priority-review-2026-04-16.html">Priority Review 2026-04-16</a></li>
+<li><a href="topics/priority-review-2026-04-17.html">Priority Review 2026-04-17</a></li>
+<li><a href="topics/product-scope-and-priorities.html">Product Scope and Priorities</a></li>
+<li><a href="topics/provider-failure-and-fallback-model.html">Provider Failure and Fallback Model</a></li>
+<li><a href="topics/public-token-flows.html">Public Token Flows</a></li>
+<li><a href="topics/resume-domain-model.html">Resume Domain Model</a></li>
+<li><a href="topics/resume-presentation-and-templates.html">Resume Presentation and Templates</a></li>
+<li><a href="topics/runbooks-incident-ops.html">Runbooks Incident Ops</a></li>
+<li><a href="topics/security-and-compliance.html">Security and Compliance</a></li>
+<li><a href="topics/session-and-token-lifecycle.html">Session and Token Lifecycle</a></li>
+<li><a href="topics/settings-and-governance-surfaces.html">Settings and Governance Surfaces</a></li>
+<li><a href="topics/settings-catalog.html">Settings Catalog</a></li>
+<li><a href="topics/settings-field-reference.html">Settings Field Reference</a></li>
+<li><a href="topics/stripe-billing-and-firm-credit-purchase.html">Stripe Billing and Firm Credit Purchase</a></li>
+<li><a href="topics/template-extraction-pipeline.html">Template Extraction Pipeline</a></li>
+<li><a href="topics/turnstile.html">Turnstile</a></li>
+<li><a href="topics/upload-ocr-and-parsing-pipeline.html">Upload OCR and Parsing Pipeline</a></li>
+</ul>
+      </details>
+    
+<ul class="nav-list">
+<li><a href="2026-04-16.html">2026-04-16</a></li>
+<li><a href="bienvenue.html">Bienvenue</a></li>
+<li><a href="index.html">Index</a></li>
+<li><a href="log.html">Log</a></li>
+<li><a href="overview.html">Overview</a></li>
+<li><a class="active" href="security.html">Security</a></li>
+</ul>
+        </nav>
+      </aside>
+      <main class="content">
+        <div class="content-meta">Source: <code>SECURITY.md</code></div>
+        <h1>Security</h1>
+<h2>Purpose</h2>
+<p>This document is the consolidated security reference for ResumeConverter inside the vault. It is not meant to replace the repository's own <code>SECURITY.md</code>; it extracts the durable truths that matter for design, debugging, operations, and future changes.</p>
+<h2>Security Model Summary</h2>
+<p>ResumeConverter is a tenant-scoped recruiting platform. Its security model is built around these priorities:</p>
+<ol><li>strong firm isolation</li><li>authenticated access to business data</li><li>admin-gated operational surfaces</li><li>controlled public token flows</li><li>server-side mediation of external providers</li><li>auditable operational behavior</li></ol>
+<p>The most important invariant is that non-admin users must not cross firm boundaries, even when resources are linked indirectly through resumes, missions, deals, clients, adaptations, or pipeline entries.</p>
+<h2>Trust Boundaries</h2>
+<h3>Browser to application backend</h3>
+<ul><li>The frontend is a React/Vite SPA.</li><li>Sensitive operations go through the Express proxy backend.</li><li>Authentication and authorization are enforced server-side, not by frontend route guards alone.</li></ul>
+<h3>Backend to PDF/document services</h3>
+<ul><li>PDF generation is delegated to a separate internal PDF server.</li><li>The PDF server is not a generic public renderer; it is protected by internal authentication and trusted-internal-URL checks.</li></ul>
+<h3>Backend to external providers</h3>
+<ul><li>LLM providers, Cloudflare Turnstile, Stripe, Google OAuth, Gmail/GDPR mail, and market-data APIs are all mediated by backend services.</li><li>Secrets remain server-side.</li><li>Failure handling, retries, and sanitization are backend concerns.</li></ul>
+<h3>Public token surfaces</h3>
+<ul><li>Some flows are intentionally public:</li><li>GDPR consent response</li><li>shared PDF access</li><li>shared original-file access</li><li>These are protected by purpose-specific tokens, expiration rules, and narrow scopes instead of account authentication.</li></ul>
+<h2>Authentication</h2>
+<h3>Primary auth shape</h3>
+<ul><li>Auth is split into:</li><li>sign-in</li><li>user-account routes</li><li>Google auth</li><li>password reset</li><li>Protected frontend routes exist, but backend middleware is the real security boundary.</li></ul>
+<h3>Session and token behavior</h3>
+<p>Based on the repository security doc and the current codebase shape, ResumeConverter uses:</p>
+<ul><li>JWT-based authentication</li><li>separate access and refresh token handling</li><li>httpOnly cookie-oriented session behavior</li><li>CSRF protection on authenticated flows</li><li>user-status checks on authenticated requests</li></ul>
+<p>Concrete authenticated-request behavior:</p>
+<ul><li>the backend reads the access token from the <code>accessToken</code> httpOnly cookie</li><li>token verification is not enough on its own; the backend also reloads the current user</li><li>requests are rejected if the current user status is <code>inactive</code></li><li>the backend emits <code>X-Token-Expires-In</code> and, when near expiry, <code>X-Token-Expiring-Soon</code></li><li>a very short-lived authenticated-user cache reduces repeated lookups without becoming a durable trust source</li></ul>
+<p>Security consequence:</p>
+<ul><li>a token that was valid moments ago is not treated as sufficient forever</li><li>account disablement still takes effect because current user state is rechecked during authenticated traffic</li></ul>
+<h3>Role model</h3>
+<p>Observed role/access layers include:</p>
+<ul><li>authenticated user</li><li>manager-level or local-admin surfaces</li><li>transverse admin or super-admin capability</li></ul>
+<p>Security consequence:</p>
+<ul><li>access control is not binary <code>logged-in / not-logged-in</code></li><li>many routes also depend on firm membership and role</li></ul>
+<h2>Tenant Isolation</h2>
+<h3>Core invariant</h3>
+<p>Firm isolation is the dominant backend security concern in this application.</p>
+<p>Non-admin users should only be able to access or mutate:</p>
+<ul><li>resumes for their firm</li><li>missions for their firm</li><li>clients and contacts for their firm</li><li>deals for their firm</li><li>pipeline data for their firm</li><li>templates and exports for their firm</li><li>credit-linked operations for their firm</li></ul>
+<h3>Why it is difficult</h3>
+<p>The data model is linked. A single workflow may join:</p>
+<ul><li>resume</li><li>mission</li><li>adaptation</li><li>client</li><li>deal</li><li>pipeline entry</li></ul>
+<p>Security bugs often happen when one object is validated but a related object is not.</p>
+<h3>Current posture</h3>
+<p>The backend audit explicitly reviewed and tightened:</p>
+<ul><li>resume-linked resources</li><li>deals</li><li>clients/contacts</li><li>missions</li><li>pipeline/interviews</li><li>consent</li><li>share/export</li><li>templates</li><li>batch jobs</li><li>firms</li><li>admin surfaces</li></ul>
+<p>This means multi-firm isolation is not just a design goal; it has been treated as an audited defect class.</p>
+<h2>Registration Protection</h2>
+<h3>Turnstile</h3>
+<p>ResumeConverter currently uses Cloudflare Turnstile on registration.</p>
+<p>Expected keys:</p>
+<ul><li>frontend public key:</li><li><code>VITE_TURNSTILE_SITE_KEY</code></li><li><code>CLOUDFLARE_TURNSTILE_SITE_KEY</code></li><li>backend secret key:</li><li><code>TURNSTILE_SECRET_KEY</code></li><li><code>CLOUDFLARE_TURNSTILE_SECRET_KEY</code></li></ul>
+<p>Backend verification uses Cloudflare siteverify:</p>
+<ul><li><code>https://challenges.cloudflare.com/turnstile/v0/siteverify</code></li></ul>
+<h3>Extra anti-abuse checks</h3>
+<p>Registration protection also includes:</p>
+<ul><li>honeypot field</li><li>minimum form fill time</li><li>suspicious user-agent filtering</li><li>disposable email-domain filtering</li></ul>
+<h3>Concrete registration anti-abuse stack</h3>
+<p>The registration flow is protected by several independent signals on both frontend and backend.</p>
+<p>Frontend behavior:</p>
+<ul><li>renders a hidden <code>website</code> field as a honeypot</li><li>captures <code>formRenderedAt</code> when the form is first displayed</li><li>renders Turnstile only when a site key is available</li><li>submits <code>captchaToken</code> and <code>captchaProvider</code> with the registration payload</li><li>resets the Turnstile widget if registration fails</li></ul>
+<p>Backend behavior:</p>
+<ul><li>rejects requests where the honeypot <code>website</code> field is non-empty</li><li>rejects suspicious user agents that look like bots/crawlers</li><li>requires <code>formRenderedAt</code> metadata and rejects implausibly fast submissions</li><li>uses a default minimum fill time of 4000 ms unless overridden by env</li><li>blocks a built-in disposable-email list plus extra blocked domains from env</li><li>requires captcha when a registration captcha secret is configured</li><li>verifies captcha server-side with a short timeout</li></ul>
+<p>Security consequence:</p>
+<ul><li>registration does not rely on captcha alone</li><li>the frontend honeypot and timestamp are only useful because the backend interprets and enforces them</li><li>bot resistance still exists if captcha is misconfigured or temporarily degraded</li></ul>
+<h3>Docker-specific security caveat</h3>
+<p>The Turnstile public key is a build-time concern in Docker because the frontend bundle must embed it. A runtime-only env change is not enough for the widget to appear if the image was built with the wrong key.</p>
+<h2>Two-Factor Authentication</h2>
+<p>The app supports TOTP-based 2FA with flows for:</p>
+<ul><li>status</li><li>setup</li><li>verify and enable</li><li>disable</li><li>backup code regeneration</li></ul>
+<p>This is an important account-hardening layer for privileged users, especially in an admin-heavy product.</p>
+<h2>Authorization and Admin Policy</h2>
+<h3>Admin-by-default principle for transverse routes</h3>
+<p>The audit and route organization indicate a strong policy direction:</p>
+<ul><li>global or transverse routes should be admin-only unless there is a clear reason not to be</li><li>business routes should remain firm-scoped for non-admins</li></ul>
+<p>This matters for:</p>
+<ul><li>metrics</li><li>backup</li><li>settings</li><li>GDPR audit</li><li>user management</li><li>billing administration</li><li>admin workspace tabs</li></ul>
+<h3>Frontend and backend alignment</h3>
+<p>Security depends on both:</p>
+<ul><li>frontend route guards for UX separation</li><li>backend middleware for real enforcement</li></ul>
+<p>Frontend restrictions without backend checks are not considered sufficient.</p>
+<h2>Public Token Flows</h2>
+<h3>GDPR consent</h3>
+<p>Resume-linked consent flows allow:</p>
+<ul><li>initialization</li><li>email send/resend</li><li>status lookup</li><li>public response by token</li></ul>
+<p>Public consent response supports:</p>
+<ul><li>accept</li><li>refuse</li><li>invalid token</li><li>expired token</li><li>already processed token</li></ul>
+<h3>Resume sharing</h3>
+<p>Public sharing supports:</p>
+<ul><li>PDF by token</li><li>original file by token</li></ul>
+<p>Generation and revocation remain authenticated and ownership-checked.</p>
+<p>Security implication:</p>
+<ul><li>public access is intentionally narrow and artifact-scoped</li><li>token validation replaces account auth only for those bounded use cases</li></ul>
+<h2>Billing and Credit Integrity</h2>
+<h3>Stripe</h3>
+<p>Firm credits purchased via Stripe are granted only after webhook confirmation.</p>
+<p>Implications:</p>
+<ul><li>browser redirects do not grant credits</li><li>webhook verification is a core financial integrity control</li><li>purchases and credit transactions form part of the security-sensitive ledger surface</li></ul>
+<h3>AI credits</h3>
+<p>AI credit logic is also a security/control concern because it protects billable provider usage.</p>
+<p>Recent hardening established:</p>
+<ul><li>upfront reservation for long-running AI jobs</li><li>workflow-level reservation for synchronous multi-step IA flows</li><li>refund/settlement behavior on failure or partial completion</li></ul>
+<p>This reduces race conditions, abuse paths, and late-failing cost leakage.</p>
+<h2>Provider Security</h2>
+<h3>LLM providers</h3>
+<p>LLM calls are server-mediated. Important security properties:</p>
+<ul><li>provider keys stay server-side</li><li>input validation and payload shaping happen before provider calls</li><li>retries and circuit-breaker behavior are controlled centrally</li><li>raw provider errors should be sanitized before reaching users</li></ul>
+<h3>Google and Gmail</h3>
+<p>OAuth flows exist for:</p>
+<ul><li>Google authentication</li><li>GDPR mail integration</li></ul>
+<p>The backend audit specifically called out OAuth/callback integrity, which means callback state handling is part of the security-critical surface.</p>
+<h3>PDF/document pipeline</h3>
+<p>PDF rendering and document conversion are isolated into a dedicated service and protected by internal tokens and network guards. This reduces direct exposure of document-rendering internals to public callers.</p>
+<h2>Secrets and Environment Validation</h2>
+<h3>Security-critical envs</h3>
+<p>Examples include:</p>
+<ul><li>JWT secret</li><li>refresh token secret</li><li>CSRF secret</li><li>Turnstile secret</li><li>PDF server internal token</li><li>mail token encryption key</li><li>Stripe secrets</li><li>provider API keys</li></ul>
+<h3>Current operational rule</h3>
+<p>ResumeConverter relies on strict environment validation. Placeholder or weak values can prevent startup. In Docker, <code>.env.docker</code> is the operational source of truth.</p>
+<h3>Migration/bootstrap interaction</h3>
+<p>Security assumptions should not rely on hidden startup side effects. The project now expects explicit migration/bootstrap via the migration runner, which reduces accidental drift and unclear startup behavior.</p>
+<h2>API and Middleware Security Shape</h2>
+<p>The proxy server includes a standard defensive layer with:</p>
+<ul><li>helmet</li><li>cors</li><li>csrf</li><li>rate limiting</li><li>request IDs</li><li>environment validation</li><li>metrics and security logging hooks</li></ul>
+<p>This is complemented by:</p>
+<ul><li>route validation</li><li>pagination and numeric-parameter hardening</li><li>error sanitization</li><li>admin-only deep diagnostics for certain health/provider checks</li></ul>
+<h3>Browser and HTTP boundary details</h3>
+<p>The browser-facing security layer is intentionally restrictive:</p>
+<ul><li>Helmet is enabled with CSP, HSTS, and restrictive document-policy defaults</li><li>CSP defaults to <code>default-src 'none'</code></li><li><code>object-src 'none'</code>, <code>base-uri 'self'</code>, and <code>frame-ancestors 'self'</code> reduce plugin injection and clickjacking exposure</li><li>Turnstile is explicitly allowlisted in script and frame directives instead of opening broad wildcards</li><li>CORS is applied only to <code>/api</code>, with an explicit origin allowlist and credential support</li></ul>
+<p>Security consequence:</p>
+<ul><li>the application follows a deny-by-default posture in the browser, then opens only the dependencies it needs</li><li>cross-origin authenticated traffic is not left to permissive default middleware behavior</li></ul>
+<h2>Concrete Security Layers</h2>
+<p>The application should be understood as a stack of overlapping controls.</p>
+<h3>1. Browser and document-policy layer</h3>
+<ul><li>strict CSP through Helmet</li><li>explicit source allowlists for scripts, styles, fonts, images, connect targets, workers, and frames</li><li>clickjacking protection through <code>frame-ancestors</code></li><li>plugin blocking through <code>object-src 'none'</code></li><li>HSTS in production</li></ul>
+<p>This layer tries to reduce what the browser is allowed to execute or load.</p>
+<h3>2. Cross-origin and cookie/session layer</h3>
+<ul><li>CORS restricted to <code>/api</code></li><li>explicit allowed-origin list</li><li>credentialed requests enabled</li><li>httpOnly cookies for authenticated session tokens</li><li>same-origin/no-Origin allowance where appropriate</li></ul>
+<p>This layer controls how browsers may send authenticated requests to the backend.</p>
+<h3>3. CSRF layer</h3>
+<p>CSRF protection is not implied by cookies alone. The app uses a double-submit model with:</p>
+<ul><li>dedicated <code>/api/csrf-token</code> endpoint</li><li>CSRF cookie</li><li><code>x-csrf-token</code> request header</li><li>session/user identifier binding</li><li>explicit invalid-token handling with cookie reset</li></ul>
+<p>Important nuance:</p>
+<ul><li>safe methods are exempt</li><li>selected auth/public paths are exempt where first-load usability would otherwise break</li></ul>
+<h3>CSRF implementation details</h3>
+<p>The current CSRF shape matters for both design and debugging:</p>
+<ul><li>the CSRF cookie name is <code>x-csrf-token</code></li><li>the frontend must fetch <code>/api/csrf-token</code> before protected state-changing calls</li><li>the backend compares the cookie and the <code>x-csrf-token</code> header through the double-submit middleware</li><li>invalid CSRF state clears the CSRF cookie and returns <code>403</code></li></ul>
+<p>Current CSRF exemptions include:</p>
+<ul><li><code>/api/auth/signin</code></li><li><code>/api/auth/refresh</code></li><li><code>/api/auth/logout</code></li><li><code>/api/auth/register</code></li><li><code>/api/consent/respond/*</code></li><li><code>/api/gdpr/mail/callback</code></li></ul>
+<p>Security consequence:</p>
+<ul><li>cookie auth remains usable for first-load auth flows and public callbacks without disabling CSRF globally</li><li>CSRF debugging should always inspect both cookie issuance and header propagation</li></ul>
+<h3>4. Registration anti-abuse layer</h3>
+<p>Registration is protected by several overlapping mechanisms:</p>
+<ul><li>frontend hidden honeypot field</li><li>frontend form-render timestamp</li><li>optional Turnstile widget</li><li>backend honeypot rejection</li><li>backend minimum form-fill-time check</li><li>suspicious user-agent filtering</li><li>disposable-email blocking</li><li>captcha verification with network timeout</li><li>registration-specific rate limit</li></ul>
+<p>This means registration does not rely only on captcha.</p>
+<h3>Why the honeypot matters</h3>
+<p>The honeypot is not cosmetic:</p>
+<ul><li>the field is present in the DOM</li><li>it uses a plausible business name, <code>website</code></li><li>it is visually hidden and removed from normal keyboard flow</li><li>automated form fillers frequently populate it anyway</li></ul>
+<p>That makes it a cheap server-verifiable anti-bot signal that complements captcha rather than replacing it.</p>
+<h3>5. Authentication layer</h3>
+<p>Authenticated requests are protected by:</p>
+<ul><li>cookie token presence check</li><li>JWT verification</li><li>user lookup</li><li>active/inactive account enforcement</li><li>token-expiration signaling</li><li>short-lived authenticated-user caching</li></ul>
+<p>The important point is that a syntactically valid token is not enough; current user state is still checked.</p>
+<h3>6. Authorization layer</h3>
+<p>After authentication, access is constrained by:</p>
+<ul><li>role checks</li><li>manager/local-admin checks</li><li>firm-scoped access rules</li><li>resource-level firm ownership verification</li></ul>
+<p>This is where ResumeConverter enforces its most important invariant: tenant isolation.</p>
+<h3>7. Rate-limit and abuse-control layer</h3>
+<p>The app applies multiple rate limits, including:</p>
+<ul><li>global</li><li>auth</li><li>registration</li><li>per-user</li><li>combined IP + user</li><li>upload</li><li>LLM</li></ul>
+<p>This means abuse control is tuned per risk surface, not only globally.</p>
+<h3>Concrete rate-limit shape</h3>
+<p>The current implementation distinguishes several abuse patterns:</p>
+<ul><li>a global limiter for general API pressure</li><li>an auth limiter for brute-force-oriented auth traffic</li><li>a registration limiter of 50 requests per hour</li><li>a per-user limiter backed by a dedicated in-memory store</li><li>a combined IP + user limiter to make bypass harder through proxies, VPNs, or account rotation</li><li>an upload limiter for file-heavy routes</li><li>an LLM limiter for provider-cost-heavy routes</li></ul>
+<p>The user-scoped limiter also raises limits for more privileged/admin-equivalent users, which is operationally useful but worth remembering when evaluating abuse posture.</p>
+<h3>8. Validation and input-hardening layer</h3>
+<p>The app also treats validation as a security mechanism through:</p>
+<ul><li>Zod request-body validation</li><li>parameter validation</li><li>query validation</li><li>UUID checks on resource identifiers</li><li>request-body alias normalization</li></ul>
+<p>This reduces malformed-input drift and blocks many accidental or hostile invalid states before business logic runs.</p>
+<h3>Validation specifics worth remembering</h3>
+<p>The validation layer is not just schema hygiene:</p>
+<ul><li>body validation is centralized with Zod</li><li>path params and query params are validated separately</li><li>alias normalization reduces drift from inconsistent client payloads</li><li>route params named <code>id</code> or ending in <code>Id</code> are treated as UUID-sensitive inputs</li></ul>
+<p>Security consequence:</p>
+<ul><li>invalid cross-entity references are often rejected before business services run</li><li>validation changes can have direct security impact, especially on tenant-linked identifiers</li></ul>
+<h3>9. Business-logic integrity layer</h3>
+<p>Certain layers are security-sensitive even if they look like business logic:</p>
+<ul><li>webhook-only Stripe fulfillment</li><li>upfront AI credit reservation</li><li>public-token sharing with revocation</li><li>consent token validation</li><li>backup outbound-host restrictions</li></ul>
+<p>These are part of the effective security model because they protect money, provider spend, personal data, and public exposure.</p>
+<h3>10. Internal service boundary</h3>
+<p>The application also has an internal-service protection layer:</p>
+<ul><li>PDF/document rendering is delegated to a dedicated PDF server</li><li>calls to that renderer are protected with an internal token</li><li>trusted-internal-URL rules reduce SSRF-style misuse of the rendering surface</li></ul>
+<p>Security consequence:</p>
+<ul><li>document rendering should be treated as a privileged internal capability, not a generic public utility</li></ul>
+<h2>Rate Limiting and Abuse Control</h2>
+<p>The repository security documentation describes multi-layer rate limiting, including auth-related and provider-cost-related limits. The important durable takeaway is:</p>
+<ul><li>abuse control is layered, not singular</li><li>authentication endpoints and expensive routes receive special protection</li><li>rate limiting is part of the security posture, not just traffic shaping</li></ul>
+<h2>Logging, Audit, and Observability</h2>
+<h3>Security-relevant logging</h3>
+<p>The platform includes security logging and admin-visible operational diagnostics.</p>
+<p>Relevant surfaces include:</p>
+<ul><li>security logs</li><li>metrics</li><li>GDPR audit</li><li>backup/admin history</li><li>worker/job status</li></ul>
+<h3>Why it matters</h3>
+<p>In a platform like ResumeConverter, many incidents are operational-security incidents rather than classic exploit chains:</p>
+<ul><li>cross-firm access bug</li><li>provider credential failure</li><li>token leakage through a share flow</li><li>billing/webhook inconsistency</li><li>admin surface overexposure</li></ul>
+<p>Observability is therefore part of security, not separate from it.</p>
+<h2>Compliance and Privacy</h2>
+<p>ResumeConverter includes explicit GDPR-oriented features:</p>
+<ul><li>consent lifecycle for resumes</li><li>consent email delivery</li><li>GDPR audit logs</li><li>DPO-related settings</li><li>controlled public consent responses</li></ul>
+<p>This means personal-data handling is part of the product model, not an afterthought.</p>
+<h2>Known Risk Themes</h2>
+<p>Even after hardening, the main risk families remain:</p>
+<ol><li>cross-firm reference injection through linked business objects</li><li>admin/global routes drifting away from admin-only policy</li><li>provider misconfiguration causing degraded or misleading runtime behavior</li><li>stale Docker builds causing incorrect public security config on the frontend</li><li>weak operational secret management outside code</li><li>inconsistencies between frontend assumptions and backend authorization rules</li></ol>
+<h2>Practical Security Checklist For Future Changes</h2>
+<p>When changing ResumeConverter, verify:</p>
+<ol><li>does the route require firm ownership enforcement?</li><li>does it expose transverse/admin data?</li><li>does it accept UUIDs or references to related entities from other tables?</li><li>can it leak raw provider, infrastructure, or SQL errors?</li><li>does it create or consume public tokens?</li><li>does it spend AI credits or depend on billing integrity?</li><li>does it depend on Docker build-time env rather than runtime env?</li><li>does it need audit visibility or admin diagnostics?</li></ol>
+<h2>Related</h2>
+<ul><li><a href="topics/security-and-compliance.html">topics/Security and Compliance</a></li><li><a href="topics/auth-and-access-model.html">topics/Auth and Access Model</a></li><li><a href="topics/turnstile.html">topics/Turnstile</a></li><li><a href="topics/docker-environment.html">topics/Docker Environment</a></li><li><a href="topics/ai-credits.html">topics/AI Credits</a></li><li><a href="topics/observability-and-quality.html">topics/Observability and Quality</a></li></ul>
+<h2>Sources</h2>
+<ul><li><a href="raw/sources/2026-04-16-backend-audit-and-quality.html">raw/sources/2026-04-16-backend-audit-and-quality</a></li><li><a href="raw/sources/2026-04-16-domain-model-and-control-plane.html">raw/sources/2026-04-16-domain-model-and-control-plane</a></li><li><a href="raw/sources/2026-04-16-cloudflare-turnstile-config.html">raw/sources/2026-04-16-cloudflare-turnstile-config</a></li><li><a href="raw/sources/2026-04-16-security-layers.html">raw/sources/2026-04-16-security-layers</a></li></ul>
+      </main>
+    </div>
+  </body>
+</html>

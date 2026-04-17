@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Email and Verification Flows | ResumeConverter Vault</title>
+    <meta name="description" content="Email and Verification Flows Summary ResumeConverter has several user account email flows that are easy to conflate: email verification after self service registration password res">
+    <link rel="stylesheet" href="../../assets/site.css">
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <a class="brand" href="../../index.html">
+          <span class="brand-mark">RC</span>
+          <span>
+            <strong>ResumeConverter Vault</strong>
+            <small>Obsidian knowledge showcase</small>
+          </span>
+        </a>
+        <nav class="nav">
+          
+      <details class="nav-folder" >
+        <summary>entities</summary>
+        <ul class="nav-list">
+<li><a href="../entities/resumeconverter.html">ResumeConverter</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" >
+        <summary>raw</summary>
+        
+      <details class="nav-folder" >
+        <summary>session-notes</summary>
+        <ul class="nav-list">
+<li><a href="../raw/session-notes/2026-04-16-memory-bootstrap.html">2026-04-16 Memory Bootstrap</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" >
+        <summary>sources</summary>
+        <ul class="nav-list">
+<li><a href="../raw/sources/2026-04-16-admin-ops-and-diagnostics.html">Source Note: admin control surfaces, backup, and diagnostics</a></li>
+<li><a href="../raw/sources/2026-04-16-backend-audit-and-quality.html">2026-04-16 Backend Audit and Quality</a></li>
+<li><a href="../raw/sources/2026-04-16-cache-architecture.html">Source Note: application cache architecture</a></li>
+<li><a href="../raw/sources/2026-04-16-cloudflare-turnstile-config.html">Source Note: Cloudflare and Turnstile configuration</a></li>
+<li><a href="../raw/sources/2026-04-16-codebase-structure.html">2026-04-16 Codebase Structure</a></li>
+<li><a href="../raw/sources/2026-04-16-domain-model-and-control-plane.html">Source Note: domain model, control plane, and secondary product modules</a></li>
+<li><a href="../raw/sources/2026-04-16-env-session-batch-state.html">Source Note: environment matrix, session lifecycle, and batch job state machine</a></li>
+<li><a href="../raw/sources/2026-04-16-functional-workflows.html">2026-04-16 Functional Workflows</a></li>
+<li><a href="../raw/sources/2026-04-16-installation-and-bootstrap-docs.html">Source Note: installation, bootstrap, and operations docs</a></li>
+<li><a href="../raw/sources/2026-04-16-karpathy-codex-skill-install.html">Source Note</a></li>
+<li><a href="../raw/sources/2026-04-16-karpathy-llm-wiki.html">2026-04-16 Karpathy LLM Wiki</a></li>
+<li><a href="../raw/sources/2026-04-16-llm-call-resolution.html">Source Note: LLM call resolution according to configuration</a></li>
+<li><a href="../raw/sources/2026-04-16-product-scope-priorities.html">2026-04-16 Product Scope Priorities</a></li>
+<li><a href="../raw/sources/2026-04-16-provider-failure-runbooks-authz.html">Source Note: provider failure, incident runbooks, and authorization map</a></li>
+<li><a href="../raw/sources/2026-04-16-public-token-and-pdf-boundaries.html">Source Note: public token flows, PDF boundary, and header budget</a></li>
+<li><a href="../raw/sources/2026-04-16-release-v1-9-1.html">Source Note</a></li>
+<li><a href="../raw/sources/2026-04-16-security-layers.html">Source Note: concrete security layers in the application</a></li>
+<li><a href="../raw/sources/2026-04-16-settings-maintenance-persistence.html">Source Note: settings, maintenance, and persistence</a></li>
+<li><a href="../raw/sources/2026-04-16-settings-scoring-and-api-surface.html">Source Note: settings fields, scoring, and API surface</a></li>
+<li><a href="../raw/sources/2026-04-16-storage-dashboards-and-resume-model.html">Source Note: storage, dashboards, and resume domain model</a></li>
+<li><a href="../raw/sources/2026-04-16-stripe-billing.html">Source Note: Stripe billing and firm credit purchases</a></li>
+<li><a href="../raw/sources/2026-04-16-upload-limits-and-email-flows.html">Source Note: upload/OCR pipeline, operational limits, and email flows</a></li>
+</ul>
+      </details>
+    
+<ul class="nav-list">
+<li><a href="../raw/readme.html">Raw Layer</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" open>
+        <summary>topics</summary>
+        <ul class="nav-list">
+<li><a href="admin-and-operations.html">Admin and Operations</a></li>
+<li><a href="ai-credits.html">AI Credits</a></li>
+<li><a href="ai-operation-matrix.html">AI Operation Matrix</a></li>
+<li><a href="ai-timeouts.html">AI Timeouts</a></li>
+<li><a href="api-surface-by-domain.html">API Surface by Domain</a></li>
+<li><a href="application-cache-model.html">Application Cache Model</a></li>
+<li><a href="application-release-history.html">Application Release History</a></li>
+<li><a href="application-surface.html">Application Surface</a></li>
+<li><a href="architecture.html">Architecture</a></li>
+<li><a href="auth-and-access-model.html">Auth and Access Model</a></li>
+<li><a href="authz-decision-map.html">AuthZ Decision Map</a></li>
+<li><a href="backup-and-disaster-recovery.html">Backup and Disaster Recovery</a></li>
+<li><a href="batch-job-state-machine.html">Batch Job State Machine</a></li>
+<li><a href="batch-jobs-and-long-running-workflows.html">Batch Jobs and Long-Running Workflows</a></li>
+<li><a href="business-objects-and-data-relationships.html">Business Objects and Data Relationships</a></li>
+<li><a href="clients-deals-missions-pipeline.html">Clients Deals Missions Pipeline</a></li>
+<li><a href="codex-agent-tooling.html">Codex Agent Tooling</a></li>
+<li><a href="core-resume-workflows.html">Core Resume Workflows</a></li>
+<li><a href="data-persistence-map.html">Data Persistence Map</a></li>
+<li><a href="docker-environment.html">Docker Environment</a></li>
+<li><a class="active" href="email-and-verification-flows.html">Email and Verification Flows</a></li>
+<li><a href="environment-and-secret-matrix.html">Environment and Secret Matrix</a></li>
+<li><a href="file-storage-and-retention-map.html">File Storage and Retention Map</a></li>
+<li><a href="header-size-budget.html">Header Size Budget</a></li>
+<li><a href="integrations.html">Integrations</a></li>
+<li><a href="llm-call-resolution-and-runtime-selection.html">LLM Call Resolution and Runtime Selection</a></li>
+<li><a href="llm-control-plane.html">LLM Control Plane</a></li>
+<li><a href="maintenance-and-cleanup-jobs.html">Maintenance and Cleanup Jobs</a></li>
+<li><a href="market-intelligence-and-reference-data.html">Market Intelligence and Reference Data</a></li>
+<li><a href="matching-and-scoring-model.html">Matching and Scoring Model</a></li>
+<li><a href="metrics-and-diagnostics.html">Metrics and Diagnostics</a></li>
+<li><a href="observability-and-quality.html">Observability and Quality</a></li>
+<li><a href="operational-dashboards-map.html">Operational Dashboards Map</a></li>
+<li><a href="operational-limits-matrix.html">Operational Limits Matrix</a></li>
+<li><a href="pdf-and-document-generation-boundary.html">PDF and Document Generation Boundary</a></li>
+<li><a href="priority-review-2026-04-16.html">Priority Review 2026-04-16</a></li>
+<li><a href="priority-review-2026-04-17.html">Priority Review 2026-04-17</a></li>
+<li><a href="product-scope-and-priorities.html">Product Scope and Priorities</a></li>
+<li><a href="provider-failure-and-fallback-model.html">Provider Failure and Fallback Model</a></li>
+<li><a href="public-token-flows.html">Public Token Flows</a></li>
+<li><a href="resume-domain-model.html">Resume Domain Model</a></li>
+<li><a href="resume-presentation-and-templates.html">Resume Presentation and Templates</a></li>
+<li><a href="runbooks-incident-ops.html">Runbooks Incident Ops</a></li>
+<li><a href="security-and-compliance.html">Security and Compliance</a></li>
+<li><a href="session-and-token-lifecycle.html">Session and Token Lifecycle</a></li>
+<li><a href="settings-and-governance-surfaces.html">Settings and Governance Surfaces</a></li>
+<li><a href="settings-catalog.html">Settings Catalog</a></li>
+<li><a href="settings-field-reference.html">Settings Field Reference</a></li>
+<li><a href="stripe-billing-and-firm-credit-purchase.html">Stripe Billing and Firm Credit Purchase</a></li>
+<li><a href="template-extraction-pipeline.html">Template Extraction Pipeline</a></li>
+<li><a href="turnstile.html">Turnstile</a></li>
+<li><a href="upload-ocr-and-parsing-pipeline.html">Upload OCR and Parsing Pipeline</a></li>
+</ul>
+      </details>
+    
+<ul class="nav-list">
+<li><a href="../2026-04-16.html">2026-04-16</a></li>
+<li><a href="../bienvenue.html">Bienvenue</a></li>
+<li><a href="../index.html">Index</a></li>
+<li><a href="../log.html">Log</a></li>
+<li><a href="../overview.html">Overview</a></li>
+<li><a href="../security.html">Security</a></li>
+</ul>
+        </nav>
+      </aside>
+      <main class="content">
+        <div class="content-meta">Source: <code>topics/Email and Verification Flows.md</code></div>
+        <h1>Email and Verification Flows</h1>
+<h2>Summary</h2>
+<p>ResumeConverter has several user-account email flows that are easy to conflate:</p>
+<ul><li>email verification after self-service registration</li><li>password reset</li><li>invite / forced password change</li><li>GDPR/operational mail delivery via the configured mail service</li></ul>
+<p>The important point is that these flows have distinct token models, expirations, and user-state consequences.</p>
+<h2>Email Verification Flow</h2>
+<p>Main path:</p>
+<ol><li>self-service registration creates the user</li><li>verification email is sent</li><li>email contains a one-time tokenized link</li><li><code>GET /api/auth/verify-email</code> consumes the token</li><li>user is redirected back to sign-in with a success or error code</li></ol>
+<p>Important properties:</p>
+<ul><li>verification tokens are hashed before persistence</li><li>token lifetime is 24 hours</li><li>existing unused verification tokens are invalidated before a new one is created</li><li>verification is blocked for inactive users</li><li>successful verification marks <code>email_verified_at</code></li></ul>
+<p>This flow is a gate for self-service users before normal sign-in is allowed.</p>
+<h2>Verification Rate Limiting</h2>
+<p>Email verification mail sending is not open-ended.</p>
+<p>Current remembered behavior:</p>
+<ul><li>there is a per-user daily ceiling on verification token generation/sending</li><li>the service logs rate-limit exceedance rather than exploding the user flow</li></ul>
+<p>This matters for both abuse control and mail-provider hygiene.</p>
+<h2>Password Reset Flow</h2>
+<p>Routes:</p>
+<ul><li><code>POST /api/auth/forgot-password</code></li><li><code>POST /api/auth/reset-password</code></li></ul>
+<p>Typical sequence:</p>
+<ol><li>user requests password reset by email</li><li>backend looks up the user</li><li>non-existent or inactive accounts do not become user-enumeration leaks</li><li>existing active account gets previous reset tokens invalidated</li><li>a new hashed reset token is stored with expiry</li><li>email is sent with a frontend reset URL containing the plain token</li><li>reset route verifies the token and updates the password</li></ol>
+<p>Important properties:</p>
+<ul><li>reset token lifetime is 1 hour</li><li>rate limiting exists per user per hour</li><li>token is one-time-use</li><li>reset is refused for inactive users</li></ul>
+<h2>Invite and Forced Password Change</h2>
+<p>The same password-reset infrastructure also supports:</p>
+<ul><li>invite emails</li><li>forced password replacement</li></ul>
+<p>These are not just cosmetic variants; they are separate email-copy modes built on the same token/reset mechanism.</p>
+<p>Operational consequence:</p>
+<ul><li>invite and forced-change flows should be understood as part of the password-reset subsystem, not a separate auth stack</li></ul>
+<h2>Delivery Dependency</h2>
+<p>Both verification and password reset ultimately depend on the configured mail-delivery service.</p>
+<p>Important remembered behavior:</p>
+<ul><li>verification emails try to send after registration</li><li>password reset treats email delivery failure as a real service error after token creation</li></ul>
+<p>This means mail-provider health can block account recovery or onboarding even when auth code itself is correct.</p>
+<h2>User-State Consequences</h2>
+<p>These flows change real account state:</p>
+<ul><li>verification sets <code>email_verified_at</code></li><li>password reset replaces the stored password hash</li><li>forced-change flow clears <code>must_change_password</code> only after successful reset</li></ul>
+<p>So they are not merely messaging flows; they are account-lifecycle flows.</p>
+<h2>Failure Patterns</h2>
+<h3>User says &quot;I never got the email&quot;</h3>
+<p>First suspects:</p>
+<ul><li>rate limit already reached</li><li>mail delivery provider issue</li><li>bad frontend URL configuration</li></ul>
+<h3>Token link opens but fails</h3>
+<p>First suspects:</p>
+<ul><li>token expired</li><li>token already used</li><li>user inactive</li><li>frontend/backend URL mismatch</li></ul>
+<h3>Password reset requested for unknown account</h3>
+<p>Expected behavior:</p>
+<ul><li>route should not expose account enumeration through different success/failure responses</li></ul>
+<h2>Design Rule For Future Changes</h2>
+<p>If a new account email flow is added, document:</p>
+<ol><li>where the plain token lives and where the hash is stored</li><li>expiry window</li><li>rate limit</li><li>one-time-use behavior</li><li>what account state changes on success</li></ol>
+<p>The shared email-template backend is less monolithic now:</p>
+<ul><li><code>server/services/emailTemplates.service.js</code> keeps template CRUD, rendering, preview, and cache-facing access helpers</li><li><code>server/services/emailTemplatesMjml.service.js</code> owns lazy MJML loading, compilation, unload scheduling, and graceful shutdown cleanup</li><li><code>server/services/emailTemplatesKeywords.service.js</code> owns placeholder substitution and keyword/date/logo expansion</li></ul>
+<h2>Related</h2>
+<ul><li><a href="session-and-token-lifecycle.html">topics/Session and Token Lifecycle</a></li><li><a href="security-and-compliance.html">topics/Security and Compliance</a></li><li><a href="integrations.html">topics/Integrations</a></li></ul>
+<h2>Sources</h2>
+<ul><li><a href="../raw/sources/2026-04-16-upload-limits-and-email-flows.html">raw/sources/2026-04-16-upload-limits-and-email-flows</a></li></ul>
+      </main>
+    </div>
+  </body>
+</html>

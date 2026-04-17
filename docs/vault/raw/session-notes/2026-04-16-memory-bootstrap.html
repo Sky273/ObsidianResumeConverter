@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>2026-04-16 Memory Bootstrap | ResumeConverter Vault</title>
+    <meta name="description" content="2026 04 16 Memory Bootstrap Source Type Bootstrap source note built from direct codebase inspection, local Docker work, and recent implementation/fix sessions on ResumeConverter. D">
+    <link rel="stylesheet" href="../../../assets/site.css">
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <a class="brand" href="../../../index.html">
+          <span class="brand-mark">RC</span>
+          <span>
+            <strong>ResumeConverter Vault</strong>
+            <small>Obsidian knowledge showcase</small>
+          </span>
+        </a>
+        <nav class="nav">
+          
+      <details class="nav-folder" >
+        <summary>entities</summary>
+        <ul class="nav-list">
+<li><a href="../../entities/resumeconverter.html">ResumeConverter</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" open>
+        <summary>raw</summary>
+        
+      <details class="nav-folder" open>
+        <summary>session-notes</summary>
+        <ul class="nav-list">
+<li><a class="active" href="2026-04-16-memory-bootstrap.html">2026-04-16 Memory Bootstrap</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" >
+        <summary>sources</summary>
+        <ul class="nav-list">
+<li><a href="../sources/2026-04-16-admin-ops-and-diagnostics.html">Source Note: admin control surfaces, backup, and diagnostics</a></li>
+<li><a href="../sources/2026-04-16-backend-audit-and-quality.html">2026-04-16 Backend Audit and Quality</a></li>
+<li><a href="../sources/2026-04-16-cache-architecture.html">Source Note: application cache architecture</a></li>
+<li><a href="../sources/2026-04-16-cloudflare-turnstile-config.html">Source Note: Cloudflare and Turnstile configuration</a></li>
+<li><a href="../sources/2026-04-16-codebase-structure.html">2026-04-16 Codebase Structure</a></li>
+<li><a href="../sources/2026-04-16-domain-model-and-control-plane.html">Source Note: domain model, control plane, and secondary product modules</a></li>
+<li><a href="../sources/2026-04-16-env-session-batch-state.html">Source Note: environment matrix, session lifecycle, and batch job state machine</a></li>
+<li><a href="../sources/2026-04-16-functional-workflows.html">2026-04-16 Functional Workflows</a></li>
+<li><a href="../sources/2026-04-16-installation-and-bootstrap-docs.html">Source Note: installation, bootstrap, and operations docs</a></li>
+<li><a href="../sources/2026-04-16-karpathy-codex-skill-install.html">Source Note</a></li>
+<li><a href="../sources/2026-04-16-karpathy-llm-wiki.html">2026-04-16 Karpathy LLM Wiki</a></li>
+<li><a href="../sources/2026-04-16-llm-call-resolution.html">Source Note: LLM call resolution according to configuration</a></li>
+<li><a href="../sources/2026-04-16-product-scope-priorities.html">2026-04-16 Product Scope Priorities</a></li>
+<li><a href="../sources/2026-04-16-provider-failure-runbooks-authz.html">Source Note: provider failure, incident runbooks, and authorization map</a></li>
+<li><a href="../sources/2026-04-16-public-token-and-pdf-boundaries.html">Source Note: public token flows, PDF boundary, and header budget</a></li>
+<li><a href="../sources/2026-04-16-release-v1-9-1.html">Source Note</a></li>
+<li><a href="../sources/2026-04-16-security-layers.html">Source Note: concrete security layers in the application</a></li>
+<li><a href="../sources/2026-04-16-settings-maintenance-persistence.html">Source Note: settings, maintenance, and persistence</a></li>
+<li><a href="../sources/2026-04-16-settings-scoring-and-api-surface.html">Source Note: settings fields, scoring, and API surface</a></li>
+<li><a href="../sources/2026-04-16-storage-dashboards-and-resume-model.html">Source Note: storage, dashboards, and resume domain model</a></li>
+<li><a href="../sources/2026-04-16-stripe-billing.html">Source Note: Stripe billing and firm credit purchases</a></li>
+<li><a href="../sources/2026-04-16-upload-limits-and-email-flows.html">Source Note: upload/OCR pipeline, operational limits, and email flows</a></li>
+</ul>
+      </details>
+    
+<ul class="nav-list">
+<li><a href="../readme.html">Raw Layer</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" >
+        <summary>topics</summary>
+        <ul class="nav-list">
+<li><a href="../../topics/admin-and-operations.html">Admin and Operations</a></li>
+<li><a href="../../topics/ai-credits.html">AI Credits</a></li>
+<li><a href="../../topics/ai-operation-matrix.html">AI Operation Matrix</a></li>
+<li><a href="../../topics/ai-timeouts.html">AI Timeouts</a></li>
+<li><a href="../../topics/api-surface-by-domain.html">API Surface by Domain</a></li>
+<li><a href="../../topics/application-cache-model.html">Application Cache Model</a></li>
+<li><a href="../../topics/application-release-history.html">Application Release History</a></li>
+<li><a href="../../topics/application-surface.html">Application Surface</a></li>
+<li><a href="../../topics/architecture.html">Architecture</a></li>
+<li><a href="../../topics/auth-and-access-model.html">Auth and Access Model</a></li>
+<li><a href="../../topics/authz-decision-map.html">AuthZ Decision Map</a></li>
+<li><a href="../../topics/backup-and-disaster-recovery.html">Backup and Disaster Recovery</a></li>
+<li><a href="../../topics/batch-job-state-machine.html">Batch Job State Machine</a></li>
+<li><a href="../../topics/batch-jobs-and-long-running-workflows.html">Batch Jobs and Long-Running Workflows</a></li>
+<li><a href="../../topics/business-objects-and-data-relationships.html">Business Objects and Data Relationships</a></li>
+<li><a href="../../topics/clients-deals-missions-pipeline.html">Clients Deals Missions Pipeline</a></li>
+<li><a href="../../topics/codex-agent-tooling.html">Codex Agent Tooling</a></li>
+<li><a href="../../topics/core-resume-workflows.html">Core Resume Workflows</a></li>
+<li><a href="../../topics/data-persistence-map.html">Data Persistence Map</a></li>
+<li><a href="../../topics/docker-environment.html">Docker Environment</a></li>
+<li><a href="../../topics/email-and-verification-flows.html">Email and Verification Flows</a></li>
+<li><a href="../../topics/environment-and-secret-matrix.html">Environment and Secret Matrix</a></li>
+<li><a href="../../topics/file-storage-and-retention-map.html">File Storage and Retention Map</a></li>
+<li><a href="../../topics/header-size-budget.html">Header Size Budget</a></li>
+<li><a href="../../topics/integrations.html">Integrations</a></li>
+<li><a href="../../topics/llm-call-resolution-and-runtime-selection.html">LLM Call Resolution and Runtime Selection</a></li>
+<li><a href="../../topics/llm-control-plane.html">LLM Control Plane</a></li>
+<li><a href="../../topics/maintenance-and-cleanup-jobs.html">Maintenance and Cleanup Jobs</a></li>
+<li><a href="../../topics/market-intelligence-and-reference-data.html">Market Intelligence and Reference Data</a></li>
+<li><a href="../../topics/matching-and-scoring-model.html">Matching and Scoring Model</a></li>
+<li><a href="../../topics/metrics-and-diagnostics.html">Metrics and Diagnostics</a></li>
+<li><a href="../../topics/observability-and-quality.html">Observability and Quality</a></li>
+<li><a href="../../topics/operational-dashboards-map.html">Operational Dashboards Map</a></li>
+<li><a href="../../topics/operational-limits-matrix.html">Operational Limits Matrix</a></li>
+<li><a href="../../topics/pdf-and-document-generation-boundary.html">PDF and Document Generation Boundary</a></li>
+<li><a href="../../topics/priority-review-2026-04-16.html">Priority Review 2026-04-16</a></li>
+<li><a href="../../topics/priority-review-2026-04-17.html">Priority Review 2026-04-17</a></li>
+<li><a href="../../topics/product-scope-and-priorities.html">Product Scope and Priorities</a></li>
+<li><a href="../../topics/provider-failure-and-fallback-model.html">Provider Failure and Fallback Model</a></li>
+<li><a href="../../topics/public-token-flows.html">Public Token Flows</a></li>
+<li><a href="../../topics/resume-domain-model.html">Resume Domain Model</a></li>
+<li><a href="../../topics/resume-presentation-and-templates.html">Resume Presentation and Templates</a></li>
+<li><a href="../../topics/runbooks-incident-ops.html">Runbooks Incident Ops</a></li>
+<li><a href="../../topics/security-and-compliance.html">Security and Compliance</a></li>
+<li><a href="../../topics/session-and-token-lifecycle.html">Session and Token Lifecycle</a></li>
+<li><a href="../../topics/settings-and-governance-surfaces.html">Settings and Governance Surfaces</a></li>
+<li><a href="../../topics/settings-catalog.html">Settings Catalog</a></li>
+<li><a href="../../topics/settings-field-reference.html">Settings Field Reference</a></li>
+<li><a href="../../topics/stripe-billing-and-firm-credit-purchase.html">Stripe Billing and Firm Credit Purchase</a></li>
+<li><a href="../../topics/template-extraction-pipeline.html">Template Extraction Pipeline</a></li>
+<li><a href="../../topics/turnstile.html">Turnstile</a></li>
+<li><a href="../../topics/upload-ocr-and-parsing-pipeline.html">Upload OCR and Parsing Pipeline</a></li>
+</ul>
+      </details>
+    
+<ul class="nav-list">
+<li><a href="../../2026-04-16.html">2026-04-16</a></li>
+<li><a href="../../bienvenue.html">Bienvenue</a></li>
+<li><a href="../../index.html">Index</a></li>
+<li><a href="../../log.html">Log</a></li>
+<li><a href="../../overview.html">Overview</a></li>
+<li><a href="../../security.html">Security</a></li>
+</ul>
+        </nav>
+      </aside>
+      <main class="content">
+        <div class="content-meta">Source: <code>raw/session-notes/2026-04-16-memory-bootstrap.md</code></div>
+        <h1>2026-04-16 Memory Bootstrap</h1>
+<h2>Source Type</h2>
+<p>Bootstrap source note built from direct codebase inspection, local Docker work, and recent implementation/fix sessions on ResumeConverter.</p>
+<h2>Durable Facts Captured</h2>
+<ul><li>Docker source of truth is <code>/.env.docker</code>, not <code>/.env</code>, for both image build helpers and runtime stack.</li><li>Turnstile can appear broken if the frontend bundle was built with an old site key, even when the running container has the correct env vars.</li><li>The proper Docker fix for Turnstile is to rebuild the image after changing <code>VITE_TURNSTILE_SITE_KEY</code> or <code>CLOUDFLARE_TURNSTILE_SITE_KEY</code>.</li><li>Insufficient AI credits are handled through dedicated backend codes and a frontend redirect page.</li><li>Upload and other AI workflows moved toward upfront credit reservation instead of late availability checks.</li><li>AI provider failures such as expired or invalid upstream tokens were normalized into cleaner product-facing errors.</li><li>AI timeout handling was standardized to a 15-minute baseline across the main IA server stack, with aligned frontend timeouts on key user-facing IA flows.</li></ul>
+<h2>Important Code Anchors</h2>
+<ul><li>Docker build helpers:</li><li><code>C:\Users\mail\CascadeProjects\ResumeConverter\docker\docker-build.ps1</code></li><li><code>C:\Users\mail\CascadeProjects\ResumeConverter\docker\docker-build.sh</code></li><li><code>C:\Users\mail\CascadeProjects\ResumeConverter\docker-run.bat</code></li><li><code>C:\Users\mail\CascadeProjects\ResumeConverter\docker-compose.redis.yml</code></li><li>Docker docs:</li><li><code>C:\Users\mail\CascadeProjects\ResumeConverter\docker\README.md</code></li><li>AI timeout standardization:</li><li><code>C:\Users\mail\CascadeProjects\ResumeConverter\server\config\constants.js</code></li><li><code>C:\Users\mail\CascadeProjects\ResumeConverter\server\services\llmGateway.service.js</code></li><li><code>C:\Users\mail\CascadeProjects\ResumeConverter\server\services\llmProvider.service.js</code></li><li><code>C:\Users\mail\CascadeProjects\ResumeConverter\client\src\constants\llmTimeouts.ts</code></li></ul>
+<h2>Related</h2>
+<ul><li><a href="../../overview.html">overview</a></li><li><a href="../../topics/docker-environment.html">topics/Docker Environment</a></li><li><a href="../../topics/turnstile.html">topics/Turnstile</a></li><li><a href="../../topics/ai-credits.html">topics/AI Credits</a></li><li><a href="../../topics/ai-timeouts.html">topics/AI Timeouts</a></li></ul>
+      </main>
+    </div>
+  </body>
+</html>

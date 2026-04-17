@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Matching and Scoring Model | ResumeConverter Vault</title>
+    <meta name="description" content="Matching and Scoring Model Summary ResumeConverter uses more than one scoring layer. The important distinction is: resume analysis scoring local profile/mission pre ranking LLM bas">
+    <link rel="stylesheet" href="../../assets/site.css">
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <a class="brand" href="../../index.html">
+          <span class="brand-mark">RC</span>
+          <span>
+            <strong>ResumeConverter Vault</strong>
+            <small>Obsidian knowledge showcase</small>
+          </span>
+        </a>
+        <nav class="nav">
+          
+      <details class="nav-folder" >
+        <summary>entities</summary>
+        <ul class="nav-list">
+<li><a href="../entities/resumeconverter.html">ResumeConverter</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" >
+        <summary>raw</summary>
+        
+      <details class="nav-folder" >
+        <summary>session-notes</summary>
+        <ul class="nav-list">
+<li><a href="../raw/session-notes/2026-04-16-memory-bootstrap.html">2026-04-16 Memory Bootstrap</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" >
+        <summary>sources</summary>
+        <ul class="nav-list">
+<li><a href="../raw/sources/2026-04-16-admin-ops-and-diagnostics.html">Source Note: admin control surfaces, backup, and diagnostics</a></li>
+<li><a href="../raw/sources/2026-04-16-backend-audit-and-quality.html">2026-04-16 Backend Audit and Quality</a></li>
+<li><a href="../raw/sources/2026-04-16-cache-architecture.html">Source Note: application cache architecture</a></li>
+<li><a href="../raw/sources/2026-04-16-cloudflare-turnstile-config.html">Source Note: Cloudflare and Turnstile configuration</a></li>
+<li><a href="../raw/sources/2026-04-16-codebase-structure.html">2026-04-16 Codebase Structure</a></li>
+<li><a href="../raw/sources/2026-04-16-domain-model-and-control-plane.html">Source Note: domain model, control plane, and secondary product modules</a></li>
+<li><a href="../raw/sources/2026-04-16-env-session-batch-state.html">Source Note: environment matrix, session lifecycle, and batch job state machine</a></li>
+<li><a href="../raw/sources/2026-04-16-functional-workflows.html">2026-04-16 Functional Workflows</a></li>
+<li><a href="../raw/sources/2026-04-16-installation-and-bootstrap-docs.html">Source Note: installation, bootstrap, and operations docs</a></li>
+<li><a href="../raw/sources/2026-04-16-karpathy-codex-skill-install.html">Source Note</a></li>
+<li><a href="../raw/sources/2026-04-16-karpathy-llm-wiki.html">2026-04-16 Karpathy LLM Wiki</a></li>
+<li><a href="../raw/sources/2026-04-16-llm-call-resolution.html">Source Note: LLM call resolution according to configuration</a></li>
+<li><a href="../raw/sources/2026-04-16-product-scope-priorities.html">2026-04-16 Product Scope Priorities</a></li>
+<li><a href="../raw/sources/2026-04-16-provider-failure-runbooks-authz.html">Source Note: provider failure, incident runbooks, and authorization map</a></li>
+<li><a href="../raw/sources/2026-04-16-public-token-and-pdf-boundaries.html">Source Note: public token flows, PDF boundary, and header budget</a></li>
+<li><a href="../raw/sources/2026-04-16-release-v1-9-1.html">Source Note</a></li>
+<li><a href="../raw/sources/2026-04-16-security-layers.html">Source Note: concrete security layers in the application</a></li>
+<li><a href="../raw/sources/2026-04-16-settings-maintenance-persistence.html">Source Note: settings, maintenance, and persistence</a></li>
+<li><a href="../raw/sources/2026-04-16-settings-scoring-and-api-surface.html">Source Note: settings fields, scoring, and API surface</a></li>
+<li><a href="../raw/sources/2026-04-16-storage-dashboards-and-resume-model.html">Source Note: storage, dashboards, and resume domain model</a></li>
+<li><a href="../raw/sources/2026-04-16-stripe-billing.html">Source Note: Stripe billing and firm credit purchases</a></li>
+<li><a href="../raw/sources/2026-04-16-upload-limits-and-email-flows.html">Source Note: upload/OCR pipeline, operational limits, and email flows</a></li>
+</ul>
+      </details>
+    
+<ul class="nav-list">
+<li><a href="../raw/readme.html">Raw Layer</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" open>
+        <summary>topics</summary>
+        <ul class="nav-list">
+<li><a href="admin-and-operations.html">Admin and Operations</a></li>
+<li><a href="ai-credits.html">AI Credits</a></li>
+<li><a href="ai-operation-matrix.html">AI Operation Matrix</a></li>
+<li><a href="ai-timeouts.html">AI Timeouts</a></li>
+<li><a href="api-surface-by-domain.html">API Surface by Domain</a></li>
+<li><a href="application-cache-model.html">Application Cache Model</a></li>
+<li><a href="application-release-history.html">Application Release History</a></li>
+<li><a href="application-surface.html">Application Surface</a></li>
+<li><a href="architecture.html">Architecture</a></li>
+<li><a href="auth-and-access-model.html">Auth and Access Model</a></li>
+<li><a href="authz-decision-map.html">AuthZ Decision Map</a></li>
+<li><a href="backup-and-disaster-recovery.html">Backup and Disaster Recovery</a></li>
+<li><a href="batch-job-state-machine.html">Batch Job State Machine</a></li>
+<li><a href="batch-jobs-and-long-running-workflows.html">Batch Jobs and Long-Running Workflows</a></li>
+<li><a href="business-objects-and-data-relationships.html">Business Objects and Data Relationships</a></li>
+<li><a href="clients-deals-missions-pipeline.html">Clients Deals Missions Pipeline</a></li>
+<li><a href="codex-agent-tooling.html">Codex Agent Tooling</a></li>
+<li><a href="core-resume-workflows.html">Core Resume Workflows</a></li>
+<li><a href="data-persistence-map.html">Data Persistence Map</a></li>
+<li><a href="docker-environment.html">Docker Environment</a></li>
+<li><a href="email-and-verification-flows.html">Email and Verification Flows</a></li>
+<li><a href="environment-and-secret-matrix.html">Environment and Secret Matrix</a></li>
+<li><a href="file-storage-and-retention-map.html">File Storage and Retention Map</a></li>
+<li><a href="header-size-budget.html">Header Size Budget</a></li>
+<li><a href="integrations.html">Integrations</a></li>
+<li><a href="llm-call-resolution-and-runtime-selection.html">LLM Call Resolution and Runtime Selection</a></li>
+<li><a href="llm-control-plane.html">LLM Control Plane</a></li>
+<li><a href="maintenance-and-cleanup-jobs.html">Maintenance and Cleanup Jobs</a></li>
+<li><a href="market-intelligence-and-reference-data.html">Market Intelligence and Reference Data</a></li>
+<li><a class="active" href="matching-and-scoring-model.html">Matching and Scoring Model</a></li>
+<li><a href="metrics-and-diagnostics.html">Metrics and Diagnostics</a></li>
+<li><a href="observability-and-quality.html">Observability and Quality</a></li>
+<li><a href="operational-dashboards-map.html">Operational Dashboards Map</a></li>
+<li><a href="operational-limits-matrix.html">Operational Limits Matrix</a></li>
+<li><a href="pdf-and-document-generation-boundary.html">PDF and Document Generation Boundary</a></li>
+<li><a href="priority-review-2026-04-16.html">Priority Review 2026-04-16</a></li>
+<li><a href="priority-review-2026-04-17.html">Priority Review 2026-04-17</a></li>
+<li><a href="product-scope-and-priorities.html">Product Scope and Priorities</a></li>
+<li><a href="provider-failure-and-fallback-model.html">Provider Failure and Fallback Model</a></li>
+<li><a href="public-token-flows.html">Public Token Flows</a></li>
+<li><a href="resume-domain-model.html">Resume Domain Model</a></li>
+<li><a href="resume-presentation-and-templates.html">Resume Presentation and Templates</a></li>
+<li><a href="runbooks-incident-ops.html">Runbooks Incident Ops</a></li>
+<li><a href="security-and-compliance.html">Security and Compliance</a></li>
+<li><a href="session-and-token-lifecycle.html">Session and Token Lifecycle</a></li>
+<li><a href="settings-and-governance-surfaces.html">Settings and Governance Surfaces</a></li>
+<li><a href="settings-catalog.html">Settings Catalog</a></li>
+<li><a href="settings-field-reference.html">Settings Field Reference</a></li>
+<li><a href="stripe-billing-and-firm-credit-purchase.html">Stripe Billing and Firm Credit Purchase</a></li>
+<li><a href="template-extraction-pipeline.html">Template Extraction Pipeline</a></li>
+<li><a href="turnstile.html">Turnstile</a></li>
+<li><a href="upload-ocr-and-parsing-pipeline.html">Upload OCR and Parsing Pipeline</a></li>
+</ul>
+      </details>
+    
+<ul class="nav-list">
+<li><a href="../2026-04-16.html">2026-04-16</a></li>
+<li><a href="../bienvenue.html">Bienvenue</a></li>
+<li><a href="../index.html">Index</a></li>
+<li><a href="../log.html">Log</a></li>
+<li><a href="../overview.html">Overview</a></li>
+<li><a href="../security.html">Security</a></li>
+</ul>
+        </nav>
+      </aside>
+      <main class="content">
+        <div class="content-meta">Source: <code>topics/Matching and Scoring Model.md</code></div>
+        <h1>Matching and Scoring Model</h1>
+<h2>Summary</h2>
+<p>ResumeConverter uses more than one scoring layer. The important distinction is:</p>
+<ul><li>resume-analysis scoring</li><li>local profile/mission pre-ranking</li><li>LLM-based mission match analysis</li></ul>
+<p>These layers are related, but they do not produce the same signal.</p>
+<h2>Resume Analysis Scoring</h2>
+<p>Resume analysis quality uses weighted scoring across sections such as:</p>
+<ul><li>executive summary</li><li>skills</li><li>experience</li><li>education</li><li>ATS</li><li>hobbies/languages</li></ul>
+<p>The final global rating is recomputed through <code>calculateWeightedGlobalRating()</code> using configured weights rather than a hard-coded formula.</p>
+<h3>Practical meaning</h3>
+<ul><li>A CV can receive the same underlying analysis but a different global rating after weight changes.</li><li>This score is about CV quality/readiness, not mission fit.</li></ul>
+<h2>Local Matching Pre-Ranking</h2>
+<p>Local matching uses configurable weights for:</p>
+<ul><li>skills</li><li>tools</li><li>industry</li><li>soft skills</li><li>exact title match</li><li>title token match</li><li>coverage multiplier</li></ul>
+<p>This layer lives in the profile-matching/local-ranking logic and acts as a cheap relevance signal before or alongside heavier AI scoring.</p>
+<h3>Practical meaning</h3>
+<ul><li>It helps narrow or order candidates before expensive LLM calls.</li><li>It is deterministic/config-driven relative to extracted structured signals.</li><li>Bad local weights can distort shortlist quality even if LLM matching is correct.</li></ul>
+<h2>LLM-Based Match Analysis</h2>
+<p>Mission matching uses a dedicated <code>Match Analysis Prompt</code> and validates the resulting payload through the mission/match contracts.</p>
+<p>This layer produces a richer semantic fit signal, typically including:</p>
+<ul><li>a match score</li><li>match reasoning</li><li>structured mission-fit details</li></ul>
+<h3>Practical meaning</h3>
+<ul><li>This is the expensive semantic layer.</li><li>It is not a replacement for local ranking; it complements it.</li></ul>
+<h2>Adaptation Coupling</h2>
+<p>Resume adaptation workflows use match analysis as an input to generate a mission-specific adapted CV.</p>
+<p>So the chain is often:</p>
+<ol><li>local relevance signal</li><li>LLM match analysis</li><li>adaptation generation</li><li>persisted adaptation + match score</li></ol>
+<h2>Why Layers Matter</h2>
+<p>Confusion happens when people mix these questions:</p>
+<ul><li><code>Is this CV good?</code></li><li><code>Is this profile locally similar to the mission?</code></li><li><code>Is this candidate semantically a strong fit for the mission?</code></li></ul>
+<p>ResumeConverter answers them with different mechanisms.</p>
+<h2>Common Failure Modes</h2>
+<ul><li>weight changes alter outcomes without any AI regression</li><li>prompt changes alter match-analysis shape/quality without changing local ranking</li><li>extraction issues degrade both local ranking and LLM fit because upstream structured facts become weaker</li></ul>
+<h2>Practical Reading</h2>
+<ul><li>For CV-quality changes, inspect resume-analysis weights.</li><li>For shortlist ordering issues, inspect local matching weights.</li><li>For semantic fit/adaptation issues, inspect match prompt and LLM outputs.</li></ul>
+<h2>Related</h2>
+<ul><li><a href="settings-catalog.html">topics/Settings Catalog</a></li><li><a href="settings-field-reference.html">topics/Settings Field Reference</a></li><li><a href="core-resume-workflows.html">topics/Core Resume Workflows</a></li><li><a href="clients-deals-missions-pipeline.html">topics/Clients Deals Missions Pipeline</a></li><li><a href="llm-control-plane.html">topics/LLM Control Plane</a></li></ul>
+<h2>Sources</h2>
+<ul><li><a href="../raw/sources/2026-04-16-settings-scoring-and-api-surface.html">raw/sources/2026-04-16-settings-scoring-and-api-surface</a></li></ul>
+      </main>
+    </div>
+  </body>
+</html>

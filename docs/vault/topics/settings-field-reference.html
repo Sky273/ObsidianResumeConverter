@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Settings Field Reference | ResumeConverter Vault</title>
+    <meta name="description" content="Settings Field Reference Summary This note keeps the high signal settings fields that most often change runtime behavior. It is not a dump of every column; it is the subset worth r">
+    <link rel="stylesheet" href="../../assets/site.css">
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <a class="brand" href="../../index.html">
+          <span class="brand-mark">RC</span>
+          <span>
+            <strong>ResumeConverter Vault</strong>
+            <small>Obsidian knowledge showcase</small>
+          </span>
+        </a>
+        <nav class="nav">
+          
+      <details class="nav-folder" >
+        <summary>entities</summary>
+        <ul class="nav-list">
+<li><a href="../entities/resumeconverter.html">ResumeConverter</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" >
+        <summary>raw</summary>
+        
+      <details class="nav-folder" >
+        <summary>session-notes</summary>
+        <ul class="nav-list">
+<li><a href="../raw/session-notes/2026-04-16-memory-bootstrap.html">2026-04-16 Memory Bootstrap</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" >
+        <summary>sources</summary>
+        <ul class="nav-list">
+<li><a href="../raw/sources/2026-04-16-admin-ops-and-diagnostics.html">Source Note: admin control surfaces, backup, and diagnostics</a></li>
+<li><a href="../raw/sources/2026-04-16-backend-audit-and-quality.html">2026-04-16 Backend Audit and Quality</a></li>
+<li><a href="../raw/sources/2026-04-16-cache-architecture.html">Source Note: application cache architecture</a></li>
+<li><a href="../raw/sources/2026-04-16-cloudflare-turnstile-config.html">Source Note: Cloudflare and Turnstile configuration</a></li>
+<li><a href="../raw/sources/2026-04-16-codebase-structure.html">2026-04-16 Codebase Structure</a></li>
+<li><a href="../raw/sources/2026-04-16-domain-model-and-control-plane.html">Source Note: domain model, control plane, and secondary product modules</a></li>
+<li><a href="../raw/sources/2026-04-16-env-session-batch-state.html">Source Note: environment matrix, session lifecycle, and batch job state machine</a></li>
+<li><a href="../raw/sources/2026-04-16-functional-workflows.html">2026-04-16 Functional Workflows</a></li>
+<li><a href="../raw/sources/2026-04-16-installation-and-bootstrap-docs.html">Source Note: installation, bootstrap, and operations docs</a></li>
+<li><a href="../raw/sources/2026-04-16-karpathy-codex-skill-install.html">Source Note</a></li>
+<li><a href="../raw/sources/2026-04-16-karpathy-llm-wiki.html">2026-04-16 Karpathy LLM Wiki</a></li>
+<li><a href="../raw/sources/2026-04-16-llm-call-resolution.html">Source Note: LLM call resolution according to configuration</a></li>
+<li><a href="../raw/sources/2026-04-16-product-scope-priorities.html">2026-04-16 Product Scope Priorities</a></li>
+<li><a href="../raw/sources/2026-04-16-provider-failure-runbooks-authz.html">Source Note: provider failure, incident runbooks, and authorization map</a></li>
+<li><a href="../raw/sources/2026-04-16-public-token-and-pdf-boundaries.html">Source Note: public token flows, PDF boundary, and header budget</a></li>
+<li><a href="../raw/sources/2026-04-16-release-v1-9-1.html">Source Note</a></li>
+<li><a href="../raw/sources/2026-04-16-security-layers.html">Source Note: concrete security layers in the application</a></li>
+<li><a href="../raw/sources/2026-04-16-settings-maintenance-persistence.html">Source Note: settings, maintenance, and persistence</a></li>
+<li><a href="../raw/sources/2026-04-16-settings-scoring-and-api-surface.html">Source Note: settings fields, scoring, and API surface</a></li>
+<li><a href="../raw/sources/2026-04-16-storage-dashboards-and-resume-model.html">Source Note: storage, dashboards, and resume domain model</a></li>
+<li><a href="../raw/sources/2026-04-16-stripe-billing.html">Source Note: Stripe billing and firm credit purchases</a></li>
+<li><a href="../raw/sources/2026-04-16-upload-limits-and-email-flows.html">Source Note: upload/OCR pipeline, operational limits, and email flows</a></li>
+</ul>
+      </details>
+    
+<ul class="nav-list">
+<li><a href="../raw/readme.html">Raw Layer</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" open>
+        <summary>topics</summary>
+        <ul class="nav-list">
+<li><a href="admin-and-operations.html">Admin and Operations</a></li>
+<li><a href="ai-credits.html">AI Credits</a></li>
+<li><a href="ai-operation-matrix.html">AI Operation Matrix</a></li>
+<li><a href="ai-timeouts.html">AI Timeouts</a></li>
+<li><a href="api-surface-by-domain.html">API Surface by Domain</a></li>
+<li><a href="application-cache-model.html">Application Cache Model</a></li>
+<li><a href="application-release-history.html">Application Release History</a></li>
+<li><a href="application-surface.html">Application Surface</a></li>
+<li><a href="architecture.html">Architecture</a></li>
+<li><a href="auth-and-access-model.html">Auth and Access Model</a></li>
+<li><a href="authz-decision-map.html">AuthZ Decision Map</a></li>
+<li><a href="backup-and-disaster-recovery.html">Backup and Disaster Recovery</a></li>
+<li><a href="batch-job-state-machine.html">Batch Job State Machine</a></li>
+<li><a href="batch-jobs-and-long-running-workflows.html">Batch Jobs and Long-Running Workflows</a></li>
+<li><a href="business-objects-and-data-relationships.html">Business Objects and Data Relationships</a></li>
+<li><a href="clients-deals-missions-pipeline.html">Clients Deals Missions Pipeline</a></li>
+<li><a href="codex-agent-tooling.html">Codex Agent Tooling</a></li>
+<li><a href="core-resume-workflows.html">Core Resume Workflows</a></li>
+<li><a href="data-persistence-map.html">Data Persistence Map</a></li>
+<li><a href="docker-environment.html">Docker Environment</a></li>
+<li><a href="email-and-verification-flows.html">Email and Verification Flows</a></li>
+<li><a href="environment-and-secret-matrix.html">Environment and Secret Matrix</a></li>
+<li><a href="file-storage-and-retention-map.html">File Storage and Retention Map</a></li>
+<li><a href="header-size-budget.html">Header Size Budget</a></li>
+<li><a href="integrations.html">Integrations</a></li>
+<li><a href="llm-call-resolution-and-runtime-selection.html">LLM Call Resolution and Runtime Selection</a></li>
+<li><a href="llm-control-plane.html">LLM Control Plane</a></li>
+<li><a href="maintenance-and-cleanup-jobs.html">Maintenance and Cleanup Jobs</a></li>
+<li><a href="market-intelligence-and-reference-data.html">Market Intelligence and Reference Data</a></li>
+<li><a href="matching-and-scoring-model.html">Matching and Scoring Model</a></li>
+<li><a href="metrics-and-diagnostics.html">Metrics and Diagnostics</a></li>
+<li><a href="observability-and-quality.html">Observability and Quality</a></li>
+<li><a href="operational-dashboards-map.html">Operational Dashboards Map</a></li>
+<li><a href="operational-limits-matrix.html">Operational Limits Matrix</a></li>
+<li><a href="pdf-and-document-generation-boundary.html">PDF and Document Generation Boundary</a></li>
+<li><a href="priority-review-2026-04-16.html">Priority Review 2026-04-16</a></li>
+<li><a href="priority-review-2026-04-17.html">Priority Review 2026-04-17</a></li>
+<li><a href="product-scope-and-priorities.html">Product Scope and Priorities</a></li>
+<li><a href="provider-failure-and-fallback-model.html">Provider Failure and Fallback Model</a></li>
+<li><a href="public-token-flows.html">Public Token Flows</a></li>
+<li><a href="resume-domain-model.html">Resume Domain Model</a></li>
+<li><a href="resume-presentation-and-templates.html">Resume Presentation and Templates</a></li>
+<li><a href="runbooks-incident-ops.html">Runbooks Incident Ops</a></li>
+<li><a href="security-and-compliance.html">Security and Compliance</a></li>
+<li><a href="session-and-token-lifecycle.html">Session and Token Lifecycle</a></li>
+<li><a href="settings-and-governance-surfaces.html">Settings and Governance Surfaces</a></li>
+<li><a href="settings-catalog.html">Settings Catalog</a></li>
+<li><a class="active" href="settings-field-reference.html">Settings Field Reference</a></li>
+<li><a href="stripe-billing-and-firm-credit-purchase.html">Stripe Billing and Firm Credit Purchase</a></li>
+<li><a href="template-extraction-pipeline.html">Template Extraction Pipeline</a></li>
+<li><a href="turnstile.html">Turnstile</a></li>
+<li><a href="upload-ocr-and-parsing-pipeline.html">Upload OCR and Parsing Pipeline</a></li>
+</ul>
+      </details>
+    
+<ul class="nav-list">
+<li><a href="../2026-04-16.html">2026-04-16</a></li>
+<li><a href="../bienvenue.html">Bienvenue</a></li>
+<li><a href="../index.html">Index</a></li>
+<li><a href="../log.html">Log</a></li>
+<li><a href="../overview.html">Overview</a></li>
+<li><a href="../security.html">Security</a></li>
+</ul>
+        </nav>
+      </aside>
+      <main class="content">
+        <div class="content-meta">Source: <code>topics/Settings Field Reference.md</code></div>
+        <h1>Settings Field Reference</h1>
+<h2>Summary</h2>
+<p>This note keeps the high-signal settings fields that most often change runtime behavior. It is not a dump of every column; it is the subset worth remembering during debugging and product changes.</p>
+<h2>Provider and Model Fields</h2>
+<ul><li><code>llmProvider</code></li><li><code>llmModel</code></li><li><code>llmAvailability</code></li><li><code>llmModelParameters</code></li></ul>
+<h3>Runtime effect</h3>
+<ul><li>Select the nominal provider/model pair for AI flows.</li><li>Influence runtime provider/model resolution before dispatch.</li><li>Affect whether model-specific parameters and availability logic can apply.</li></ul>
+<h3>Operational notes</h3>
+<ul><li>Misconfiguration here can look like a feature bug everywhere AI is used.</li><li>Provider/model changes do not require frontend rebuild, but they do require settings cache invalidation to propagate cleanly.</li></ul>
+<h2>Ollama-Specific Fields</h2>
+<ul><li><code>ollamaBaseUrl</code></li><li><code>ollamaVisionModel</code></li><li><code>ollamaKeepAlive</code></li><li><code>ollamaNumCtx</code></li><li>discovered-model/catalog capability fields</li></ul>
+<h3>Runtime effect</h3>
+<ul><li>Only relevant when <code>llmProvider = ollama</code>.</li><li>Control where the backend is allowed to discover and validate models.</li><li>Influence Ollama runtime behavior and context budgeting.</li></ul>
+<h3>Operational notes</h3>
+<ul><li>The backend deliberately restricts discovery to the configured Ollama URL.</li><li>Empty Ollama fields are stripped from saved payloads when the provider is not Ollama.</li></ul>
+<h2>Prompt Fields</h2>
+<ul><li><code>Pre Analysis Prompt</code></li><li><code>Analysis Prompt</code></li><li><code>Improvement Prompt</code></li><li><code>Match Analysis Prompt</code></li><li><code>Adaptation Prompt</code></li><li><code>preAnalysisEnabled</code></li></ul>
+<h3>Runtime effect</h3>
+<ul><li>Govern the durable prompt layer for main AI operations.</li><li><code>preAnalysisEnabled</code> toggles whether the pre-analysis step is part of the effective workflow.</li></ul>
+<h3>Operational notes</h3>
+<ul><li>Prompt edits are behavior changes, not cosmetic changes.</li><li>Prompt issues can manifest as malformed JSON, weak outputs, or degraded match quality.</li></ul>
+<h2>Resume Analysis Weight Fields</h2>
+<ul><li><code>Executive Summary Weight</code></li><li><code>Skills Weight</code></li><li><code>Experience Weight</code></li><li><code>Education Weight</code></li><li><code>ATS Weight</code></li><li><code>Hobbies Languages Weight</code></li></ul>
+<h3>Runtime effect</h3>
+<ul><li>Drive weighted global rating recomputation for resume analysis.</li><li>The score is data-driven through <code>calculateWeightedGlobalRating()</code> rather than being fixed in feature code.</li></ul>
+<h3>Operational notes</h3>
+<ul><li>These weights should be thought of as a product scoring policy.</li><li>Changes here alter ranking/perception of CV quality even if the raw analysis payload is unchanged.</li></ul>
+<h2>Local Matching Weight Fields</h2>
+<ul><li><code>Profile Matching Local Skill Weight</code></li><li><code>Profile Matching Local Tool Weight</code></li><li><code>Profile Matching Local Industry Weight</code></li><li><code>Profile Matching Local Soft Skill Weight</code></li><li><code>Profile Matching Local Title Exact Weight</code></li><li><code>Profile Matching Local Title Token Weight</code></li><li><code>Profile Matching Local Coverage Multiplier</code></li></ul>
+<h3>Runtime effect</h3>
+<ul><li>Control the local pre-ranking layer used before or alongside LLM-based matching.</li><li>Affect candidate ordering and local relevance scoring prior to expensive AI work.</li></ul>
+<h3>Operational notes</h3>
+<ul><li>These are often more important to shortlist quality than people expect.</li><li>A mismatch between local-ranking settings and AI match behavior can create confusing ranking outcomes.</li></ul>
+<h2>AI Credit Cost Fields</h2>
+<ul><li><code>aiCreditChatbotMessage</code></li><li><code>aiCreditResumeAiModify</code></li><li><code>aiCreditTemplateExtract</code></li><li><code>aiCreditResumeAnalysis</code></li><li><code>aiCreditResumeImprovement</code></li><li><code>aiCreditResumeAdaptation</code></li><li><code>aiCreditResumeMatch</code></li><li><code>aiCreditProfileSearch</code></li><li><code>aiCreditProfileAnalysis</code></li><li><code>firmInitialCredits</code></li></ul>
+<h3>Runtime effect</h3>
+<ul><li>Control upfront reservation and billing budget for AI actions.</li><li>Directly affect whether a workflow can start or is rejected for insufficient credits.</li></ul>
+<h3>Operational notes</h3>
+<ul><li>A cost increase can break workflows for firms that previously had enough credits.</li><li><code>firmInitialCredits</code> changes tenant bootstrap economics rather than existing-firm balances.</li></ul>
+<h2>AI Max Tokens Fields</h2>
+<ul><li><code>aiMaxTokensChatbotMessage</code></li><li><code>aiMaxTokensResumeAiModify</code></li><li><code>aiMaxTokensTemplateExtract</code></li><li><code>aiMaxTokensResumeAnalysis</code></li><li><code>aiMaxTokensResumeImprovement</code></li><li><code>aiMaxTokensResumeAdaptation</code></li><li><code>aiMaxTokensResumeMatch</code></li><li><code>aiMaxTokensProfileSearch</code></li><li><code>aiMaxTokensProfileAnalysis</code></li></ul>
+<h3>Runtime effect</h3>
+<ul><li>Shape request budgets for each AI operation family.</li><li>Affect output completeness, provider cost, and timeout pressure.</li></ul>
+<h3>Operational notes</h3>
+<ul><li>These fields are easy to underestimate because a model can still succeed with smaller outputs while quality silently degrades.</li></ul>
+<h2>UX and Governance Fields</h2>
+<ul><li><code>cvMode</code></li><li><code>chatbotEnabled</code></li><li><code>publicHomeEnabled</code></li><li><code>webglEnabled</code></li><li><code>allowUserRegistrationWithoutApproval</code></li><li><code>DPO Name</code></li><li><code>DPO Email</code></li><li><code>DPO Phone</code></li></ul>
+<h3>Runtime effect</h3>
+<ul><li><code>cvMode</code> changes whether CV presentation is nominative or anonymous by policy.</li><li><code>chatbotEnabled</code> toggles chatbot behavior.</li><li><code>publicHomeEnabled</code> affects public landing/home behavior.</li><li><code>allowUserRegistrationWithoutApproval</code> changes registration governance semantics.</li><li>DPO fields support compliance-visible metadata.</li></ul>
+<h3>Operational notes</h3>
+<ul><li><code>publicHomeEnabled</code> is one of the settings that can visibly change unauthenticated routing behavior.</li><li>Governance fields can alter onboarding and compliance behavior without changing business logic code.</li></ul>
+<h2>Practical Reading</h2>
+<ul><li>If AI behavior changed globally, inspect provider/model, prompts, max tokens, and credit settings first.</li><li>If ranking changed, inspect weight fields before blaming extraction or AI quality.</li><li>If onboarding behavior changed, inspect <code>publicHomeEnabled</code> and <code>allowUserRegistrationWithoutApproval</code>.</li></ul>
+<h2>Related</h2>
+<ul><li><a href="settings-catalog.html">topics/Settings Catalog</a></li><li><a href="llm-control-plane.html">topics/LLM Control Plane</a></li><li><a href="matching-and-scoring-model.html">topics/Matching and Scoring Model</a></li><li><a href="ai-credits.html">topics/AI Credits</a></li></ul>
+<h2>Sources</h2>
+<ul><li><a href="../raw/sources/2026-04-16-settings-scoring-and-api-surface.html">raw/sources/2026-04-16-settings-scoring-and-api-surface</a></li></ul>
+      </main>
+    </div>
+  </body>
+</html>

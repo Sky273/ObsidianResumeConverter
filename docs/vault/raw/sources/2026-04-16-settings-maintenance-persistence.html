@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Source Note: settings, maintenance, and persistence | ResumeConverter Vault</title>
+    <meta name="description" content="Source Note: settings, maintenance, and persistence Scope This note captures durable facts from the current codebase about: the canonical settings model recurring maintenance and c">
+    <link rel="stylesheet" href="../../../assets/site.css">
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <a class="brand" href="../../../index.html">
+          <span class="brand-mark">RC</span>
+          <span>
+            <strong>ResumeConverter Vault</strong>
+            <small>Obsidian knowledge showcase</small>
+          </span>
+        </a>
+        <nav class="nav">
+          
+      <details class="nav-folder" >
+        <summary>entities</summary>
+        <ul class="nav-list">
+<li><a href="../../entities/resumeconverter.html">ResumeConverter</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" open>
+        <summary>raw</summary>
+        
+      <details class="nav-folder" >
+        <summary>session-notes</summary>
+        <ul class="nav-list">
+<li><a href="../session-notes/2026-04-16-memory-bootstrap.html">2026-04-16 Memory Bootstrap</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" open>
+        <summary>sources</summary>
+        <ul class="nav-list">
+<li><a href="2026-04-16-admin-ops-and-diagnostics.html">Source Note: admin control surfaces, backup, and diagnostics</a></li>
+<li><a href="2026-04-16-backend-audit-and-quality.html">2026-04-16 Backend Audit and Quality</a></li>
+<li><a href="2026-04-16-cache-architecture.html">Source Note: application cache architecture</a></li>
+<li><a href="2026-04-16-cloudflare-turnstile-config.html">Source Note: Cloudflare and Turnstile configuration</a></li>
+<li><a href="2026-04-16-codebase-structure.html">2026-04-16 Codebase Structure</a></li>
+<li><a href="2026-04-16-domain-model-and-control-plane.html">Source Note: domain model, control plane, and secondary product modules</a></li>
+<li><a href="2026-04-16-env-session-batch-state.html">Source Note: environment matrix, session lifecycle, and batch job state machine</a></li>
+<li><a href="2026-04-16-functional-workflows.html">2026-04-16 Functional Workflows</a></li>
+<li><a href="2026-04-16-installation-and-bootstrap-docs.html">Source Note: installation, bootstrap, and operations docs</a></li>
+<li><a href="2026-04-16-karpathy-codex-skill-install.html">Source Note</a></li>
+<li><a href="2026-04-16-karpathy-llm-wiki.html">2026-04-16 Karpathy LLM Wiki</a></li>
+<li><a href="2026-04-16-llm-call-resolution.html">Source Note: LLM call resolution according to configuration</a></li>
+<li><a href="2026-04-16-product-scope-priorities.html">2026-04-16 Product Scope Priorities</a></li>
+<li><a href="2026-04-16-provider-failure-runbooks-authz.html">Source Note: provider failure, incident runbooks, and authorization map</a></li>
+<li><a href="2026-04-16-public-token-and-pdf-boundaries.html">Source Note: public token flows, PDF boundary, and header budget</a></li>
+<li><a href="2026-04-16-release-v1-9-1.html">Source Note</a></li>
+<li><a href="2026-04-16-security-layers.html">Source Note: concrete security layers in the application</a></li>
+<li><a class="active" href="2026-04-16-settings-maintenance-persistence.html">Source Note: settings, maintenance, and persistence</a></li>
+<li><a href="2026-04-16-settings-scoring-and-api-surface.html">Source Note: settings fields, scoring, and API surface</a></li>
+<li><a href="2026-04-16-storage-dashboards-and-resume-model.html">Source Note: storage, dashboards, and resume domain model</a></li>
+<li><a href="2026-04-16-stripe-billing.html">Source Note: Stripe billing and firm credit purchases</a></li>
+<li><a href="2026-04-16-upload-limits-and-email-flows.html">Source Note: upload/OCR pipeline, operational limits, and email flows</a></li>
+</ul>
+      </details>
+    
+<ul class="nav-list">
+<li><a href="../readme.html">Raw Layer</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" >
+        <summary>topics</summary>
+        <ul class="nav-list">
+<li><a href="../../topics/admin-and-operations.html">Admin and Operations</a></li>
+<li><a href="../../topics/ai-credits.html">AI Credits</a></li>
+<li><a href="../../topics/ai-operation-matrix.html">AI Operation Matrix</a></li>
+<li><a href="../../topics/ai-timeouts.html">AI Timeouts</a></li>
+<li><a href="../../topics/api-surface-by-domain.html">API Surface by Domain</a></li>
+<li><a href="../../topics/application-cache-model.html">Application Cache Model</a></li>
+<li><a href="../../topics/application-release-history.html">Application Release History</a></li>
+<li><a href="../../topics/application-surface.html">Application Surface</a></li>
+<li><a href="../../topics/architecture.html">Architecture</a></li>
+<li><a href="../../topics/auth-and-access-model.html">Auth and Access Model</a></li>
+<li><a href="../../topics/authz-decision-map.html">AuthZ Decision Map</a></li>
+<li><a href="../../topics/backup-and-disaster-recovery.html">Backup and Disaster Recovery</a></li>
+<li><a href="../../topics/batch-job-state-machine.html">Batch Job State Machine</a></li>
+<li><a href="../../topics/batch-jobs-and-long-running-workflows.html">Batch Jobs and Long-Running Workflows</a></li>
+<li><a href="../../topics/business-objects-and-data-relationships.html">Business Objects and Data Relationships</a></li>
+<li><a href="../../topics/clients-deals-missions-pipeline.html">Clients Deals Missions Pipeline</a></li>
+<li><a href="../../topics/codex-agent-tooling.html">Codex Agent Tooling</a></li>
+<li><a href="../../topics/core-resume-workflows.html">Core Resume Workflows</a></li>
+<li><a href="../../topics/data-persistence-map.html">Data Persistence Map</a></li>
+<li><a href="../../topics/docker-environment.html">Docker Environment</a></li>
+<li><a href="../../topics/email-and-verification-flows.html">Email and Verification Flows</a></li>
+<li><a href="../../topics/environment-and-secret-matrix.html">Environment and Secret Matrix</a></li>
+<li><a href="../../topics/file-storage-and-retention-map.html">File Storage and Retention Map</a></li>
+<li><a href="../../topics/header-size-budget.html">Header Size Budget</a></li>
+<li><a href="../../topics/integrations.html">Integrations</a></li>
+<li><a href="../../topics/llm-call-resolution-and-runtime-selection.html">LLM Call Resolution and Runtime Selection</a></li>
+<li><a href="../../topics/llm-control-plane.html">LLM Control Plane</a></li>
+<li><a href="../../topics/maintenance-and-cleanup-jobs.html">Maintenance and Cleanup Jobs</a></li>
+<li><a href="../../topics/market-intelligence-and-reference-data.html">Market Intelligence and Reference Data</a></li>
+<li><a href="../../topics/matching-and-scoring-model.html">Matching and Scoring Model</a></li>
+<li><a href="../../topics/metrics-and-diagnostics.html">Metrics and Diagnostics</a></li>
+<li><a href="../../topics/observability-and-quality.html">Observability and Quality</a></li>
+<li><a href="../../topics/operational-dashboards-map.html">Operational Dashboards Map</a></li>
+<li><a href="../../topics/operational-limits-matrix.html">Operational Limits Matrix</a></li>
+<li><a href="../../topics/pdf-and-document-generation-boundary.html">PDF and Document Generation Boundary</a></li>
+<li><a href="../../topics/priority-review-2026-04-16.html">Priority Review 2026-04-16</a></li>
+<li><a href="../../topics/priority-review-2026-04-17.html">Priority Review 2026-04-17</a></li>
+<li><a href="../../topics/product-scope-and-priorities.html">Product Scope and Priorities</a></li>
+<li><a href="../../topics/provider-failure-and-fallback-model.html">Provider Failure and Fallback Model</a></li>
+<li><a href="../../topics/public-token-flows.html">Public Token Flows</a></li>
+<li><a href="../../topics/resume-domain-model.html">Resume Domain Model</a></li>
+<li><a href="../../topics/resume-presentation-and-templates.html">Resume Presentation and Templates</a></li>
+<li><a href="../../topics/runbooks-incident-ops.html">Runbooks Incident Ops</a></li>
+<li><a href="../../topics/security-and-compliance.html">Security and Compliance</a></li>
+<li><a href="../../topics/session-and-token-lifecycle.html">Session and Token Lifecycle</a></li>
+<li><a href="../../topics/settings-and-governance-surfaces.html">Settings and Governance Surfaces</a></li>
+<li><a href="../../topics/settings-catalog.html">Settings Catalog</a></li>
+<li><a href="../../topics/settings-field-reference.html">Settings Field Reference</a></li>
+<li><a href="../../topics/stripe-billing-and-firm-credit-purchase.html">Stripe Billing and Firm Credit Purchase</a></li>
+<li><a href="../../topics/template-extraction-pipeline.html">Template Extraction Pipeline</a></li>
+<li><a href="../../topics/turnstile.html">Turnstile</a></li>
+<li><a href="../../topics/upload-ocr-and-parsing-pipeline.html">Upload OCR and Parsing Pipeline</a></li>
+</ul>
+      </details>
+    
+<ul class="nav-list">
+<li><a href="../../2026-04-16.html">2026-04-16</a></li>
+<li><a href="../../bienvenue.html">Bienvenue</a></li>
+<li><a href="../../index.html">Index</a></li>
+<li><a href="../../log.html">Log</a></li>
+<li><a href="../../overview.html">Overview</a></li>
+<li><a href="../../security.html">Security</a></li>
+</ul>
+        </nav>
+      </aside>
+      <main class="content">
+        <div class="content-meta">Source: <code>raw/sources/2026-04-16-settings-maintenance-persistence.md</code></div>
+        <h1>Source Note: settings, maintenance, and persistence</h1>
+<h2>Scope</h2>
+<p>This note captures durable facts from the current codebase about:</p>
+<ul><li>the canonical settings model</li><li>recurring maintenance and cleanup behavior</li><li>the main PostgreSQL persistence families</li></ul>
+<h2>Primary sources</h2>
+<ul><li><code>server/services/settings.service.js</code></li><li><code>server/services/scheduler.service.js</code></li><li><code>server/utils/fileCleanup.js</code></li><li><code>docker/schema.sql</code></li></ul>
+<h2>Settings facts</h2>
+<ul><li><code>settings.service.js</code> uses <code>CANONICAL_LLM_SETTINGS_KEY</code> to read the canonical <code>llm_settings</code> row.</li><li><code>getLLMSettings()</code> returns normalized settings and is the main entry point for the runtime control plane.</li><li>Cache invalidation is explicit via <code>invalidateSettingsCache()</code> / shared-cache invalidation.</li><li>Weighted global rating depends on settings, which confirms that scoring logic is partly data-driven.</li><li>The settings layer covers provider/model selection, prompts, and related AI control-plane behavior.</li></ul>
+<h2>Scheduler facts</h2>
+<ul><li><code>scheduler.service.js</code> includes recurring consent checks, reminder checks, purge checks, GDPR token refresh, and password-reset token cleanup.</li><li>Timers are interval-based and there is an initial execution shortly after startup.</li><li><code>runAllChecks()</code> provides a manual execution path.</li></ul>
+<h2>Cleanup facts</h2>
+<ul><li><code>fileCleanup.js</code> constrains cleanup to managed roots.</li><li>Cleanup families include uploads, batch-job uploads, batch exports, temp files, and shared artifacts.</li><li>OCR temp artifacts are cleaned separately using prefix-based matching such as <code>resume-ocr-</code> and <code>resume-word-ocr-</code>.</li><li>Cleanup also coordinates expired shared artifacts, old batch jobs/export refs, and local backup retention.</li><li>Cleanup keeps stats, emits metrics, prevents overlapping runs, and starts with an immediate pass before interval-based runs.</li></ul>
+<h2>Persistence facts</h2>
+<p>Key tables observed directly in <code>docker/schema.sql</code> include:</p>
+<ul><li><code>firms</code></li><li><code>users</code></li><li><code>resumes</code></li><li><code>resume_versions</code></li><li><code>resume_adaptations</code></li><li><code>resume_comments</code></li><li><code>resume_submissions</code></li><li><code>templates</code></li><li><code>batch_jobs</code></li><li><code>batch_job_items</code></li><li><code>clients</code></li><li><code>client_contacts</code></li><li><code>deals</code></li><li><code>deal_resumes</code></li><li><code>missions</code></li><li><code>candidate_pipeline</code></li><li><code>pipeline_history</code></li><li><code>pipeline_interviews</code></li><li><code>llm_settings</code></li><li><code>firm_credit_transactions</code></li><li><code>password_reset_tokens</code></li><li><code>email_verification_tokens</code></li><li><code>backup_settings</code></li><li><code>backup_history</code></li><li><code>gdpr_audit_log</code></li><li><code>cache_scope_versions</code></li></ul>
+<p>The durable architectural pattern is:</p>
+<ul><li>tenant truth centered on <code>firms</code></li><li>user/auth truth in <code>users</code> and token tables</li><li>candidate truth centered on <code>resumes</code></li><li>async truth in <code>batch_jobs</code> and <code>batch_job_items</code></li><li>business-development truth in clients/deals/missions/pipeline tables</li><li>AI control-plane truth in <code>llm_settings</code> and credit ledger tables</li><li>ops/compliance truth in backup, audit, and cache-version tables</li></ul>
+      </main>
+    </div>
+  </body>
+</html>

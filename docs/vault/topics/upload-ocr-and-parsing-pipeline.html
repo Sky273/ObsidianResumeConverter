@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Upload OCR and Parsing Pipeline | ResumeConverter Vault</title>
+    <meta name="description" content="Upload OCR and Parsing Pipeline Summary ResumeConverter has a real document ingestion pipeline rather than a single naive &quot;upload and parse&quot; step. The exact path depends on: file t">
+    <link rel="stylesheet" href="../../assets/site.css">
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <a class="brand" href="../../index.html">
+          <span class="brand-mark">RC</span>
+          <span>
+            <strong>ResumeConverter Vault</strong>
+            <small>Obsidian knowledge showcase</small>
+          </span>
+        </a>
+        <nav class="nav">
+          
+      <details class="nav-folder" >
+        <summary>entities</summary>
+        <ul class="nav-list">
+<li><a href="../entities/resumeconverter.html">ResumeConverter</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" >
+        <summary>raw</summary>
+        
+      <details class="nav-folder" >
+        <summary>session-notes</summary>
+        <ul class="nav-list">
+<li><a href="../raw/session-notes/2026-04-16-memory-bootstrap.html">2026-04-16 Memory Bootstrap</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" >
+        <summary>sources</summary>
+        <ul class="nav-list">
+<li><a href="../raw/sources/2026-04-16-admin-ops-and-diagnostics.html">Source Note: admin control surfaces, backup, and diagnostics</a></li>
+<li><a href="../raw/sources/2026-04-16-backend-audit-and-quality.html">2026-04-16 Backend Audit and Quality</a></li>
+<li><a href="../raw/sources/2026-04-16-cache-architecture.html">Source Note: application cache architecture</a></li>
+<li><a href="../raw/sources/2026-04-16-cloudflare-turnstile-config.html">Source Note: Cloudflare and Turnstile configuration</a></li>
+<li><a href="../raw/sources/2026-04-16-codebase-structure.html">2026-04-16 Codebase Structure</a></li>
+<li><a href="../raw/sources/2026-04-16-domain-model-and-control-plane.html">Source Note: domain model, control plane, and secondary product modules</a></li>
+<li><a href="../raw/sources/2026-04-16-env-session-batch-state.html">Source Note: environment matrix, session lifecycle, and batch job state machine</a></li>
+<li><a href="../raw/sources/2026-04-16-functional-workflows.html">2026-04-16 Functional Workflows</a></li>
+<li><a href="../raw/sources/2026-04-16-installation-and-bootstrap-docs.html">Source Note: installation, bootstrap, and operations docs</a></li>
+<li><a href="../raw/sources/2026-04-16-karpathy-codex-skill-install.html">Source Note</a></li>
+<li><a href="../raw/sources/2026-04-16-karpathy-llm-wiki.html">2026-04-16 Karpathy LLM Wiki</a></li>
+<li><a href="../raw/sources/2026-04-16-llm-call-resolution.html">Source Note: LLM call resolution according to configuration</a></li>
+<li><a href="../raw/sources/2026-04-16-product-scope-priorities.html">2026-04-16 Product Scope Priorities</a></li>
+<li><a href="../raw/sources/2026-04-16-provider-failure-runbooks-authz.html">Source Note: provider failure, incident runbooks, and authorization map</a></li>
+<li><a href="../raw/sources/2026-04-16-public-token-and-pdf-boundaries.html">Source Note: public token flows, PDF boundary, and header budget</a></li>
+<li><a href="../raw/sources/2026-04-16-release-v1-9-1.html">Source Note</a></li>
+<li><a href="../raw/sources/2026-04-16-security-layers.html">Source Note: concrete security layers in the application</a></li>
+<li><a href="../raw/sources/2026-04-16-settings-maintenance-persistence.html">Source Note: settings, maintenance, and persistence</a></li>
+<li><a href="../raw/sources/2026-04-16-settings-scoring-and-api-surface.html">Source Note: settings fields, scoring, and API surface</a></li>
+<li><a href="../raw/sources/2026-04-16-storage-dashboards-and-resume-model.html">Source Note: storage, dashboards, and resume domain model</a></li>
+<li><a href="../raw/sources/2026-04-16-stripe-billing.html">Source Note: Stripe billing and firm credit purchases</a></li>
+<li><a href="../raw/sources/2026-04-16-upload-limits-and-email-flows.html">Source Note: upload/OCR pipeline, operational limits, and email flows</a></li>
+</ul>
+      </details>
+    
+<ul class="nav-list">
+<li><a href="../raw/readme.html">Raw Layer</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" open>
+        <summary>topics</summary>
+        <ul class="nav-list">
+<li><a href="admin-and-operations.html">Admin and Operations</a></li>
+<li><a href="ai-credits.html">AI Credits</a></li>
+<li><a href="ai-operation-matrix.html">AI Operation Matrix</a></li>
+<li><a href="ai-timeouts.html">AI Timeouts</a></li>
+<li><a href="api-surface-by-domain.html">API Surface by Domain</a></li>
+<li><a href="application-cache-model.html">Application Cache Model</a></li>
+<li><a href="application-release-history.html">Application Release History</a></li>
+<li><a href="application-surface.html">Application Surface</a></li>
+<li><a href="architecture.html">Architecture</a></li>
+<li><a href="auth-and-access-model.html">Auth and Access Model</a></li>
+<li><a href="authz-decision-map.html">AuthZ Decision Map</a></li>
+<li><a href="backup-and-disaster-recovery.html">Backup and Disaster Recovery</a></li>
+<li><a href="batch-job-state-machine.html">Batch Job State Machine</a></li>
+<li><a href="batch-jobs-and-long-running-workflows.html">Batch Jobs and Long-Running Workflows</a></li>
+<li><a href="business-objects-and-data-relationships.html">Business Objects and Data Relationships</a></li>
+<li><a href="clients-deals-missions-pipeline.html">Clients Deals Missions Pipeline</a></li>
+<li><a href="codex-agent-tooling.html">Codex Agent Tooling</a></li>
+<li><a href="core-resume-workflows.html">Core Resume Workflows</a></li>
+<li><a href="data-persistence-map.html">Data Persistence Map</a></li>
+<li><a href="docker-environment.html">Docker Environment</a></li>
+<li><a href="email-and-verification-flows.html">Email and Verification Flows</a></li>
+<li><a href="environment-and-secret-matrix.html">Environment and Secret Matrix</a></li>
+<li><a href="file-storage-and-retention-map.html">File Storage and Retention Map</a></li>
+<li><a href="header-size-budget.html">Header Size Budget</a></li>
+<li><a href="integrations.html">Integrations</a></li>
+<li><a href="llm-call-resolution-and-runtime-selection.html">LLM Call Resolution and Runtime Selection</a></li>
+<li><a href="llm-control-plane.html">LLM Control Plane</a></li>
+<li><a href="maintenance-and-cleanup-jobs.html">Maintenance and Cleanup Jobs</a></li>
+<li><a href="market-intelligence-and-reference-data.html">Market Intelligence and Reference Data</a></li>
+<li><a href="matching-and-scoring-model.html">Matching and Scoring Model</a></li>
+<li><a href="metrics-and-diagnostics.html">Metrics and Diagnostics</a></li>
+<li><a href="observability-and-quality.html">Observability and Quality</a></li>
+<li><a href="operational-dashboards-map.html">Operational Dashboards Map</a></li>
+<li><a href="operational-limits-matrix.html">Operational Limits Matrix</a></li>
+<li><a href="pdf-and-document-generation-boundary.html">PDF and Document Generation Boundary</a></li>
+<li><a href="priority-review-2026-04-16.html">Priority Review 2026-04-16</a></li>
+<li><a href="priority-review-2026-04-17.html">Priority Review 2026-04-17</a></li>
+<li><a href="product-scope-and-priorities.html">Product Scope and Priorities</a></li>
+<li><a href="provider-failure-and-fallback-model.html">Provider Failure and Fallback Model</a></li>
+<li><a href="public-token-flows.html">Public Token Flows</a></li>
+<li><a href="resume-domain-model.html">Resume Domain Model</a></li>
+<li><a href="resume-presentation-and-templates.html">Resume Presentation and Templates</a></li>
+<li><a href="runbooks-incident-ops.html">Runbooks Incident Ops</a></li>
+<li><a href="security-and-compliance.html">Security and Compliance</a></li>
+<li><a href="session-and-token-lifecycle.html">Session and Token Lifecycle</a></li>
+<li><a href="settings-and-governance-surfaces.html">Settings and Governance Surfaces</a></li>
+<li><a href="settings-catalog.html">Settings Catalog</a></li>
+<li><a href="settings-field-reference.html">Settings Field Reference</a></li>
+<li><a href="stripe-billing-and-firm-credit-purchase.html">Stripe Billing and Firm Credit Purchase</a></li>
+<li><a href="template-extraction-pipeline.html">Template Extraction Pipeline</a></li>
+<li><a href="turnstile.html">Turnstile</a></li>
+<li><a class="active" href="upload-ocr-and-parsing-pipeline.html">Upload OCR and Parsing Pipeline</a></li>
+</ul>
+      </details>
+    
+<ul class="nav-list">
+<li><a href="../2026-04-16.html">2026-04-16</a></li>
+<li><a href="../bienvenue.html">Bienvenue</a></li>
+<li><a href="../index.html">Index</a></li>
+<li><a href="../log.html">Log</a></li>
+<li><a href="../overview.html">Overview</a></li>
+<li><a href="../security.html">Security</a></li>
+</ul>
+        </nav>
+      </aside>
+      <main class="content">
+        <div class="content-meta">Source: <code>topics/Upload OCR and Parsing Pipeline.md</code></div>
+        <h1>Upload OCR and Parsing Pipeline</h1>
+<h2>Summary</h2>
+<p>ResumeConverter has a real document-ingestion pipeline rather than a single naive &quot;upload and parse&quot; step.</p>
+<p>The exact path depends on:</p>
+<ul><li>file type</li><li>file validity</li><li>whether native extraction yields enough text</li><li>whether OCR fallbacks are available in the runtime</li></ul>
+<h2>Main Entry Points</h2>
+<p>Resume text extraction routes:</p>
+<ul><li><code>POST /api/resumes/extract-doc</code></li><li><code>POST /api/resumes/extract-pdf</code></li></ul>
+<p>These routes are authenticated and rate-limited, and they operate on one uploaded file per request.</p>
+<h2>Common Upload Gate</h2>
+<p>Before deep extraction, the upload layer enforces:</p>
+<ul><li>file-size limits</li><li>single-file constraint</li><li>extension/MIME coherence</li><li>temporary disk staging under the configured upload directory</li><li>cleanup of temp files after success or failure</li></ul>
+<p>This means extraction does not operate directly on arbitrary in-memory browser payloads.</p>
+<h2>PDF Extraction Path</h2>
+<p>Typical PDF flow:</p>
+<ol><li>upload PDF to temp storage</li><li>validate file signature</li><li>acquire a per-user extraction slot</li><li>load the PDF</li><li>inspect each page for text-vs-scanned characteristics</li><li>extract structured text directly when the page already contains usable text</li><li>fall back to OCR for scanned or low-text pages</li><li>normalize and clean extracted text</li><li>record metrics and release the extraction slot</li></ol>
+<p>Important properties:</p>
+<ul><li>per-user concurrency is bounded</li><li>OCR is page-aware rather than always-on</li><li>extracted text is cleaned before returning to the caller</li></ul>
+<h2>OCR Decision Model</h2>
+<p>The pipeline does not OCR every PDF page blindly.</p>
+<p>It uses a heuristic approach:</p>
+<ul><li>pages with usable embedded text stay on the native extraction path</li><li>pages that appear scanned go through OCR</li><li>if the whole document still yields too little text, the service can force a broader OCR pass</li></ul>
+<p>This matters because OCR is expensive and noisier than native text extraction.</p>
+<h2>OCR Runtime Model</h2>
+<p>The OCR stack is layered:</p>
+<ul><li>preferred runtime uses native binaries such as <code>tesseract</code>, <code>pdftoppm</code>, and <code>pdfimages</code></li><li>OCR variants and scoring heuristics try multiple render/recognition strategies</li><li>advanced OCR backend support is enabled by default through <code>OCR_ADVANCED_BACKEND=paddleocr</code></li><li>JavaScript OCR exists as part of the service stack, but the best-quality path is still the native-tool chain</li></ul>
+<p>The vault should remember that OCR quality and throughput are strongly environment-dependent.</p>
+<p>Important runtime consequence:</p>
+<ul><li>the advanced OCR layer is now opt-out rather than opt-in</li><li>if Python or the advanced backend is unavailable, the extraction path degrades to CLI OCR and then to <code>tesseract.js</code></li><li>this default favors extraction quality over minimum runtime dependency footprint</li></ul>
+<h2>Word Extraction Path</h2>
+<p>Typical DOC/DOCX flow:</p>
+<ul><li>convert Word to PDF</li><li>reuse the PDF OCR pipeline</li></ul>
+<p>Important consequence:</p>
+<ul><li>Word extraction is not a wholly separate world; its fallback path converges into the PDF OCR pipeline</li></ul>
+<h2>Native Word Extraction</h2>
+<p>The current native extraction shape is:</p>
+<ul><li><code>mammoth</code> for DOCX raw text</li><li>DOC handling via <code>word-extractor</code>, with fallback logic</li></ul>
+<p>This means good DOCX input can often avoid OCR entirely.</p>
+<h2>Cleaning and Normalization</h2>
+<p>After extraction, the text is cleaned before response.</p>
+<p>This is important because the output exposed to the rest of the app is not simply the raw OCR/native payload; it is a normalized text layer better suited for later AI analysis or persistence.</p>
+<p>Important caveat from code inspection on 2026-04-16:</p>
+<ul><li>the current extraction cleanup stack repairs mojibake and normalizes whitespace/newlines, but it does not explicitly strip <code>U+0000</code> / NUL characters</li><li>the resume import path later persists extracted text and analysis JSON directly to PostgreSQL</li><li>PostgreSQL text/json columns reject embedded NUL bytes with <code>invalid byte sequence for encoding &amp;quot;UTF8&amp;quot;: 0x00</code></li><li>there is already a backend sanitizer utility that removes NUL characters, but the resume import/analyze persistence path is not wired through it</li></ul>
+<p>Operational consequence:</p>
+<ul><li>malformed PDFs, OCR output, legacy DOC files, or even provider-returned strings that contain <code>\u0000</code> can fail late during persistence rather than earlier during extraction</li></ul>
+<p>Current mitigation from 2026-04-16:</p>
+<ul><li>the persistence boundary now strips NUL characters on resume writes and batch-item pending payload writes</li><li>this mitigation lives at the DB service layer rather than inside OCR extraction itself, so it also covers provider-returned strings such as resume names, titles, and pending manual-review payloads</li></ul>
+<h2>Metrics and Diagnostics</h2>
+<p>The upload/extraction flow records metrics for:</p>
+<ul><li>upload activity</li><li>OCR activity</li><li>page count</li><li>OCR usage</li><li>average OCR confidence</li><li>extraction time</li><li>primary OCR engine/variant details when available</li></ul>
+<p>This makes extraction a diagnosable subsystem rather than a black box.</p>
+<h2>Failure Patterns</h2>
+<h3>PDF extraction refused immediately</h3>
+<p>First suspects:</p>
+<ul><li>invalid signature</li><li>file too large</li><li>per-user extraction concurrency limit reached</li></ul>
+<h3>PDF returns too little text</h3>
+<p>First suspects:</p>
+<ul><li>scanned content beyond OCR thresholds</li><li>OCR runtime missing or degraded</li><li>poor-quality scan</li></ul>
+<h3>Word extraction works locally but not elsewhere</h3>
+<p>First suspects:</p>
+<ul><li><code>soffice</code> unavailable in the target environment</li><li>runtime differences in native Word extraction or OCR fallback availability</li></ul>
+<h2>Design Rule For Future Changes</h2>
+<p>If a change touches ingestion, document:</p>
+<ol><li>where validation happens</li><li>whether it changes native extraction vs OCR fallback behavior</li><li>whether it affects temp-file staging or cleanup</li><li>whether it changes metrics or diagnostic visibility</li></ol>
+<h2>Related</h2>
+<ul><li><a href="core-resume-workflows.html">topics/Core Resume Workflows</a></li><li><a href="operational-limits-matrix.html">topics/Operational Limits Matrix</a></li><li><a href="integrations.html">topics/Integrations</a></li><li><a href="metrics-and-diagnostics.html">topics/Metrics and Diagnostics</a></li></ul>
+<h2>Sources</h2>
+<ul><li><a href="../raw/sources/2026-04-16-upload-limits-and-email-flows.html">raw/sources/2026-04-16-upload-limits-and-email-flows</a></li></ul>
+      </main>
+    </div>
+  </body>
+</html>

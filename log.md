@@ -860,3 +860,33 @@
   - updated `eslint.config.js` with a dedicated override so those files no longer fail TypeScript project resolution
   - fixed the only remaining real lint error in `e2e/helpers/docx.ts` by replacing the control-character ASCII regex range with the equivalent Unicode `\p{ASCII}` form
   - revalidated with `node .\scripts\run-eslint.mjs e2e playwright.config.ts`
+- Fixed the remaining public-route E2E flake from GitHub `validate:e2e`:
+  - traced the last `/welcome` and `/signin` failures to `client/src/services/authService.ts`, where `restoreSession()` used raw `fetch()` calls without a timeout
+  - when `/api/auth/me` stalled, `AuthContext` stayed in its initialization spinner and the public `/welcome` links never became interactable within Playwright's 30s budget
+  - added an explicit short-timeout wrapper for public auth bootstrap requests and made session restore fail closed to unauthenticated state on timeout
+  - added unit coverage in `client/src/services/authService.test.ts` for the hung-session-restore path
+  - revalidated with:
+    - `node .\node_modules\vitest\vitest.mjs run client\src\services\authService.test.ts`
+    - `node .\node_modules\@playwright\test\cli.js test e2e/public-navigation.spec.ts e2e/auth.spec.ts --project=chromium`
+    - `node .\node_modules\@playwright\test\cli.js test e2e/public-navigation.spec.ts e2e/auth.spec.ts --project=firefox`
+- Cleaned up E2E build artifact tracking:
+  - confirmed `playwright.config.ts` and `scripts/start-playwright-webserver.mjs` generate static assets into `client/dist-e2e`
+  - recorded `client/dist-e2e` as generated Playwright/Vite output rather than durable source
+  - added `client/dist-e2e/` to repo ignore rules and removed the directory from Git tracking while keeping local files in place
+- Hardened resume improvement persistence against weak-model invalid structured responses:
+  - traced a real failure path where improvement generation succeeded but the post-improvement analysis still aborted the whole job with `Le modèle LLM a retourné une réponse invalide`
+  - updated `server/services/batchJobsWorker/processors/improvement.js` so invalid-response failures in the post-improvement analysis now fall back to the structured analysis already embedded in the improvement result when usable
+  - added targeted regression coverage in `server/tests/services/batchJobsWorker.itemProcessors.test.js`
+  - revalidated with `node .\node_modules\vitest\vitest.mjs run server\tests\services\batchJobsWorker.itemProcessors.test.js`
+- Hardened public landing-page startup for E2E and slow runtime settings paths:
+  - traced the stable `validate:e2e` failures on `e2e/public-navigation.spec.ts` to `/welcome` sometimes not rendering its public auth links quickly enough on first paint
+  - updated `client/src/app/publicHomeSetting.ts` so `/welcome` renders the public-home shell optimistically before the async runtime settings fetch resolves
+  - added targeted coverage in `client/src/app/publicHomeSetting.test.tsx`
+  - revalidated with:
+    - `node .\node_modules\vitest\vitest.mjs run client\src\app\publicHomeSetting.test.tsx`
+    - `node .\node_modules\@playwright\test\cli.js test e2e/public-navigation.spec.ts --project=chromium`
+- Added a GitHub Pages showcase for the Obsidian vault:
+  - added a static-site generator in `scripts/build-pages.mjs` that turns vault markdown into browsable HTML under `docs/`
+  - added a dedicated Pages deployment workflow in `.github/workflows/github-pages.yml`
+  - added `site-assets/site.css` as the shared visual layer for the generated showcase
+  - generated the initial `docs/` site so core pages, topics, entities, and raw source notes are directly browsable on GitHub Pages

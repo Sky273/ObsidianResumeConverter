@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Priority Review 2026-04-16 | ResumeConverter Vault</title>
+    <meta name="description" content="Priority Review 2026 04 16 Summary High priority review areas now cluster around delivery/runtime integrity, secret handling in Docker packaging, and cross cutting maintainability ">
+    <link rel="stylesheet" href="../../assets/site.css">
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <a class="brand" href="../../index.html">
+          <span class="brand-mark">RC</span>
+          <span>
+            <strong>ResumeConverter Vault</strong>
+            <small>Obsidian knowledge showcase</small>
+          </span>
+        </a>
+        <nav class="nav">
+          
+      <details class="nav-folder" >
+        <summary>entities</summary>
+        <ul class="nav-list">
+<li><a href="../entities/resumeconverter.html">ResumeConverter</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" >
+        <summary>raw</summary>
+        
+      <details class="nav-folder" >
+        <summary>session-notes</summary>
+        <ul class="nav-list">
+<li><a href="../raw/session-notes/2026-04-16-memory-bootstrap.html">2026-04-16 Memory Bootstrap</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" >
+        <summary>sources</summary>
+        <ul class="nav-list">
+<li><a href="../raw/sources/2026-04-16-admin-ops-and-diagnostics.html">Source Note: admin control surfaces, backup, and diagnostics</a></li>
+<li><a href="../raw/sources/2026-04-16-backend-audit-and-quality.html">2026-04-16 Backend Audit and Quality</a></li>
+<li><a href="../raw/sources/2026-04-16-cache-architecture.html">Source Note: application cache architecture</a></li>
+<li><a href="../raw/sources/2026-04-16-cloudflare-turnstile-config.html">Source Note: Cloudflare and Turnstile configuration</a></li>
+<li><a href="../raw/sources/2026-04-16-codebase-structure.html">2026-04-16 Codebase Structure</a></li>
+<li><a href="../raw/sources/2026-04-16-domain-model-and-control-plane.html">Source Note: domain model, control plane, and secondary product modules</a></li>
+<li><a href="../raw/sources/2026-04-16-env-session-batch-state.html">Source Note: environment matrix, session lifecycle, and batch job state machine</a></li>
+<li><a href="../raw/sources/2026-04-16-functional-workflows.html">2026-04-16 Functional Workflows</a></li>
+<li><a href="../raw/sources/2026-04-16-installation-and-bootstrap-docs.html">Source Note: installation, bootstrap, and operations docs</a></li>
+<li><a href="../raw/sources/2026-04-16-karpathy-codex-skill-install.html">Source Note</a></li>
+<li><a href="../raw/sources/2026-04-16-karpathy-llm-wiki.html">2026-04-16 Karpathy LLM Wiki</a></li>
+<li><a href="../raw/sources/2026-04-16-llm-call-resolution.html">Source Note: LLM call resolution according to configuration</a></li>
+<li><a href="../raw/sources/2026-04-16-product-scope-priorities.html">2026-04-16 Product Scope Priorities</a></li>
+<li><a href="../raw/sources/2026-04-16-provider-failure-runbooks-authz.html">Source Note: provider failure, incident runbooks, and authorization map</a></li>
+<li><a href="../raw/sources/2026-04-16-public-token-and-pdf-boundaries.html">Source Note: public token flows, PDF boundary, and header budget</a></li>
+<li><a href="../raw/sources/2026-04-16-release-v1-9-1.html">Source Note</a></li>
+<li><a href="../raw/sources/2026-04-16-security-layers.html">Source Note: concrete security layers in the application</a></li>
+<li><a href="../raw/sources/2026-04-16-settings-maintenance-persistence.html">Source Note: settings, maintenance, and persistence</a></li>
+<li><a href="../raw/sources/2026-04-16-settings-scoring-and-api-surface.html">Source Note: settings fields, scoring, and API surface</a></li>
+<li><a href="../raw/sources/2026-04-16-storage-dashboards-and-resume-model.html">Source Note: storage, dashboards, and resume domain model</a></li>
+<li><a href="../raw/sources/2026-04-16-stripe-billing.html">Source Note: Stripe billing and firm credit purchases</a></li>
+<li><a href="../raw/sources/2026-04-16-upload-limits-and-email-flows.html">Source Note: upload/OCR pipeline, operational limits, and email flows</a></li>
+</ul>
+      </details>
+    
+<ul class="nav-list">
+<li><a href="../raw/readme.html">Raw Layer</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" open>
+        <summary>topics</summary>
+        <ul class="nav-list">
+<li><a href="admin-and-operations.html">Admin and Operations</a></li>
+<li><a href="ai-credits.html">AI Credits</a></li>
+<li><a href="ai-operation-matrix.html">AI Operation Matrix</a></li>
+<li><a href="ai-timeouts.html">AI Timeouts</a></li>
+<li><a href="api-surface-by-domain.html">API Surface by Domain</a></li>
+<li><a href="application-cache-model.html">Application Cache Model</a></li>
+<li><a href="application-release-history.html">Application Release History</a></li>
+<li><a href="application-surface.html">Application Surface</a></li>
+<li><a href="architecture.html">Architecture</a></li>
+<li><a href="auth-and-access-model.html">Auth and Access Model</a></li>
+<li><a href="authz-decision-map.html">AuthZ Decision Map</a></li>
+<li><a href="backup-and-disaster-recovery.html">Backup and Disaster Recovery</a></li>
+<li><a href="batch-job-state-machine.html">Batch Job State Machine</a></li>
+<li><a href="batch-jobs-and-long-running-workflows.html">Batch Jobs and Long-Running Workflows</a></li>
+<li><a href="business-objects-and-data-relationships.html">Business Objects and Data Relationships</a></li>
+<li><a href="clients-deals-missions-pipeline.html">Clients Deals Missions Pipeline</a></li>
+<li><a href="codex-agent-tooling.html">Codex Agent Tooling</a></li>
+<li><a href="core-resume-workflows.html">Core Resume Workflows</a></li>
+<li><a href="data-persistence-map.html">Data Persistence Map</a></li>
+<li><a href="docker-environment.html">Docker Environment</a></li>
+<li><a href="email-and-verification-flows.html">Email and Verification Flows</a></li>
+<li><a href="environment-and-secret-matrix.html">Environment and Secret Matrix</a></li>
+<li><a href="file-storage-and-retention-map.html">File Storage and Retention Map</a></li>
+<li><a href="header-size-budget.html">Header Size Budget</a></li>
+<li><a href="integrations.html">Integrations</a></li>
+<li><a href="llm-call-resolution-and-runtime-selection.html">LLM Call Resolution and Runtime Selection</a></li>
+<li><a href="llm-control-plane.html">LLM Control Plane</a></li>
+<li><a href="maintenance-and-cleanup-jobs.html">Maintenance and Cleanup Jobs</a></li>
+<li><a href="market-intelligence-and-reference-data.html">Market Intelligence and Reference Data</a></li>
+<li><a href="matching-and-scoring-model.html">Matching and Scoring Model</a></li>
+<li><a href="metrics-and-diagnostics.html">Metrics and Diagnostics</a></li>
+<li><a href="observability-and-quality.html">Observability and Quality</a></li>
+<li><a href="operational-dashboards-map.html">Operational Dashboards Map</a></li>
+<li><a href="operational-limits-matrix.html">Operational Limits Matrix</a></li>
+<li><a href="pdf-and-document-generation-boundary.html">PDF and Document Generation Boundary</a></li>
+<li><a class="active" href="priority-review-2026-04-16.html">Priority Review 2026-04-16</a></li>
+<li><a href="priority-review-2026-04-17.html">Priority Review 2026-04-17</a></li>
+<li><a href="product-scope-and-priorities.html">Product Scope and Priorities</a></li>
+<li><a href="provider-failure-and-fallback-model.html">Provider Failure and Fallback Model</a></li>
+<li><a href="public-token-flows.html">Public Token Flows</a></li>
+<li><a href="resume-domain-model.html">Resume Domain Model</a></li>
+<li><a href="resume-presentation-and-templates.html">Resume Presentation and Templates</a></li>
+<li><a href="runbooks-incident-ops.html">Runbooks Incident Ops</a></li>
+<li><a href="security-and-compliance.html">Security and Compliance</a></li>
+<li><a href="session-and-token-lifecycle.html">Session and Token Lifecycle</a></li>
+<li><a href="settings-and-governance-surfaces.html">Settings and Governance Surfaces</a></li>
+<li><a href="settings-catalog.html">Settings Catalog</a></li>
+<li><a href="settings-field-reference.html">Settings Field Reference</a></li>
+<li><a href="stripe-billing-and-firm-credit-purchase.html">Stripe Billing and Firm Credit Purchase</a></li>
+<li><a href="template-extraction-pipeline.html">Template Extraction Pipeline</a></li>
+<li><a href="turnstile.html">Turnstile</a></li>
+<li><a href="upload-ocr-and-parsing-pipeline.html">Upload OCR and Parsing Pipeline</a></li>
+</ul>
+      </details>
+    
+<ul class="nav-list">
+<li><a href="../2026-04-16.html">2026-04-16</a></li>
+<li><a href="../bienvenue.html">Bienvenue</a></li>
+<li><a href="../index.html">Index</a></li>
+<li><a href="../log.html">Log</a></li>
+<li><a href="../overview.html">Overview</a></li>
+<li><a href="../security.html">Security</a></li>
+</ul>
+        </nav>
+      </aside>
+      <main class="content">
+        <div class="content-meta">Source: <code>topics/Priority Review 2026-04-16.md</code></div>
+        <h1>Priority Review 2026-04-16</h1>
+<h2>Summary</h2>
+<p>High-priority review areas now cluster around delivery/runtime integrity, secret handling in Docker packaging, and cross-cutting maintainability drift on top of the already-known backend operational hotspots.</p>
+<h2>Current State</h2>
+<ul><li>The application surface is broad: SPA frontend, Express proxy, PostgreSQL-backed domain model, batch workers, OCR pipeline, PDF/DOCX generation service, billing, email, and admin tooling.</li><li>Quality posture is meaningful:</li><li><code>214</code> backend test files</li><li><code>129</code> client test files</li><li><code>16</code> Playwright spec files</li><li>CI runs <code>validate:core</code> then <code>validate:e2e</code> on Ubuntu with Node <code>22</code></li><li>The most important currently documented backend risks remain:</li><li>memory amplification and sync I/O in batch export generation</li><li>cleanup routines that need stricter managed-path boundaries</li><li>incomplete OCR temp directory cleanup</li><li>Two previously identified hardening items have now been materially reduced in code:</li><li>DOCX validation is now strict OOXML validation that requires both <code>[Content_Types].xml</code>, <code>_rels/.rels</code>, and a declared main document part that actually exists</li><li>validation scripts now invoke local project binaries directly instead of depending on a globally resolvable <code>tsc</code> / <code>vitest</code> / <code>playwright</code></li><li>Structural complexity is still concentrated in a few central files:</li><li><code>server/services/cache.service.js</code> (<code>731</code> lines)</li><li><code>server/services/aiCredits.service.js</code> (<code>699</code> lines)</li><li><code>server/services/batchJobsWorker/exportGenerator.js</code> (<code>669</code> lines)</li><li><code>server/config/lifecycle.js</code> is a central bootstrap/orchestration hotspot</li><li>frontend complexity is distributed but still heavy in page hooks/sections such as <code>client/src/pages/UsersManagement.hooks.ts</code> (<code>674</code> lines) and <code>client/src/pages/ResumesPage.parts.tsx</code> (<code>625</code> lines)</li><li>The route surface is extensive, with many feature-heavy backend route modules around <code>13k</code> to <code>20k</code> bytes each.</li><li>Local validation now fails fast for environment-policy reasons rather than deep tool breakage:</li><li><code>npm run typecheck</code> and <code>npm run lint</code> both abort through <code>scripts/tooling-preflight.mjs</code> when the workspace is not on Node <code>22.x</code></li><li>the inspected workspace is currently on Node <code>25.9.0</code>, so local validation remains blocked until the runtime is aligned with <code>.nvmrc</code> and <code>package.json.engines</code></li><li>After switching the inspected workspace back to Node <code>22.22.2</code>, local validation progresses further and exposes an inconsistent dependency install:</li><li><code>npm run typecheck</code> fails in <code>node_modules/typescript/lib/lib.dom.d.ts</code> because the file is truncated/corrupted around <code>SVGFEDropShadowElement.addEventListener</code></li><li><code>npm run lint</code> fails because <code>node_modules/eslint/package.json</code> is missing and <code>npm ls</code> marks the local <code>eslint</code> install as invalid</li><li>practical implication: the next corrective action is dependency reinstall/normalization (<code>npm ci</code> or equivalent), not application-code debugging</li><li>After a clean dependency reinstall, validation reaches real project issues:</li><li><code>npm ls</code> is healthy again for top-level <code>typescript@5.9.3</code> and <code>eslint@10.0.3</code></li><li><code>npm run typecheck</code> now reports a small set of real source errors in <code>client/src/components/ErrorBoundary.tsx</code>, <code>client/src/pages/UsersManagement.hooks.ts</code>, and <code>client/src/services/authService.ts</code></li><li><code>npm run lint</code> reports many source findings, but the result is heavily polluted by generated files under <code>client/dist-e2e/**</code></li><li><code>eslint.config.js</code> ignores <code>client/dist/**</code> and <code>client/coverage/**</code> but currently does not ignore <code>client/dist-e2e/**</code>, so lint scope should be corrected before treating the full lint count as actionable</li><li>Current validated state after fixes:</li><li><code>npm run typecheck</code> passes under Node <code>22.22.2</code></li><li><code>npm run lint</code> passes with zero errors after excluding generated <code>client/dist-e2e/**</code> output from lint scope</li><li>the remaining lint debt is warnings-only (<code>26</code> warnings), concentrated in React hook dependency warnings, a few <code>no-explicit-any</code> test/helpers, Fast Refresh export warnings, and a handful of unused variables</li><li>Current validated state after warning cleanup:</li><li><code>npm run typecheck</code> passes under Node <code>22.22.2</code></li><li><code>npm run lint</code> passes with zero errors and zero warnings</li><li>Fast Refresh warnings were resolved by moving non-component exports into dedicated helper/constants files where appropriate (<code>DealsTab</code> and <code>FactsPage</code>)</li><li>generated <code>client/dist-e2e/**</code> output remains excluded from lint scope so validation reflects source files rather than built artifacts</li><li>Behavioral validation snapshot after the static cleanup:</li><li><code>npm run test:pdf</code> passes (<code>359</code> tests, <code>11</code> files)</li><li><code>npm test</code> now passes (<code>3354</code> tests, <code>214</code> files)</li><li><code>npm run test:client</code> now passes (<code>526</code> tests, <code>129</code> files)</li><li>the previously failing backend/client suites were resolved without product-code refactors; the main fixes were test contract updates for current LLM/runtime behavior, stricter DOCX test fixtures, and UI test assumptions aligned with fresh-resume loading</li><li><code>npm run validate:core</code> now passes end-to-end on Node <code>22.22.2</code></li><li><code>happy-dom</code> abort/noise traces have been suppressed in client test setup; remaining validation noise is limited to non-blocking Node deprecation warnings around <code>punycode</code> (<code>DEP0040</code>)</li><li>E2E validation is now also green: <code>npm run validate:e2e</code> passes (<code>86</code> Playwright tests across Chromium and Firefox)</li><li>the E2E-specific fixes were targeted and infrastructural rather than broad product refactors:</li><li>Playwright web-server startup now injects a strong fallback <code>DEFAULT_ADMIN_PASSWORD</code> so production-like env validation does not abort local E2E boot</li><li>the auth E2E helper now publishes settings cache invalidation after flipping <code>allow_user_registration_without_approval</code>, because the registration path reads process-local cached <code>llm_settings</code></li><li>E2E bootstrap ensures the shared firm has a minimum credit balance so improve/export scenarios do not fail spuriously on insufficient credits</li><li><code>server/services/batchJobCredits.service.js</code> no longer orders cancelled batch jobs by a non-existent <code>batch_jobs.updated_at</code>; it uses real lifecycle timestamps instead</li><li>the resumes/adaptations refresh spec now uses deterministic post-upload naming plus more stable UI selectors, which removes false failures caused by parser-derived duplicate names and filter-panel text collisions</li><li>Runtime/toolchain versions are currently skewed across environments:</li><li>Docker builder now targets Node <code>22</code></li><li>CI runs Node <code>22</code></li><li>the inspected local workspace uses Node <code>25.9.0</code></li><li>this increases the risk of contributor-only failures and hard-to-reproduce dependency behavior</li><li>The repository now explicitly standardizes local validation on Node <code>22</code>:</li><li><code>package.json</code> declares <code>engines.node &amp;gt;=22 &amp;lt;23</code></li><li><code>.nvmrc</code> pins <code>22</code></li><li>local wrappers now fail fast with explicit diagnostics when Node or local tool installs are out of policy</li><li>Secret handling still has a real packaging risk despite stronger runtime validation:</li><li><code>.env.docker</code> is now ignored by git going forward</li><li><code>Dockerfile</code> still bakes fallback <code>POSTGRES_PASSWORD</code>, <code>JWT_SECRET</code>, <code>REFRESH_TOKEN_SECRET</code>, and <code>CSRF_SECRET</code> values directly into the runtime image</li><li>Documentation and text encoding drift are visible in user-facing and operational sources:</li><li><code>README.md</code> version and stack badges are now aligned with runtime reality (<code>1.9.1</code>, Node <code>22.x</code>, React <code>19.2</code>, TypeScript <code>5.9</code>)</li><li>README/install/auth-related files still contain mojibake and mixed legacy terminology</li></ul>
+<h2>Important Facts</h2>
+<ul><li>Database migrations are driven by <code>server/scripts/docker-migrate.js</code> and canonical SQL assets under <code>docker/</code>, not a <code>server/database/migrations</code> directory.</li><li>Migration/bootstrap logic still contains mojibake in seeded SQL labels, so encoding drift is not limited to docs and can leak into persisted reference data if uncorrected.</li><li>Frontend route loading is already partially optimized through lazy loading and CSS-on-demand in <code>client/src/app/lazyPages.ts</code>.</li><li>The backend lifecycle still coordinates many unrelated concerns at startup and shutdown: cache cleanup, schedulers, worker boot, backup init, OAuth state cleanup, memory monitor, and DB listeners.</li><li>Existing audit material is high-signal and still aligned with current code hotspots, so it should be treated as active guidance rather than historical noise.</li><li>Frontend auth/client models still carry compatibility aliases (<code>firmId</code>/<code>firm_id</code>, <code>firmName</code>/<code>firm</code>, legacy <code>customer*</code> aliases), which signals contract drift that should be reduced rather than expanded.</li><li>The E2E registration auto-approval path is sensitive to the settings cache boundary: mutating <code>llm_settings</code> directly in a separate process is insufficient unless the app receives the corresponding cache invalidation event.</li><li>The <code>batch_jobs</code> table schema does not include <code>updated_at</code>; batch-job maintenance/settlement code must rely on <code>created_at</code>, <code>started_at</code>, or <code>completed_at</code> instead.</li></ul>
+<h2>Open Questions</h2>
+<ul><li>Whether the local typecheck failure is a Windows-only environment issue or indicates a dependency/version mismatch that can also affect contributor onboarding.</li><li>Whether <code>.env.docker</code> is intentionally meant to carry live secrets in version control or should be replaced by a sanitized template plus deployment-only injection.</li><li>Whether batch export and OCR cleanup limits have production telemetry proving they are still within safe bounds.</li><li>Whether the PDF server is ever reachable outside loopback in non-production deployments.</li></ul>
+<h2>Related</h2>
+<ul><li><a href="../overview.html">overview</a></li><li><a href="architecture.html">topics/Architecture</a></li><li><a href="observability-and-quality.html">topics/Observability and Quality</a></li><li><a href="maintenance-and-cleanup-jobs.html">topics/Maintenance and Cleanup Jobs</a></li><li><a href="pdf-and-document-generation-boundary.html">topics/PDF and Document Generation Boundary</a></li><li><a href="upload-ocr-and-parsing-pipeline.html">topics/Upload OCR and Parsing Pipeline</a></li><li><a href="security-and-compliance.html">topics/Security and Compliance</a></li><li><a href="docker-environment.html">topics/Docker Environment</a></li><li><a href="environment-and-secret-matrix.html">topics/Environment and Secret Matrix</a></li></ul>
+<h2>Sources</h2>
+<ul><li><a href="../raw/session-notes/2026-04-16-memory-bootstrap.html">raw/session-notes/2026-04-16-memory-bootstrap</a></li><li><a href="../raw/sources/2026-04-16-backend-audit-and-quality.html">raw/sources/2026-04-16-backend-audit-and-quality</a></li></ul>
+      </main>
+    </div>
+  </body>
+</html>

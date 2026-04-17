@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AuthZ Decision Map | ResumeConverter Vault</title>
+    <meta name="description" content="AuthZ Decision Map Summary ResumeConverter uses a small set of roles, but their effect is spread across backend middleware, firm scoped access checks, and frontend route guards. Th">
+    <link rel="stylesheet" href="../../assets/site.css">
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <a class="brand" href="../../index.html">
+          <span class="brand-mark">RC</span>
+          <span>
+            <strong>ResumeConverter Vault</strong>
+            <small>Obsidian knowledge showcase</small>
+          </span>
+        </a>
+        <nav class="nav">
+          
+      <details class="nav-folder" >
+        <summary>entities</summary>
+        <ul class="nav-list">
+<li><a href="../entities/resumeconverter.html">ResumeConverter</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" >
+        <summary>raw</summary>
+        
+      <details class="nav-folder" >
+        <summary>session-notes</summary>
+        <ul class="nav-list">
+<li><a href="../raw/session-notes/2026-04-16-memory-bootstrap.html">2026-04-16 Memory Bootstrap</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" >
+        <summary>sources</summary>
+        <ul class="nav-list">
+<li><a href="../raw/sources/2026-04-16-admin-ops-and-diagnostics.html">Source Note: admin control surfaces, backup, and diagnostics</a></li>
+<li><a href="../raw/sources/2026-04-16-backend-audit-and-quality.html">2026-04-16 Backend Audit and Quality</a></li>
+<li><a href="../raw/sources/2026-04-16-cache-architecture.html">Source Note: application cache architecture</a></li>
+<li><a href="../raw/sources/2026-04-16-cloudflare-turnstile-config.html">Source Note: Cloudflare and Turnstile configuration</a></li>
+<li><a href="../raw/sources/2026-04-16-codebase-structure.html">2026-04-16 Codebase Structure</a></li>
+<li><a href="../raw/sources/2026-04-16-domain-model-and-control-plane.html">Source Note: domain model, control plane, and secondary product modules</a></li>
+<li><a href="../raw/sources/2026-04-16-env-session-batch-state.html">Source Note: environment matrix, session lifecycle, and batch job state machine</a></li>
+<li><a href="../raw/sources/2026-04-16-functional-workflows.html">2026-04-16 Functional Workflows</a></li>
+<li><a href="../raw/sources/2026-04-16-installation-and-bootstrap-docs.html">Source Note: installation, bootstrap, and operations docs</a></li>
+<li><a href="../raw/sources/2026-04-16-karpathy-codex-skill-install.html">Source Note</a></li>
+<li><a href="../raw/sources/2026-04-16-karpathy-llm-wiki.html">2026-04-16 Karpathy LLM Wiki</a></li>
+<li><a href="../raw/sources/2026-04-16-llm-call-resolution.html">Source Note: LLM call resolution according to configuration</a></li>
+<li><a href="../raw/sources/2026-04-16-product-scope-priorities.html">2026-04-16 Product Scope Priorities</a></li>
+<li><a href="../raw/sources/2026-04-16-provider-failure-runbooks-authz.html">Source Note: provider failure, incident runbooks, and authorization map</a></li>
+<li><a href="../raw/sources/2026-04-16-public-token-and-pdf-boundaries.html">Source Note: public token flows, PDF boundary, and header budget</a></li>
+<li><a href="../raw/sources/2026-04-16-release-v1-9-1.html">Source Note</a></li>
+<li><a href="../raw/sources/2026-04-16-security-layers.html">Source Note: concrete security layers in the application</a></li>
+<li><a href="../raw/sources/2026-04-16-settings-maintenance-persistence.html">Source Note: settings, maintenance, and persistence</a></li>
+<li><a href="../raw/sources/2026-04-16-settings-scoring-and-api-surface.html">Source Note: settings fields, scoring, and API surface</a></li>
+<li><a href="../raw/sources/2026-04-16-storage-dashboards-and-resume-model.html">Source Note: storage, dashboards, and resume domain model</a></li>
+<li><a href="../raw/sources/2026-04-16-stripe-billing.html">Source Note: Stripe billing and firm credit purchases</a></li>
+<li><a href="../raw/sources/2026-04-16-upload-limits-and-email-flows.html">Source Note: upload/OCR pipeline, operational limits, and email flows</a></li>
+</ul>
+      </details>
+    
+<ul class="nav-list">
+<li><a href="../raw/readme.html">Raw Layer</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" open>
+        <summary>topics</summary>
+        <ul class="nav-list">
+<li><a href="admin-and-operations.html">Admin and Operations</a></li>
+<li><a href="ai-credits.html">AI Credits</a></li>
+<li><a href="ai-operation-matrix.html">AI Operation Matrix</a></li>
+<li><a href="ai-timeouts.html">AI Timeouts</a></li>
+<li><a href="api-surface-by-domain.html">API Surface by Domain</a></li>
+<li><a href="application-cache-model.html">Application Cache Model</a></li>
+<li><a href="application-release-history.html">Application Release History</a></li>
+<li><a href="application-surface.html">Application Surface</a></li>
+<li><a href="architecture.html">Architecture</a></li>
+<li><a href="auth-and-access-model.html">Auth and Access Model</a></li>
+<li><a class="active" href="authz-decision-map.html">AuthZ Decision Map</a></li>
+<li><a href="backup-and-disaster-recovery.html">Backup and Disaster Recovery</a></li>
+<li><a href="batch-job-state-machine.html">Batch Job State Machine</a></li>
+<li><a href="batch-jobs-and-long-running-workflows.html">Batch Jobs and Long-Running Workflows</a></li>
+<li><a href="business-objects-and-data-relationships.html">Business Objects and Data Relationships</a></li>
+<li><a href="clients-deals-missions-pipeline.html">Clients Deals Missions Pipeline</a></li>
+<li><a href="codex-agent-tooling.html">Codex Agent Tooling</a></li>
+<li><a href="core-resume-workflows.html">Core Resume Workflows</a></li>
+<li><a href="data-persistence-map.html">Data Persistence Map</a></li>
+<li><a href="docker-environment.html">Docker Environment</a></li>
+<li><a href="email-and-verification-flows.html">Email and Verification Flows</a></li>
+<li><a href="environment-and-secret-matrix.html">Environment and Secret Matrix</a></li>
+<li><a href="file-storage-and-retention-map.html">File Storage and Retention Map</a></li>
+<li><a href="header-size-budget.html">Header Size Budget</a></li>
+<li><a href="integrations.html">Integrations</a></li>
+<li><a href="llm-call-resolution-and-runtime-selection.html">LLM Call Resolution and Runtime Selection</a></li>
+<li><a href="llm-control-plane.html">LLM Control Plane</a></li>
+<li><a href="maintenance-and-cleanup-jobs.html">Maintenance and Cleanup Jobs</a></li>
+<li><a href="market-intelligence-and-reference-data.html">Market Intelligence and Reference Data</a></li>
+<li><a href="matching-and-scoring-model.html">Matching and Scoring Model</a></li>
+<li><a href="metrics-and-diagnostics.html">Metrics and Diagnostics</a></li>
+<li><a href="observability-and-quality.html">Observability and Quality</a></li>
+<li><a href="operational-dashboards-map.html">Operational Dashboards Map</a></li>
+<li><a href="operational-limits-matrix.html">Operational Limits Matrix</a></li>
+<li><a href="pdf-and-document-generation-boundary.html">PDF and Document Generation Boundary</a></li>
+<li><a href="priority-review-2026-04-16.html">Priority Review 2026-04-16</a></li>
+<li><a href="priority-review-2026-04-17.html">Priority Review 2026-04-17</a></li>
+<li><a href="product-scope-and-priorities.html">Product Scope and Priorities</a></li>
+<li><a href="provider-failure-and-fallback-model.html">Provider Failure and Fallback Model</a></li>
+<li><a href="public-token-flows.html">Public Token Flows</a></li>
+<li><a href="resume-domain-model.html">Resume Domain Model</a></li>
+<li><a href="resume-presentation-and-templates.html">Resume Presentation and Templates</a></li>
+<li><a href="runbooks-incident-ops.html">Runbooks Incident Ops</a></li>
+<li><a href="security-and-compliance.html">Security and Compliance</a></li>
+<li><a href="session-and-token-lifecycle.html">Session and Token Lifecycle</a></li>
+<li><a href="settings-and-governance-surfaces.html">Settings and Governance Surfaces</a></li>
+<li><a href="settings-catalog.html">Settings Catalog</a></li>
+<li><a href="settings-field-reference.html">Settings Field Reference</a></li>
+<li><a href="stripe-billing-and-firm-credit-purchase.html">Stripe Billing and Firm Credit Purchase</a></li>
+<li><a href="template-extraction-pipeline.html">Template Extraction Pipeline</a></li>
+<li><a href="turnstile.html">Turnstile</a></li>
+<li><a href="upload-ocr-and-parsing-pipeline.html">Upload OCR and Parsing Pipeline</a></li>
+</ul>
+      </details>
+    
+<ul class="nav-list">
+<li><a href="../2026-04-16.html">2026-04-16</a></li>
+<li><a href="../bienvenue.html">Bienvenue</a></li>
+<li><a href="../index.html">Index</a></li>
+<li><a href="../log.html">Log</a></li>
+<li><a href="../overview.html">Overview</a></li>
+<li><a href="../security.html">Security</a></li>
+</ul>
+        </nav>
+      </aside>
+      <main class="content">
+        <div class="content-meta">Source: <code>topics/AuthZ Decision Map.md</code></div>
+        <h1>AuthZ Decision Map</h1>
+<h2>Summary</h2>
+<p>ResumeConverter uses a small set of roles, but their effect is spread across backend middleware, firm-scoped access checks, and frontend route guards.</p>
+<p>The durable distinction is:</p>
+<ul><li><code>admin</code>: superadmin/platform-wide authority</li><li><code>localAdmin</code>: firm manager authority</li><li><code>user</code> and <code>viewer</code>: non-manager firm users</li></ul>
+<h2>Backend Role Rules</h2>
+<h3><code>admin</code></h3>
+<ul><li>passes <code>requireAdmin</code></li><li>can cross firm boundaries</li><li>can access settings, metrics, backup, GDPR audit, market-radar collection, ROME collection, and firm management routes</li></ul>
+<h3><code>localAdmin</code></h3>
+<ul><li>does not pass <code>requireAdmin</code></li><li>does pass <code>requireUserManager</code></li><li>can manage firm-scoped management surfaces where routes use manager semantics instead of superadmin semantics</li><li>remains constrained by firm ownership checks</li></ul>
+<h3><code>user</code> / <code>viewer</code></h3>
+<ul><li>do not pass admin or manager middleware</li><li>can only act through normal authenticated business routes and their own firm-scoped data</li></ul>
+<h2>Backend Access Patterns</h2>
+<h3>Global/superadmin-only surfaces</h3>
+<p>Common examples:</p>
+<ul><li><code>/api/settings</code></li><li><code>/api/metrics</code></li><li><code>/api/backup</code></li><li><code>/api/admin/*</code></li><li>firm CRUD and firm-credit top-up routes</li><li>GDPR audit and mail-governance admin routes</li><li>market-radar and ROME collection/admin refresh routes</li></ul>
+<p>These consistently use <code>authenticateToken + requireAdmin</code>.</p>
+<h3>Manager surfaces</h3>
+<p>Manager semantics mean:</p>
+<ul><li><code>admin</code> and <code>localAdmin</code> are both allowed</li><li>non-managers are denied</li></ul>
+<p>The backend exposes this through <code>requireUserManager()</code> and related helpers.</p>
+<h3>Firm-scoped resource checks</h3>
+<p>Even after passing authentication, many routes still require:</p>
+<ul><li>same-firm ownership</li><li>same-firm cross-entity consistency</li></ul>
+<p>So role alone is not enough. Access is often <code>authenticated + role check + firm consistency</code>.</p>
+<h2>Frontend Route Guard Model</h2>
+<p>The SPA uses two main elevated guards:</p>
+<h3><code>AdminRoute</code></h3>
+<ul><li>only <code>user.role === 'admin'</code></li><li>used for settings, metrics, backup, jobs, security logs, and other superadmin pages</li></ul>
+<h3><code>ManagerRoute</code></h3>
+<ul><li>allows <code>admin</code> and <code>localAdmin</code></li><li>used for the admin workspace and template-management area</li></ul>
+<p>This means the frontend already reflects the same structural distinction as the backend: <code>localAdmin</code> is a manager, not a superadmin.</p>
+<h2>Important Mental Model</h2>
+<p>Do not think of <code>localAdmin</code> as <code>almost admin everywhere</code>.</p>
+<p>The closer model is:</p>
+<ul><li><code>admin</code> = platform/superadmin</li><li><code>localAdmin</code> = firm manager</li><li>many sensitive operational surfaces remain superadmin-only</li></ul>
+<h2>Common Pitfalls</h2>
+<ul><li>Seeing an admin-like screen in the SPA does not imply the backend route is superadmin-only or vice versa; verify both sides.</li><li>Firm-scoped helpers still matter for managers and normal users even after route-level role checks pass.</li><li>Some bugs that look like missing permissions are actually firm-mismatch failures rather than role failures.</li></ul>
+<h2>Practical Reading</h2>
+<ul><li>If the question is <code>who can operate the platform?</code>, start with <code>requireAdmin</code>.</li><li>If the question is <code>who can manage a firm surface?</code>, inspect <code>requireUserManager</code> plus firm checks.</li><li>If the question is <code>why can this user see the page but still fail the API call?</code>, compare frontend route guard vs backend middleware vs firm ownership validation.</li></ul>
+<h2>Related</h2>
+<ul><li><a href="auth-and-access-model.html">topics/Auth and Access Model</a></li><li><a href="security-and-compliance.html">topics/Security and Compliance</a></li><li><a href="admin-and-operations.html">topics/Admin and Operations</a></li><li><a href="public-token-flows.html">topics/Public Token Flows</a></li><li><a href="business-objects-and-data-relationships.html">topics/Business Objects and Data Relationships</a></li></ul>
+<h2>Sources</h2>
+<ul><li><a href="../raw/sources/2026-04-16-provider-failure-runbooks-authz.html">raw/sources/2026-04-16-provider-failure-runbooks-authz</a></li></ul>
+      </main>
+    </div>
+  </body>
+</html>
