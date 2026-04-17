@@ -890,3 +890,7 @@
   - added a dedicated Pages deployment workflow in `.github/workflows/github-pages.yml`
   - added `site-assets/site.css` as the shared visual layer for the generated showcase
   - generated the initial `docs/` site so core pages, topics, entities, and raw source notes are directly browsable on GitHub Pages
+- Tightened GitHub Pages coverage for the vault showcase:
+  - removed the last broken wiki-link in the generated site by exposing `AGENTS.md` as a published page
+  - extended the static-site generator to publish non-markdown vault files (`.base`, `.canvas`) as plain-text pages
+  - revalidated that the Pages output now exposes all supported vault source files with zero generated broken links

@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>2026-04-16 | ResumeConverter Vault</title>
-    <meta name="description" content="2026-04-16 page">
+    <title>ResumeConverter Vault Schema | ResumeConverter Vault</title>
+    <meta name="description" content="ResumeConverter Vault Schema This vault is an LLM maintained external memory for the ResumeConverter project. Purpose The vault stores synthesized, durable project knowledge in mar">
     <link rel="stylesheet" href="../assets/site.css">
   </head>
   <body>
@@ -131,8 +131,8 @@
       </details>
     
 <ul class="nav-list">
-<li><a class="active" href="2026-04-16.html">2026-04-16</a></li>
-<li><a href="agents.html">ResumeConverter Vault Schema</a></li>
+<li><a href="2026-04-16.html">2026-04-16</a></li>
+<li><a class="active" href="agents.html">ResumeConverter Vault Schema</a></li>
 <li><a href="bienvenue.html">Bienvenue</a></li>
 <li><a href="index.html">Index</a></li>
 <li><a href="log.html">Log</a></li>
@@ -144,8 +144,29 @@
         </nav>
       </aside>
       <main class="content">
-        <div class="content-meta">Source: <code>2026-04-16.md</code></div>
-        
+        <div class="content-meta">Source: <code>AGENTS.md</code></div>
+        <h1>ResumeConverter Vault Schema</h1>
+<p>This vault is an LLM-maintained external memory for the ResumeConverter project.</p>
+<h2>Purpose</h2>
+<p>The vault stores synthesized, durable project knowledge in markdown so future sessions can reuse it instead of rebuilding context from scratch.</p>
+<h2>Core Rules</h2>
+<ol><li>Read <code>index.md</code> first before broad project questions.</li><li>Read <code>overview.md</code> second for high-level product and architecture context.</li><li>Read only the relevant topic and entity pages needed for the task.</li><li>Update the vault when new durable knowledge appears.</li><li>Append every meaningful maintenance action to <code>log.md</code>.</li><li>Keep raw material immutable under <code>raw/</code>.</li><li>Keep synthesized knowledge in normal wiki pages at the vault root or in typed folders.</li></ol>
+<h2>Directory Model</h2>
+<ul><li><code>raw/</code></li><li>immutable source material</li><li>session bootstrap notes</li><li>imported articles, docs, transcripts, exports</li><li><code>entities/</code></li><li>stable project objects</li><li>products, services, environments, providers</li><li><code>topics/</code></li><li>cross-cutting knowledge</li><li>Docker, Turnstile, AI credits, timeouts, deployment behavior</li><li><code>overview.md</code></li><li>high-level project map</li><li><code>index.md</code></li><li>navigational catalog</li><li><code>log.md</code></li><li>append-only chronological maintenance log</li></ul>
+<h2>File Conventions</h2>
+<ul><li>Use markdown only.</li><li>Prefer one topic per file.</li><li>Use clear filenames in English.</li><li>Prefer short sections:</li><li><code>Summary</code></li><li><code>Current State</code></li><li><code>Important Facts</code></li><li><code>Open Questions</code></li><li><code>Related</code></li><li><code>Sources</code></li><li>Use Obsidian wikilinks for internal references.</li><li>Keep statements factual and specific.</li><li>Include exact paths, routes, env vars, and commands where useful.</li></ul>
+<h2>Operating Modes</h2>
+<h3>Query</h3>
+<ol><li>Read <code>index.md</code>.</li><li>Read the smallest relevant set of pages.</li><li>Answer from the wiki first.</li><li>If the wiki is stale or incomplete, inspect the codebase or the web.</li><li>If new durable knowledge is found, write it back to the vault.</li></ol>
+<h3>Ingest</h3>
+<ol><li>Put raw material under <code>raw/</code> if it should be preserved.</li><li>Update or create the relevant synthesized pages.</li><li>Update <code>index.md</code>.</li><li>Append a dated entry to <code>log.md</code>.</li></ol>
+<h3>Lint</h3>
+<p>Periodically check for:</p>
+<ul><li>orphan pages</li><li>duplicated facts across pages</li><li>stale claims</li><li>missing cross-links</li><li>pages that should be split</li><li>topics that deserve their own page</li></ul>
+<h2>Scope</h2>
+<p>This vault is for durable ResumeConverter knowledge, not temporary scratch notes.</p>
+<p>Do not store:</p>
+<ul><li>ephemeral debugging noise</li><li>large copied logs unless needed as raw evidence</li><li>duplicated source text when a short synthesis is enough</li></ul>
       </main>
     </div>
   </body>

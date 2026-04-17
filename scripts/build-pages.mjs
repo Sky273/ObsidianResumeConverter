@@ -9,9 +9,9 @@ const outputRoot = path.join(repoRoot, 'docs');
 const siteAssetsRoot = path.join(repoRoot, 'site-assets');
 
 const excludedDirectories = new Set(['.git', '.github', '.obsidian', 'docs', 'scripts']);
-const excludedFiles = new Set(['AGENTS.md']);
+const supportedExtensions = new Set(['.md', '.base', '.canvas']);
 
-const markdownFiles = [];
+const sourceFiles = [];
 
 async function walk(dir) {
   const entries = await fs.readdir(dir, { withFileTypes: true });
@@ -24,10 +24,10 @@ async function walk(dir) {
       await walk(absolutePath);
       continue;
     }
-    if (!entry.name.endsWith('.md') || excludedFiles.has(entry.name)) {
+    if (!supportedExtensions.has(path.extname(entry.name).toLowerCase())) {
       continue;
     }
-    markdownFiles.push(path.relative(repoRoot, absolutePath).replace(/\\/g, '/'));
+    sourceFiles.push(path.relative(repoRoot, absolutePath).replace(/\\/g, '/'));
   }
 }
 
@@ -40,7 +40,7 @@ function slugify(value) {
 }
 
 function pageOutputPath(relativePath) {
-  const normalized = relativePath.replace(/\.md$/i, '');
+  const normalized = relativePath.replace(/\.(md|base|canvas)$/i, '');
   const segments = normalized.split('/');
   const fileName = segments.pop();
   const safeName = `${slugify(fileName)}.html`;
@@ -62,6 +62,10 @@ function escapeHtml(value) {
 function extractTitle(markdown, fallback) {
   const match = markdown.match(/^#\s+(.+)$/m);
   return match ? match[1].trim() : fallback;
+}
+
+function extractFallbackTitle(relativePath) {
+  return path.basename(relativePath, path.extname(relativePath));
 }
 
 function stripMarkdown(markdown) {
@@ -111,8 +115,8 @@ function resolveWikiTarget(target, currentFile, fileMap, aliasMap) {
   const currentDir = path.posix.dirname(currentFile);
 
   const directCandidates = [
-    `${normalizedTarget}.md`,
-    path.posix.join(currentDir, `${normalizedTarget}.md`),
+    ...[...supportedExtensions].map((ext) => `${normalizedTarget}${ext}`),
+    ...[...supportedExtensions].map((ext) => path.posix.join(currentDir, `${normalizedTarget}${ext}`)),
   ];
 
   for (const candidate of directCandidates) {
@@ -232,6 +236,10 @@ function renderMarkdown(markdown, currentFile, fileMap, aliasMap) {
   return parts.join('\n');
 }
 
+function renderPlainText(text) {
+  return `<pre><code>${escapeHtml(text.replace(/\r\n/g, '\n'))}</code></pre>`;
+}
+
 function buildTree(files) {
   const root = { files: [], children: new Map() };
 
@@ -319,21 +327,22 @@ function pageTemplate({ pageTitle, description, sidebar, content, sourcePath, ro
 
 async function main() {
   await walk(repoRoot);
-  markdownFiles.sort((a, b) => a.localeCompare(b));
+  sourceFiles.sort((a, b) => a.localeCompare(b));
 
   const fileMap = new Map();
   const aliasMap = new Map();
 
-  for (const relativePath of markdownFiles) {
+  for (const relativePath of sourceFiles) {
     const absolutePath = path.join(repoRoot, relativePath);
-    const markdown = await fs.readFile(absolutePath, 'utf8');
-    const fallbackTitle = path.basename(relativePath, '.md');
-    const title = extractTitle(markdown, fallbackTitle);
-    const description = stripMarkdown(markdown).slice(0, 180) || `${title} page`;
+    const source = await fs.readFile(absolutePath, 'utf8');
+    const ext = path.extname(relativePath).toLowerCase();
+    const fallbackTitle = extractFallbackTitle(relativePath);
+    const title = ext === '.md' ? extractTitle(source, fallbackTitle) : fallbackTitle;
+    const description = (ext === '.md' ? stripMarkdown(source) : source.trim()).slice(0, 180) || `${title} page`;
 
-    fileMap.set(relativePath, { title, description, markdown });
+    fileMap.set(relativePath, { title, description, source, ext });
 
-    const withoutExtension = relativePath.replace(/\.md$/i, '');
+    const withoutExtension = relativePath.replace(/\.(md|base|canvas)$/i, '');
     aliasMap.set(withoutExtension.toLowerCase(), relativePath);
     aliasMap.set(path.basename(withoutExtension).toLowerCase(), relativePath);
   }
@@ -345,15 +354,17 @@ async function main() {
     path.join(outputRoot, 'assets', 'site.css')
   );
 
-  const tree = buildTree(markdownFiles);
+  const tree = buildTree(sourceFiles);
 
-  for (const relativePath of markdownFiles) {
+  for (const relativePath of sourceFiles) {
     const page = fileMap.get(relativePath);
     const outputPath = pageOutputPath(relativePath);
     const rootPrefix = path.relative(path.dirname(outputPath), outputRoot).replace(/\\/g, '/') || '.';
     const normalizedRootPrefix = rootPrefix.endsWith('/') ? rootPrefix : `${rootPrefix}/`;
     const sidebar = renderTree(tree, [], relativePath, fileMap);
-    const content = renderMarkdown(page.markdown, relativePath, fileMap, aliasMap);
+    const content = page.ext === '.md'
+      ? renderMarkdown(page.source, relativePath, fileMap, aliasMap)
+      : renderPlainText(page.source);
     const html = pageTemplate({
       pageTitle: `${page.title} | ResumeConverter Vault`,
       description: page.description,
@@ -366,7 +377,7 @@ async function main() {
     await fs.writeFile(outputPath, html, 'utf8');
   }
 
-  const indexCards = ['Bienvenue.md', 'overview.md', 'index.md', 'SECURITY.md']
+  const indexCards = ['Bienvenue.md', 'overview.md', 'index.md', 'SECURITY.md', 'AGENTS.md']
     .filter((file) => fileMap.has(file))
     .map((file) => {
       const page = fileMap.get(file);
@@ -380,8 +391,8 @@ async function main() {
     })
     .join('\n');
 
-  const topicalCards = markdownFiles
-    .filter((file) => file.startsWith('topics/'))
+  const topicalCards = sourceFiles
+    .filter((file) => file.startsWith('topics/') && path.extname(file).toLowerCase() === '.md')
     .slice(0, 12)
     .map((file) => {
       const page = fileMap.get(file);
@@ -418,7 +429,7 @@ async function main() {
       </section>
       <section class="panel">
         <h2>Vault coverage</h2>
-        <p>${markdownFiles.length} markdown pages are rendered into static HTML for GitHub Pages.</p>
+        <p>${sourceFiles.length} vault files are rendered into static HTML for GitHub Pages.</p>
         <ul class="topic-list">
           ${topicalCards}
         </ul>
