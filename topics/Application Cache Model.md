@@ -121,6 +121,9 @@ If Redis is configured but unavailable:
 
 This fallback is intentional and visible in diagnostics.
 
+Recent decomposition work split Redis connection state out of the main cache service into a dedicated helper so cache namespace logic is less entangled with global Redis lifecycle bookkeeping.
+The remaining invalidation key composition and grouped-view invalidation helpers are also now isolated from the main service, which keeps namespace definitions and lifecycle code separate from key-set assembly logic.
+
 ## Request Coalescing
 
 The cache layer also avoids duplicate concurrent loads for the same versioned key through pending-load tracking.
@@ -165,6 +168,11 @@ The cache layer exposes meaningful diagnostics, including:
 - cache hit/miss stats
 - per-namespace stats
 - application-cache active state
+
+Recent decomposition note:
+
+- `server/services/cache.service.js` now focuses more on cache registry composition, public namespaces, invalidation helpers, and exported operational APIs.
+- The memory/Redis namespace implementations and versioned-key machinery now live in `server/services/cacheNamespaces.service.js`.
 
 This is why the metrics/admin surfaces can explain cache behavior in production.
 

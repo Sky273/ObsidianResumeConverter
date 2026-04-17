@@ -25,6 +25,8 @@ ResumeConverter is not only a CV processing app. It also models the commercial a
 - They sit at the junction between business demand and candidate evaluation.
 - Missions are the main target object for profile matching and resume adaptation.
 - They can also be surfaced from deal context.
+- The grouped mission-by-deal view is now isolated from the broader CRUD service: `server/services/missions.service.js` keeps cache and public service entrypoints, while `server/services/missionsGroupedView.service.js` owns the heavier deal/missions/count assembly path.
+- Attachment-count enrichment for grouped mission views is now centralized instead of duplicated separately for assigned and unassigned mission collections.
 
 ## Candidate Pipeline
 
@@ -57,6 +59,9 @@ ResumeConverter is not only a CV processing app. It also models the commercial a
 - Matching and adaptation connect candidates to a mission.
 - Deals and clients provide the business envelope.
 - Candidate pipeline and interviews provide execution tracking after selection begins.
+- The resume-submission service is now split between:
+  - `server/services/resumeSubmissions.service.js` for service-level behavior and cache invalidation
+  - `server/services/resumeSubmissionsPersistence.service.js` for SQL shape, listing/count queries, and CRUD persistence primitives
 
 ## Why This Matters
 

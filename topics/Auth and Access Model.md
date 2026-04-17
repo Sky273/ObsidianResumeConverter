@@ -43,6 +43,15 @@ The backend audit indicates that firm isolation is a core invariant:
 - Access control in this application is not only about authentication; tenant isolation is equally important.
 - Backend route behavior and frontend page guards should be understood together.
 - Future feature work should assume ownership checks and firm scoping are mandatory unless a route is explicitly transverse and admin-only.
+- The frontend auth/session contract is being tightened around canonical user fields:
+  - `firmId`
+  - `firmName`
+  - `role`
+  - `status`
+- Backend auth routes still emit legacy aliases such as `firm_id`, `firm`, and `customer*` for compatibility, but client-side session restoration and sign-in normalization now collapse those shapes into the canonical fields before `AuthContext` consumers read them.
+- Backend user-response shaping is now centralized in `server/utils/mappers.js`:
+  - session-facing endpoints such as sign-in, refresh, `me`, and Google auth still include legacy aliases for compatibility
+  - user-management endpoints now return the canonical fields by default and no longer rebuild legacy aliases ad hoc in each route
 
 ## Related
 

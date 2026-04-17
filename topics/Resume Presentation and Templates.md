@@ -13,8 +13,6 @@ ResumeConverter does not stop at content analysis. It also owns resume presentat
 ## Template Extraction
 
 - The app can extract a reusable template from uploaded CV files.
-- DOCX-oriented extraction uses HTML plus embedded styles and images.
-- PDF-oriented extraction uses vision analysis.
 - The target is a normalized template structure containing:
   - `headerContent`
   - `templateContent`
@@ -24,12 +22,36 @@ ResumeConverter does not stop at content analysis. It also owns resume presentat
   - tags
   - extracted colors and fonts
 - The extraction logic aims to preserve layout style while removing personal data and collapsing the body into reusable placeholders such as `-name-`, `-title-`, and `-content-`.
+- The current extraction path is now PDF-centered even for Office inputs:
+  - DOC/DOCX are converted to PDF through LibreOffice
+  - the first PDF page is transformed into structured HTML/CSS fragments
+  - fragments are sanitized and split into header/content/footer before LLM normalization
+  - sparse-layout PDFs fall back to vision, then text-only extraction if needed
+- The extraction response now includes review metadata:
+  - `extractionConfidence` for a score and level signal
+  - `extractionReview` for method, metrics, and intermediate fragments
+- This makes the feature inspectable from the UI instead of being a pure black-box normalization step.
+- The extraction modal now supports pre-save operator correction of:
+  - header
+  - body
+  - footer
+  - stylesheet
+- When the operator turns an extracted result into a saved template, the new template is now pre-assigned to the current authenticated user's `firmId` instead of defaulting to the global template scope.
+- The extraction-to-template handoff waits for auth restoration before consuming the extracted payload from `sessionStorage`, so a slow `/api/auth/me` bootstrap does not accidentally create a global template with an empty `firm_id`.
+- The PDF-centered extraction path also recovers coarse visual structure from the source PDF, including large background blocks and approximate image regions, so the generated template is less text-only than before.
 
 ## Export and Rendering
 
 - Resume export depends on a dedicated PDF server, not only on the main Express app.
 - The PDF server is an internal service guarded by an internal token and timeout/concurrency limits.
 - Export includes PDF generation from HTML and likely document-style rendering for improved/adapted resumes.
+- Export template rendering now understands the template placeholder `-logo-`:
+  - on batch HTTP export
+  - on batch-job worker export
+  - on single resume/adaptation export and share flows built in the frontend
+- During export, `-logo-` is replaced with the exporting cabinet's logo when the source resume/adaptation is associated with a firm that has a stored logo.
+- The replacement prefers embedded binary logo data from `firms.logo_data`, producing a data URL in the rendered HTML so the PDF/DOCX generator does not depend on cookie-authenticated asset fetches.
+- The single-export/share path now resolves the logo from the source resume's `firm_id` on the client side, fetches `/api/firms/:id/logo/image`, converts it to a `data:` URL, and injects the resulting `<img>` markup before sending HTML to the PDF/DOCX generator.
 
 ## Sharing
 
@@ -51,6 +73,7 @@ ResumeConverter does not stop at content analysis. It also owns resume presentat
 
 - [[topics/Core Resume Workflows]]
 - [[topics/PDF and Document Generation Boundary]]
+- [[topics/Template Extraction Pipeline]]
 - [[topics/Header Size Budget]]
 - [[topics/Integrations]]
 - [[topics/Docker Environment]]

@@ -44,6 +44,7 @@
 - [[topics/LLM Call Resolution and Runtime Selection]]: how configured provider/model settings resolve into real runtime LLM calls.
 - [[topics/Provider Failure and Fallback Model]]: non-retryable provider auth failures, structured-output retries, and fallback semantics.
 - [[topics/Resume Presentation and Templates]]: template CRUD, extraction, export, rendering, and sharing.
+- [[topics/Template Extraction Pipeline]]: normalized Office/PDF template extraction flow, sanitization, layout splitting, and fallback behavior.
 - [[topics/PDF and Document Generation Boundary]]: internal PDF-server trust boundary, proxying rules, payload guards, and rendering limits.
 - [[topics/Public Token Flows]]: narrow tokenized public routes for consent and share access.
 - [[topics/Header Size Budget]]: architectural rule to keep request headers comfortably under 4 KB.
@@ -54,10 +55,15 @@
 - [[topics/API Surface by Domain]]: orientation map for the main backend route families.
 - [[topics/Integrations]]: external providers and platform integrations used by the app.
 - [[topics/Observability and Quality]]: tests, CI, audits, metrics, and validation strategy.
+- [[topics/Codex Agent Tooling]]: local Codex skills and agent-side workflow tooling recorded for this project workspace.
+- [[topics/Application Release History]]: durable memory of application-level release milestones and current version.
+- [[topics/Priority Review 2026-04-16]]: current top-priority review areas across operational safety, security boundaries, tooling, and maintainability.
+- [[topics/Priority Review 2026-04-17]]: refreshed whole-app priority review centered on backend decoupling, long-running workflow hardening, and scope discipline.
 - [[topics/Product Scope and Priorities]]: nucleus vs secondary scope and roadmap guidance.
 - [[topics/Docker Environment]]: Docker env source of truth and runtime/build behavior.
 - [[topics/Turnstile]]: Cloudflare Turnstile configuration and Docker build implications.
 - [[topics/AI Credits]]: upfront AI credit reservation model and insufficient-credit UX.
+- [[topics/AI Operation Matrix]]: route-to-actionType-to-operationType map with configurable cost and token budgets.
 - [[topics/AI Timeouts]]: standardized 15-minute IA timeout policy.
 
 ## Raw Sources
@@ -67,6 +73,8 @@
 - [[raw/sources/2026-04-16-karpathy-llm-wiki]]: source note for the LLM Wiki pattern used by this vault.
 - [[raw/sources/2026-04-16-codebase-structure]]: source note for current codebase architecture and route surface.
 - [[raw/sources/2026-04-16-product-scope-priorities]]: source note for product scope guidance.
+- [[raw/sources/2026-04-16-karpathy-codex-skill-install]]: source note for the locally installed Codex adaptation of Karpathy coding guidelines.
+- [[raw/sources/2026-04-16-release-v1.9.1]]: source note for the `v1.9.1` application release bump and changelog update.
 - [[raw/sources/2026-04-16-functional-workflows]]: source note for core workflows, admin flows, and integrations.
 - [[raw/sources/2026-04-16-backend-audit-and-quality]]: source note for access-control posture, validation, CI, and quality guidance.
 - [[raw/sources/2026-04-16-domain-model-and-control-plane]]: source note for business objects, control plane, compliance, and secondary modules.

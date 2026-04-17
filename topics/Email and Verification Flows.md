@@ -135,6 +135,12 @@ If a new account email flow is added, document:
 4. one-time-use behavior
 5. what account state changes on success
 
+The shared email-template backend is less monolithic now:
+
+- `server/services/emailTemplates.service.js` keeps template CRUD, rendering, preview, and cache-facing access helpers
+- `server/services/emailTemplatesMjml.service.js` owns lazy MJML loading, compilation, unload scheduling, and graceful shutdown cleanup
+- `server/services/emailTemplatesKeywords.service.js` owns placeholder substitution and keyword/date/logo expansion
+
 ## Related
 
 - [[topics/Session and Token Lifecycle]]
@@ -144,4 +150,3 @@ If a new account email flow is added, document:
 ## Sources
 
 - [[raw/sources/2026-04-16-upload-limits-and-email-flows]]
-

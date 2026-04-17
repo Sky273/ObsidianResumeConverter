@@ -48,6 +48,11 @@ The AI layer is governed centrally through settings, provider availability, cred
   - profile search
   - profile analysis
 - Recent hardening introduced upfront reservation for both long-running jobs and synchronous workflows.
+- Business tracing is carried separately through explicit `operationType` metadata sent into the shared LLM layer.
+- The intended model is:
+  - `actionType` = charging and reservation unit
+  - `operationType` = business tracing label
+- These are not always one-to-one. Some priced actions deliberately span several LLM sub-operations under one credit action.
 
 ## Timeout Governance
 
@@ -79,6 +84,7 @@ The closer model is:
 ## Related
 
 - [[topics/AI Credits]]
+- [[topics/AI Operation Matrix]]
 - [[topics/AI Timeouts]]
 - [[topics/LLM Call Resolution and Runtime Selection]]
 - [[topics/Provider Failure and Fallback Model]]

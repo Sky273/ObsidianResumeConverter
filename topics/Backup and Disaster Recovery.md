@@ -78,6 +78,15 @@ Operational consequence:
 - restoration is treated as an application-managed operation
 - restore activity is security-relevant and audited
 
+The backup core is also less monolithic now:
+
+- `server/services/backup/core.service.js` keeps the orchestration layer: history entries, settings lookup, FTP upload/download, retention cleanup, and top-level logging
+- `server/services/backup/artifacts.service.js` owns the artifact lifecycle primitives:
+  - PostgreSQL binary resolution
+  - backup dump creation and gzip compression
+  - restore decompression and legacy dump detection
+  - best-effort temporary artifact cleanup
+
 ## Why This Matters
 
 - Backup in ResumeConverter is part of the product's operational posture.

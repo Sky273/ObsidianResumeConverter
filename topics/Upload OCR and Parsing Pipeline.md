@@ -70,10 +70,16 @@ The OCR stack is layered:
 
 - preferred runtime uses native binaries such as `tesseract`, `pdftoppm`, and `pdfimages`
 - OCR variants and scoring heuristics try multiple render/recognition strategies
-- advanced OCR backend support can exist if configured
+- advanced OCR backend support is enabled by default through `OCR_ADVANCED_BACKEND=paddleocr`
 - JavaScript OCR exists as part of the service stack, but the best-quality path is still the native-tool chain
 
 The vault should remember that OCR quality and throughput are strongly environment-dependent.
+
+Important runtime consequence:
+
+- the advanced OCR layer is now opt-out rather than opt-in
+- if Python or the advanced backend is unavailable, the extraction path degrades to CLI OCR and then to `tesseract.js`
+- this default favors extraction quality over minimum runtime dependency footprint
 
 ## Word Extraction Path
 
@@ -105,6 +111,22 @@ This means good DOCX input can often avoid OCR entirely.
 After extraction, the text is cleaned before response.
 
 This is important because the output exposed to the rest of the app is not simply the raw OCR/native payload; it is a normalized text layer better suited for later AI analysis or persistence.
+
+Important caveat from code inspection on 2026-04-16:
+
+- the current extraction cleanup stack repairs mojibake and normalizes whitespace/newlines, but it does not explicitly strip `U+0000` / NUL characters
+- the resume import path later persists extracted text and analysis JSON directly to PostgreSQL
+- PostgreSQL text/json columns reject embedded NUL bytes with `invalid byte sequence for encoding "UTF8": 0x00`
+- there is already a backend sanitizer utility that removes NUL characters, but the resume import/analyze persistence path is not wired through it
+
+Operational consequence:
+
+- malformed PDFs, OCR output, legacy DOC files, or even provider-returned strings that contain `\u0000` can fail late during persistence rather than earlier during extraction
+
+Current mitigation from 2026-04-16:
+
+- the persistence boundary now strips NUL characters on resume writes and batch-item pending payload writes
+- this mitigation lives at the DB service layer rather than inside OCR extraction itself, so it also covers provider-returned strings such as resume names, titles, and pending manual-review payloads
 
 ## Metrics and Diagnostics
 
@@ -164,4 +186,3 @@ If a change touches ingestion, document:
 ## Sources
 
 - [[raw/sources/2026-04-16-upload-limits-and-email-flows]]
-

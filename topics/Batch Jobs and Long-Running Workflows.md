@@ -41,6 +41,12 @@ Important management routes:
 - Import jobs can create staged items after the API response, so job state management and failure settlement are important.
 - Deal export uses the same broader job framework, not a separate ad hoc implementation.
 - creation or staging failure is expected to trigger refund/settlement behavior rather than leaving credits orphaned
+- The batch export worker is being decomposed incrementally rather than rewritten:
+  - source loading for resume vs adaptation items
+  - firm-logo resolution
+  - template placeholder expansion
+  - PDF/DOCX renderer retry orchestration
+  are now separable concerns ahead of the actual PDF/DOCX generation and ZIP packaging path
 
 ## Functional Role
 

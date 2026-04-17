@@ -52,6 +52,28 @@ Examples:
 
 These are often retried once with stricter or more compact JSON instructions.
 
+Current durable behavior for resume analysis as of 2026-04-16:
+
+- analysis requests now run with deterministic structured-output settings (`temperature: 0`)
+- malformed JSON no longer stops after a single parse failure
+- the flow now attempts, in order:
+  - normal structured analysis
+  - compact-JSON retry
+  - JSON repair pass that asks the provider to repair the malformed payload into valid compact JSON
+- local parsing also strips BOM/NUL characters and repairs some trailing-comma/control-character issues before giving up
+- local parsing now also repairs a common provider defect where a comma is missing between two JSON properties, which previously surfaced as `Expected ',' or '}' after property value`
+- local parsing also tolerates JSON comments, smart quotes, duplicate separators, and root-level missing closing braces/brackets when the payload is otherwise structurally unambiguous
+- local repair deliberately does not try to invent the end of a string value truncated mid-field; those cases still fall through to retry / repair-pass logic
+- the analysis flow no longer imposes a hardcoded output-token default; when no request-level max-token override is provided, runtime token limits still come from the configured model/provider parameters
+
+Current durable behavior for resume analysis as of 2026-04-17:
+
+- when all JSON-oriented recovery attempts still fail, the backend now performs one final local salvage pass on the provider text
+- this salvage path accepts loose Markdown / `key: value` output and reconstructs a minimal analysis payload when it can recover fields such as candidate name, title, ratings, top skills/tools, and section suggestions
+- this reduces user-facing hard failures on providers that ignore `json_object` but still return semantically useful analysis text
+- degraded-analysis salvage now logs provider/model hints, detected loose-response shape, recovered fields, missing fields, per-section counts, and a short response preview so low-capability local models can be diagnosed from backend logs
+- if the loose-text salvage cannot recover any meaningful structure, the original stable invalid-response error is still returned
+
 This is not provider failover; it is prompt/response-shape recovery within the same provider path.
 
 ### Empty or low-quality content
@@ -88,6 +110,11 @@ ResumeConverter currently uses several different notions of fallback.
 - A call can retry with stricter JSON instructions.
 - Improvement can fall back from structured JSON expectations to a plain-text style recovery path.
 - This is an output-contract fallback, not a provider failover.
+
+### Request-level parameter precedence
+
+- request-level `maxTokens` / `max_tokens` overrides take precedence over persisted model parameters in the LLM control plane
+- this matters for AI operation budgets because per-action max-token settings must remain the effective runtime ceiling, even when model defaults or admin parameters also define token values
 
 ### User-message fallback
 
