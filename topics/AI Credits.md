@@ -21,6 +21,8 @@ ResumeConverter moved from late credit checks to upfront reservation for importa
 - Credit governance is keyed by business `actionType`, not by low-level provider call count.
 - A single billed `actionType` can intentionally cover several traced LLM sub-operations when they belong to one priced user action.
 - The main maintainability hotspot was a mix of policy and ledger concerns in one service; extracting the ledger layer reduced that coupling without changing credit semantics.
+- Batch settlement for reserved jobs depends on `batch_job_items.pending_data.creditUsage` to know which reserved actions were actually consumed before deciding any refund.
+- `server/services/batchJobs/itemCrud.js:updateJobItemStatus()` must preserve `pending_data.creditUsage` when it writes `result_data`; otherwise a successful action can later be refunded incorrectly at job settlement time.
 
 ## Current Reservation Shape
 
@@ -34,6 +36,13 @@ Observed batch reservation mapping includes:
 - `profile-analysis` -> `profile.analysis`
 
 Reservation metadata is attached to job options and later settled or refunded depending on real consumption and failure paths.
+
+## Regression Note 2026-04-18
+
+- A false-refund bug existed on some successful batch LLM operations, notably profile search / analysis / matching paths.
+- Root cause: `markBatchJobActionCreditConsumed()` merged `pending_data.creditUsage`, but later successful `updateJobItemStatus(..., { result_data })` replaced `pending_data` entirely and dropped that marker.
+- Consequence: `server/services/batchJobCredits.service.js:settleBatchJobCredits()` interpreted the reserved action as unused and refunded it even though the operation had succeeded.
+- Fix: preserve existing `creditUsage` when persisting `result_data`, and lock it with a regression test in `server/tests/services/batchJobs.itemCrud.test.js`.
 
 ## ActionType Governance Rule
 

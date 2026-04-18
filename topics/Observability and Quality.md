@@ -104,6 +104,8 @@ The backend audit shows that the project already invested in:
   - this avoids the previous state where the process could stay partially alive without ever exposing `/health`, causing Playwright to report a generic health timeout instead of a real startup failure
   - in practice, this makes local E2E bootstrap issues such as wrong PostgreSQL credentials surface immediately as startup defects rather than as misleading auth-spec failures
 - As of 2026-04-17, the Playwright webserver wrapper itself now performs an explicit PostgreSQL preflight before the frontend build:
+  - the wrapper now also probes the intended local E2E ports before startup (`3001` for the proxy, `3002` for the PDF server by default) and fails early if a stale listener is already present
+  - this prevents misleading export-path `403` errors caused by Playwright talking to an old local PDF server instance left behind from a previous debug session or aborted run
   - `scripts/start-playwright-webserver.mjs` checks the live connection using the current `POSTGRES_*` env values and fails early with an actionable message if authentication or connectivity is wrong
   - this makes the most common local E2E bootstrap failure mode (`resume_user` password mismatch / wrong local DB target) obvious before the heavier Vite build step starts
   - the wrapper health timeout was aligned upward as part of the same pass so cold bootstrap runs do not fail prematurely
@@ -126,6 +128,16 @@ The backend audit shows that the project already invested in:
 - As of 2026-04-17, improvement fallback observability is now surfaced in the client metrics UI as well as the backend payload:
   - `postAnalysisFallbackRuns` is exposed in the metrics types and displayed in the improvement operations card
   - a dedicated client regression test now locks that rendering path so the post-analysis fallback counter cannot silently disappear during future refactors
+- As of 2026-04-17, the weak-model improvement path is also resilient to sparse but technically valid post-analysis payloads:
+  - improvement persistence no longer only distinguishes `valid` vs `invalid` post-analysis responses
+  - when the post-analysis succeeds but omits fields such as title, summary, tags, or suggestions, the worker now merges those missing fields from the embedded analysis returned by the original improvement step
+  - this merge path is tracked separately from the invalid-response fallback path through `postAnalysisMergeRuns` and `source: embedded-analysis-merge`
+- As of 2026-04-17, adaptation diagnostics now preserve which resume text source fed the adaptation path:
+  - recent adaptation metrics entries record whether the operation ran from `improved_text` or `original_text`
+  - the client metrics card renders this as a human-readable resume-source label, so operators can tell whether a degraded downstream result still used the improved resume variant
+- As of 2026-04-17, the upload phase of the analysis/improve/export Playwright flow uses a shared helper instead of an inline file-input sequence:
+  - `e2e/helpers/ui.ts` now exposes a dedicated `setInputFilesWhenReady(...)` helper
+  - the analysis/improve/export spec uses that helper so the upload step is less timing-sensitive and easier to reuse in future multi-step upload specs
 - The remaining CI warnings at this point are non-blocking:
   - GitHub Actions deprecation warnings around Node 20-based action runtimes
   - Node `DEP0040` warnings around `punycode` from transitive dependencies during validation runs
@@ -152,6 +164,17 @@ The backend audit shows that the project already invested in:
 - Targeted public-auth Playwright reruns on 2026-04-17 after the auth bootstrap timeout fix:
   - Chromium: `e2e/auth.spec.ts` and `e2e/public-navigation.spec.ts` green
   - Firefox: `e2e/auth.spec.ts` and `e2e/public-navigation.spec.ts` green
+- Targeted CV-flow reruns on 2026-04-17 after the helper consolidation:
+  - Chromium: `e2e/upload-to-analysis.spec.ts` green
+  - Chromium: isolated `analysis-improve-export` PDF export green
+  - the DOCX export scenario is now dependency-aware and skipped locally when `pandoc` is unavailable, instead of failing as a false product regression on Windows workstations without that binary
+- As of 2026-04-17, the local combined `analysis-improve-export` Chromium run was hardened further:
+  - `scripts/start-e2e-stack.mjs` now auto-restarts the proxy/PDF child processes on unexpected local exits, with a bounded restart budget
+  - `e2e/helpers/ui.ts` retries `page.goto(...)` on transient `ERR_CONNECTION_REFUSED` so a momentary local restart does not immediately fail the next navigation
+  - the combined Chromium rerun now completes as `2 passed, 1 skipped` on a machine without a local DOCX converter
+- The remaining instability on the combined local `analysis-improve-export` Chromium run is currently classified as local stack instability:
+  - one rerun still hit `ERR_CONNECTION_REFUSED` in mid-spec after earlier steps had already passed
+  - isolated reruns of the new coverage behave correctly, so this is not currently treated as a regression in the new helper or export assertions
 - Remaining CI warnings are now mostly non-blocking dependency/platform notices unless a fresh GitHub run proves otherwise
 
 ## Related

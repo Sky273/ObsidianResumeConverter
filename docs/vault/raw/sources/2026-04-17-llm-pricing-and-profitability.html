@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>2026-04-17 LLM Pricing and Profitability | ResumeConverter Vault</title>
+    <meta name="description" content="2026 04 17 LLM Pricing and Profitability Purpose Source note for the refreshed pricing and profitability projection grounded in: current ResumeConverter AI credit governance curren">
+    <link rel="stylesheet" href="../../../assets/site.css">
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <a class="brand" href="../../../index.html">
+          <span class="brand-mark">RC</span>
+          <span>
+            <strong>ResumeConverter Vault</strong>
+            <small>Obsidian knowledge showcase</small>
+          </span>
+        </a>
+        <nav class="nav">
+          
+      <details class="nav-folder" >
+        <summary>entities</summary>
+        <ul class="nav-list">
+<li><a href="../../entities/resumeconverter.html">ResumeConverter</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" open>
+        <summary>raw</summary>
+        
+      <details class="nav-folder" >
+        <summary>session-notes</summary>
+        <ul class="nav-list">
+<li><a href="../session-notes/2026-04-16-memory-bootstrap.html">2026-04-16 Memory Bootstrap</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" open>
+        <summary>sources</summary>
+        <ul class="nav-list">
+<li><a href="2026-04-16-admin-ops-and-diagnostics.html">Source Note: admin control surfaces, backup, and diagnostics</a></li>
+<li><a href="2026-04-16-backend-audit-and-quality.html">2026-04-16 Backend Audit and Quality</a></li>
+<li><a href="2026-04-16-cache-architecture.html">Source Note: application cache architecture</a></li>
+<li><a href="2026-04-16-cloudflare-turnstile-config.html">Source Note: Cloudflare and Turnstile configuration</a></li>
+<li><a href="2026-04-16-codebase-structure.html">2026-04-16 Codebase Structure</a></li>
+<li><a href="2026-04-16-domain-model-and-control-plane.html">Source Note: domain model, control plane, and secondary product modules</a></li>
+<li><a href="2026-04-16-env-session-batch-state.html">Source Note: environment matrix, session lifecycle, and batch job state machine</a></li>
+<li><a href="2026-04-16-functional-workflows.html">2026-04-16 Functional Workflows</a></li>
+<li><a href="2026-04-16-installation-and-bootstrap-docs.html">Source Note: installation, bootstrap, and operations docs</a></li>
+<li><a href="2026-04-16-karpathy-codex-skill-install.html">Source Note</a></li>
+<li><a href="2026-04-16-karpathy-llm-wiki.html">2026-04-16 Karpathy LLM Wiki</a></li>
+<li><a href="2026-04-16-llm-call-resolution.html">Source Note: LLM call resolution according to configuration</a></li>
+<li><a href="2026-04-16-product-scope-priorities.html">2026-04-16 Product Scope Priorities</a></li>
+<li><a href="2026-04-16-provider-failure-runbooks-authz.html">Source Note: provider failure, incident runbooks, and authorization map</a></li>
+<li><a href="2026-04-16-public-token-and-pdf-boundaries.html">Source Note: public token flows, PDF boundary, and header budget</a></li>
+<li><a href="2026-04-16-release-v1-9-1.html">Source Note</a></li>
+<li><a href="2026-04-16-security-layers.html">Source Note: concrete security layers in the application</a></li>
+<li><a href="2026-04-16-settings-maintenance-persistence.html">Source Note: settings, maintenance, and persistence</a></li>
+<li><a href="2026-04-16-settings-scoring-and-api-surface.html">Source Note: settings fields, scoring, and API surface</a></li>
+<li><a href="2026-04-16-storage-dashboards-and-resume-model.html">Source Note: storage, dashboards, and resume domain model</a></li>
+<li><a href="2026-04-16-stripe-billing.html">Source Note: Stripe billing and firm credit purchases</a></li>
+<li><a href="2026-04-16-upload-limits-and-email-flows.html">Source Note: upload/OCR pipeline, operational limits, and email flows</a></li>
+<li><a href="2026-04-17-installation-deployment-docs.html">Source Note: Installation and Deployment Docs</a></li>
+<li><a href="2026-04-17-llm-executive-presentation.html">Source Note - LLM Executive Presentation</a></li>
+<li><a class="active" href="2026-04-17-llm-pricing-and-profitability.html">2026-04-17 LLM Pricing and Profitability</a></li>
+<li><a href="2026-04-17-ocr-and-llm-docs.html">Source Note: OCR and LLM Technical Docs</a></li>
+<li><a href="2026-04-17-repository-markdown-docs.html">Source Note: Repository Markdown Docs Inventory</a></li>
+<li><a href="2026-04-17-security-and-user-docs.html">Source Note: Security and User Guide Docs</a></li>
+</ul>
+      </details>
+    
+<ul class="nav-list">
+<li><a href="../readme.html">Raw Layer</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" >
+        <summary>topics</summary>
+        <ul class="nav-list">
+<li><a href="../../topics/accessibility-and-interaction-quality.html">Accessibility and Interaction Quality</a></li>
+<li><a href="../../topics/admin-and-operations.html">Admin and Operations</a></li>
+<li><a href="../../topics/ai-credits.html">AI Credits</a></li>
+<li><a href="../../topics/ai-operation-matrix.html">AI Operation Matrix</a></li>
+<li><a href="../../topics/ai-timeouts.html">AI Timeouts</a></li>
+<li><a href="../../topics/api-surface-by-domain.html">API Surface by Domain</a></li>
+<li><a href="../../topics/application-cache-model.html">Application Cache Model</a></li>
+<li><a href="../../topics/application-release-history.html">Application Release History</a></li>
+<li><a href="../../topics/application-surface.html">Application Surface</a></li>
+<li><a href="../../topics/architecture.html">Architecture</a></li>
+<li><a href="../../topics/auth-and-access-model.html">Auth and Access Model</a></li>
+<li><a href="../../topics/authz-decision-map.html">AuthZ Decision Map</a></li>
+<li><a href="../../topics/backup-and-disaster-recovery.html">Backup and Disaster Recovery</a></li>
+<li><a href="../../topics/batch-job-state-machine.html">Batch Job State Machine</a></li>
+<li><a href="../../topics/batch-jobs-and-long-running-workflows.html">Batch Jobs and Long-Running Workflows</a></li>
+<li><a href="../../topics/business-objects-and-data-relationships.html">Business Objects and Data Relationships</a></li>
+<li><a href="../../topics/clients-deals-missions-pipeline.html">Clients Deals Missions Pipeline</a></li>
+<li><a href="../../topics/codex-agent-tooling.html">Codex Agent Tooling</a></li>
+<li><a href="../../topics/core-resume-workflows.html">Core Resume Workflows</a></li>
+<li><a href="../../topics/data-persistence-map.html">Data Persistence Map</a></li>
+<li><a href="../../topics/docker-environment.html">Docker Environment</a></li>
+<li><a href="../../topics/email-and-verification-flows.html">Email and Verification Flows</a></li>
+<li><a href="../../topics/environment-and-secret-matrix.html">Environment and Secret Matrix</a></li>
+<li><a href="../../topics/file-storage-and-retention-map.html">File Storage and Retention Map</a></li>
+<li><a href="../../topics/header-size-budget.html">Header Size Budget</a></li>
+<li><a href="../../topics/integrations.html">Integrations</a></li>
+<li><a href="../../topics/llm-call-resolution-and-runtime-selection.html">LLM Call Resolution and Runtime Selection</a></li>
+<li><a href="../../topics/llm-control-plane.html">LLM Control Plane</a></li>
+<li><a href="../../topics/llm-cost-model-and-pricing-strategy.html">LLM Cost Model and Pricing Strategy</a></li>
+<li><a href="../../topics/llm-executive-decision-presentation.html">LLM Executive Decision Presentation</a></li>
+<li><a href="../../topics/maintenance-and-cleanup-jobs.html">Maintenance and Cleanup Jobs</a></li>
+<li><a href="../../topics/market-intelligence-and-reference-data.html">Market Intelligence and Reference Data</a></li>
+<li><a href="../../topics/matching-and-scoring-model.html">Matching and Scoring Model</a></li>
+<li><a href="../../topics/metrics-and-diagnostics.html">Metrics and Diagnostics</a></li>
+<li><a href="../../topics/observability-and-quality.html">Observability and Quality</a></li>
+<li><a href="../../topics/operational-dashboards-map.html">Operational Dashboards Map</a></li>
+<li><a href="../../topics/operational-limits-matrix.html">Operational Limits Matrix</a></li>
+<li><a href="../../topics/pdf-and-document-generation-boundary.html">PDF and Document Generation Boundary</a></li>
+<li><a href="../../topics/priority-review-2026-04-16.html">Priority Review 2026-04-16</a></li>
+<li><a href="../../topics/priority-review-2026-04-17.html">Priority Review 2026-04-17</a></li>
+<li><a href="../../topics/priority-review-2026-04-18.html">Priority Review 2026-04-18</a></li>
+<li><a href="../../topics/product-scope-and-priorities.html">Product Scope and Priorities</a></li>
+<li><a href="../../topics/provider-failure-and-fallback-model.html">Provider Failure and Fallback Model</a></li>
+<li><a href="../../topics/public-token-flows.html">Public Token Flows</a></li>
+<li><a href="../../topics/repository-documentation-map.html">Repository Documentation Map</a></li>
+<li><a href="../../topics/resume-domain-model.html">Resume Domain Model</a></li>
+<li><a href="../../topics/resume-presentation-and-templates.html">Resume Presentation and Templates</a></li>
+<li><a href="../../topics/runbooks-incident-ops.html">Runbooks Incident Ops</a></li>
+<li><a href="../../topics/security-and-compliance.html">Security and Compliance</a></li>
+<li><a href="../../topics/session-and-token-lifecycle.html">Session and Token Lifecycle</a></li>
+<li><a href="../../topics/settings-and-governance-surfaces.html">Settings and Governance Surfaces</a></li>
+<li><a href="../../topics/settings-catalog.html">Settings Catalog</a></li>
+<li><a href="../../topics/settings-field-reference.html">Settings Field Reference</a></li>
+<li><a href="../../topics/stripe-billing-and-firm-credit-purchase.html">Stripe Billing and Firm Credit Purchase</a></li>
+<li><a href="../../topics/template-extraction-pipeline.html">Template Extraction Pipeline</a></li>
+<li><a href="../../topics/turnstile.html">Turnstile</a></li>
+<li><a href="../../topics/upload-ocr-and-parsing-pipeline.html">Upload OCR and Parsing Pipeline</a></li>
+</ul>
+      </details>
+    
+<ul class="nav-list">
+<li><a href="../../2026-04-16.html">2026-04-16</a></li>
+<li><a href="../../agents.html">ResumeConverter Vault Schema</a></li>
+<li><a href="../../bienvenue.html">Bienvenue</a></li>
+<li><a href="../../index.html">Index</a></li>
+<li><a href="../../log.html">Log</a></li>
+<li><a href="../../overview.html">Overview</a></li>
+<li><a href="../../sans-titre.html">Sans titre</a></li>
+<li><a href="../../sans-titre.html">Sans titre</a></li>
+<li><a href="../../security.html">Security</a></li>
+</ul>
+        </nav>
+      </aside>
+      <main class="content">
+        <div class="content-meta">Source: <code>raw/sources/2026-04-17-llm-pricing-and-profitability.md</code></div>
+        <h1>2026-04-17 LLM Pricing and Profitability</h1>
+<h2>Purpose</h2>
+<p>Source note for the refreshed pricing and profitability projection grounded in:</p>
+<ul><li>current ResumeConverter AI credit governance</li><li>current Stripe credit-pack defaults</li><li>official provider pricing or model pages consulted on 2026-04-17</li></ul>
+<h2>Repository Inputs</h2>
+<ul><li><code>server/config/aiCredits.js</code></li><li><code>server/config/stripe.js</code></li><li><a href="../../topics/ai-credits.html">topics/AI Credits</a></li><li><a href="../../topics/ai-operation-matrix.html">topics/AI Operation Matrix</a></li><li><a href="../../topics/llm-control-plane.html">topics/LLM Control Plane</a></li></ul>
+<h2>Current Product Economics Inputs</h2>
+<h3>Credit governance</h3>
+<p>Default <code>actionType</code> costs:</p>
+<ul><li><code>chatbot.message</code>: 1 credit</li><li><code>resume.ai_modify</code>: 5 credits</li><li><code>template.extract</code>: 15 credits</li><li><code>resume.analysis</code>: 25 credits</li><li><code>resume.improvement</code>: 75 credits</li><li><code>resume.adaptation</code>: 50 credits</li><li><code>resume.match</code>: 8 credits</li><li><code>profile.search</code>: 12 credits</li><li><code>profile.analysis</code>: 25 credits</li></ul>
+<p>Default initial firm balance:</p>
+<ul><li><code>firmInitialCredits</code>: 1000</li></ul>
+<h3>Current Stripe pack defaults</h3>
+<p>From <code>server/config/stripe.js</code>:</p>
+<ul><li><code>starter</code>: 250 credits for 2900 cents EUR</li><li><code>growth</code>: 750 credits for 7900 cents EUR</li><li><code>scale</code>: 2000 credits for 19900 cents EUR</li></ul>
+<p>Equivalent selling price per 1000 credits:</p>
+<ul><li>starter: 116 EUR / 1000 credits</li><li>growth: 105.33 EUR / 1000 credits</li><li>scale: 99.50 EUR / 1000 credits</li></ul>
+<h2>Official Provider Snapshot Consulted</h2>
+<h3>OpenAI</h3>
+<ul><li>Pricing page: <a href="https://openai.com/api/pricing">OpenAI API pricing</a></li><li>Model page: <a href="https://developers.openai.com/api/docs/models/gpt-5.4/">GPT-5.4</a></li><li>Latest public family observed on 2026-04-17:</li><li>GPT-5.4 input: 2.50 USD / 1M tokens</li><li>GPT-5.4 output: 15.00 USD / 1M tokens</li><li>GPT-5.4 mini input: 0.75 USD / 1M tokens</li><li>GPT-5.4 mini output: 4.50 USD / 1M tokens</li><li>GPT-5.4 nano input: 0.20 USD / 1M tokens</li><li>GPT-5.4 nano output: 1.25 USD / 1M tokens</li></ul>
+<h3>Anthropic</h3>
+<ul><li>Pricing page: <a href="https://www.anthropic.com/pricing">Anthropic pricing</a></li><li>Detailed docs: <a href="https://docs.anthropic.com/en/docs/about-claude/pricing">Anthropic API pricing</a></li><li>Product pages:</li><li><a href="https://www.anthropic.com/claude/opus">Claude Opus 4.7</a></li><li><a href="https://www.anthropic.com/claude/haiku">Claude Haiku 4.5</a></li><li>Latest public model information observed on 2026-04-17:</li><li>Claude Opus 4.7 was published on 2026-04-16</li><li>Opus 4.7 pricing starts at 5.00 USD / 1M input and 25.00 USD / 1M output</li><li>Claude Sonnet 4 remains the stable public mid-tier pricing baseline at 3.00 / 15.00 USD per 1M</li><li>Claude Haiku 4.5 pricing starts at 1.00 / 5.00 USD per 1M</li></ul>
+<h3>DeepSeek</h3>
+<ul><li>Pricing page: <a href="https://api-docs.deepseek.com/quick_start/pricing/">DeepSeek Models &amp;amp; Pricing</a></li><li>Snapshot used for <code>deepseek-chat</code> / DeepSeek-V3.2:</li><li>input cache miss: 0.28 USD / 1M tokens</li><li>output: 0.42 USD / 1M tokens</li><li>cache hit: 0.028 USD / 1M tokens</li></ul>
+<h3>Z.AI / GLM</h3>
+<ul><li>Pricing page: <a href="https://docs.z.ai/guides/overview/pricing">Z.AI pricing overview</a></li><li>Overview: <a href="https://docs.z.ai/guides/overview/overview">Z.AI models overview</a></li><li>Release notes: <a href="https://docs.z.ai/release-notes/new-released">New Released</a></li><li>Latest public model information observed on 2026-04-17:</li><li>GLM-5.1 appears in the public overview and release notes as of 2026-04-07</li><li>the public pricing page still exposes GLM-5 and GLM-5-Turbo, not a distinct GLM-5.1 row</li><li>official public price rows used:</li><li>GLM-5 input: 1.00 USD / 1M tokens</li><li>GLM-5 output: 3.20 USD / 1M tokens</li><li>GLM-5-Turbo input: 1.20 USD / 1M tokens</li><li>GLM-5-Turbo output: 4.00 USD / 1M tokens</li><li>GLM-4.7 input: 0.60 USD / 1M tokens</li><li>GLM-4.7 output: 2.20 USD / 1M tokens</li><li>Projection rule used:</li><li>GLM-5 is the closest official public pricing proxy for GLM-5.1 until Z.AI publishes a separate public price row</li></ul>
+<h3>MiniMax</h3>
+<ul><li>Official compatibility page: <a href="https://platform.minimax.io/docs/api-reference/text-anthropic-api">MiniMax compatible Anthropic API</a></li><li>Official token pricing page: <a href="https://platform.minimax.io/docs/api-reference/anthropic-api-compatible-cache">MiniMax Anthropic-compatible cache pricing</a></li><li>Latest public model information observed on 2026-04-17:</li><li>MiniMax-M2.7 is the newest public flagship in this family</li><li>public token rates remain:</li><li>input: 0.30 USD / 1M tokens</li><li>output: 1.20 USD / 1M tokens</li></ul>
+<h3>Hugging Face routed inference</h3>
+<ul><li>Pricing page: <a href="https://huggingface.co/docs/inference-providers/pricing">Hugging Face Inference Providers pricing</a></li><li>Important note:</li><li>Hugging Face states routed requests are billed with no markup.</li><li>This is a routing/billing layer, not a standalone token-price baseline.</li></ul>
+<h2>Modeling Assumptions Used For Projection</h2>
+<p>The repo exposes default max-token ceilings, but not a durable cross-feature “typical token telemetry” page yet. The profitability projection therefore uses an explicit operational estimate per priced action, inferred from product behavior and bundled substeps.</p>
+<p>Indicative per-action token envelopes used in the projection:</p>
+<p>| Action | Input tokens | Output tokens | Notes | | --- | ---: | ---: | --- | | <code>chatbot.message</code> | 2000 | 700 | Short contextual assistance turn | | <code>resume.ai_modify</code> | 6000 | 2000 | Rewrite assistance on a selected segment | | <code>template.extract</code> | 20000 | 4000 | Heavy extraction/normalization path | | <code>resume.analysis</code> | 14000 | 5000 | Initial structured CV analysis | | <code>resume.improvement</code> | 28000 | 12000 | Includes generation plus post-improvement analysis bundle | | <code>resume.adaptation</code> | 16000 | 6000 | Includes adaptation plus matching-oriented work | | <code>resume.match</code> | 8000 | 1500 | Standalone match analysis | | <code>profile.search</code> | 12000 | 2500 | Keywords + batch scoring + explanations | | <code>profile.analysis</code> | 8000 | 2500 | Detailed profile analysis |</p>
+<p>These are not official provider numbers; they are product-level planning assumptions.</p>
+<h2>Derived Cost Benchmarks</h2>
+<p>Indicative variable cost per action, refreshed around the newest public models:</p>
+<p>| Action | GPT-5.4 | GPT-5.4 mini | Claude Opus 4.7 | GLM-5 proxy for 5.1 | MiniMax M2.7 | | --- | ---: | ---: | ---: | ---: | ---: | | <code>chatbot.message</code> | 0.0155 USD | 0.0046 USD | 0.0275 USD | 0.0042 USD | 0.0014 USD | | <code>resume.analysis</code> | 0.1100 USD | 0.0330 USD | 0.1950 USD | 0.0300 USD | 0.0102 USD | | <code>resume.improvement</code> | 0.2500 USD | 0.0750 USD | 0.4400 USD | 0.0664 USD | 0.0228 USD | | <code>resume.adaptation</code> | 0.1300 USD | 0.0390 USD | 0.2300 USD | 0.0352 USD | 0.0120 USD |</p>
+<p>Representative blended basket for 1000 credits:</p>
+<ul><li>4 improvements</li><li>6 analyses</li><li>4 adaptations</li><li>6 template extractions</li><li>10 matches</li><li>10 profile searches</li><li>6 AI modifications</li><li>30 chatbot messages</li></ul>
+<p>Resulting variable AI cost for that 1000-credit basket:</p>
+<ul><li>DeepSeek V3.2: 0.2729 USD</li><li>MiniMax M2.7: 0.4416 USD</li><li>Z.AI GLM-4.7: 0.8434 USD</li><li>Z.AI GLM-5 (proxy for 5.1): 1.3128 USD</li><li>OpenAI GPT-5.4 mini: 1.4025 USD</li><li>Anthropic Claude Haiku 4.5: 1.6710 USD</li><li>OpenAI GPT-5.4: 4.6750 USD</li><li>Anthropic Claude Sonnet 4: 5.0130 USD</li><li>Anthropic Claude Opus 4.7: 8.3550 USD</li></ul>
+<h2>Local Model Option</h2>
+<p>Ollama / local hosting has no official token-price page comparable to hosted APIs.</p>
+<p>The projection therefore treats local models as infrastructure-backed cost rather than token-priced cost.</p>
+<p>Illustrative all-in local-hosting assumption:</p>
+<ul><li>250 EUR / month total</li><li>GPU/VPS or amortized on-prem hardware</li><li>electricity / hosting</li><li>admin/ops allocation</li></ul>
+<p>Equivalent cost per 1000-credit blended basket at different monthly volumes:</p>
+<ul><li>20 baskets / month: 12.50 EUR</li><li>50 baskets / month: 5.00 EUR</li><li>100 baskets / month: 2.50 EUR</li></ul>
+<h2>Commercial Interpretation</h2>
+<p>The current default Stripe packs are already in a very high-margin zone relative to the modeled variable AI cost, including when using GPT-5.4, Claude Sonnet 4, or Claude Opus 4.7 for a meaningful share of traffic.</p>
+<p>That does not automatically mean they are wrong:</p>
+<ul><li>they may intentionally absorb product support, infra, OCR, storage, onboarding, and margin</li><li>they leave wide safety room for prompt growth and long outputs</li><li>they are commercially conservative rather than merely “profitable”</li></ul>
+<h2>Related</h2>
+<ul><li><a href="../../topics/ai-credits.html">topics/AI Credits</a></li><li><a href="../../topics/ai-operation-matrix.html">topics/AI Operation Matrix</a></li><li><a href="../../topics/llm-cost-model-and-pricing-strategy.html">topics/LLM Cost Model and Pricing Strategy</a></li></ul>
+      </main>
+    </div>
+  </body>
+</html>

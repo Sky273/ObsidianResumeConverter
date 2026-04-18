@@ -39,6 +39,8 @@ Not all Markdown files are equally authoritative. The most useful ones are the i
   - processing constraints and limits
 - `server/config/LLM_GOVERNANCE.md`
   - prompt/contract/versioning policy
+- `docs/LLM_COST_MODEL_AND_PRICING.md`
+  - pricing and profitability note for provider mix, local-model economics, and credit-pack design
 - `USER_GUIDE.md`
   - French user-facing walkthrough
 - `USER_GUIDE_EN.md`
@@ -59,6 +61,8 @@ Not all Markdown files are equally authoritative. The most useful ones are the i
   - `server/DOCUMENT_PROCESSING_LIMITS.md`
 - For prompt/runtime governance, start with:
   - `server/config/LLM_GOVERNANCE.md`
+- For AI economics or tariff design, start with:
+  - `docs/LLM_COST_MODEL_AND_PRICING.md`
 - For product walkthroughs or UI explanation, use:
   - `README.md`
   - `USER_GUIDE.md`
@@ -76,6 +80,11 @@ Not all Markdown files are equally authoritative. The most useful ones are the i
   - `INSTALL.md`, `INSTALL_PG.md`, `SECURITY.md`, and `USER_GUIDE_EN.md` read correctly as UTF-8 when inspected explicitly.
   - future doc cleanup should focus on wording drift and consolidation, not broad re-encoding.
 - Historical audit docs like `BACKEND_AUDIT_2026-04-04.md` and `security_best_practices_report.md` are evidence and guidance, not canonical runtime truth.
+- `docs/LLM_COST_MODEL_AND_PRICING.md` is now the most direct repository-side source for:
+  - official provider pricing snapshots
+  - ResumeConverter credit/action assumptions
+  - local Ollama cost framing
+  - recommended credit-pack tariff ranges
 
 ## Open Questions
 

@@ -41,6 +41,8 @@
 - [[topics/Data Persistence Map]]: which table families hold durable product truth versus temporary or derived artifacts.
 - [[topics/Stripe Billing and Firm Credit Purchase]]: Stripe checkout, webhook fulfillment, and firm-credit top-up model.
 - [[topics/LLM Control Plane]]: provider/model governance, prompts, credits, tokens, and timeout policy.
+- [[topics/LLM Cost Model and Pricing Strategy]]: provider pricing snapshot, local-model economics, and recommended credit-pack tariff ranges.
+- [[topics/LLM Executive Decision Presentation]]: management-facing synthesis for LLM choice, premium/runtime separation, and tariff posture.
 - [[topics/LLM Call Resolution and Runtime Selection]]: how configured provider/model settings resolve into real runtime LLM calls.
 - [[topics/Provider Failure and Fallback Model]]: non-retryable provider auth failures, structured-output retries, and fallback semantics.
 - [[topics/Resume Presentation and Templates]]: template CRUD, extraction, export, rendering, and sharing.
@@ -55,11 +57,13 @@
 - [[topics/API Surface by Domain]]: orientation map for the main backend route families.
 - [[topics/Integrations]]: external providers and platform integrations used by the app.
 - [[topics/Observability and Quality]]: tests, CI, audits, metrics, and validation strategy.
+- [[topics/Accessibility and Interaction Quality]]: current accessibility baseline, dialog/live-region quality, and remaining guardrail priorities.
 - [[topics/Codex Agent Tooling]]: local Codex skills and agent-side workflow tooling recorded for this project workspace.
 - [[topics/Repository Documentation Map]]: map of the main Markdown docs inside the repository and which ones are authoritative.
 - [[topics/Application Release History]]: durable memory of application-level release milestones and current version.
 - [[topics/Priority Review 2026-04-16]]: current top-priority review areas across operational safety, security boundaries, tooling, and maintainability.
 - [[topics/Priority Review 2026-04-17]]: refreshed whole-app priority review centered on backend decoupling, long-running workflow hardening, and scope discipline.
+- [[topics/Priority Review 2026-04-18]]: refreshed whole-app priority review confirming backend runtime concentration, workflow hardening needs, and renewed scope discipline.
 - [[topics/Product Scope and Priorities]]: nucleus vs secondary scope and roadmap guidance.
 - [[topics/Docker Environment]]: Docker env source of truth and runtime/build behavior.
 - [[topics/Turnstile]]: Cloudflare Turnstile configuration and Docker build implications.
@@ -93,6 +97,8 @@
 - [[raw/sources/2026-04-16-settings-scoring-and-api-surface]]: source note for high-signal settings fields, scoring layers, and API domain grouping.
 - [[raw/sources/2026-04-16-storage-dashboards-and-resume-model]]: source note for file retention, operational views, and the layered resume object model.
 - [[raw/sources/2026-04-17-repository-markdown-docs]]: source note for the main Markdown documentation files currently present in the repository.
+- [[raw/sources/2026-04-17-llm-pricing-and-profitability]]: source note for official provider pricing, current Stripe packs, and profitability modeling assumptions.
+- [[raw/sources/2026-04-17-llm-executive-presentation]]: source note for the hierarchy-facing synthesis of LLM choice and tariff scenarios.
 - [[raw/sources/2026-04-17-installation-deployment-docs]]: source note for install, bootstrap, Docker, and deployment markdown docs in the repository.
 - [[raw/sources/2026-04-17-security-and-user-docs]]: source note for the repository security document and user guides.
 - [[raw/sources/2026-04-17-ocr-and-llm-docs]]: source note for OCR pipeline, document-processing limits, and LLM governance markdown docs.

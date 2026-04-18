@@ -98,6 +98,21 @@ This indicates that the team treats latency debugging as part of normal operatio
   - the improvement operations card already exposed `postAnalysisFallbackRuns`
   - recent entries now also render the embedded-analysis fallback source and the `post-analysis` stage with human-readable labels instead of raw internal identifiers
   - this makes the difference between generation fallback and persistence-analysis fallback easier to interpret during incident review
+- As of 2026-04-17, improvement diagnostics distinguish a third post-analysis quality state:
+  - `postAnalysisFallbackRuns` still means the persistence analysis failed with an invalid structured payload and the worker kept the embedded analysis wholesale
+  - `postAnalysisMergeRuns` now means the persistence analysis technically succeeded but was sparse, so missing fields were backfilled from the embedded improvement analysis
+  - recent entries expose this with `source: embedded-analysis-merge`, `stage: post-analysis`, and the merged field list
+- As of 2026-04-17, adaptation diagnostics also expose which resume text source fed the operation:
+  - recent entries can now indicate `resumeSource: improved_text` or `resumeSource: original_text`
+  - this makes the admin-facing diagnostics more actionable when validating the end-to-end value of the improvement fallback chain
+- As of 2026-04-17, the metrics card now surfaces degradation state explicitly:
+  - improvement entries distinguish `generation fallback`, `post-analysis fallback`, and `post-analysis merge`
+  - adaptation entries distinguish `adaptation fallback`
+  - failed runs are rendered separately from nominal flows
+- As of 2026-04-17, the metrics translations and tests were repaired in UTF-8 without BOM:
+  - `client/src/i18n/locales/fr/metrics.json` was repaired from mojibake while preserving the full key set
+  - `OperationLLMCard.test.tsx` now asserts degradation, source, stage, merged fields, and adaptation resume source labels explicitly
+
 
 ## Related
 

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>LLM Cost Model and Pricing Strategy | ResumeConverter Vault</title>
+    <meta name="description" content="LLM Cost Model and Pricing Strategy Summary ResumeConverter’s AI economics are governed by business credits, not by raw provider calls. The current credit model remains economicall">
+    <link rel="stylesheet" href="../../assets/site.css">
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <a class="brand" href="../../index.html">
+          <span class="brand-mark">RC</span>
+          <span>
+            <strong>ResumeConverter Vault</strong>
+            <small>Obsidian knowledge showcase</small>
+          </span>
+        </a>
+        <nav class="nav">
+          
+      <details class="nav-folder" >
+        <summary>entities</summary>
+        <ul class="nav-list">
+<li><a href="../entities/resumeconverter.html">ResumeConverter</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" >
+        <summary>raw</summary>
+        
+      <details class="nav-folder" >
+        <summary>session-notes</summary>
+        <ul class="nav-list">
+<li><a href="../raw/session-notes/2026-04-16-memory-bootstrap.html">2026-04-16 Memory Bootstrap</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" >
+        <summary>sources</summary>
+        <ul class="nav-list">
+<li><a href="../raw/sources/2026-04-16-admin-ops-and-diagnostics.html">Source Note: admin control surfaces, backup, and diagnostics</a></li>
+<li><a href="../raw/sources/2026-04-16-backend-audit-and-quality.html">2026-04-16 Backend Audit and Quality</a></li>
+<li><a href="../raw/sources/2026-04-16-cache-architecture.html">Source Note: application cache architecture</a></li>
+<li><a href="../raw/sources/2026-04-16-cloudflare-turnstile-config.html">Source Note: Cloudflare and Turnstile configuration</a></li>
+<li><a href="../raw/sources/2026-04-16-codebase-structure.html">2026-04-16 Codebase Structure</a></li>
+<li><a href="../raw/sources/2026-04-16-domain-model-and-control-plane.html">Source Note: domain model, control plane, and secondary product modules</a></li>
+<li><a href="../raw/sources/2026-04-16-env-session-batch-state.html">Source Note: environment matrix, session lifecycle, and batch job state machine</a></li>
+<li><a href="../raw/sources/2026-04-16-functional-workflows.html">2026-04-16 Functional Workflows</a></li>
+<li><a href="../raw/sources/2026-04-16-installation-and-bootstrap-docs.html">Source Note: installation, bootstrap, and operations docs</a></li>
+<li><a href="../raw/sources/2026-04-16-karpathy-codex-skill-install.html">Source Note</a></li>
+<li><a href="../raw/sources/2026-04-16-karpathy-llm-wiki.html">2026-04-16 Karpathy LLM Wiki</a></li>
+<li><a href="../raw/sources/2026-04-16-llm-call-resolution.html">Source Note: LLM call resolution according to configuration</a></li>
+<li><a href="../raw/sources/2026-04-16-product-scope-priorities.html">2026-04-16 Product Scope Priorities</a></li>
+<li><a href="../raw/sources/2026-04-16-provider-failure-runbooks-authz.html">Source Note: provider failure, incident runbooks, and authorization map</a></li>
+<li><a href="../raw/sources/2026-04-16-public-token-and-pdf-boundaries.html">Source Note: public token flows, PDF boundary, and header budget</a></li>
+<li><a href="../raw/sources/2026-04-16-release-v1-9-1.html">Source Note</a></li>
+<li><a href="../raw/sources/2026-04-16-security-layers.html">Source Note: concrete security layers in the application</a></li>
+<li><a href="../raw/sources/2026-04-16-settings-maintenance-persistence.html">Source Note: settings, maintenance, and persistence</a></li>
+<li><a href="../raw/sources/2026-04-16-settings-scoring-and-api-surface.html">Source Note: settings fields, scoring, and API surface</a></li>
+<li><a href="../raw/sources/2026-04-16-storage-dashboards-and-resume-model.html">Source Note: storage, dashboards, and resume domain model</a></li>
+<li><a href="../raw/sources/2026-04-16-stripe-billing.html">Source Note: Stripe billing and firm credit purchases</a></li>
+<li><a href="../raw/sources/2026-04-16-upload-limits-and-email-flows.html">Source Note: upload/OCR pipeline, operational limits, and email flows</a></li>
+<li><a href="../raw/sources/2026-04-17-installation-deployment-docs.html">Source Note: Installation and Deployment Docs</a></li>
+<li><a href="../raw/sources/2026-04-17-llm-executive-presentation.html">Source Note - LLM Executive Presentation</a></li>
+<li><a href="../raw/sources/2026-04-17-llm-pricing-and-profitability.html">2026-04-17 LLM Pricing and Profitability</a></li>
+<li><a href="../raw/sources/2026-04-17-ocr-and-llm-docs.html">Source Note: OCR and LLM Technical Docs</a></li>
+<li><a href="../raw/sources/2026-04-17-repository-markdown-docs.html">Source Note: Repository Markdown Docs Inventory</a></li>
+<li><a href="../raw/sources/2026-04-17-security-and-user-docs.html">Source Note: Security and User Guide Docs</a></li>
+</ul>
+      </details>
+    
+<ul class="nav-list">
+<li><a href="../raw/readme.html">Raw Layer</a></li>
+</ul>
+      </details>
+    
+
+      <details class="nav-folder" open>
+        <summary>topics</summary>
+        <ul class="nav-list">
+<li><a href="accessibility-and-interaction-quality.html">Accessibility and Interaction Quality</a></li>
+<li><a href="admin-and-operations.html">Admin and Operations</a></li>
+<li><a href="ai-credits.html">AI Credits</a></li>
+<li><a href="ai-operation-matrix.html">AI Operation Matrix</a></li>
+<li><a href="ai-timeouts.html">AI Timeouts</a></li>
+<li><a href="api-surface-by-domain.html">API Surface by Domain</a></li>
+<li><a href="application-cache-model.html">Application Cache Model</a></li>
+<li><a href="application-release-history.html">Application Release History</a></li>
+<li><a href="application-surface.html">Application Surface</a></li>
+<li><a href="architecture.html">Architecture</a></li>
+<li><a href="auth-and-access-model.html">Auth and Access Model</a></li>
+<li><a href="authz-decision-map.html">AuthZ Decision Map</a></li>
+<li><a href="backup-and-disaster-recovery.html">Backup and Disaster Recovery</a></li>
+<li><a href="batch-job-state-machine.html">Batch Job State Machine</a></li>
+<li><a href="batch-jobs-and-long-running-workflows.html">Batch Jobs and Long-Running Workflows</a></li>
+<li><a href="business-objects-and-data-relationships.html">Business Objects and Data Relationships</a></li>
+<li><a href="clients-deals-missions-pipeline.html">Clients Deals Missions Pipeline</a></li>
+<li><a href="codex-agent-tooling.html">Codex Agent Tooling</a></li>
+<li><a href="core-resume-workflows.html">Core Resume Workflows</a></li>
+<li><a href="data-persistence-map.html">Data Persistence Map</a></li>
+<li><a href="docker-environment.html">Docker Environment</a></li>
+<li><a href="email-and-verification-flows.html">Email and Verification Flows</a></li>
+<li><a href="environment-and-secret-matrix.html">Environment and Secret Matrix</a></li>
+<li><a href="file-storage-and-retention-map.html">File Storage and Retention Map</a></li>
+<li><a href="header-size-budget.html">Header Size Budget</a></li>
+<li><a href="integrations.html">Integrations</a></li>
+<li><a href="llm-call-resolution-and-runtime-selection.html">LLM Call Resolution and Runtime Selection</a></li>
+<li><a href="llm-control-plane.html">LLM Control Plane</a></li>
+<li><a class="active" href="llm-cost-model-and-pricing-strategy.html">LLM Cost Model and Pricing Strategy</a></li>
+<li><a href="llm-executive-decision-presentation.html">LLM Executive Decision Presentation</a></li>
+<li><a href="maintenance-and-cleanup-jobs.html">Maintenance and Cleanup Jobs</a></li>
+<li><a href="market-intelligence-and-reference-data.html">Market Intelligence and Reference Data</a></li>
+<li><a href="matching-and-scoring-model.html">Matching and Scoring Model</a></li>
+<li><a href="metrics-and-diagnostics.html">Metrics and Diagnostics</a></li>
+<li><a href="observability-and-quality.html">Observability and Quality</a></li>
+<li><a href="operational-dashboards-map.html">Operational Dashboards Map</a></li>
+<li><a href="operational-limits-matrix.html">Operational Limits Matrix</a></li>
+<li><a href="pdf-and-document-generation-boundary.html">PDF and Document Generation Boundary</a></li>
+<li><a href="priority-review-2026-04-16.html">Priority Review 2026-04-16</a></li>
+<li><a href="priority-review-2026-04-17.html">Priority Review 2026-04-17</a></li>
+<li><a href="priority-review-2026-04-18.html">Priority Review 2026-04-18</a></li>
+<li><a href="product-scope-and-priorities.html">Product Scope and Priorities</a></li>
+<li><a href="provider-failure-and-fallback-model.html">Provider Failure and Fallback Model</a></li>
+<li><a href="public-token-flows.html">Public Token Flows</a></li>
+<li><a href="repository-documentation-map.html">Repository Documentation Map</a></li>
+<li><a href="resume-domain-model.html">Resume Domain Model</a></li>
+<li><a href="resume-presentation-and-templates.html">Resume Presentation and Templates</a></li>
+<li><a href="runbooks-incident-ops.html">Runbooks Incident Ops</a></li>
+<li><a href="security-and-compliance.html">Security and Compliance</a></li>
+<li><a href="session-and-token-lifecycle.html">Session and Token Lifecycle</a></li>
+<li><a href="settings-and-governance-surfaces.html">Settings and Governance Surfaces</a></li>
+<li><a href="settings-catalog.html">Settings Catalog</a></li>
+<li><a href="settings-field-reference.html">Settings Field Reference</a></li>
+<li><a href="stripe-billing-and-firm-credit-purchase.html">Stripe Billing and Firm Credit Purchase</a></li>
+<li><a href="template-extraction-pipeline.html">Template Extraction Pipeline</a></li>
+<li><a href="turnstile.html">Turnstile</a></li>
+<li><a href="upload-ocr-and-parsing-pipeline.html">Upload OCR and Parsing Pipeline</a></li>
+</ul>
+      </details>
+    
+<ul class="nav-list">
+<li><a href="../2026-04-16.html">2026-04-16</a></li>
+<li><a href="../agents.html">ResumeConverter Vault Schema</a></li>
+<li><a href="../bienvenue.html">Bienvenue</a></li>
+<li><a href="../index.html">Index</a></li>
+<li><a href="../log.html">Log</a></li>
+<li><a href="../overview.html">Overview</a></li>
+<li><a href="../sans-titre.html">Sans titre</a></li>
+<li><a href="../sans-titre.html">Sans titre</a></li>
+<li><a href="../security.html">Security</a></li>
+</ul>
+        </nav>
+      </aside>
+      <main class="content">
+        <div class="content-meta">Source: <code>topics/LLM Cost Model and Pricing Strategy.md</code></div>
+        <h1>LLM Cost Model and Pricing Strategy</h1>
+<h2>Summary</h2>
+<p>ResumeConverter’s AI economics are governed by business credits, not by raw provider calls. The current credit model remains economically safe after updating the analysis to the latest public model families visible on 2026-04-17, including <code>GPT-5.4</code>, <code>Claude Opus 4.7</code>, and the public Z.AI <code>GLM-5.1</code> availability update. A local Ollama option can still be cheaper at scale, but only once infrastructure is amortized over enough monthly usage.</p>
+<h2>Current State</h2>
+<ul><li>Pricing inside the product is structurally credit-based, not token-based.</li><li>Credits are charged by business <code>actionType</code>, not by low-level provider request count.</li><li>The app already exposes Stripe credit packs rather than a broad subscription billing platform.</li><li>Current default Stripe packs in <code>server/config/stripe.js</code> are:</li><li>250 credits for 29 EUR</li><li>750 credits for 79 EUR</li><li>2000 credits for 199 EUR</li><li>The current default initial balance is 1000 credits per firm.</li></ul>
+<h2>Important Facts</h2>
+<ul><li><code>resume.improvement</code> intentionally bundles both generation and post-improvement analysis under one priced action.</li><li><code>profile.search</code> intentionally bundles keyword extraction, batch scoring, and explanation work under one priced action.</li><li>Hugging Face routed inference is not a standalone pricing baseline because Hugging Face documents that routed requests carry no markup; the real economics come from the underlying provider.</li><li>A local Ollama deployment has no official token pricing comparable to API vendors; it must be modeled as infra cost plus ops burden.</li><li><code>GLM-5.1</code> is visible in public Z.AI overview and release notes as of 2026-04-07, but the public pricing page still does not expose a distinct <code>GLM-5.1</code> tariff row.</li></ul>
+<h2>Official Provider Pricing Snapshot</h2>
+<p>Prices below are the official public rates or model-page claims consulted on 2026-04-17.</p>
+<p>| Provider / model | Input USD / 1M | Output USD / 1M | Notes | | --- | ---: | ---: | --- | | OpenAI GPT-5.4 | 2.50 | 15.00 | Latest public OpenAI flagship visible on 2026-04-17 | | OpenAI GPT-5.4 mini | 0.75 | 4.50 | Latest public OpenAI mini baseline | | OpenAI GPT-5.4 nano | 0.20 | 1.25 | Cheapest public GPT-5.4-class option | | Anthropic Claude Opus 4.7 | 5.00 | 25.00 | Latest public Anthropic premium model, published 2026-04-16 | | Anthropic Claude Sonnet 4 | 3.00 | 15.00 | Stable public mid-tier baseline | | Anthropic Claude Haiku 4.5 | 1.00 | 5.00 | Fast and cheaper recent option | | DeepSeek V3.2 (<code>deepseek-chat</code>) | 0.28 | 0.42 | Cache-hit input can be much lower | | Z.AI GLM-5 | 1.00 | 3.20 | Official public pricing proxy for GLM-5.1 | | Z.AI GLM-5-Turbo | 1.20 | 4.00 | Official public high-end visible row | | Z.AI GLM-4.7 | 0.60 | 2.20 | Still publicly priced | | MiniMax M2.7 | 0.30 | 1.20 | Latest public MiniMax flagship family row | | Hugging Face routed inference | provider-dependent | provider-dependent | No markup according to HF docs | | Ollama / local | n/a | n/a | Modeled via infra amortization, not official token rates |</p>
+<p>Important note:</p>
+<ul><li><code>GLM-5.1</code> is visible in the public Z.AI overview and release notes, but the public pricing page does not yet expose a distinct <code>GLM-5.1</code> row.</li><li>The calculations below therefore use <code>GLM-5</code> as the nearest official public pricing proxy for <code>GLM-5.1</code>.</li><li>This is an inference from the sources, not a distinct public <code>GLM-5.1</code> tariff.</li></ul>
+<h2>Projection Assumptions</h2>
+<p>The repo defines max-token ceilings, but not a durable cross-feature “typical real token usage” page yet. The cost projection therefore uses explicit operational estimates per priced action.</p>
+<p>| Action | Credits | Input tokens | Output tokens | | --- | ---: | ---: | ---: | | <code>chatbot.message</code> | 1 | 2000 | 700 | | <code>resume.ai_modify</code> | 5 | 6000 | 2000 | | <code>template.extract</code> | 15 | 20000 | 4000 | | <code>resume.analysis</code> | 25 | 14000 | 5000 | | <code>resume.improvement</code> | 75 | 28000 | 12000 | | <code>resume.adaptation</code> | 50 | 16000 | 6000 | | <code>resume.match</code> | 8 | 8000 | 1500 | | <code>profile.search</code> | 12 | 12000 | 2500 | | <code>profile.analysis</code> | 25 | 8000 | 2500 |</p>
+<p>This is an inference from the product’s action model and bundled workflows, not an official provider claim.</p>
+<h2>Indicative Variable Cost Per Action</h2>
+<p>| Action | GPT-5.4 | GPT-5.4 mini | Claude Opus 4.7 | GLM-5 proxy for 5.1 | MiniMax M2.7 | | --- | ---: | ---: | ---: | ---: | ---: | | <code>chatbot.message</code> | 0.0155 USD | 0.0046 USD | 0.0275 USD | 0.0042 USD | 0.0014 USD | | <code>resume.analysis</code> | 0.1100 USD | 0.0330 USD | 0.1950 USD | 0.0300 USD | 0.0102 USD | | <code>resume.improvement</code> | 0.2500 USD | 0.0750 USD | 0.4400 USD | 0.0664 USD | 0.0228 USD | | <code>resume.adaptation</code> | 0.1300 USD | 0.0390 USD | 0.2300 USD | 0.0352 USD | 0.0120 USD | | <code>template.extract</code> | 0.1100 USD | 0.0330 USD | 0.2000 USD | 0.0328 USD | 0.0108 USD |</p>
+<p>Interpretation:</p>
+<ul><li>DeepSeek and MiniMax remain in the very-cheap hosted band.</li><li>GLM-5 as a proxy for GLM-5.1 and GPT-5.4 mini stay comfortable for a credit-based commercial model.</li><li>GPT-5.4 and Claude Opus 4.7 materially raise variable cost, but still remain far below the current selling price implied by the existing credit packs.</li></ul>
+<h2>1000-Credit Basket Economics</h2>
+<p>To compare providers at the product level, a representative 1000-credit basket was modeled as:</p>
+<ul><li>4 resume improvements</li><li>6 resume analyses</li><li>4 resume adaptations</li><li>6 template extractions</li><li>10 resume matches</li><li>10 profile searches</li><li>6 AI modifications</li><li>30 chatbot messages</li></ul>
+<p>| Default LLM policy | Variable AI cost for 1000 credits | | --- | ---: | | DeepSeek V3.2 | 0.27 USD | | MiniMax M2.7 | 0.44 USD | | Z.AI GLM-4.7 | 0.84 USD | | Z.AI GLM-5 (proxy GLM-5.1) | 1.31 USD | | OpenAI GPT-5.4 mini | 1.40 USD | | Anthropic Claude Haiku 4.5 | 1.67 USD | | OpenAI GPT-5.4 | 4.68 USD | | Anthropic Claude Sonnet 4 | 5.01 USD | | Anthropic Claude Opus 4.7 | 8.36 USD |</p>
+<p>This is the key commercial takeaway:</p>
+<ul><li>even the premium hosted basket stays in a single-digit USD range</li><li>the current Stripe packs price 1000 credits at roughly 99.50 EUR to 116 EUR equivalent</li><li>therefore the existing pack family is not just profitable; it is highly conservative</li></ul>
+<h2>Local Model Option</h2>
+<p>For Ollama / local hosting, the relevant question is not token price but utilization.</p>
+<p>Illustrative local cost model:</p>
+<ul><li>250 EUR / month all-in</li><li>GPU/VPS or amortized hardware</li><li>power/hosting</li><li>admin overhead</li></ul>
+<p>Equivalent cost per representative 1000-credit basket:</p>
+<p>| Monthly basket volume | Local infra cost per 1000-credit basket | | --- | ---: | | 20 | 12.50 EUR | | 50 | 5.00 EUR | | 100 | 2.50 EUR |</p>
+<p>Interpretation:</p>
+<ul><li>local mode is not automatically the cheapest option at low volume</li><li>local mode becomes commercially very attractive once monthly usage is steady and the infra is well amortized</li><li>if the customer hosts the local stack on their own side, the software vendor can price the application more like software + support than like AI resale</li></ul>
+<h2>Recommended Tariff Table</h2>
+<h3>Option A: Budget / local-first pricing</h3>
+<p>Use this only if the dominant defaults remain in the modern low-cost band:</p>
+<ul><li>DeepSeek</li><li>MiniMax</li><li>GLM</li><li>local Ollama</li><li>GPT-5.4 mini or nano</li></ul>
+<p>| Pack | Credits | Recommended price | | --- | ---: | ---: | | Starter | 250 | 12 EUR | | Growth | 750 | 35 EUR | | Scale | 2000 | 89 EUR |</p>
+<h3>Option B: Universal hosted pricing</h3>
+<p>Use this when the dominant defaults remain in the modern “efficient hosted” band:</p>
+<ul><li>GPT-5.4 mini</li><li>GLM-5 / GLM-5.1</li><li>Claude Haiku 4.5</li><li>DeepSeek</li><li>MiniMax</li></ul>
+<p>| Pack | Credits | Recommended price | | --- | ---: | ---: | | Starter | 250 | 19 EUR | | Growth | 750 | 55 EUR | | Scale | 2000 | 139 EUR |</p>
+<h3>Option C: Premium-safe pricing</h3>
+<p>Use this when one wants a single tariff family that remains comfortable even if premium models such as GPT-5.4, Claude Sonnet 4, or Claude Opus 4.7 become common defaults on valuable workflows.</p>
+<p>| Pack | Credits | Recommended price | | --- | ---: | ---: | | Starter | 250 | 29 EUR | | Growth | 750 | 79 EUR | | Scale | 2000 | 199 EUR |</p>
+<p>This exactly matches the current default Stripe pack configuration.</p>
+<h2>Recommended Commercial Position</h2>
+<p>The safest reading is:</p>
+<ul><li>if ResumeConverter is sold as a premium B2B workflow tool, the current packs are economically safe and operationally low-risk even after updating the model set to GPT-5.4 / Opus 4.7-era providers</li><li>if growth and lower entry friction matter more, the current packs can likely be reduced toward the “universal hosted” range without threatening profitability as long as the mix is still dominated by efficient hosted or local models</li><li>if the product is positioned around local/self-hosted AI, the monetization should rely more on platform/support pricing and less on large credit markup</li></ul>
+<h2>Open Questions</h2>
+<ul><li>The repo currently lacks a durable telemetry page for real median token usage per <code>actionType</code>.</li><li>A future pricing revision should be informed by real production token medians, not only by budget estimates.</li><li>Z.AI may later publish a distinct public tariff for <code>GLM-5.1</code>; when that happens, the current <code>GLM-5</code> proxy should be removed.</li></ul>
+<h2>Related</h2>
+<ul><li><a href="ai-credits.html">topics/AI Credits</a></li><li><a href="ai-operation-matrix.html">topics/AI Operation Matrix</a></li><li><a href="llm-control-plane.html">topics/LLM Control Plane</a></li><li><a href="stripe-billing-and-firm-credit-purchase.html">topics/Stripe Billing and Firm Credit Purchase</a></li></ul>
+<h2>Sources</h2>
+<ul><li><a href="../raw/sources/2026-04-17-llm-pricing-and-profitability.html">raw/sources/2026-04-17-llm-pricing-and-profitability</a></li></ul>
+      </main>
+    </div>
+  </body>
+</html>

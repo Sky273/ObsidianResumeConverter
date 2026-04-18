@@ -64,6 +64,8 @@
 <li><a href="../raw/sources/2026-04-16-stripe-billing.html">Source Note: Stripe billing and firm credit purchases</a></li>
 <li><a href="../raw/sources/2026-04-16-upload-limits-and-email-flows.html">Source Note: upload/OCR pipeline, operational limits, and email flows</a></li>
 <li><a href="../raw/sources/2026-04-17-installation-deployment-docs.html">Source Note: Installation and Deployment Docs</a></li>
+<li><a href="../raw/sources/2026-04-17-llm-executive-presentation.html">Source Note - LLM Executive Presentation</a></li>
+<li><a href="../raw/sources/2026-04-17-llm-pricing-and-profitability.html">2026-04-17 LLM Pricing and Profitability</a></li>
 <li><a href="../raw/sources/2026-04-17-ocr-and-llm-docs.html">Source Note: OCR and LLM Technical Docs</a></li>
 <li><a href="../raw/sources/2026-04-17-repository-markdown-docs.html">Source Note: Repository Markdown Docs Inventory</a></li>
 <li><a href="../raw/sources/2026-04-17-security-and-user-docs.html">Source Note: Security and User Guide Docs</a></li>
@@ -79,6 +81,7 @@
       <details class="nav-folder" open>
         <summary>topics</summary>
         <ul class="nav-list">
+<li><a href="accessibility-and-interaction-quality.html">Accessibility and Interaction Quality</a></li>
 <li><a href="admin-and-operations.html">Admin and Operations</a></li>
 <li><a href="ai-credits.html">AI Credits</a></li>
 <li><a href="ai-operation-matrix.html">AI Operation Matrix</a></li>
@@ -106,6 +109,8 @@
 <li><a href="integrations.html">Integrations</a></li>
 <li><a href="llm-call-resolution-and-runtime-selection.html">LLM Call Resolution and Runtime Selection</a></li>
 <li><a href="llm-control-plane.html">LLM Control Plane</a></li>
+<li><a href="llm-cost-model-and-pricing-strategy.html">LLM Cost Model and Pricing Strategy</a></li>
+<li><a href="llm-executive-decision-presentation.html">LLM Executive Decision Presentation</a></li>
 <li><a href="maintenance-and-cleanup-jobs.html">Maintenance and Cleanup Jobs</a></li>
 <li><a href="market-intelligence-and-reference-data.html">Market Intelligence and Reference Data</a></li>
 <li><a href="matching-and-scoring-model.html">Matching and Scoring Model</a></li>
@@ -116,6 +121,7 @@
 <li><a href="pdf-and-document-generation-boundary.html">PDF and Document Generation Boundary</a></li>
 <li><a href="priority-review-2026-04-16.html">Priority Review 2026-04-16</a></li>
 <li><a href="priority-review-2026-04-17.html">Priority Review 2026-04-17</a></li>
+<li><a href="priority-review-2026-04-18.html">Priority Review 2026-04-18</a></li>
 <li><a href="product-scope-and-priorities.html">Product Scope and Priorities</a></li>
 <li><a href="provider-failure-and-fallback-model.html">Provider Failure and Fallback Model</a></li>
 <li><a href="public-token-flows.html">Public Token Flows</a></li>
@@ -176,7 +182,7 @@
 <ul><li>aggregate APM stats</li><li>bounded slow-request list</li><li>buffer clearing endpoint</li></ul>
 <p>This indicates that the team treats latency debugging as part of normal operations, not only ad hoc debugging.</p>
 <h2>Why This Matters</h2>
-<ul><li>Metrics in ResumeConverter are productized operations tooling.</li><li>The dashboard mirrors real subsystems: OCR, cache, database, AI, profile matching, imports, cleanup.</li><li>Future changes should preserve both the APIs and the semantics of these metrics, because they are how the system explains itself in production.</li><li>As of 2026-04-17, improvement fallback diagnostics are more readable in the client:</li><li>the improvement operations card already exposed <code>postAnalysisFallbackRuns</code></li><li>recent entries now also render the embedded-analysis fallback source and the <code>post-analysis</code> stage with human-readable labels instead of raw internal identifiers</li><li>this makes the difference between generation fallback and persistence-analysis fallback easier to interpret during incident review</li></ul>
+<ul><li>Metrics in ResumeConverter are productized operations tooling.</li><li>The dashboard mirrors real subsystems: OCR, cache, database, AI, profile matching, imports, cleanup.</li><li>Future changes should preserve both the APIs and the semantics of these metrics, because they are how the system explains itself in production.</li><li>As of 2026-04-17, improvement fallback diagnostics are more readable in the client:</li><li>the improvement operations card already exposed <code>postAnalysisFallbackRuns</code></li><li>recent entries now also render the embedded-analysis fallback source and the <code>post-analysis</code> stage with human-readable labels instead of raw internal identifiers</li><li>this makes the difference between generation fallback and persistence-analysis fallback easier to interpret during incident review</li><li>As of 2026-04-17, improvement diagnostics distinguish a third post-analysis quality state:</li><li><code>postAnalysisFallbackRuns</code> still means the persistence analysis failed with an invalid structured payload and the worker kept the embedded analysis wholesale</li><li><code>postAnalysisMergeRuns</code> now means the persistence analysis technically succeeded but was sparse, so missing fields were backfilled from the embedded improvement analysis</li><li>recent entries expose this with <code>source: embedded-analysis-merge</code>, <code>stage: post-analysis</code>, and the merged field list</li><li>As of 2026-04-17, adaptation diagnostics also expose which resume text source fed the operation:</li><li>recent entries can now indicate <code>resumeSource: improved_text</code> or <code>resumeSource: original_text</code></li><li>this makes the admin-facing diagnostics more actionable when validating the end-to-end value of the improvement fallback chain</li><li>As of 2026-04-17, the metrics card now surfaces degradation state explicitly:</li><li>improvement entries distinguish <code>generation fallback</code>, <code>post-analysis fallback</code>, and <code>post-analysis merge</code></li><li>adaptation entries distinguish <code>adaptation fallback</code></li><li>failed runs are rendered separately from nominal flows</li><li>As of 2026-04-17, the metrics translations and tests were repaired in UTF-8 without BOM:</li><li><code>client/src/i18n/locales/fr/metrics.json</code> was repaired from mojibake while preserving the full key set</li><li><code>OperationLLMCard.test.tsx</code> now asserts degradation, source, stage, merged fields, and adaptation resume source labels explicitly</li></ul>
 <h2>Related</h2>
 <ul><li><a href="admin-and-operations.html">topics/Admin and Operations</a></li><li><a href="operational-limits-matrix.html">topics/Operational Limits Matrix</a></li><li><a href="upload-ocr-and-parsing-pipeline.html">topics/Upload OCR and Parsing Pipeline</a></li><li><a href="application-cache-model.html">topics/Application Cache Model</a></li><li><a href="observability-and-quality.html">topics/Observability and Quality</a></li><li><a href="batch-jobs-and-long-running-workflows.html">topics/Batch Jobs and Long-Running Workflows</a></li><li><a href="llm-control-plane.html">topics/LLM Control Plane</a></li></ul>
 <h2>Sources</h2>

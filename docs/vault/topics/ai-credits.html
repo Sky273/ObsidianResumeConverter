@@ -64,6 +64,8 @@
 <li><a href="../raw/sources/2026-04-16-stripe-billing.html">Source Note: Stripe billing and firm credit purchases</a></li>
 <li><a href="../raw/sources/2026-04-16-upload-limits-and-email-flows.html">Source Note: upload/OCR pipeline, operational limits, and email flows</a></li>
 <li><a href="../raw/sources/2026-04-17-installation-deployment-docs.html">Source Note: Installation and Deployment Docs</a></li>
+<li><a href="../raw/sources/2026-04-17-llm-executive-presentation.html">Source Note - LLM Executive Presentation</a></li>
+<li><a href="../raw/sources/2026-04-17-llm-pricing-and-profitability.html">2026-04-17 LLM Pricing and Profitability</a></li>
 <li><a href="../raw/sources/2026-04-17-ocr-and-llm-docs.html">Source Note: OCR and LLM Technical Docs</a></li>
 <li><a href="../raw/sources/2026-04-17-repository-markdown-docs.html">Source Note: Repository Markdown Docs Inventory</a></li>
 <li><a href="../raw/sources/2026-04-17-security-and-user-docs.html">Source Note: Security and User Guide Docs</a></li>
@@ -79,6 +81,7 @@
       <details class="nav-folder" open>
         <summary>topics</summary>
         <ul class="nav-list">
+<li><a href="accessibility-and-interaction-quality.html">Accessibility and Interaction Quality</a></li>
 <li><a href="admin-and-operations.html">Admin and Operations</a></li>
 <li><a class="active" href="ai-credits.html">AI Credits</a></li>
 <li><a href="ai-operation-matrix.html">AI Operation Matrix</a></li>
@@ -106,6 +109,8 @@
 <li><a href="integrations.html">Integrations</a></li>
 <li><a href="llm-call-resolution-and-runtime-selection.html">LLM Call Resolution and Runtime Selection</a></li>
 <li><a href="llm-control-plane.html">LLM Control Plane</a></li>
+<li><a href="llm-cost-model-and-pricing-strategy.html">LLM Cost Model and Pricing Strategy</a></li>
+<li><a href="llm-executive-decision-presentation.html">LLM Executive Decision Presentation</a></li>
 <li><a href="maintenance-and-cleanup-jobs.html">Maintenance and Cleanup Jobs</a></li>
 <li><a href="market-intelligence-and-reference-data.html">Market Intelligence and Reference Data</a></li>
 <li><a href="matching-and-scoring-model.html">Matching and Scoring Model</a></li>
@@ -116,6 +121,7 @@
 <li><a href="pdf-and-document-generation-boundary.html">PDF and Document Generation Boundary</a></li>
 <li><a href="priority-review-2026-04-16.html">Priority Review 2026-04-16</a></li>
 <li><a href="priority-review-2026-04-17.html">Priority Review 2026-04-17</a></li>
+<li><a href="priority-review-2026-04-18.html">Priority Review 2026-04-18</a></li>
 <li><a href="product-scope-and-priorities.html">Product Scope and Priorities</a></li>
 <li><a href="provider-failure-and-fallback-model.html">Provider Failure and Fallback Model</a></li>
 <li><a href="public-token-flows.html">Public Token Flows</a></li>
@@ -156,11 +162,13 @@
 <h2>Current State</h2>
 <ul><li>insufficient-credit backend responses use a machine-readable code</li><li>the frontend redirects users to a dedicated insufficient-credit page</li><li>upload-related AI workflows now block early when credits are not available</li><li>reservation is made upfront and settled afterward instead of relying on a late availability check</li><li>ledger primitives for firm-credit balance locking, transaction inserts, balance updates, and cache invalidation are now isolated in <code>server/services/aiCreditsLedger.service.js</code></li><li><code>server/services/aiCredits.service.js</code> now focuses more narrowly on business policy such as reservation, workflow settlement, refunds, and configured action costs</li></ul>
 <h2>Important Facts</h2>
-<ul><li>Late credit checks caused unstable UX because work could start before the credit failure surfaced.</li><li>Upfront reservation is the safer model for concurrency and user feedback.</li><li>This topic is cross-cutting and affects upload, improvement, adaptation, matching, and similar IA features.</li><li>Credit governance is keyed by business <code>actionType</code>, not by low-level provider call count.</li><li>A single billed <code>actionType</code> can intentionally cover several traced LLM sub-operations when they belong to one priced user action.</li><li>The main maintainability hotspot was a mix of policy and ledger concerns in one service; extracting the ledger layer reduced that coupling without changing credit semantics.</li></ul>
+<ul><li>Late credit checks caused unstable UX because work could start before the credit failure surfaced.</li><li>Upfront reservation is the safer model for concurrency and user feedback.</li><li>This topic is cross-cutting and affects upload, improvement, adaptation, matching, and similar IA features.</li><li>Credit governance is keyed by business <code>actionType</code>, not by low-level provider call count.</li><li>A single billed <code>actionType</code> can intentionally cover several traced LLM sub-operations when they belong to one priced user action.</li><li>The main maintainability hotspot was a mix of policy and ledger concerns in one service; extracting the ledger layer reduced that coupling without changing credit semantics.</li><li>Batch settlement for reserved jobs depends on <code>batch_job_items.pending_data.creditUsage</code> to know which reserved actions were actually consumed before deciding any refund.</li><li><code>server/services/batchJobs/itemCrud.js:updateJobItemStatus()</code> must preserve <code>pending_data.creditUsage</code> when it writes <code>result_data</code>; otherwise a successful action can later be refunded incorrectly at job settlement time.</li></ul>
 <h2>Current Reservation Shape</h2>
 <p>Observed batch reservation mapping includes:</p>
 <ul><li><code>import</code> -&gt; <code>resume.analysis</code>, plus <code>resume.improvement</code> if improve mode is enabled</li><li><code>improve</code> -&gt; <code>resume.improvement</code></li><li><code>adapt</code> -&gt; <code>resume.adaptation</code></li><li><code>match</code> -&gt; <code>resume.match</code></li><li><code>profile-search</code> -&gt; <code>profile.search</code></li><li><code>profile-analysis</code> -&gt; <code>profile.analysis</code></li></ul>
 <p>Reservation metadata is attached to job options and later settled or refunded depending on real consumption and failure paths.</p>
+<h2>Regression Note 2026-04-18</h2>
+<ul><li>A false-refund bug existed on some successful batch LLM operations, notably profile search / analysis / matching paths.</li><li>Root cause: <code>markBatchJobActionCreditConsumed()</code> merged <code>pending_data.creditUsage</code>, but later successful <code>updateJobItemStatus(..., { result_data })</code> replaced <code>pending_data</code> entirely and dropped that marker.</li><li>Consequence: <code>server/services/batchJobCredits.service.js:settleBatchJobCredits()</code> interpreted the reserved action as unused and refunded it even though the operation had succeeded.</li><li>Fix: preserve existing <code>creditUsage</code> when persisting <code>result_data</code>, and lock it with a regression test in <code>server/tests/services/batchJobs.itemCrud.test.js</code>.</li></ul>
 <h2>ActionType Governance Rule</h2>
 <p>Every durable AI feature should define, together:</p>
 <ul><li>a charged <code>actionType</code></li><li>a traced business <code>operationType</code></li><li>a configurable cost setting</li><li>a configurable max-token setting</li></ul>

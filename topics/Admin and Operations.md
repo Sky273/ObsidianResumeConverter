@@ -14,6 +14,7 @@ The admin workspace groups:
 - email templates
 - tags
 - firm credits
+- a dedicated firm-credit detail screen with per-user, per-action, and recent-transaction breakdown for one cabinet
 
 It is not just a settings page; it is a consolidated admin area for business configuration and governance.
 
@@ -54,6 +55,7 @@ This makes settings a central control plane for AI behavior and some compliance 
 - Stripe Checkout session creation
 - webhook-driven credit attribution
 - firm-credit purchase state persisted before checkout redirect
+- firm-credit admin detail view backed by firm credit transaction history and user/action aggregations
 
 ### Metrics
 

@@ -1,5 +1,163 @@
 # Log
 
+## [2026-04-18] feat | add firm credit detail screen by user and action
+
+- Added a dedicated cabinet credit detail flow reachable from the administration cabinet-credit screen.
+- Backend:
+  - added `GET /api/firms/:id/credits/detail`
+  - returns firm credit summary, breakdown by user, breakdown by action, user/action matrix, and recent transactions
+  - local admins are restricted to their own firm; super admins can inspect any firm
+- Frontend:
+  - added `client/src/pages/FirmCreditsDetailPage.tsx`
+  - added routing through `/admin/firm-credits/:id`
+  - added detail entry buttons on `client/src/pages/FirmCreditsPage.tsx`
+- Revalidated with:
+  - `node .\node_modules\vitest\vitest.mjs run server\tests\routes\firms.routes.test.js --config server\vitest.config.js`
+  - `node .\node_modules\vitest\vitest.mjs run server\tests\services\firms.service.test.js --config server\vitest.config.js`
+  - `node .\node_modules\vitest\vitest.mjs run --config client\vitest.config.ts client\src\pages\FirmCreditsPage.test.tsx client\src\pages\FirmCreditsPage.refresh.test.tsx client\src\pages\FirmCreditsDetailPage.test.tsx`
+
+## [2026-04-18] review | whole-app inspection refreshed with validation signal
+
+- Re-read the vault entry points and re-inspected the current repository entry points, runtime layers, hotspot services, and validation posture.
+- Refreshed `[[topics/Priority Review 2026-04-18]]` with current confirmed facts:
+  - `380` test files across `server`, `client`, `pdf-server`, and `e2e`
+  - `server/config/lifecycle/runtimeMaintenance.js` is now only a thin shim, while orchestration still converges through the lifecycle subtree
+  - `npm run test:pdf` passes with `11` files and `359` tests
+  - `npm run typecheck` currently fails in frontend test tooling rather than product runtime code
+- Recorded the concrete current typecheck blockers:
+  - `client/src/components/Metrics/OperationLLMCard.test.tsx` uses an incompatible `i18next` mock shape
+  - frontend tests importing `jest-axe` are missing a declaration file
+
+## [2026-04-18] refactor | split runtime maintenance startup and shutdown orchestration
+
+- Reduced the maintenance hotspot under `server/config/lifecycle/` without changing the external lifecycle API.
+- Split the previous single-file runtime maintenance logic into:
+  - `server/config/lifecycle/runtimeMaintenance.startup.js`
+  - `server/config/lifecycle/runtimeMaintenance.shutdown.js`
+  - thin re-export shim `server/config/lifecycle/runtimeMaintenance.js`
+- Updated `server/tests/config/lifecycle.test.js` to align with the current fail-fast startup contract when PostgreSQL initialization fails and to keep shutdown assertions focused on a normally started server.
+- Revalidated with:
+  - `node .\node_modules\vitest\vitest.mjs run server\tests\config\lifecycle.test.js --config server\vitest.config.js`
+  - `node .\scripts\run-eslint.mjs server\config\lifecycle.js server\config\lifecycle\runtimeMaintenance.js server\config\lifecycle\runtimeMaintenance.startup.js server\config\lifecycle\runtimeMaintenance.shutdown.js server\tests\config\lifecycle.test.js`
+
+## [2026-04-18] refactor | split startup runtime maintenance by concern
+
+- Continued the lifecycle hotspot reduction inside `server/config/lifecycle/runtimeMaintenance.startup.js`.
+- Extracted startup subdomains into:
+  - `server/config/lifecycle/runtimeMaintenance.cacheBootstrap.js`
+  - `server/config/lifecycle/runtimeMaintenance.database.js`
+  - `server/config/lifecycle/runtimeMaintenance.alwaysOn.js`
+- Kept the startup order and public behavior stable while separating:
+  - startup cache cleanup/bootstrap
+  - database-backed runtime services
+  - always-on cleanup/monitor services
+- Revalidated with:
+  - `node .\node_modules\vitest\vitest.mjs run server\tests\config\lifecycle.test.js --config server\vitest.config.js`
+  - `node .\scripts\run-eslint.mjs server\config\lifecycle\runtimeMaintenance.js server\config\lifecycle\runtimeMaintenance.startup.js server\config\lifecycle\runtimeMaintenance.shutdown.js server\config\lifecycle\runtimeMaintenance.cacheBootstrap.js server\config\lifecycle\runtimeMaintenance.database.js server\config\lifecycle\runtimeMaintenance.alwaysOn.js server\tests\config\lifecycle.test.js`
+
+## [2026-04-18] refactor | group shutdown runtime maintenance steps by concern
+
+- Continued the lifecycle hotspot reduction inside `server/config/lifecycle/runtimeMaintenance.shutdown.js`.
+- Extracted the shutdown step list into grouped concerns via:
+  - `server/config/lifecycle/runtimeMaintenance.shutdownGroups.js`
+- Kept shutdown ordering unchanged while making the grouped sequence explicit across:
+  - local state and cache teardown
+  - application service teardown
+  - database-backed runtime teardown
+- Revalidated with:
+  - `node .\node_modules\vitest\vitest.mjs run server\tests\config\lifecycle.test.js --config server\vitest.config.js`
+  - `node .\scripts\run-eslint.mjs server\config\lifecycle\runtimeMaintenance.js server\config\lifecycle\runtimeMaintenance.startup.js server\config\lifecycle\runtimeMaintenance.shutdown.js server\config\lifecycle\runtimeMaintenance.shutdownGroups.js server\config\lifecycle\runtimeMaintenance.cacheBootstrap.js server\config\lifecycle\runtimeMaintenance.database.js server\config\lifecycle\runtimeMaintenance.alwaysOn.js server\tests\config\lifecycle.test.js`
+
+## [2026-04-18] refactor | split batch export generator by document and support concerns
+
+- Reduced the `server/services/batchJobsWorker/exportGenerator.js` hotspot without changing the public export workflow.
+- Extracted document-specific behavior into:
+  - `server/services/batchJobsWorker/exportGenerator.documents.js`
+  - source loading for resumes/adaptations
+  - template placeholder processing
+  - PDF/DOCX generation retry logic
+- Extracted shared export support behavior into:
+  - `server/services/batchJobsWorker/exportGenerator.support.js`
+  - workload and batch-size resolution
+  - export item selection and status summaries
+  - archive path and duplicate-name handling
+  - temporary artifact workspace helpers
+- Revalidated with:
+  - `node .\node_modules\vitest\vitest.mjs run server\tests\services\batchJobsWorker.exportGenerator.test.js --config server\vitest.config.js`
+  - `node .\scripts\run-eslint.mjs server\services\batchJobsWorker\exportGenerator.js server\services\batchJobsWorker\exportGenerator.documents.js server\services\batchJobsWorker\exportGenerator.support.js server\tests\services\batchJobsWorker.exportGenerator.test.js`
+
+## [2026-04-18] refactor | split improvement processor by analysis and persistence concerns
+
+- Reduced the `server/services/batchJobsWorker/processors/improvement.js` hotspot without changing the batch-improvement workflow.
+- Extracted post-improvement analysis and fallback handling into:
+  - `server/services/batchJobsWorker/processors/improvementAnalysis.js`
+- Extracted improved-resume scoring and persistence into:
+  - `server/services/batchJobsWorker/processors/improvementPersistence.js`
+- Kept `improvement.js` focused on orchestration:
+  - retry loop
+  - job-item progress updates
+  - final analysis/persistence sequencing
+- Revalidated with:
+  - `node .\node_modules\vitest\vitest.mjs run server\tests\services\batchJobsWorker.itemProcessors.test.js --config server\vitest.config.js`
+  - `node .\scripts\run-eslint.mjs server\services\batchJobsWorker\processors\improvement.js server\services\batchJobsWorker\processors\improvementAnalysis.js server\services\batchJobsWorker\processors\improvementPersistence.js server\tests\services\batchJobsWorker.itemProcessors.test.js`
+
+## [2026-04-18] refactor | split AI credit action flow from broader credit service concerns
+
+- Reduced the `server/services/aiCredits.service.js` hotspot without changing its public surface.
+- Extracted reservation/refund/action-execution orchestration into:
+  - `server/services/aiCreditsActions.service.js`
+- Kept `aiCredits.service.js` focused on:
+  - configuration lookup
+  - import/workflow planning helpers
+  - firm credit listing/reporting
+  - public function composition
+- Revalidated with:
+  - `node .\node_modules\vitest\vitest.mjs run server\tests\services\aiCredits.service.test.js --config server\vitest.config.js`
+  - `node .\scripts\run-eslint.mjs server\services\aiCredits.service.js server\services\aiCreditsActions.service.js server\services\aiCreditsLedger.service.js server\tests\services\aiCredits.service.test.js`
+
+## [2026-04-18] refactor | split resume service consent and invalidation concerns
+
+- Reduced the `server/services/resumes.service.js` hotspot without changing its public exports.
+- Extracted cache/view invalidation helpers into:
+  - `server/services/resumesInvalidation.service.js`
+- Extracted consent-related mutations and retention/expiration helpers into:
+  - `server/services/resumesConsent.service.js`
+- Kept `resumes.service.js` focused on:
+  - CRUD queries
+  - list/count helpers
+  - compatibility exports
+  - adaptation creation and timeout-based record lookups
+- Revalidated with:
+  - `node .\node_modules\vitest\vitest.mjs run server\tests\services\resumes.service.test.js --config server\vitest.config.js`
+  - `node .\scripts\run-eslint.mjs server\services\resumes.service.js server\services\resumesInvalidation.service.js server\services\resumesConsent.service.js server\tests\services\resumes.service.test.js`
+
+## [2026-04-18] test | add direct coverage for extracted AI credit and resume consent modules
+
+- Added direct tests for the newly extracted credit-action module:
+  - `server/tests/services/aiCreditsActions.service.test.js`
+  - covers reservation, refund, and upfront-reservation action execution
+- Added direct tests for the newly extracted resume-consent module:
+  - `server/tests/services/resumesConsent.service.test.js`
+  - covers consent initialization, consent error marking, pending-consent expiration, and reminder-side invalidation
+- Revalidated with:
+  - `node .\node_modules\vitest\vitest.mjs run server\tests\services\aiCreditsActions.service.test.js server\tests\services\resumesConsent.service.test.js --config server\vitest.config.js`
+  - `node .\scripts\run-eslint.mjs server\services\aiCreditsActions.service.js server\services\resumesConsent.service.js server\tests\services\aiCreditsActions.service.test.js server\tests\services\resumesConsent.service.test.js`
+
+## [2026-04-18] review | refreshed whole-application priority assessment
+
+- Re-read the vault entry points and re-inspected the current repository entry points and route surface.
+- Added [[topics/Priority Review 2026-04-18]] to record the refreshed priority stack:
+  - backend runtime decomposition
+  - long-running AI/document workflow hardening
+  - secondary-scope discipline
+  - control-plane contract tightening
+  - targeted hotspot decomposition
+- Recorded updated surface-size facts from the current repository:
+  - `45` backend route modules
+  - `154` frontend page files
+  - `378` test files
+- Captured that lifecycle decoupling has progressed into `server/config/lifecycle/runtimeMaintenance.js`, but runtime orchestration is still materially centralized.
+
 ## [2026-04-17] fix | preserve French UTF-8 fixtures in resume UI regression coverage
 
 - Cleaned the remaining French accent corruption in targeted client regression fixtures tied to resume entry and improvement flows.
@@ -959,3 +1117,123 @@
   - `INSTALL.md` now records the local E2E bootstrap requirement (`npm run migrate` plus valid PostgreSQL credentials) instead of leaving Playwright behavior implicit
   - `docker/README.md` now states clearly that it is the canonical Docker reference
   - `client/src/i18n/locales/fr/metrics.json` received a last wording pass on several visible labels (`succès du cache`, `routes API les plus sollicitées`, `reçus / stockés en base`, `recherche de profils`, etc.)
+- Added a durable LLM pricing and profitability note to the vault:
+  - recorded current AI credit economics from `server/config/aiCredits.js` and current Stripe pack defaults from `server/config/stripe.js`
+  - captured an official 2026-04-17 pricing snapshot for OpenAI, Anthropic, DeepSeek, Z.AI / GLM, MiniMax, and Hugging Face routed inference
+  - modeled an explicit local Ollama option as infra-backed cost rather than fake token pricing
+  - added `topics/LLM Cost Model and Pricing Strategy` with per-action indicative costs and three tariff ranges: budget/local-first, universal hosted, and premium-safe
+- Mirrored that pricing note into the repository:
+  - added `docs/LLM_COST_MODEL_AND_PRICING.md`
+  - linked it from `README.md`
+  - updated `topics/Repository Documentation Map` so pricing and tariff discussions now have a clear repo-side reference
+- Refreshed the pricing documents against the latest public provider model set visible on 2026-04-17:
+  - updated repo-side pricing docs to replace old `GPT-5.2` / `Claude 3.5` assumptions with `GPT-5.4`, `GPT-5.4 mini`, `Claude Opus 4.7`, `Claude Haiku 4.5`, `MiniMax M2.7`, and current DeepSeek V3.2
+  - recorded that `GLM-5.1` is publicly available in Z.AI overview/release notes but still lacks a distinct public pricing row, so projections currently use `GLM-5` as the closest official pricing proxy
+  - confirmed that the commercial conclusion still holds: the current Stripe packs remain premium-safe even under the refreshed frontier-model mix
+# 2026-04-17
+
+- Added a management-facing executive presentation for LLM selection and tariff posture, derived from the repository pricing studies, with a recommended hosted-universal operating model and tariff grid.
+- Hardened the small-model CV flow further:
+  - post-improvement persistence analysis now merges sparse successful payloads with the embedded improvement analysis instead of only handling hard invalid-response fallbacks
+  - improvement metrics now distinguish full post-analysis fallback vs post-analysis merge
+  - adaptation metrics now record whether the operation used `improved_text` or `original_text`
+  - the analysis/improve/export Playwright flow now uses a shared file-input helper instead of an inline upload wait sequence
+
+- Tightened local Playwright bootstrap against stale listeners:
+  - confirmed a misleading local export `403` came from an old PDF server process still listening on `3002`, not from the export flow itself
+  - `scripts/start-playwright-webserver.mjs` now probes the intended local E2E ports before startup and fails early if `3001` or `3002` is already occupied
+- Finished the next code-priority pass on E2E coverage, admin diagnostics, and residual quality debt:
+  - `e2e/helpers/ui.ts` now centralizes the remaining localized selectors in UTF-8 (`rafraîchir`, `connectez-vous`, `créer un compte`, `réinitialiser`, `améliorer`)
+  - `analysis-improve-export.spec.ts` now covers improved PDF export and conditionally covers DOCX export only when `pandoc` is available on the machine
+  - `client/src/components/Metrics/OperationLLMCard.tsx` now surfaces recent-entry degradation explicitly (`generation fallback`, `post-analysis fallback`, `post-analysis merge`, `adaptation fallback`, `failed run`)
+  - `client/src/i18n/locales/fr/metrics.json` was repaired from mojibake to UTF-8 without BOM
+  - targeted validation passed for ESLint, `OperationLLMCard.test.tsx`, `upload-to-analysis.spec.ts`, and the isolated PDF export scenario; the remaining combined-run `ERR_CONNECTION_REFUSED` is still classified as local stack instability
+- Closed the two remaining local E2E reservations on the analysis/improve/export flow:
+  - `scripts/start-e2e-stack.mjs` now auto-restarts the proxy and PDF children on unexpected exits, which removes the mid-sequence local `ERR_CONNECTION_REFUSED` failure from the combined Chromium rerun
+  - `e2e/helpers/ui.ts` now retries navigations on transient `ERR_CONNECTION_REFUSED`
+  - DOCX export no longer assumes `pandoc` specifically: `pdf-server/lib/docxGenerator.cjs` now uses `pandoc` when present, falls back to LibreOffice/`soffice` for DOCX generation when available, and only fails explicitly when no DOCX converter exists at all
+  - the combined local Chromium run of `analysis-improve-export` now completes as `2 passed, 1 skipped` on a workstation without a local DOCX converter
+- Added a first durable accessibility quality pass on the frontend:
+  - `Layout.tsx` now exposes a skip link and a stable `main-content` landmark target
+  - the custom `UsersManagement` modal now has labelled dialog semantics, focus restoration, and `Escape` close behavior
+  - `ImprovementAnimation.tsx` now exposes reader-friendly live status semantics and a labelled fullscreen dialog wrapper
+  - `ChatbotWindow.tsx` now exposes dialog semantics and an explicit label path for the message input
+  - targeted ESLint and Vitest checks passed on the touched surfaces
+- Added the next accessibility hardening layer:
+  - the frontend lint stack now includes `eslint-plugin-jsx-a11y`, with the crashing `label-has-associated-control` rule explicitly disabled until the repository's current `minimatch` / plugin interop issue is resolved
+  - targeted `axe` smoke tests now cover `SignIn`, `Register`, and `ResetPasswordPage`
+  - `SignIn`, `Register`, and `ResetPasswordPage` now expose `role="alert"` summaries plus `aria-invalid` / `aria-describedby` associations on their critical fields
+  - `Register` and `ResetPasswordPage` now focus the first invalid field on client-side validation failures
+  - targeted ESLint and client-side Vitest checks passed on the auth and accessibility surfaces
+# 2026-04-18
+
+- Tightened the CTA hierarchy on the editorial CVthèque and Missions pages:
+  - the page-primary action now reuses the same visual recipe as the active view toggle (`segmented-control__item--active`) instead of introducing a separate competing primary style
+  - the affected CTA surfaces are `client/src/components/ResumesPage/SearchAndActions.tsx` and `client/src/components/MissionsPage/MissionsDealsGroupedView.parts.tsx`
+  - the shared style contract now lives in `client/src/styles/resumesEditorial.css` and `client/src/styles/editorialPages.css` as `cv-page-primary-action`
+- Extended the CTA hierarchy to matching and auth entry flows:
+  - `client/src/pages/ProfileMatchSearchPanel.tsx` now uses `cv-page-primary-action` for the main "search profiles" CTA
+  - `client/src/components/SignIn.tsx`, `client/src/components/Register.tsx`, and `client/src/pages/ForgotPasswordPage.tsx` now use a shared global `app-primary-action`
+  - `client/src/styles/_base.css` now carries the non-editorial primary CTA recipe so auth pages do not duplicate inline button gradients
+- Extended the CTA and tabs cleanup to the authenticated home and older legacy primaries:
+  - `client/src/components/HomePage/HomeStickyNav.tsx` now reuses `ResponsivePageTabs` instead of a custom sticky-pill implementation, with `ResponsivePageTabs` updated to allow icon-less usage
+  - the authenticated home dashboard now promotes `Importer un CV` as the page-primary CTA instead of rendering it with the same secondary quick-action card treatment
+  - a broad frontend pass replaced many remaining legacy blue primaries (`btn btn-primary` and explicit `bg-indigo-600` button styles) with the shared `app-primary-action` contract
+- Fixed the authenticated home tabs contrast contract in both themes:
+  - `client/src/components/page/ResponsivePageTabs.tsx` no longer injects local Tailwind text-color utilities for inactive tabs; segmented tab contrast now comes only from the shared CSS contract
+  - `client/src/styles/_base.css` now gives the global segmented-control clearer active/inactive contrast in light mode and higher inactive-text readability plus stronger active-state separation in dark mode
+
+## [2026-04-18] fix | preserve consumed batch AI credit markers when persisting result data
+
+- Investigated reports of successful LLM operations being refunded anyway.
+- Confirmed the false-refund path on reserved batch actions:
+  - consumption markers are stored in `batch_job_items.pending_data.creditUsage`
+  - `server/services/batchJobCredits.service.js` refunds any reserved action missing from that map during final settlement
+  - `server/services/batchJobs/itemCrud.js:updateJobItemStatus()` was overwriting `pending_data` when storing `result_data`, which could erase `creditUsage` after a successful action
+- Fixed `updateJobItemStatus()` to preserve existing `creditUsage` while writing `result_data`.
+- Added a regression test in `server/tests/services/batchJobs.itemCrud.test.js`.
+- Revalidated with:
+  - `npx vitest run server/tests/services/batchJobs.itemCrud.test.js`
+  - `npx vitest run server/tests/services/batchJobsWorker.itemProcessors.test.js`
+
+## [2026-04-18] fix | keep all in-scope profiles in mission search results even when LLM scoring omits some ids
+
+- Investigated a profile-search result gap where the returned result set could be smaller than the number of CVs in scope even with default segmentation and no explicit result limit.
+- Confirmed the root cause in `server/services/profileMatching.service.js`:
+  - all in-scope resumes were fetched correctly
+  - for small sets, the usual prefilter cap was not the cause
+  - the final result builder dropped any profile whose `resumeId` was omitted from the LLM `scores` payload
+- Fixed the consolidation step so omitted candidates remain in the results with an explicit low/default score instead of disappearing.
+- Added a regression test in `server/tests/services/profileMatching.service.test.js` covering the case where the LLM returns scores for only a subset of candidates.
+- Revalidated with:
+  - `npx vitest run server/tests/services/profileMatching.service.test.js`
+  - `npx vitest run server/tests/services/batchJobsWorker.itemProcessors.test.js`
+
+## [2026-04-18] fix | score all accessible CVs in profile matching, including LLM failure fallback
+
+- Investigated a stronger matching regression where the UI could show `Aucun profil ne correspond aux critères` even though the user had accessible CVs.
+- Confirmed two backend causes in `server/services/profileMatching.service.js`:
+  - profile search still built an LLM scoring subset instead of treating all accessible CVs as candidates for final scoring
+  - when batch LLM scoring failed completely or no model was configured, the service returned an empty `profiles` array instead of falling back to local scoring
+- Changed profile matching so all accessible CVs are sent through the batching pipeline, and added deterministic local heuristic fallback scoring for:
+  - complete LLM failure
+  - missing LLM score entries for some candidate ids
+- Added/updated regression coverage in `server/tests/services/profileMatching.service.test.js`.
+- Revalidated with:
+  - `npx vitest run server/tests/services/profileMatching.service.test.js`
+  - `npx vitest run server/tests/services/batchJobsWorker.itemProcessors.test.js`
+
+## [2026-04-18] fix | reduce GLM rate-limit bursts on profile matching batch scoring
+
+- Investigated a production `429` on GLM during profile matching:
+  - `/var/log/supervisor/proxy-server.err.log` showed `GLM API call failed` with `Rate limit reached for requests` on `glm-5.1`
+  - the provider-level retry layer already retries `429`, so the remaining issue was burst pressure from the matching batch orchestration itself
+- Confirmed that `server/services/profileMatching/llmScoring.js` could still launch multiple GLM scoring batches in parallel with generic hosted-provider defaults.
+- Tightened GLM-specific defaults for profile matching:
+  - `maxConcurrency = 1`
+  - `batchSize = 16`
+- Practical effect: medium result sets such as 14 accessible CVs now go through a single GLM scoring request instead of multiple near-simultaneous requests that can trigger provider-side request-rate limiting.
+- Added regression coverage in `server/tests/services/profileMatching.service.test.js`.
+- Revalidated with:
+  - `npx vitest run server/tests/services/profileMatching.service.test.js`
+  - `node .\scripts\run-eslint.mjs server\services\profileMatching\llmScoring.js server\tests\services\profileMatching.service.test.js`

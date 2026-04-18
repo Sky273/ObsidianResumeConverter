@@ -62,6 +62,10 @@ This layer produces a richer semantic fit signal, typically including:
 
 - This is the expensive semantic layer.
 - It is not a replacement for local ranking; it complements it.
+- In profile search, every CV the current user can access is expected to be scored and kept in the final result set; the product should not hide accessible CVs because of an LLM-side shortlist or omission.
+- If the LLM omits some candidate IDs in its JSON payload, those CVs should keep a deterministic local score instead of disappearing from the returned results.
+- If batch LLM scoring fails entirely or no model is configured, the service should fall back to local heuristic scoring for all accessible CVs rather than returning an empty result list.
+- GLM is more sensitive to request bursts on profile-search batch scoring; the service should use a more conservative default (`maxConcurrency = 1`) and a larger batch (`batchSize = 16`) to reduce `429 Rate limit reached for requests` responses on medium-size candidate sets.
 
 ## Adaptation Coupling
 
