@@ -36,6 +36,10 @@ ResumeConverter does not stop at content analysis. It also owns resume presentat
   - body
   - footer
   - stylesheet
+- The final template-editing page must preserve raw extracted HTML and CSS fidelity:
+  - template header/body/footer fragments can carry structural `div` trees, extracted `class` names, and inline `data:image/...;base64,...` sources
+  - a rich-text editor that reparses arbitrary HTML into paragraph-oriented content is not acceptable for this surface because it destroys the extracted layout contract
+  - the template editor therefore needs raw HTML editing semantics for these three fragments, with preview handled separately
 - When the operator turns an extracted result into a saved template, the new template is now pre-assigned to the current authenticated user's `firmId` instead of defaulting to the global template scope.
 - The extraction-to-template handoff waits for auth restoration before consuming the extracted payload from `sessionStorage`, so a slow `/api/auth/me` bootstrap does not accidentally create a global template with an empty `firm_id`.
 - The PDF-centered extraction path also recovers coarse visual structure from the source PDF, including large background blocks and approximate image regions, so the generated template is less text-only than before.

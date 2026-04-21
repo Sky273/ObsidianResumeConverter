@@ -87,8 +87,32 @@ Important remembered behavior:
 
 - verification emails try to send after registration
 - password reset treats email delivery failure as a real service error after token creation
+- all current application-level outbound emails that call `server/services/mail/gdprMailService.js` now pass through a provider switch rather than being hard-bound to Gmail OAuth
 
 This means mail-provider health can block account recovery or onboarding even when auth code itself is correct.
+
+## Current Delivery Provider Model
+
+The delivery facade for real outbound emails is currently `server/services/mail/gdprMailService.js`.
+
+Durable facts:
+
+- `sendEmail()` now resolves the active provider from `GDPR_MAIL_PROVIDER` (or `MAIL_DELIVERY_PROVIDER` as fallback)
+- supported modes are `gmail`, `smtp`, and `auto`
+- `auto` prefers SMTP when the full `SMTP_*` configuration is present; otherwise it falls back to Gmail OAuth
+- the new SMTP transport is implemented in `server/services/mail/smtpProvider.js` using `nodemailer`
+- account lifecycle emails already wired to this facade include:
+  - password reset / invite / forced password change
+  - registration confirmation
+  - email verification
+  - GDPR consent requests and reminders
+
+Operational implications:
+
+- Gmail OAuth remains the transport for GDPR mail when the active provider resolves to `gmail`
+- SMTP is treated as server-managed configuration rather than an end-user OAuth connection
+- the GDPR settings screen now reflects provider capabilities so SMTP mode hides Gmail connect/disconnect actions while still allowing test sends
+- the GDPR status route can now report a provider-managed SMTP status with `allowConnect=false` and `allowDisconnect=false`
 
 ## User-State Consequences
 

@@ -47,7 +47,9 @@ Security and compliance are built into the application architecture, not bolted 
 - Resume-linked consent can be initialized, sent by email, resent, checked, and answered through public tokenized routes.
 - Public consent response handles accepted, refused, expired, invalid, and already-processed tokens.
 - GDPR audit exposes admin-only logs, stats, action/category catalogs, firm lists, and target-email export.
-- GDPR mail uses a global Gmail OAuth token for sending consent emails, while templates remain firm-specific.
+- GDPR and other application outbound emails now go through a provider-selected delivery facade in `server/services/mail/gdprMailService.js`.
+- The active provider can resolve to Gmail OAuth or SMTP, with `GDPR_MAIL_PROVIDER` supporting `gmail`, `smtp`, and `auto`.
+- In SMTP mode, delivery is server-managed configuration rather than an admin-driven OAuth connection.
 - DPO and GDPR-related settings exist in the settings surface.
 
 ## Sharing and Data Exposure
@@ -68,6 +70,7 @@ Security and compliance are built into the application architecture, not bolted 
 - The proxy server includes helmet/cors/csrf, request IDs, metrics, rate limits, and environment validation.
 - The PDF server is isolated behind an internal auth token and trusted-internal-URL checks.
 - Backup, metrics, and GDPR audit are admin-only operational surfaces.
+- Default-admin bootstrap still supports the historical `DEFAULT_ADMIN_PASSWORD` fallback and is no longer protected by a startup guard that rejects default/weak values.
 
 ## Concrete HTTP and Session Protections
 

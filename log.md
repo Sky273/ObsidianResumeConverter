@@ -1,5 +1,41 @@
 # Log
 
+## [2026-04-20] fix | preserve extracted template HTML and inline logos through review and fallback paths
+
+- Reworked the template-extraction review/edit flow around three user-visible defects.
+- Frontend editor:
+  - replaced the Tiptap-based header/body/footer editors in `client/src/pages/NewTemplatePage.tsx` with plain HTML `textarea` fields
+  - reason: Tiptap was reparsing extracted template fragments and overwriting layout-oriented markup/classes
+- Backend fallback path:
+  - updated `server/services/templateExtraction.service.js` and `server/services/templateExtractionFallback.service.js` so deterministic layout fallback now receives extracted images
+  - fallback templates now replace `-logo-` with extracted base64 image markup instead of leaving the placeholder behind
+- Frontend preview/runtime:
+  - updated `client/src/utils/sanitizer.frontend.ts` to allow `data:image/...;base64,...` sources so extracted inline logos remain visible in preview frames
+- View refresh:
+  - updated `client/src/components/ExtractTemplateModal.tsx` to mark the templates view dirty after a successful extraction and again when handing off to `/admin/templates/new?fromExtraction=true`
+  - this ensures the templates dashboard refreshes when users return from the extraction workflow
+- Revalidated with:
+  - `node .\node_modules\vitest\vitest.mjs run --config client/vitest.config.ts client/src/pages/NewTemplatePage.test.tsx client/src/components/ExtractTemplateModal.test.tsx client/src/utils/sanitizer.frontend.test.ts`
+  - `node .\node_modules\vitest\vitest.mjs run server/tests/services/templateExtraction.service.test.js --config server/vitest.config.js`
+
+## [2026-04-20] fix | support pdf-parse v2 class export in CV template extraction
+
+- Investigated template-extraction warnings showing:
+  - `pdf-parse extraction failed, falling back to pdfjs-dist`
+  - `pdf-parse module does not expose a callable parser`
+- Confirmed the cause in `server/routes/templates/extraction/pdfExtractionHelpers.js`:
+  - the repository now installs `pdf-parse@2.4.5`
+  - this version exposes `PDFParse` as a class-based API instead of the older callable default export expected by the helper
+- Fixed the compatibility layer so template extraction now supports:
+  - callable default export
+  - direct callable module export
+  - `pdfParse` named export
+  - `PDFParse` class export by instantiating the parser with `{ data: buffer }`, calling `getText()`, and destroying it
+- Added regression coverage in `server/tests/routes/templates.extraction.pdfExtractionHelpers.test.js`.
+- Revalidated with:
+  - `node .\node_modules\vitest\vitest.mjs run server/tests/routes/templates.extraction.pdfExtractionHelpers.test.js --config server/vitest.config.js`
+  - `node .\node_modules\vitest\vitest.mjs run server/tests/routes/templates.extraction.extractors.test.js --config server/vitest.config.js`
+
 ## [2026-04-18] feat | add firm credit detail screen by user and action
 
 - Added a dedicated cabinet credit detail flow reachable from the administration cabinet-credit screen.
@@ -1237,3 +1273,211 @@
 - Revalidated with:
   - `npx vitest run server/tests/services/profileMatching.service.test.js`
   - `node .\scripts\run-eslint.mjs server\services\profileMatching\llmScoring.js server\tests\services\profileMatching.service.test.js`
+## [2026-04-18] fix | prevent legacy submit hover from overriding migrated auth CTAs
+
+- Investigated auth/public screens where CTA buttons looked correct at rest but switched to the old visual treatment on hover.
+- Confirmed the root cause in `client/src/styles/_base.css`: legacy global selectors on `button[type="submit"]` and `input[type="submit"]` were still applying on top of the newer `.app-primary-action` CTA style used by sign-in, register, forgot-password, reset-password, and similar screens.
+- Fixed the overlap at the source by excluding `.app-primary-action` from the legacy submit selectors for base, hover, and active states.
+- Result: migrated CTA buttons now keep their intended hover/active treatment consistently, while untouched legacy submit buttons keep their previous styling.
+- Revalidated with:
+  - `node .\scripts\run-eslint.mjs client\src\styles\_base.css client\src\components\SignIn.tsx client\src\components\Register.tsx client\src\pages\ForgotPasswordPage.tsx client\src\pages\ResetPasswordPage.tsx`
+
+## [2026-04-18] fix | improve CV template header/footer extraction
+
+- Investigated template extraction quality for CV models where body reconstruction was already strong but `headerContent` and `footerContent` were often empty, truncated, or misclassified.
+- Confirmed the weak point in `server/routes/templates/extraction/pdfLayoutTemplateBuilder.js`:
+  - header/footer detection relied mainly on fixed top/bottom first-page ratios
+  - this missed deeper but still contiguous header/footer blocks
+  - it also ignored repeated cabinet branding or pagination visible on later pages
+- Improved the structured PDF layout builder so header/footer detection now combines:
+  - fixed ratio seeding
+  - short-range continuity extension for contiguous top/bottom blocks
+  - repeated top/bottom line hints detected across up to the first three PDF pages
+- Added regression coverage in `server/tests/routes/templates.extraction.pdfLayoutTemplateBuilder.test.js` for:
+  - a header block extending below the old ratio cutoff
+  - repeated top/bottom lines being promoted into header/footer regions
+- Revalidated with:
+  - `npx vitest run server/tests/routes/templates.extraction.pdfLayoutTemplateBuilder.test.js`
+  - `npx vitest run server/tests/routes/templates.extraction.extractors.test.js`
+  - `node .\scripts\run-eslint.mjs server\routes\templates\extraction\pdfLayoutTemplateBuilder.js server\tests\routes\templates.extraction.pdfLayoutTemplateBuilder.test.js`
+
+## [2026-04-18] tweak | give more label space to transverse page tabs
+
+- Adjusted the shared transverse tabs component in `client/src/components/page/ResponsivePageTabs.tsx`.
+- Reduced the grid gap and outer segmented-control padding slightly, and also tightened per-tab horizontal padding and icon/text spacing.
+- Kept the same responsive grid behavior and active-state styling while increasing the effective width available to each tab label before truncation.
+- Revalidated with:
+  - `node .\scripts\run-eslint.mjs client\src\components\page\ResponsivePageTabs.tsx client\src\pages\SettingsPage.tsx client\src\pages\AdminWorkspacePage.tsx client\src\pages\ResumeImprovePage.tsx`
+  - `pnpm exec tsc --noEmit -p client/tsconfig.json`
+
+## [2026-04-18] tweak | stop aggressive truncation in transverse page tabs
+
+- Reworked `client/src/components/page/ResponsivePageTabs.tsx` again after observing that labels were still truncated too aggressively on dense admin screens.
+- The shared tab component now:
+  - uses a smaller default minimum item width
+  - uses tighter outer and inner spacing
+  - allows label text to wrap instead of forcing single-line ellipsis
+- Goal: prioritize full tab-label visibility over preserving a single-line layout at all costs.
+- Revalidated with:
+  - `node .\scripts\run-eslint.mjs client\src\components\page\ResponsivePageTabs.tsx client\src\pages\AdminWorkspacePage.tsx client\src\pages\SettingsPage.tsx`
+  - `pnpm exec tsc --noEmit -p client/tsconfig.json`
+
+## [2026-04-18] fix | recover from stale lazy-loaded chunks after template extraction
+
+- Investigated a reported "template extraction" failure that surfaced in the UI as:
+  - `TypeError: Failed to fetch dynamically imported module`
+  - missing hashed asset for `NewTemplatePage`
+- Correlated the user-facing error with backend logs showing:
+  - `POST /api/templates/extract-from-cv` completed with `200`
+  - the extraction request was slow but successful
+- Conclusion: the extraction itself succeeded; the failure happened after navigation when the SPA tried to lazy-load a stale JS chunk from an older deployment.
+- Updated `client/src/app/lazyPages.ts` so lazy-loaded routes now:
+  - detect recoverable dynamic-import/chunk-load failures
+  - trigger a one-time full page reload to pick up the current asset manifest
+  - avoid infinite recovery loops by allowing only one retry for the current path
+- Added regression coverage in `client/src/app/lazyPages.test.ts`.
+- Revalidated with:
+  - `npx vitest run client/src/app/lazyPages.test.ts`
+  - `node .\scripts\run-eslint.mjs client\src\app\lazyPages.ts client\src\app\lazyPages.test.ts`
+  - `pnpm exec tsc --noEmit -p client/tsconfig.json`
+
+## [2026-04-18] fix | degrade cleanly when GDPR mail token decryption fails
+
+- Investigated recurring scheduler logs during proactive GDPR token refresh:
+  - `[GDPR Token Refresh] Proactive refresh failed`
+  - `Unsupported state or unable to authenticate data`
+- Confirmed the failure point in `server/services/mail/gdprMailService.js`:
+  - the scheduler was reaching the refresh-token decryption step
+  - the backend crypto layer threw an AEAD authentication error, which indicates unreadable stored token ciphertext for the current key/material rather than a normal Google refresh failure
+- Updated the GDPR mail service so unreadable stored tokens now:
+  - are classified explicitly as local token-decryption failures
+  - mark the stored GDPR token as requiring reconnection by nulling encrypted access/refresh fields and expiring the record
+  - return a user-facing reconnect-required message instead of the raw crypto runtime error text
+- This prevents the scheduler from surfacing opaque `Unsupported state or unable to authenticate data` errors for this class of failure.
+- Added regression coverage in `server/tests/services/gdprMailService.test.js`.
+- Revalidated with:
+  - `npx vitest run server/tests/services/gdprMailService.test.js`
+  - `node .\scripts\run-eslint.mjs server\services\mail\gdprMailService.js server\tests\services\gdprMailService.test.js`
+
+## [2026-04-18] fix | regenerate unreadable stored share tokens instead of breaking share flows
+
+- Investigated failures around share-link / QR-code generation and narrowed the risk to stored share-token handling.
+- Confirmed two brittle spots in the share layer:
+  - `getOrCreateShareToken(...)` could throw if an existing stored token was unreadable
+  - `getShareStatus(...)` could fail entirely when trying to decode a corrupted or incompatible stored token
+- Updated the share services so unreadable stored share tokens now fail soft:
+  - original-file token generation treats the stored token as invalid and regenerates a fresh one
+  - share status hides unreadable PDF/file tokens instead of throwing
+- Practical effect: stale/corrupted/incompatible stored share-token values no longer block QR-code/link generation paths.
+- Added regression coverage in `server/tests/services/shareResume.service.test.js`.
+- Revalidated with:
+  - `npx vitest run server/tests/services/shareResume.service.test.js`
+  - `node .\scripts\run-eslint.mjs server\services\shareResume.helpers.js server\services\shareResume.service.js server\tests\services\shareResume.service.test.js`
+
+## [2026-04-18] fix | keep resume share-token persistence within varchar(64)
+
+- Investigated a remaining public-share generation failure with logs showing:
+  - `value too long for type character varying(64)`
+  - failure on `UPDATE resumes ... shared_pdf_token = $2`
+- Confirmed the root cause in `server/utils/shareTokenStorage.js`:
+  - the recently introduced versioned/encrypted stored token format exceeded the real schema width of `resumes.shared_pdf_token` / `shared_file_token`
+  - share generation therefore failed before the QR-code/link flow could complete
+- Fixed the persistence contract so new resume share-token writes stay within the original 64-character token budget.
+- Kept compatibility for lookup helpers so legacy versioned token patterns can still be queried if encountered.
+- Revalidated with:
+  - `npx vitest run server/tests/utils/shareTokenStorage.test.js server/tests/services/shareResume.service.test.js server/tests/routes/share.routes.test.js`
+  - `node .\scripts\run-eslint.mjs server\utils\shareTokenStorage.js server\tests\utils\shareTokenStorage.test.js server\services\shareResume.helpers.js server\services\shareResume.service.js`
+
+## [2026-04-18] fix | standardize CV template extraction timeout to the platform LLM baseline
+
+- Investigated reports that the CV-template extraction timeout still looked non-standard even after the general IA timeout unification.
+- Confirmed the inconsistency in `server/services/templateExtraction.service.js`:
+  - the shared LLM facade already enforces the platform baseline `LLM_OPERATION_TIMEOUT_MS`
+  - but the extraction service still passed a legacy local `120000 ms` timeout on the HTML branch
+  - the vision branch did not pass the standardized timeout explicitly
+- Fixed the extraction service so both paths now request the same standard timeout:
+  - HTML extraction uses `LLM_OPERATION_TIMEOUT_MS`
+  - vision fallback uses `LLM_OPERATION_TIMEOUT_MS`
+  - fallback logging now reports the standardized timeout instead of the old 120-second hint
+- Updated regression coverage in `server/tests/services/templateExtraction.service.test.js` to lock this contract.
+- Revalidated with:
+  - `npx vitest run server/tests/services/templateExtraction.service.test.js`
+  - `node .\scripts\run-eslint.mjs server\services\templateExtraction.service.js server\tests\services\templateExtraction.service.test.js`
+
+## [2026-04-18] fix | preserve extracted images and source CSS in CV template extraction
+
+- Reworked the template-extraction post-processing to improve asset fidelity rather than only placeholder compliance.
+- Confirmed two quality gaps in the previous pipeline:
+  - extracted images were mostly reduced to a single logo replacement path
+  - recovered layout CSS could still be discarded when the LLM returned sparse or generic stylesheet output
+- Updated the extraction stack so the final template now:
+  - hydrates detected `template-image-slot` placeholders with extracted document images in sequence
+  - still replaces classic logo placeholders where relevant
+  - merges the structured-layout stylesheet back into the final returned stylesheet instead of relying only on the LLM stylesheet
+  - appends shared asset rules so embedded extracted images render correctly inside stored templates
+- Expanded targeted regression coverage for:
+  - multi-slot image hydration
+  - merged source stylesheet preservation on the final extracted template
+- Revalidated with:
+  - `npx vitest run server/tests/routes/templates.extraction.imagePlaceholders.test.js server/tests/services/templateExtraction.service.test.js server/tests/routes/templates.extraction.extractors.test.js`
+  - `node .\scripts\run-eslint.mjs server\routes\templates\extraction\imagePlaceholders.js server\services\templateExtractionFallback.service.js server\services\templateExtraction.service.js server\utils\sanitizer.backend.js server\tests\routes\templates.extraction.imagePlaceholders.test.js server\tests\services\templateExtraction.service.test.js`
+
+## [2026-04-18] fix | rebase extracted CV templates on detected layout classes and embed logos inline
+
+- Investigated a remaining extraction-quality defect where:
+  - `-logo-` could still be visible in extracted template output
+  - the recovered stylesheet was present, but the final header/body/footer no longer carried the `template-region-*` classes expected by that stylesheet
+- Confirmed the mismatch came from the final LLM-normalized HTML drifting away from the structured PDF layout fragments, while the source layout stylesheet was still merged into the result.
+- Updated `server/services/templateExtractionFallback.service.js` so that when structured layout fragments are available:
+  - header, content, and footer are re-based on the detected `template-region-*` fragments
+  - content line blocks are rewritten into `-name-`, `-title-`, and `-content-` placeholders while preserving the layout classes
+  - header/footer text line blocks are stripped while retaining layout chrome and image-slot structure
+  - extracted logo/image content is then injected inline as `data:image/...;base64,...`, eliminating residual `-logo-` in the final stored template when image data exists
+- Updated `server/services/templateExtraction.service.js` to pass the full layout-analysis context into the extraction post-processor.
+- Added regression coverage in `server/tests/services/templateExtraction.service.test.js` to lock:
+  - class-preserving layout rebasing
+  - inline base64 logo injection
+  - removal of leaked detected text from the final layout-backed template
+- Revalidated with:
+  - `npx vitest run server/tests/services/templateExtraction.service.test.js server/tests/routes/templates.extraction.extractors.test.js server/tests/routes/templates.extraction.imagePlaceholders.test.js`
+  - `node .\scripts\run-eslint.mjs server\services\templateExtractionFallback.service.js server\services\templateExtraction.service.js server\tests\services\templateExtraction.service.test.js`
+
+## [2026-04-18] fix | preserve extracted template HTML/CSS fidelity in the admin template editor
+
+- Investigated a remaining user-visible defect after backend extraction fixes:
+  - extracted template fragments still appeared in the editor as `<p></p>` and `<p>-name-</p><p>-title-</p><p>-content-</p>`
+  - this proved the backend output was no longer the only problem; the admin template-editing surface itself was flattening extracted HTML into paragraph-oriented rich text
+- Confirmed the destructive step in `client/src/pages/NewTemplatePage.tsx`:
+  - header/content/footer were edited through the shared Tiptap editor
+  - that editor is optimized for prose content and reparses arbitrary HTML through a limited schema, dropping the original extracted `div` structure, classes, and layout-specific nodes
+- Fixed the template editor so header/content/footer are now edited as raw HTML textareas rather than through Tiptap.
+- Added a live preview frame to keep template-editing UX usable without sacrificing structural fidelity.
+- Updated frontend sanitization to explicitly allow `data:image/...;base64,...` sources in previewed HTML so embedded extracted logos/images remain visible.
+- Updated `client/src/pages/NewTemplatePage.test.tsx` to lock the new contract that extracted header/footer HTML is preserved when creating a template from extraction.
+- Revalidated with:
+  - `npx vitest run client/src/pages/NewTemplatePage.test.tsx`
+  - `node .\scripts\run-eslint.mjs client\src\pages\NewTemplatePage.tsx client\src\pages\NewTemplatePage.test.tsx client\src\utils\sanitizer.frontend.ts`
+  - `pnpm exec tsc --noEmit -p client/tsconfig.json`
+
+## [2026-04-20] feat | route transactional app emails through a configurable provider with SMTP support
+
+- Implemented a provider switch for real outbound app emails in `server/services/mail/gdprMailService.js`.
+- Added `server/services/mail/smtpProvider.js` using `nodemailer`.
+- Added `GDPR_MAIL_PROVIDER` support with modes `gmail`, `smtp`, and `auto`; `MAIL_DELIVERY_PROVIDER` is accepted as fallback.
+- Wired existing application mail sends behind the provider facade so password reset, invite, forced password change, registration confirmation, email verification, and GDPR consent sends all reuse the same provider selection.
+- Updated the GDPR settings route/UI contract so SMTP-managed mode reports provider capabilities and suppresses Gmail OAuth/disconnect actions while keeping test-send available.
+- Added targeted backend tests for SMTP dispatch and provider-specific route errors.
+- Revalidated with:
+  - `node ./node_modules/vitest/vitest.mjs run server/tests/services/gdprMailService.test.js server/tests/routes/gdprMail.routes.test.js --config server/vitest.config.js`
+  - `node ./node_modules/vitest/vitest.mjs run server/tests/services/passwordReset.service.test.js server/tests/services/registrationEmail.service.test.js server/tests/services/emailVerification.service.test.js --config server/vitest.config.js`
+  - `npm run typecheck`
+  - `node scripts/run-eslint.mjs client/src/components/SettingsPage/GdprTab.tsx server/services/mail/gdprMailService.js server/services/mail/smtpProvider.js server/routes/gdprMail.routes.js server/tests/services/gdprMailService.test.js server/tests/routes/gdprMail.routes.test.js --ext js,jsx,ts,tsx`
+
+## [2026-04-21] memory | align vault with current default-admin password policy and email delivery model
+
+- Updated `topics/Environment and Secret Matrix.md` to remove the stale claim that `DEFAULT_ADMIN_PASSWORD` is a production startup guard.
+- Recorded that the default-admin bootstrap still allows the historical fallback/default password and that this is now a deployment responsibility rather than an enforced runtime invariant.
+- Updated `topics/Security and Compliance.md` to reflect the current outbound email model:
+  - app emails are routed through `server/services/mail/gdprMailService.js`
+  - provider selection supports Gmail OAuth and SMTP
+  - SMTP mode is server-managed configuration rather than an OAuth connection owned from the admin UI

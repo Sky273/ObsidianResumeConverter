@@ -87,6 +87,20 @@ This makes sharing an operational surface, not a permanent publication mechanism
 
 The public endpoints reject malformed or unknown tokens before serving content.
 
+### Self-healing around stored share tokens
+
+- Authenticated share-management flows can encounter unreadable stored share tokens:
+  - legacy plaintext vs encrypted transition issues
+  - corrupted stored token payload
+  - changed encryption key material
+- The share layer now fails soft for this case:
+  - share status hides unreadable stored tokens instead of failing the whole request
+  - original-file token generation regenerates and overwrites an unreadable stored token instead of surfacing a 500
+- Resume share-token persistence also remains constrained by the existing `resumes.shared_pdf_token` / `shared_file_token` schema budget:
+  - those columns still follow the legacy 64-character token contract
+  - the persisted format must therefore stay within 64 characters
+  - legacy versioned/encrypted token lookup remains tolerated for reads, but new share-token writes stay on the 64-character raw token format
+
 ### Public-route CSRF exemption is intentional
 
 Consent response routes are publicly reachable and intentionally exempted from CSRF in the global middleware model.
@@ -122,4 +136,3 @@ If a new public route is ever added, document explicitly:
 ## Sources
 
 - [[raw/sources/2026-04-16-public-token-and-pdf-boundaries]]
-

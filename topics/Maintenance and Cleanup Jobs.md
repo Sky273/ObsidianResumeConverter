@@ -28,12 +28,15 @@ They are related, but they do not do the same work.
 - purge checks run daily
 - GDPR token refresh runs every 7 days
 - an initial pass is triggered shortly after startup rather than waiting a full interval
+- If the stored GDPR Gmail token can no longer be decrypted (for example after key drift or corrupted ciphertext), the refresh task now marks the token as requiring reconnection instead of repeatedly surfacing the raw crypto runtime error
 
 ### Operational meaning
 
 - GDPR behavior is not only route-driven; it also depends on background upkeep.
 - Token hygiene for password-reset flows depends on background cleanup, not only on request-time validation.
 - There is also a manual `runAllChecks()` path, so the scheduler logic can be invoked intentionally for diagnostics or recovery.
+- A scheduler warning about GDPR token refresh does not always mean Google rejected the token:
+  - it can also mean the locally stored encrypted token is no longer decryptable with the current key material
 
 ## Filesystem and Artifact Cleanup
 

@@ -188,8 +188,14 @@
 <h2>Delivery Dependency</h2>
 <p>Both verification and password reset ultimately depend on the configured mail-delivery service.</p>
 <p>Important remembered behavior:</p>
-<ul><li>verification emails try to send after registration</li><li>password reset treats email delivery failure as a real service error after token creation</li></ul>
+<ul><li>verification emails try to send after registration</li><li>password reset treats email delivery failure as a real service error after token creation</li><li>all current application-level outbound emails that call <code>server/services/mail/gdprMailService.js</code> now pass through a provider switch rather than being hard-bound to Gmail OAuth</li></ul>
 <p>This means mail-provider health can block account recovery or onboarding even when auth code itself is correct.</p>
+<h2>Current Delivery Provider Model</h2>
+<p>The delivery facade for real outbound emails is currently <code>server/services/mail/gdprMailService.js</code>.</p>
+<p>Durable facts:</p>
+<ul><li><code>sendEmail()</code> now resolves the active provider from <code>GDPR_MAIL_PROVIDER</code> (or <code>MAIL_DELIVERY_PROVIDER</code> as fallback)</li><li>supported modes are <code>gmail</code>, <code>smtp</code>, and <code>auto</code></li><li><code>auto</code> prefers SMTP when the full <code>SMTP_*</code> configuration is present; otherwise it falls back to Gmail OAuth</li><li>the new SMTP transport is implemented in <code>server/services/mail/smtpProvider.js</code> using <code>nodemailer</code></li><li>account lifecycle emails already wired to this facade include:</li><li>password reset / invite / forced password change</li><li>registration confirmation</li><li>email verification</li><li>GDPR consent requests and reminders</li></ul>
+<p>Operational implications:</p>
+<ul><li>Gmail OAuth remains the transport for GDPR mail when the active provider resolves to <code>gmail</code></li><li>SMTP is treated as server-managed configuration rather than an end-user OAuth connection</li><li>the GDPR settings screen now reflects provider capabilities so SMTP mode hides Gmail connect/disconnect actions while still allowing test sends</li><li>the GDPR status route can now report a provider-managed SMTP status with <code>allowConnect=false</code> and <code>allowDisconnect=false</code></li></ul>
 <h2>User-State Consequences</h2>
 <p>These flows change real account state:</p>
 <ul><li>verification sets <code>email_verified_at</code></li><li>password reset replaces the stored password hash</li><li>forced-change flow clears <code>must_change_password</code> only after successful reset</li></ul>

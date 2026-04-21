@@ -30,10 +30,6 @@ The backend environment validation currently treats these as required:
 - `POSTGRES_PASSWORD`
 - `CSRF_SECRET`
 
-Additional production-critical rule:
-
-- `DEFAULT_ADMIN_PASSWORD` must be explicitly set to a strong non-default value in production
-
 Special case:
 
 - `PDF_SERVER_INTERNAL_TOKEN` is effectively required in production
@@ -138,7 +134,6 @@ Environment validation rejects or warns on obvious placeholders.
 Important remembered rules:
 
 - placeholder-like JWT/CSRF secrets fail validation
-- weak default admin passwords fail validation in production
 - placeholder-like provider secrets may not block startup but still represent broken operational config
 
 The app therefore treats "example values left in env" as a real operational defect class.
@@ -160,7 +155,6 @@ First suspects:
 - missing/weak `JWT_SECRET`
 - missing/weak `CSRF_SECRET`
 - missing DB credentials
-- weak `DEFAULT_ADMIN_PASSWORD` in production
 
 ### Frontend widget missing but app boots
 
@@ -188,6 +182,16 @@ When adding any integration or security-sensitive feature, document:
 2. whether missing config should fail boot or only disable the feature
 3. whether placeholder values should be treated as fatal or warning-only
 4. whether Docker needs an image rebuild or only a container restart
+
+## Default Admin Password Behavior
+
+Current remembered behavior:
+
+- `DEFAULT_ADMIN_PASSWORD` is still used by the default-admin bootstrap script when the seed account must be created
+- the app no longer blocks startup or bootstrap simply because `DEFAULT_ADMIN_PASSWORD` is unset, weak, or equal to the historical fallback `admin123`
+- this means operational hardening of the default admin password is now a deployment responsibility rather than an enforced startup invariant
+
+This is important when reasoning about local/dev bootstrap versus production safety assumptions.
 
 ## Related
 

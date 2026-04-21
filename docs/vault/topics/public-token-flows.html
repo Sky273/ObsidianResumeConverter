@@ -191,6 +191,8 @@
 <p>This makes sharing an operational surface, not a permanent publication mechanism.</p>
 <h3>Validation before response</h3>
 <p>The public endpoints reject malformed or unknown tokens before serving content.</p>
+<h3>Self-healing around stored share tokens</h3>
+<ul><li>Authenticated share-management flows can encounter unreadable stored share tokens:</li><li>legacy plaintext vs encrypted transition issues</li><li>corrupted stored token payload</li><li>changed encryption key material</li><li>The share layer now fails soft for this case:</li><li>share status hides unreadable stored tokens instead of failing the whole request</li><li>original-file token generation regenerates and overwrites an unreadable stored token instead of surfacing a 500</li><li>Resume share-token persistence also remains constrained by the existing <code>resumes.shared_pdf_token</code> / <code>shared_file_token</code> schema budget:</li><li>those columns still follow the legacy 64-character token contract</li><li>the persisted format must therefore stay within 64 characters</li><li>legacy versioned/encrypted token lookup remains tolerated for reads, but new share-token writes stay on the 64-character raw token format</li></ul>
 <h3>Public-route CSRF exemption is intentional</h3>
 <p>Consent response routes are publicly reachable and intentionally exempted from CSRF in the global middleware model.</p>
 <p>That is not a security hole by itself; it is part of the design because these routes do not rely on an authenticated cookie session.</p>

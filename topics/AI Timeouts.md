@@ -17,7 +17,7 @@ The main IA stack was standardized around a 15-minute timeout baseline.
 - The timeout was centralized in the backend config and propagated through the gateway and provider services.
 - Key frontend IA flows were aligned to avoid client-side expiry before backend completion.
 - The legacy backend LLM facade (`server/services/llm.service.js`) now also enforces the same 15-minute minimum before delegating to the provider gateway.
-- This matters for template extraction because it still calls `callLLM` / `callLLMWithVision` directly rather than `callBusinessChatCompletion`; its extraction-specific timeout hint can no longer shrink the real provider timeout below the standard platform floor.
+- Template extraction now requests the same standard 15-minute timeout explicitly on both HTML normalization and vision fallback paths; it no longer carries a legacy local 120-second extraction timeout hint.
 - Batch upload job timeout remains longer and should be treated separately unless there is an explicit product decision to shorten it.
 
 ## Known Scope

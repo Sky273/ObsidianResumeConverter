@@ -32,14 +32,17 @@ Template extraction now follows a hybrid pipeline centered on deterministic PDF 
 3. PDF to structured layout
    - The first PDF page is parsed with `pdfjs-dist`.
    - Text items are normalized into positioned lines.
-   - Lines are split heuristically into:
-     - header
-     - content
-     - footer
-   - A CSS-backed intermediate HTML representation is generated:
-     - `pageHtml`
-     - `headerHtml`
-     - `contentHtml`
+- Lines are split heuristically into:
+  - header
+  - content
+  - footer
+- Header/footer recovery is no longer based only on fixed top/bottom page ratios:
+  - contiguous top or bottom text blocks can extend slightly beyond the default ratio cutoffs and still stay in the header/footer region
+  - repeated top/bottom lines observed across the first pages are promoted into header/footer hints, which helps recover recurring cabinet branding and pagination
+- A CSS-backed intermediate HTML representation is generated:
+  - `pageHtml`
+  - `headerHtml`
+  - `contentHtml`
      - `footerHtml`
      - `stylesheet`
 
@@ -47,6 +50,11 @@ Template extraction now follows a hybrid pipeline centered on deterministic PDF 
    - Generated HTML fragments are sanitized with `sanitizeDocumentHtmlContent(...)`.
    - Generated CSS is sanitized with `sanitizeDocumentStylesheet(...)`.
    - LLM output is sanitized again before returning the extracted template.
+- The extraction post-processor now also preserves image and CSS fidelity explicitly:
+  - detected `template-image-slot` blocks are hydrated with extracted document images when available
+  - the final template stylesheet is merged with the structured-layout stylesheet recovered upstream, so layout CSS is not lost when the LLM returns a sparse or overly generic stylesheet
+  - when structured layout fragments are available, the final extracted template is now re-based on those fragments so the returned HTML keeps the same `template-region-*` classes as the recovered stylesheet
+  - this prevents a recurring mismatch where the stylesheet was present but the final HTML had drifted to unrelated LLM-generated classes
 
 5. LLM normalization
    - The LLM no longer starts from a raw binary or document view only.
@@ -110,17 +118,21 @@ Template extraction now follows a hybrid pipeline centered on deterministic PDF 
      - `aiCreditTemplateExtract`
      - `aiMaxTokensTemplateExtract`
    - The underlying LLM calls are now tagged with explicit operation types so provider-gateway logs and runtime classification stay aligned with other AI actions.
-   - The extraction path also benefits from the standard backend LLM timeout floor:
-     - the extraction service still passes its own shorter HTML normalization timeout value for local intent and logging
-     - but the shared LLM facade now clamps legacy `callLLM` / `callLLMWithVision` requests to at least the platform-wide `LLM_OPERATION_TIMEOUT_MS` baseline (15 minutes), matching other LLM business flows
+  - The extraction path now requests the same standard backend LLM timeout as the rest of the business IA stack on both HTML and vision branches:
+    - `LLM_OPERATION_TIMEOUT_MS` (15 minutes by default)
+    - no extraction-specific 120-second timeout remains in the service layer
 
 10. Error contract
-   - The extraction endpoint is expected to answer in JSON, including upload failures.
-   - The frontend extraction client now sends `Accept: application/json` explicitly.
-   - The frontend no longer assumes that every non-2xx response is JSON:
-     - HTML error pages from proxy/auth/static fallbacks are converted into a readable error message
-     - invalid non-JSON success payloads are rejected as an invalid extraction response instead of surfacing `Unexpected token <`
-   - This hardens the extraction modal against infrastructure or middleware responses that bypass the normal API payload shape.
+- The extraction endpoint is expected to answer in JSON, including upload failures.
+- The frontend extraction client now sends `Accept: application/json` explicitly.
+- The frontend no longer assumes that every non-2xx response is JSON:
+  - HTML error pages from proxy/auth/static fallbacks are converted into a readable error message
+  - invalid non-JSON success payloads are rejected as an invalid extraction response instead of surfacing `Unexpected token <`
+- This hardens the extraction modal against infrastructure or middleware responses that bypass the normal API payload shape.
+- A distinct frontend-only failure mode also exists after deployments:
+  - extraction may complete successfully on the backend
+  - the subsequent navigation to the template editor can fail if the browser still holds an older app shell and tries to lazy-load a now-missing hashed JS chunk
+  - the lazy page loader now attempts a one-time full reload on recoverable dynamic-import chunk failures to recover from stale asset references without turning the extraction into a dead-end
 
 ## Fallback Model
 
@@ -146,6 +158,20 @@ Template extraction now follows a hybrid pipeline centered on deterministic PDF 
 - Template extraction is now biased toward deterministic preprocessing rather than pure model inference.
 - The first page is treated as the canonical style carrier for template extraction.
 - DOCX-specific media and style hints are still harvested when possible, then merged into the PDF-centered path.
+- The text pre-extraction helper in `server/routes/templates/extraction/pdfExtractionHelpers.js` must support both old callable `pdf-parse` exports and the newer `pdf-parse@2.x` class-based API:
+  - recent installed versions can expose `PDFParse` instead of a callable default export
+  - the compatibility layer now instantiates `new PDFParse({ data: buffer })`, calls `getText()`, and destroys the parser
+  - without this adapter, template extraction logs `pdf-parse module does not expose a callable parser` and falls back immediately to the `pdfjs-dist` path
+- Extracted images are now intended to survive into the saved template itself, not only into diagnostics:
+  - placeholder logos are no longer expected to survive in the final stored template when an extracted image is available
+  - detected image slots can now be filled with extracted image data URLs in sequence
+- A stricter asset-fidelity rule now applies to layout-based extraction:
+  - if a structured PDF layout is available, the final template HTML is re-based on that layout fragment structure
+  - `template-region-*` classes from the detected layout are preserved in the final returned header/body/footer
+  - extracted logo/image content is embedded directly as `data:image/...;base64,...` in the stored HTML rather than left as `-logo-`
+- The final template CSS is no longer treated as LLM-only truth:
+  - source layout CSS from the structured extractor is merged back into the final stylesheet
+  - shared asset rules are appended so embedded extracted images render correctly inside hydrated image slots
 - The returned extraction method is now a meaningful runtime signal:
   - `office-pdf-layout-html`
   - `pdf-layout-html`
@@ -156,6 +182,10 @@ Template extraction now follows a hybrid pipeline centered on deterministic PDF 
   - live preview of the corrected template
   - direct replacement of final fragments with detected ones
   - extraction diagnostics for text density, visual blocks, and image regions
+- The handoff from extraction preview to template creation now also marks the `templates` / `administration` view-refresh scopes dirty on the frontend:
+  - successful extraction marks the template list as stale
+  - creating a draft-from-extraction marks it again before navigating to `/admin/templates/new?fromExtraction=true`
+  - this ensures the templates dashboard refreshes when the user returns
 - Confidence is now part of the extraction contract:
   - layout-based extraction trends higher when text density and section detection are strong
   - vision fallback is weaker than structural PDF recovery
@@ -164,6 +194,9 @@ Template extraction now follows a hybrid pipeline centered on deterministic PDF 
 - PDF layout recovery now includes a lightweight pass over PDF drawing operators to recover:
   - large filled rectangles that likely represent section backgrounds or separators
   - image paint regions that approximate logo and illustration placement
+- The layout builder now also uses limited multi-page repetition to improve header/footer detection:
+  - up to the first three pages are scanned for repeated top-region and bottom-region lines
+  - those repeated lines feed region hints for the first-page structured template
 - The vision fallback no longer depends on a browser runtime:
   - no `puppeteer` launch
   - no browser-side PDF rendering step
@@ -178,6 +211,10 @@ Template extraction now follows a hybrid pipeline centered on deterministic PDF 
   - candidate role collapses to `-title-`
   - the rest of the resume body collapses to `-content-`
 - Header/footer branding can remain when it represents template chrome rather than candidate content.
+- The admin template editor must keep extracted HTML/CSS as raw markup:
+  - `client/src/pages/NewTemplatePage.tsx` now edits header/body/footer with plain `textarea` fields
+  - the extracted HTML is no longer reparsed through Tiptap, which previously flattened or rewrote layout structure
+- Frontend preview sanitization now explicitly allows `data:image/...;base64,...` URIs so extracted inline logos remain visible in preview frames.
 
 ## Improvement Ideas
 

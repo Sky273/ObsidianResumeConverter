@@ -166,9 +166,9 @@
 <h3>Main recurring tasks</h3>
 <ul><li>consent checks</li><li>reminder checks</li><li>retention/purge checks</li><li>proactive GDPR token refresh</li><li>password-reset token cleanup</li></ul>
 <h3>Cadence</h3>
-<ul><li>consent checks run hourly</li><li>reminder checks run every 6 hours</li><li>purge checks run daily</li><li>GDPR token refresh runs every 7 days</li><li>an initial pass is triggered shortly after startup rather than waiting a full interval</li></ul>
+<ul><li>consent checks run hourly</li><li>reminder checks run every 6 hours</li><li>purge checks run daily</li><li>GDPR token refresh runs every 7 days</li><li>an initial pass is triggered shortly after startup rather than waiting a full interval</li><li>If the stored GDPR Gmail token can no longer be decrypted (for example after key drift or corrupted ciphertext), the refresh task now marks the token as requiring reconnection instead of repeatedly surfacing the raw crypto runtime error</li></ul>
 <h3>Operational meaning</h3>
-<ul><li>GDPR behavior is not only route-driven; it also depends on background upkeep.</li><li>Token hygiene for password-reset flows depends on background cleanup, not only on request-time validation.</li><li>There is also a manual <code>runAllChecks()</code> path, so the scheduler logic can be invoked intentionally for diagnostics or recovery.</li></ul>
+<ul><li>GDPR behavior is not only route-driven; it also depends on background upkeep.</li><li>Token hygiene for password-reset flows depends on background cleanup, not only on request-time validation.</li><li>There is also a manual <code>runAllChecks()</code> path, so the scheduler logic can be invoked intentionally for diagnostics or recovery.</li><li>A scheduler warning about GDPR token refresh does not always mean Google rejected the token:</li><li>it can also mean the locally stored encrypted token is no longer decryptable with the current key material</li></ul>
 <h2>Filesystem and Artifact Cleanup</h2>
 <p><code>server/utils/fileCleanup.js</code> owns periodic cleanup of temporary files and derived artifacts.</p>
 <h3>Managed cleanup roots</h3>
