@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>LLM Control Plane | ResumeConverter Vault</title>
-    <meta name="description" content="LLM Control Plane Summary The AI layer is governed centrally through settings, provider availability, credits, prompts, weights, timeout policy, and model specific validation. This">
+    <title>Priority Review 2026-04-21 | ResumeConverter Vault</title>
+    <meta name="description" content="Priority Review 2026 04 21 Summary Repository inspection on 2026 04 21 confirms that ResumeConverter remains broad and fairly well tested, but the highest priority review areas are">
     <link rel="stylesheet" href="../../assets/site.css">
   </head>
   <body>
@@ -108,7 +108,7 @@
 <li><a href="header-size-budget.html">Header Size Budget</a></li>
 <li><a href="integrations.html">Integrations</a></li>
 <li><a href="llm-call-resolution-and-runtime-selection.html">LLM Call Resolution and Runtime Selection</a></li>
-<li><a class="active" href="llm-control-plane.html">LLM Control Plane</a></li>
+<li><a href="llm-control-plane.html">LLM Control Plane</a></li>
 <li><a href="llm-cost-model-and-pricing-strategy.html">LLM Cost Model and Pricing Strategy</a></li>
 <li><a href="llm-executive-decision-presentation.html">LLM Executive Decision Presentation</a></li>
 <li><a href="maintenance-and-cleanup-jobs.html">Maintenance and Cleanup Jobs</a></li>
@@ -122,7 +122,7 @@
 <li><a href="priority-review-2026-04-16.html">Priority Review 2026-04-16</a></li>
 <li><a href="priority-review-2026-04-17.html">Priority Review 2026-04-17</a></li>
 <li><a href="priority-review-2026-04-18.html">Priority Review 2026-04-18</a></li>
-<li><a href="priority-review-2026-04-21.html">Priority Review 2026-04-21</a></li>
+<li><a class="active" href="priority-review-2026-04-21.html">Priority Review 2026-04-21</a></li>
 <li><a href="product-scope-and-priorities.html">Product Scope and Priorities</a></li>
 <li><a href="provider-failure-and-fallback-model.html">Provider Failure and Fallback Model</a></li>
 <li><a href="public-token-flows.html">Public Token Flows</a></li>
@@ -156,31 +156,31 @@
         </nav>
       </aside>
       <main class="content">
-        <div class="content-meta">Source: <code>topics/LLM Control Plane.md</code></div>
-        <h1>LLM Control Plane</h1>
+        <div class="content-meta">Source: <code>topics/Priority Review 2026-04-21.md</code></div>
+        <h1>Priority Review 2026-04-21</h1>
 <h2>Summary</h2>
-<p>The AI layer is governed centrally through settings, provider availability, credits, prompts, weights, timeout policy, and model-specific validation. This is not an ad hoc helper layer; it is a product control plane.</p>
-<h2>Control Surfaces</h2>
-<ul><li>Global settings API returns or persists the active LLM provider and model.</li><li>Admin settings also control prompt templates used by:</li><li>pre-analysis</li><li>analysis</li><li>improvement</li><li>matching</li><li>adaptation</li><li>Matching weights and local ranking parameters are configurable.</li><li>Provider availability flags are merged into the settings response so the UI can reflect current capability.</li></ul>
-<h2>Provider Model</h2>
-<ul><li>The app supports several providers and provider-specific services.</li><li>Provider selection is normalized through backend settings and an LLM gateway.</li><li>Ollama is treated as an administrable provider with:</li><li>base URL normalization</li><li>configured URL enforcement</li><li>model discovery</li><li>selected-model validation</li><li>There is an admin test endpoint for validating the configured provider/model before persisting settings.</li><li>Runtime model availability can override a nominal configuration and redirect execution toward a fallback model.</li></ul>
-<h2>Prompt Governance</h2>
-<ul><li>Default prompts exist in backend config and are surfaced through settings defaults.</li><li>Prompt text is not buried inside every feature route; there is an explicit attempt to centralize prompt governance.</li><li>This matters because several workflows share the same provider infrastructure but should remain behaviorally tunable without code edits.</li><li>The dedicated governance doc defines the intended contract between prompts and validators:</li><li>each prompt should carry <code>id</code>, <code>version</code>, <code>domain</code>, <code>operation</code>, and <code>contractId</code></li><li>each output contract should carry <code>id</code>, <code>version</code>, <code>validatorModule</code>, and <code>validatorExport</code></li><li>semantic prompt changes should bump prompt version</li><li>JSON output structure changes should bump contract version</li><li>The same doc also records current governance gaps:</li><li>prompt/contract versions are not yet universally persisted in DB state</li><li>execution metadata is not yet guaranteed to record the effective prompt version everywhere</li><li>user-customized prompt migration is not automated</li></ul>
-<h2>Credit Governance</h2>
-<ul><li>AI costs are represented as per-action credit settings.</li><li>The settings layer exposes both credit cost and max-token parameters for actions such as:</li><li>chatbot message</li><li>resume AI modify</li><li>template extraction</li><li>resume analysis</li><li>resume improvement</li><li>resume adaptation</li><li>resume match</li><li>profile search</li><li>profile analysis</li><li>Recent hardening introduced upfront reservation for both long-running jobs and synchronous workflows.</li><li>Business tracing is carried separately through explicit <code>operationType</code> metadata sent into the shared LLM layer.</li><li>The intended model is:</li><li><code>actionType</code> = charging and reservation unit</li><li><code>operationType</code> = business tracing label</li><li>These are not always one-to-one. Some priced actions deliberately span several LLM sub-operations under one credit action.</li></ul>
-<h2>Timeout Governance</h2>
-<ul><li>AI operation timeout policy has been standardized to 15 minutes for backend AI operations.</li><li>Key frontend IA flows were aligned to the same expectation.</li><li>This should be treated as a product-level invariant unless there is a deliberate provider-specific exception.</li></ul>
-<h2>Operational Implications</h2>
-<ul><li>When AI appears <code>broken</code>, the root cause may be:</li><li>invalid provider credentials</li><li>provider/model unavailability</li><li>bad settings payload</li><li>insufficient firm credits</li><li>prompt or token configuration drift</li><li>timeout mismatch</li><li>Debugging should start from the control plane, not only from the feature route that triggered the call.</li></ul>
-<h2>Missing Mental Model To Avoid</h2>
-<p>It is incorrect to think in terms of:</p>
-<ul><li>feature -&gt; provider API directly</li></ul>
-<p>The closer model is:</p>
-<ul><li>feature -&gt; settings -&gt; provider/model resolution -&gt; availability/fallback -&gt; effective parameters -&gt; gateway -&gt; provider adapter</li></ul>
+<p>Repository inspection on 2026-04-21 confirms that ResumeConverter remains broad and fairly well tested, but the highest-priority review areas are still concentrated in backend runtime orchestration, long-running export/AI workflows, auth/session edge handling, and overall product-surface sprawl.</p>
+<h2>Current State</h2>
+<ul><li>The codebase keeps a wide active surface:</li><li><code>45</code> backend route modules under <code>server/routes</code></li><li><code>144</code> frontend page files under <code>client/src/pages</code></li><li><code>595</code> client source files, <code>362</code> server source files, <code>253</code> test files, and <code>17</code> PDF-server files across the inspected JS/TS source tree</li><li>Runtime control is still centralized in a few modules:</li><li><code>server/proxy-server.js</code> remains the main HTTP/bootstrap/security composition root</li><li><code>server/config/lifecycle.js</code> still owns server startup, TLS, DB initialization, runtime maintenance start, graceful shutdown, agent teardown, and forced exit policy</li><li><code>server/config/routeRegistry/apiRoutes.js</code> still acts as the registration hub for a wide backend API surface</li><li>Heavy core-path services remain large:</li><li><code>server/services/batchJobsWorker/exportGenerator.js</code> (<code>638</code> lines)</li><li><code>server/services/aiCredits.service.js</code> (<code>564</code> lines)</li><li><code>server/services/resumes.service.js</code> (<code>327</code> lines)</li><li><code>server/services/batchJobsWorker/processors/improvement.js</code> (<code>178</code> lines) plus surrounding worker modules</li><li>Frontend app composition is simpler than the backend, but route and auth behavior still have broad reach:</li><li><code>client/src/App.tsx</code> special-cases public share rendering outside the normal provider stack</li><li><code>client/src/context/AuthContext.tsx</code> still contains session bootstrap, expired-session recovery, redirect coupling, and auth state ownership</li><li><code>client/src/app/appRoutes.tsx</code> exposes a wide authenticated product surface across resumes, missions, clients, deals, adaptations, admin, metrics, settings, GDPR, backup, and credits</li></ul>
+<h2>Priority Order</h2>
+<p>The first review target remains the backend entry/runtime layer because startup, shutdown, DB gating, proxy behavior, security middleware, route registration, and maintenance orchestration still converge through a small set of files. That creates high blast radius for operational changes and makes failures harder to localize.</p>
+<ol><li>Backend runtime control tower</li></ol>
+<p>Export generation, batch processing, OCR/LLM orchestration, and credit reservation/refund semantics remain the most failure-prone stack. These paths combine temp files, archive budgets, retries, external services, job state transitions, and financial side effects in the same workflows.</p>
+<ol><li>Long-running export and AI-credit workflows</li></ol>
+<p>Auth remains operationally important because session restore, expired-session cleanup, public-route behavior, and client-side redirect logic are still coupled through <code>AuthContext</code> and special-case top-level rendering. This area is not obviously broken today, but it still deserves priority review because a small regression can block a large part of the app.</p>
+<ol><li>Auth/session edge handling</li></ol>
+<p>The application still carries substantially more surface than the core resume ingestion -&gt; analysis -&gt; improvement/adaptation -&gt; export/matching loop: admin workspace, metrics, backup, GDPR, market radar, ROME data, billing, and secondary CRM-like flows all share the same runtime. This increases maintenance cost and raises the chance that secondary work destabilizes the core path.</p>
+<ol><li>Product-surface sprawl</li></ol>
+<p>Runtime behavior still depends heavily on settings, roles, credits, and provider configuration. The main review lens here is reducing hidden coupling between control-plane state and business workflows rather than adding more features.</p>
+<ol><li>Contract tightening around control-plane settings</li></ol>
+<h2>Important Facts</h2>
+<ul><li>The previous quality concern around frontend type checking is no longer current:</li><li><code>npm run typecheck</code> passes on 2026-04-21</li><li>The PDF-server quality posture remains a strength:</li><li><code>npm run test:pdf</code> passes on 2026-04-21 (<code>11</code> files, <code>359</code> tests)</li><li>Current risk is therefore more about hotspot concentration and operational coupling than about an obvious broad validation gap.</li></ul>
+<h2>Recommended Near-Term Focus</h2>
+<ul><li>Review and continue decomposing the backend composition root:</li><li>separate pure app wiring from process lifecycle and shutdown policy</li><li>isolate route registration ownership by domain</li><li>reduce the number of cross-cutting concerns handled directly in <code>proxy-server.js</code></li><li>Continue hardening export and credit-coupled workflows:</li><li>clearer idempotency boundaries</li><li>tighter temp-artifact lifecycle guarantees</li><li>narrower retry/failure classes</li><li>clearer separation between orchestration, persistence, and side effects</li><li>Keep auth/session behavior intentionally narrow:</li><li>reduce route-specific boot logic</li><li>keep public vs authenticated rendering contracts explicit</li><li>Apply scope discipline to roadmap work:</li><li>prefer work that stabilizes core resume workflows over expanding secondary modules</li></ul>
 <h2>Related</h2>
-<ul><li><a href="ai-credits.html">topics/AI Credits</a></li><li><a href="ai-operation-matrix.html">topics/AI Operation Matrix</a></li><li><a href="ai-timeouts.html">topics/AI Timeouts</a></li><li><a href="llm-call-resolution-and-runtime-selection.html">topics/LLM Call Resolution and Runtime Selection</a></li><li><a href="provider-failure-and-fallback-model.html">topics/Provider Failure and Fallback Model</a></li><li><a href="core-resume-workflows.html">topics/Core Resume Workflows</a></li><li><a href="batch-jobs-and-long-running-workflows.html">topics/Batch Jobs and Long-Running Workflows</a></li><li><a href="admin-and-operations.html">topics/Admin and Operations</a></li><li><a href="integrations.html">topics/Integrations</a></li></ul>
+<ul><li><a href="../overview.html">overview</a></li><li><a href="architecture.html">topics/Architecture</a></li><li><a href="observability-and-quality.html">topics/Observability and Quality</a></li><li><a href="product-scope-and-priorities.html">topics/Product Scope and Priorities</a></li><li><a href="batch-jobs-and-long-running-workflows.html">topics/Batch Jobs and Long-Running Workflows</a></li><li><a href="llm-control-plane.html">topics/LLM Control Plane</a></li><li><a href="priority-review-2026-04-18.html">topics/Priority Review 2026-04-18</a></li></ul>
 <h2>Sources</h2>
-<ul><li><a href="../raw/session-notes/2026-04-16-memory-bootstrap.html">raw/session-notes/2026-04-16-memory-bootstrap</a></li><li><a href="../raw/sources/2026-04-16-functional-workflows.html">raw/sources/2026-04-16-functional-workflows</a></li><li><a href="../raw/sources/2026-04-16-domain-model-and-control-plane.html">raw/sources/2026-04-16-domain-model-and-control-plane</a></li><li><a href="../raw/sources/2026-04-16-llm-call-resolution.html">raw/sources/2026-04-16-llm-call-resolution</a></li><li><a href="../raw/sources/2026-04-16-provider-failure-runbooks-authz.html">raw/sources/2026-04-16-provider-failure-runbooks-authz</a></li><li><a href="../raw/sources/2026-04-17-ocr-and-llm-docs.html">raw/sources/2026-04-17-ocr-and-llm-docs</a></li></ul>
+<ul><li>Repository inspection on 2026-04-21:</li><li><code>package.json</code></li><li><code>server/proxy-server.js</code></li><li><code>server/config/lifecycle.js</code></li><li><code>server/config/routeRegistry/apiRoutes.js</code></li><li><code>server/services/aiCredits.service.js</code></li><li><code>server/services/resumes.service.js</code></li><li><code>server/services/batchJobsWorker/exportGenerator.js</code></li><li><code>server/services/batchJobsWorker/processors/improvement.js</code></li><li><code>client/src/App.tsx</code></li><li><code>client/src/app/appRoutes.tsx</code></li><li><code>client/src/context/AuthContext.tsx</code></li><li><code>npm run typecheck</code></li><li><code>npm run test:pdf</code></li></ul>
       </main>
     </div>
   </body>

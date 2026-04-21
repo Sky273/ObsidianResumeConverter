@@ -172,6 +172,9 @@ The backend audit shows that the project already invested in:
   - `scripts/start-e2e-stack.mjs` now auto-restarts the proxy/PDF child processes on unexpected local exits, with a bounded restart budget
   - `e2e/helpers/ui.ts` retries `page.goto(...)` on transient `ERR_CONNECTION_REFUSED` so a momentary local restart does not immediately fail the next navigation
   - the combined Chromium rerun now completes as `2 passed, 1 skipped` on a machine without a local DOCX converter
+- As of 2026-04-21, the previously recorded frontend typecheck breakage is no longer current:
+  - `npm run typecheck` passes locally again
+  - the current whole-app risk picture is therefore better described as hotspot concentration and runtime coupling than as an active baseline validation failure
 - The remaining instability on the combined local `analysis-improve-export` Chromium run is currently classified as local stack instability:
   - one rerun still hit `ERR_CONNECTION_REFUSED` in mid-spec after earlier steps had already passed
   - isolated reruns of the new coverage behave correctly, so this is not currently treated as a regression in the new helper or export assertions

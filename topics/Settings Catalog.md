@@ -62,6 +62,13 @@ This means prompt changes are operational behavior changes, not code changes.
 
 - GDPR and DPO-related settings live near the same governance surface even when they are not used in the LLM path itself.
 - Swagger/API-doc exposure is also governed from settings, which reinforces that this surface is partly operational.
+- The canonical `llm_settings` row now also stores application mail-delivery control-plane values for the GDPR/settings UI:
+  - provider mode (`gmail`, `smtp`, `auto`)
+  - SMTP connection and sender fields
+  - encrypted stored SMTP password
+  - GDPR Gmail callback URI override
+
+This means application email routing is now partially data-driven from the same canonical settings record rather than env-only.
 
 ## Runtime Effect Model
 

@@ -64,6 +64,7 @@
 - [[topics/Priority Review 2026-04-16]]: current top-priority review areas across operational safety, security boundaries, tooling, and maintainability.
 - [[topics/Priority Review 2026-04-17]]: refreshed whole-app priority review centered on backend decoupling, long-running workflow hardening, and scope discipline.
 - [[topics/Priority Review 2026-04-18]]: refreshed whole-app priority review confirming backend runtime concentration, workflow hardening needs, and renewed scope discipline.
+- [[topics/Priority Review 2026-04-21]]: refreshed whole-app priority review confirming backend runtime concentration, auth/session edge risk, workflow hardening needs, and that frontend typecheck is green again.
 - [[topics/Product Scope and Priorities]]: nucleus vs secondary scope and roadmap guidance.
 - [[topics/Docker Environment]]: Docker env source of truth and runtime/build behavior.
 - [[topics/Turnstile]]: Cloudflare Turnstile configuration and Docker build implications.

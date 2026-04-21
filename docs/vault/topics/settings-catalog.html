@@ -122,6 +122,7 @@
 <li><a href="priority-review-2026-04-16.html">Priority Review 2026-04-16</a></li>
 <li><a href="priority-review-2026-04-17.html">Priority Review 2026-04-17</a></li>
 <li><a href="priority-review-2026-04-18.html">Priority Review 2026-04-18</a></li>
+<li><a href="priority-review-2026-04-21.html">Priority Review 2026-04-21</a></li>
 <li><a href="product-scope-and-priorities.html">Product Scope and Priorities</a></li>
 <li><a href="provider-failure-and-fallback-model.html">Provider Failure and Fallback Model</a></li>
 <li><a href="public-token-flows.html">Public Token Flows</a></li>
@@ -179,7 +180,8 @@
 <h3>Credit economics</h3>
 <ul><li>Per-action AI credit costs are configurable from the settings/admin control surfaces rather than being frozen in code.</li><li>This matters because credit reservation logic consumes these configured action costs when reserving budgets upfront.</li></ul>
 <h3>Compliance and governance fields</h3>
-<ul><li>GDPR and DPO-related settings live near the same governance surface even when they are not used in the LLM path itself.</li><li>Swagger/API-doc exposure is also governed from settings, which reinforces that this surface is partly operational.</li></ul>
+<ul><li>GDPR and DPO-related settings live near the same governance surface even when they are not used in the LLM path itself.</li><li>Swagger/API-doc exposure is also governed from settings, which reinforces that this surface is partly operational.</li><li>The canonical <code>llm_settings</code> row now also stores application mail-delivery control-plane values for the GDPR/settings UI:</li><li>provider mode (<code>gmail</code>, <code>smtp</code>, <code>auto</code>)</li><li>SMTP connection and sender fields</li><li>encrypted stored SMTP password</li><li>GDPR Gmail callback URI override</li></ul>
+<p>This means application email routing is now partially data-driven from the same canonical settings record rather than env-only.</p>
 <h2>Runtime Effect Model</h2>
 <p>The practical chain is:</p>
 <ol><li>Admin updates settings.</li><li>The canonical <code>llm_settings</code> row changes.</li><li>Settings cache is invalidated.</li><li>Subsequent AI calls read normalized settings.</li><li>Provider/model resolution and prompt selection use those settings.</li><li>Downstream services execute with the resulting effective config.</li></ol>

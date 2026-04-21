@@ -16,6 +16,7 @@ The important operational rule is that not all missing envs fail in the same way
 - non-Docker local runtime uses `/.env`
 - Docker build and runtime use `/.env.docker`
 - `/.env.example` is the template/reference, not the live source of truth
+- the Node runtime bootstrap now loads `/.env` first and then `/.env.docker` as a non-overriding fallback, so Docker-oriented env keys remain available even when the process was not started through the expected `env_file` injection path
 
 This distinction matters because the frontend bundle can embed stale public env values if the image was not rebuilt.
 
@@ -124,6 +125,7 @@ These do not all need to exist simultaneously, but the configured runtime path m
 - Stripe secrets
 - OAuth secrets
 - `MAIL_TOKEN_ENCRYPTION_KEY`
+- SMTP credentials and GDPR Gmail callback envs used as fallback defaults when the canonical mail settings record does not override them
 
 These protect payment and mail-related flows.
 
@@ -192,6 +194,32 @@ Current remembered behavior:
 - this means operational hardening of the default admin password is now a deployment responsibility rather than an enforced startup invariant
 
 This is important when reasoning about local/dev bootstrap versus production safety assumptions.
+
+## Mail Delivery Configuration Precedence
+
+Current remembered behavior:
+
+- application mail delivery is no longer env-only
+- the admin GDPR tab can persist mail-delivery configuration into the canonical `llm_settings` row
+- persisted fields currently include:
+  - `mail_delivery_provider`
+  - `smtp_host`
+  - `smtp_port`
+  - `smtp_secure`
+  - `smtp_user`
+  - encrypted `smtp_password`
+  - sender name/email
+  - GDPR Gmail callback URI
+- when those persisted values are absent, runtime mail resolution falls back to the environment variables:
+  - `GDPR_MAIL_PROVIDER` or `MAIL_DELIVERY_PROVIDER`
+  - `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASSWORD`
+  - `SMTP_FROM_NAME`, `SMTP_FROM_EMAIL`
+  - `GOOGLE_GDPR_REDIRECT_URI`
+
+Operational consequence:
+
+- changing mail delivery through the GDPR tab generally requires no container restart because the runtime now reads the persisted control-plane values
+- environment values still matter as bootstrap/defaults and for instances where no DB override has been saved yet
 
 ## Related
 

@@ -1,5 +1,36 @@
 # Log
 
+## [2026-04-21] feat | expose full application mail configuration in the GDPR settings tab
+
+- Updated the durable vault memory for the current email-delivery model.
+- Recorded that the GDPR admin tab now owns the full application mail configuration surface:
+  - provider selection (`gmail`, `smtp`, `auto`)
+  - SMTP connection and sender fields
+  - GDPR Gmail callback URI override
+- Recorded that the admin read contract now also exposes the effective SMTP password so the form can be fully prefilled from persisted values or `.env` fallbacks.
+- Recorded the new precedence model:
+  - persisted values in the canonical `llm_settings` row are read first
+  - environment variables remain bootstrap/default fallbacks
+- Reaffirmed the current default-admin-password policy:
+  - the historical default/fallback remains allowed
+  - no startup/runtime guard now blocks it automatically
+
+## [2026-04-21] fix | load docker mail/runtime env as fallback during Node startup
+
+- Added a shared environment bootstrap so the Node runtime now loads `/.env` first and `/.env.docker` second without overriding already exported variables.
+- Applied the same fallback logic to `server/proxy-server.js` startup and `server/scripts/docker-migrate.js`.
+- Practical effect:
+  - SMTP / GDPR mail settings present only in `/.env.docker` are now visible to the app runtime
+  - this avoids a class of production misconfiguration where the repo file was correct but the process lacked the injected env vars
+
+## [2026-04-21] fix | make persisted GDPR mail configuration authoritative for delivery
+
+- Updated the GDPR mail configuration resolver so a saved `llm_settings` mail config now drives delivery on its own.
+- Removed the previous field-by-field fallback to environment values once a database config exists.
+- Practical effect:
+  - env values still seed the runtime when no GDPR mail config has ever been saved
+  - after saving the GDPR form, email delivery is based on the form-backed database values rather than partially relying on `.env`
+
 ## [2026-04-20] fix | preserve extracted template HTML and inline logos through review and fallback paths
 
 - Reworked the template-extraction review/edit flow around three user-visible defects.
@@ -1481,3 +1512,29 @@
   - app emails are routed through `server/services/mail/gdprMailService.js`
   - provider selection supports Gmail OAuth and SMTP
   - SMTP mode is server-managed configuration rather than an OAuth connection owned from the admin UI
+
+## [2026-04-21] fix | make GDPR mail config resolution resilient to partial persisted SMTP settings
+
+- Updated `topics/Email and Verification Flows.md` to record the corrected runtime rule for outbound email resolution.
+- Durable behavior now is:
+  - `server/services/mail/mailSystemConfig.service.js` merges persisted GDPR mail settings over environment defaults field by field instead of switching to database-only resolution as soon as any mail setting exists
+  - `server/services/mail/gdprMailService.js` merges the GDPR test-send form override over the resolved runtime config so blank/missing request fields do not erase valid SMTP settings
+- This specifically addresses the failure mode where SMTP test sends reported missing `SMTP_HOST`, `SMTP_PORT`, and `SMTP_FROM_EMAIL` even though those values still existed in `/.env.docker`.
+
+## [2026-04-21] fix | add final SMTP env fallback at transport boundary
+
+- Updated `server/services/mail/smtpProvider.js` so `normalizeSmtpConfig()` fills missing SMTP fields from `process.env.SMTP_*` before configuration validation and transport creation.
+- Added `server/tests/services/smtpProvider.test.js` to lock this behavior for both status checks and actual SMTP sends.
+- This closes the remaining gap where a partial runtime mail config object could still reach `sendSmtpEmail()` and trigger `SMTP_HOST, SMTP_PORT, SMTP_FROM_EMAIL` errors despite a valid Docker env configuration.
+
+## [2026-04-21] docs | refresh whole-app priority review and quality status
+
+- Added `topics/Priority Review 2026-04-21.md` after a fresh repository-wide inspection.
+- Recorded the current review order as:
+  - backend runtime control tower
+  - long-running export and AI-credit workflows
+  - auth/session edge handling
+  - product-surface sprawl
+  - control-plane contract tightening
+- Updated `topics/Observability and Quality.md` to note that `npm run typecheck` now passes again locally on 2026-04-21, so the active concern is hotspot concentration rather than a baseline validation failure.
+- Updated `index.md` to link the new priority review page.

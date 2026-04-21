@@ -97,10 +97,24 @@ The delivery facade for real outbound emails is currently `server/services/mail/
 
 Durable facts:
 
-- `sendEmail()` now resolves the active provider from `GDPR_MAIL_PROVIDER` (or `MAIL_DELIVERY_PROVIDER` as fallback)
+- `sendEmail()` now resolves the active provider from persisted GDPR mail settings first, then falls back to `GDPR_MAIL_PROVIDER` (or `MAIL_DELIVERY_PROVIDER`)
 - supported modes are `gmail`, `smtp`, and `auto`
 - `auto` prefers SMTP when the full `SMTP_*` configuration is present; otherwise it falls back to Gmail OAuth
 - the new SMTP transport is implemented in `server/services/mail/smtpProvider.js` using `nodemailer`
+- the admin GDPR settings tab now exposes the full application mail configuration, including:
+  - active provider selection
+  - SMTP host/port/secure/user/password/from fields
+  - GDPR Gmail callback URI override
+- the admin config read now returns the effective SMTP password value as well, so the GDPR form is fully prefilled from persisted settings or the fallback environment
+- persisted GDPR mail settings are stored on the canonical `llm_settings` record and sanitized for admin reads through `server/services/mail/mailSystemConfig.service.js`
+- runtime mail resolution now merges persisted GDPR settings over the environment field by field:
+  - persisted values override defaults when present
+  - missing/blank persisted SMTP host, port, user, from name, from email, and GDPR redirect URI fall back to the environment defaults
+  - this avoids a partial `llm_settings` mail row breaking SMTP test sends that previously worked from `/.env.docker`
+- GDPR test sends also merge the current form override over the resolved runtime config so omitted form fields do not erase already-resolved SMTP settings during a test send
+- `server/services/mail/smtpProvider.js` now also applies the same env fallback at the final transport boundary:
+  - if a caller still passes a partial SMTP config object to `sendSmtpEmail()`, missing host/port/secure/user/password/from fields are hydrated from `process.env.SMTP_*`
+  - this makes SMTP delivery resilient even if upstream GDPR form state or persisted config resolution is unexpectedly partial at runtime
 - account lifecycle emails already wired to this facade include:
   - password reset / invite / forced password change
   - registration confirmation
@@ -112,6 +126,7 @@ Operational implications:
 - Gmail OAuth remains the transport for GDPR mail when the active provider resolves to `gmail`
 - SMTP is treated as server-managed configuration rather than an end-user OAuth connection
 - the GDPR settings screen now reflects provider capabilities so SMTP mode hides Gmail connect/disconnect actions while still allowing test sends
+- the GDPR settings screen saves configuration before refreshing its state so the selected provider/config does not disappear on reload
 - the GDPR status route can now report a provider-managed SMTP status with `allowConnect=false` and `allowDisconnect=false`
 
 ## User-State Consequences
