@@ -74,6 +74,23 @@ Examples:
 
 These are consumed by the backend process at runtime.
 
+## Current Public Frontend Origin
+
+Current remembered production-facing origin from the repository env files:
+
+- `FRONTEND_URL=https://resumeconverter.net`
+- Google auth and GDPR callback URIs also target `https://resumeconverter.net/...`
+
+Operational note from live verification on 2026-04-21:
+
+- `https://resumeconverter.net` serves the ResumeConverter SPA and authenticated workspace
+- `https://resumeconverter.com` timed out on port `443` from the test environment
+- `http://resumeconverter.com/` redirected to `https://resumepower.com/`, which is not the ResumeConverter application
+
+Practical consequence:
+
+- when validating the live app, treat `resumeconverter.net` as the current functional frontend origin unless deployment/docs are updated to say otherwise
+
 ## Secret Classes
 
 ResumeConverter secrets fall into a few useful buckets:

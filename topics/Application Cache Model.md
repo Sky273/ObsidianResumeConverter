@@ -157,6 +157,12 @@ Some routes support explicit cache bypass with:
 
 This is useful for admin/debug/consistency-sensitive reads and is part of the intended cache contract.
 
+Recent pipeline-specific note:
+
+- the candidate-pipeline route family now also needs this bypass behavior on read endpoints
+- otherwise a successful pipeline mutation can be followed by an immediate stale reread that visually rewinds the UI even though the write succeeded
+- mission-pipeline post-mutation reloads are therefore expected to force `refresh=1`
+
 ## Diagnostics
 
 The cache layer exposes meaningful diagnostics, including:

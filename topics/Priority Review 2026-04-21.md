@@ -43,6 +43,29 @@ Repository inspection on 2026-04-21 confirms that ResumeConverter remains broad 
 
 ## Important Facts
 
+- A first structural treatment pass was applied on 2026-04-21:
+  - `server/proxy-server.js` was reduced by extracting fatal process handlers, trust-proxy resolution, request-context setup, body-size guarding, and request logging into dedicated modules
+  - `client/src/App.tsx` now delegates shared router/suspense/toaster wiring to `client/src/app/AppShell.tsx`
+  - `client/src/context/AuthContext.tsx` now delegates session-restore bootstrap to `client/src/context/useAuthInitialization.ts`
+- A second workflow-focused treatment pass was also applied on 2026-04-21:
+  - `server/services/batchJobsWorker/exportGenerator.js` was reduced by extracting per-item export processing to `server/services/batchJobsWorker/exportGenerator.items.js`
+  - final archive writing was extracted to `server/services/batchJobsWorker/exportGenerator.archive.js`
+  - AI workflow reservation planning was extracted from `server/services/aiCredits.service.js` into `server/services/aiCreditsWorkflow.service.js`
+- A third service-focused treatment pass was also applied on 2026-04-21:
+  - firm-credit reporting and detail reads were extracted from `server/services/aiCredits.service.js` into `server/services/aiCreditsReporting.service.js`
+- A fourth service-focused treatment pass was also applied on 2026-04-21:
+  - resume read/listing responsibilities were extracted from `server/services/resumes.service.js` into `server/services/resumesReads.service.js`
+- A fifth runtime-focused treatment pass was also applied on 2026-04-21:
+  - startup/listen orchestration was extracted from `server/config/lifecycle.js` into `server/config/lifecycle.network.js`
+  - graceful-shutdown and process-signal orchestration was extracted into `server/config/lifecycle.shutdown.js`
+- A sixth route-surface treatment pass was also applied on 2026-04-21:
+  - backend API route registration was grouped by domain in `server/config/routeRegistry/apiRouteGroups.js`
+  - frontend app route registration was grouped by route families in `client/src/app/appRouteGroups.tsx`
+- This improves ownership boundaries around the backend composition root and the auth bootstrap path, but it does not yet remove the deeper coupling in lifecycle orchestration, route-surface breadth, or long-running export/credit workflows.
+- This also improves ownership boundaries in the long-running export and AI-credit stack, but the main orchestration files are still central and still deserve further decomposition if work continues.
+- The resume service is now less mixed because cached reads/listing and mutation logic are no longer in the same file, but resume mutations and persistence contracts still remain central enough to deserve future attention if resume-domain work continues.
+- The lifecycle entry file is now slimmer, but the remaining priority risk has shifted more toward route-surface breadth and control-plane/module coupling than toward one oversized runtime file.
+- Route registration is now visually narrower on both backend and frontend, so the remaining risk is less about registration sprawl itself and more about the actual breadth of product surface and cross-domain behavior.
 - The previous quality concern around frontend type checking is no longer current:
   - `npm run typecheck` passes on 2026-04-21
 - The PDF-server quality posture remains a strength:

@@ -46,6 +46,11 @@ ResumeConverter is not only a CV processing app. It also models the commercial a
   - a mission
   - a client
 - The service validates that these linked entities belong to the same firm and are logically coherent.
+- Pipeline mutations must invalidate more than the `candidatePipeline` namespace: mission and deal derived views also surface `pipeline_count`, so adding, moving, editing, or removing a pipeline entry has to dirty mission/deal caches and grouped mission/deal views as well.
+- The mission kanban drag-and-drop flow is timing-sensitive on the frontend:
+  - relying only on React state for the active dragged card is not sufficient
+  - the stable drag source must be tracked through `dataTransfer` plus a synchronous ref
+  - otherwise a drop can acknowledge success while the wrong entry, or no current entry, is used during the move request
 
 ## Interviews
 

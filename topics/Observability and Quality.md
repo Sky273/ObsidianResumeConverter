@@ -175,6 +175,10 @@ The backend audit shows that the project already invested in:
 - As of 2026-04-21, the previously recorded frontend typecheck breakage is no longer current:
   - `npm run typecheck` passes locally again
   - the current whole-app risk picture is therefore better described as hotspot concentration and runtime coupling than as an active baseline validation failure
+- As of 2026-04-21, a fresh `validate-core` client-test failure was traced to stale ASCII expectations rather than a product regression:
+  - `client/src/components/SettingsPage/LLMTab.test.tsx` still asserted `Reinitialiser`, `Tester le modele`, and `La valeur par defaut est`
+  - the live UI now intentionally renders accented UTF-8 labels (`Réinitialiser`, `Tester le modèle`, `La valeur par défaut est`)
+  - the durable rule for French UI regression tests is to match the real accented source text instead of ASCII approximations when the rendered copy is user-visible
 - The remaining instability on the combined local `analysis-improve-export` Chromium run is currently classified as local stack instability:
   - one rerun still hit `ERR_CONNECTION_REFUSED` in mid-spec after earlier steps had already passed
   - isolated reruns of the new coverage behave correctly, so this is not currently treated as a regression in the new helper or export assertions

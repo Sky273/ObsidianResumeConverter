@@ -1,5 +1,142 @@
 # Log
 
+## [2026-04-22] fix | make template extraction layout-driven for placeholder normalization
+
+- Reworked `server/services/templateExtractionFallback.service.js` so the final extracted template no longer depends primarily on the LLM HTML body when structured layout fragments are available.
+- The post-processor now:
+  - parses recovered `template-region-(header|content|footer)-line-*` blocks
+  - reads their CSS metrics from the recovered stylesheet
+  - chooses deterministic targets for `-name-`, `-title-`, and the unique `-content-` anchor
+  - blanks the remaining text lines while preserving the positioned wrappers and recovered classes
+  - keeps image-slot hydration and embedded `data:image/...;base64,...` assets intact
+- Also upgraded the deterministic layout fallback so it starts from recovered `headerHtml` / `contentHtml` / `footerHtml` and only falls back to more generic placeholder repair when structured line classes are missing.
+- Revalidated with:
+  - `node ./node_modules/vitest/vitest.mjs run --config server/vitest.config.js server/tests/services/templateExtraction.service.test.js server/tests/routes/templates.extraction.extractors.test.js server/tests/routes/templates.extraction.imagePlaceholders.test.js server/tests/routes/templates.extraction.pdfLayoutTemplateBuilder.test.js`
+  - `node ./node_modules/eslint/bin/eslint.js server/services/templateExtraction.service.js server/services/templateExtractionFallback.service.js server/tests/services/templateExtraction.service.test.js`
+
+## [2026-04-22] fix | improve extracted colors and visual baseline for CV templates
+
+- Updated `server/routes/templates/extraction/pdfLayoutTemplateBuilder.js` so the structured layout stylesheet is less generic and closer to the source PDF:
+  - preserve text colors per line when available from PDF text items
+  - derive the page font family from the dominant extracted font
+  - infer page background from the largest recovered visual block when it likely represents the document chrome
+  - compute `extractedColors` from both text colors and visual fills instead of only rectangle fills
+- Added a regression test in `server/tests/routes/templates.extraction.pdfLayoutTemplateBuilder.test.js` covering background color, dominant font family, line text color, and extracted color palette output.
+- Revalidated with:
+  - `node ./node_modules/vitest/vitest.mjs run --config server/vitest.config.js server/tests/routes/templates.extraction.pdfLayoutTemplateBuilder.test.js`
+  - `node ./node_modules/eslint/bin/eslint.js server/routes/templates/extraction/pdfLayoutTemplateBuilder.js server/tests/routes/templates.extraction.pdfLayoutTemplateBuilder.test.js`
+
+## [2026-04-22] fix | enrich DOCX style harvesting before template normalization
+
+- Expanded `server/routes/templates/extraction/extractorHelpers.js` so DOCX style extraction no longer depends only on `word/styles.xml`.
+- The DOCX style parser now also reads:
+  - `word/theme/theme1.xml` for theme palette colors like `accent1` / `accent2`
+  - `word/fontTable.xml` for declared font families
+  - `word/document.xml` for additional run-level colors and fonts
+- Updated `server/routes/templates/extraction/extractors.js` to pass this richer DOCX package context into `parseDocxStyles(...)` before the Word-to-PDF path continues.
+- Added regression coverage in `server/tests/routes/templates.extraction.extractorHelpers.test.js` for theme-color resolution and broader font discovery.
+- Revalidated with:
+  - `node ./node_modules/vitest/vitest.mjs run --config server/vitest.config.js server/tests/routes/templates.extraction.extractorHelpers.test.js server/tests/routes/templates.extraction.extractors.test.js server/tests/services/templateExtraction.service.test.js`
+  - `node ./node_modules/eslint/bin/eslint.js server/routes/templates/extraction/extractorHelpers.js server/routes/templates/extraction/extractors.js server/tests/routes/templates.extraction.extractorHelpers.test.js`
+
+## [2026-04-22] fix | remove degraded template-extraction fallbacks and return explicit errors
+
+- Updated the template-extraction pipeline so the user-facing route no longer returns degraded fallback outputs such as:
+  - `pdf-vision-fallback`
+  - `pdf-text-fallback`
+  - deterministic layout fallback after LLM failure
+- `server/routes/templates/extraction/extractors.js` now fails fast with structured `422` extraction errors when:
+  - the recovered PDF layout is too sparse (`TEMPLATE_LAYOUT_TOO_SPARSE`)
+  - the layout extraction / normalization phase fails (`TEMPLATE_LAYOUT_EXTRACTION_FAILED`)
+- `server/services/templateExtraction.service.js` now supports strict extraction mode so layout-based requests can surface upstream LLM failures instead of silently generating a deterministic fallback template.
+- `server/routes/templates/extraction/handlers.js` now returns structured `422` JSON payloads with `code`, `error`, and `details`.
+- `client/src/utils/templateService.ts` now formats these extraction-specific diagnostics into a clearer user-facing error message.
+- Revalidated with:
+  - `node ./node_modules/vitest/vitest.mjs run --config server/vitest.config.js server/tests/routes/templates.extraction.extractors.test.js server/tests/routes/templates.extraction.routes.test.js server/tests/services/templateExtraction.service.test.js`
+  - `node ./node_modules/eslint/bin/eslint.js server/routes/templates/extraction/extractors.js server/routes/templates/extraction/handlers.js server/services/templateExtraction.service.js server/tests/routes/templates.extraction.extractors.test.js server/tests/routes/templates.extraction.routes.test.js server/tests/services/templateExtraction.service.test.js client/src/utils/templateService.ts`
+
+## [2026-04-22] fix | improve sparse-layout diagnostics and choose the best early PDF page
+
+- Updated `server/routes/templates/extraction/pdfLayoutTemplateBuilder.js` so structured layout extraction no longer assumes page 1 is always the best template carrier.
+- The extractor now scans up to the first three pages, computes layout density per page, and selects the best candidate page as the structured layout source.
+- Added richer layout diagnostics:
+  - `sourcePageNumber`
+  - candidate-page summaries (`rawItemCount`, `rawTextCharacters`, `totalLines`, `layoutTextCharacters`)
+  - raw item and raw text metrics for the selected page
+- Updated `server/routes/templates/extraction/extractors.js` so sparse-layout errors now compare:
+  - global extracted PDF text length
+  - structured layout text length
+  - selected source page number
+- This makes it much easier to identify PDFs where text exists globally but the positioned layout extractor under-detects the visual template page.
+- Revalidated with:
+  - `node ./node_modules/vitest/vitest.mjs run --config server/vitest.config.js server/tests/routes/templates.extraction.pdfLayoutTemplateBuilder.test.js server/tests/routes/templates.extraction.extractors.test.js server/tests/routes/templates.extraction.routes.test.js`
+  - `node ./node_modules/eslint/bin/eslint.js server/routes/templates/extraction/pdfLayoutTemplateBuilder.js server/routes/templates/extraction/extractors.js server/tests/routes/templates.extraction.pdfLayoutTemplateBuilder.test.js server/tests/routes/templates.extraction.extractors.test.js server/tests/routes/templates.extraction.routes.test.js client/src/utils/templateService.ts`
+
+## [2026-04-22] fix | force server-side pdfjs template extraction to run without worker
+
+- Investigated a hard extraction failure on a real PDF where the backend reported:
+  - `The API version "5.5.207" does not match the Worker version "5.4.296".`
+- Root cause:
+  - the server-side `pdfjs-dist` helper used for structured template extraction was still letting `pdfjs` resolve a separate worker runtime
+  - the resolved worker version did not match the API bundle version
+- Fixed `server/utils/pdfjs.server.js` by forcing `disableWorker: true` on backend PDF loads so template extraction runs fully in-process and no longer depends on an external worker version match.
+- Revalidated with:
+  - `node ./node_modules/vitest/vitest.mjs run --config server/vitest.config.js server/tests/utils/pdfjs.server.test.js server/tests/routes/templates.extraction.pdfLayoutTemplateBuilder.test.js server/tests/routes/templates.extraction.extractors.test.js`
+  - `node ./node_modules/eslint/bin/eslint.js server/utils/pdfjs.server.js server/tests/utils/pdfjs.server.test.js server/routes/templates/extraction/pdfLayoutTemplateBuilder.js server/routes/templates/extraction/extractors.js`
+
+## [2026-04-21] fix | restabilize validate-core after accented LLM settings labels
+
+- Investigated the failing GitHub Actions `validate-core` run and confirmed the red job was in `npm run test:client`, not migrations or backend tests.
+- Narrowed the failure to stale assertions in `client/src/components/SettingsPage/LLMTab.test.tsx`:
+  - `Reinitialiser` vs `Réinitialiser`
+  - `Tester le modele` vs `Tester le modèle`
+  - `La valeur par defaut est` vs `La valeur par défaut est`
+- Revalidated with:
+  - `npm run test:client -- client/src/components/SettingsPage/LLMTab.test.tsx`
+  - `npm run test:client`
+
+## [2026-04-21] feat | allow deleting an improved resume from its detail page
+
+- Added a delete action directly on the improved-resume detail page header in `client/src/pages/ResumeImprovePage.tsx`.
+- The detail page now opens the same confirmation dialog pattern used in the resumes list before deletion.
+- On confirmed deletion:
+  - `ResumeContext.deleteResume()` now rethrows failures after recording user-facing error state, so callers can distinguish success from failure
+  - the detail page shows success/error toast feedback and redirects back to `/resumes` on success
+- Verified with:
+  - `npm run test:client -- ResumeImprovePage.test.tsx`
+  - `npm run typecheck`
+
+## [2026-04-21] fix | force post-mutation fresh reads for mission pipeline state
+
+- Investigated a remaining mission-pipeline defect where drag-and-drop still showed `stage updated` but the candidate card visually returned to its original column.
+- Confirmed the deeper cause was not only drag state:
+  - the move request could succeed
+  - then the immediate mission-pipeline reload could reread cached pipeline data and overwrite the optimistic local move
+- Fixed the pipeline read path end-to-end:
+  - backend candidate-pipeline read services now support `bypassCache`
+  - pipeline routes now honor `refresh=1` / `refresh=true` on read endpoints
+  - the mission kanban now reloads with `forceRefresh` after move/add/remove/notes/interview mutations and from the explicit refresh button
+- Revalidated with:
+  - `node ./node_modules/vitest/vitest.mjs run server/tests/routes/pipeline.routes.test.js --config server/vitest.config.js`
+  - `node ./node_modules/vitest/vitest.mjs run client/src/components/MissionsPage/MissionPipelineKanban.test.tsx`
+  - `npm run typecheck`
+
+## [2026-04-21] fix | make mission pipeline drag-and-drop deterministic
+
+- Investigated an intermittent mission pipeline defect where dropping a card showed a success toast but the card sometimes stayed in its original column.
+- Confirmed the frontend cause in `client/src/components/MissionsPage/MissionPipelineKanban.tsx`:
+  - the drop flow relied on React state alone for the active dragged entry
+  - under real drag timing, the drop handler could observe stale or missing drag state
+- Updated the mission kanban so drag-and-drop now:
+  - stores the active dragged entry in a ref
+  - writes the pipeline entry id into `dataTransfer`
+  - resolves the dropped entry from the ref or transfer payload at drop time
+  - clears drag state explicitly on `dragEnd`
+  - applies an optimistic local stage update before the subsequent reload
+- Revalidated with:
+  - `node ./node_modules/vitest/vitest.mjs run client/src/components/MissionsPage/MissionPipelineKanban.test.tsx`
+  - `npm run typecheck`
+
 ## [2026-04-21] feat | expose full application mail configuration in the GDPR settings tab
 
 - Updated the durable vault memory for the current email-delivery model.
@@ -1538,3 +1675,269 @@
   - control-plane contract tightening
 - Updated `topics/Observability and Quality.md` to note that `npm run typecheck` now passes again locally on 2026-04-21, so the active concern is hotspot concentration rather than a baseline validation failure.
 - Updated `index.md` to link the new priority review page.
+
+## [2026-04-21] refactor | first pass on runtime/auth hotspot decomposition
+
+- Reduced `server/proxy-server.js` by extracting:
+  - `server/config/processFatalHandlers.js`
+  - `server/config/trustProxy.js`
+  - `server/middleware/requestContext.middleware.js`
+  - `server/middleware/bodySize.middleware.js`
+  - `server/middleware/requestLogging.middleware.js`
+- Reduced `client/src/App.tsx` by moving shared router/error-boundary/suspense/toaster composition into `client/src/app/AppShell.tsx`.
+- Reduced `client/src/context/AuthContext.tsx` by moving session-restore bootstrap into `client/src/context/useAuthInitialization.ts`.
+- Verified the refactor with:
+  - `npm run typecheck`
+  - targeted Vitest on `client/src/context/AuthContext.test.tsx`
+  - targeted ESLint on the touched backend/frontend files
+
+## [2026-04-21] refactor | second pass on export and AI-credit hotspot decomposition
+
+- Reduced `server/services/batchJobsWorker/exportGenerator.js` by extracting:
+  - `server/services/batchJobsWorker/exportGenerator.items.js` for per-item export generation
+  - `server/services/batchJobsWorker/exportGenerator.archive.js` for final ZIP archive writing
+- Reduced `server/services/aiCredits.service.js` by extracting AI workflow reservation planning into `server/services/aiCreditsWorkflow.service.js`.
+- Preserved the export cleanup contract on final ZIP streaming failure by attaching the partial archive path at the archive-writer boundary and keeping partial-file cleanup in the caller.
+- Verified this pass with:
+  - targeted Vitest on `server/tests/services/batchJobsWorker.exportGenerator.test.js`
+  - targeted Vitest on `server/tests/services/aiCredits.service.test.js`
+  - targeted ESLint on the touched workflow files
+  - `npm run typecheck`
+
+## [2026-04-21] refactor | third pass on aiCredits reporting responsibilities
+
+- Reduced `server/services/aiCredits.service.js` further by extracting read/reporting responsibilities into `server/services/aiCreditsReporting.service.js`.
+- The extracted area now owns:
+  - firm credits list/report aggregation
+  - per-firm detail/report aggregation
+- Verified this pass with:
+  - targeted Vitest on `server/tests/services/aiCredits.service.test.js`
+  - targeted ESLint on `server/services/aiCredits.service.js` and `server/services/aiCreditsReporting.service.js`
+  - `npm run typecheck`
+
+## [2026-04-21] refactor | fourth pass on resumes read responsibilities
+
+- Reduced `server/services/resumes.service.js` by extracting cached reads, listing/counting, audit reads, and adaptation/read helpers into `server/services/resumesReads.service.js`.
+- Kept the public API of `server/services/resumes.service.js` stable by re-exporting the extracted read functions and `RESUME_SELECT_COLUMNS`.
+- Left mutation-oriented behavior (`insertResume`, `updateResume`, `deleteResume`, file URL update, consent-related re-exports) in the main service file.
+- Verified this pass with:
+  - targeted Vitest on `server/tests/services/resumes.service.test.js`
+  - targeted ESLint on `server/services/resumes.service.js` and `server/services/resumesReads.service.js`
+  - `npm run typecheck`
+
+## [2026-04-21] refactor | fifth pass on lifecycle runtime decomposition
+
+- Reduced `server/config/lifecycle.js` by extracting:
+  - startup/listen and HTTPS option construction into `server/config/lifecycle.network.js`
+  - graceful shutdown finalization and process signal registration into `server/config/lifecycle.shutdown.js`
+- Kept `startServer(app, serverDir)` as the public entry point so callers and tests remain stable.
+- Verified this pass with:
+  - targeted Vitest on `server/tests/config/lifecycle.test.js`
+  - targeted ESLint on the touched lifecycle files
+  - `npm run typecheck`
+
+## [2026-04-21] refactor | sixth pass on backend and frontend route registration breadth
+
+- Reduced `server/config/routeRegistry/apiRoutes.js` by moving domain-grouped route registration into `server/config/routeRegistry/apiRouteGroups.js`.
+- Reduced `client/src/app/appRoutes.tsx` by moving public/workspace/admin/manager route-family definitions into `client/src/app/appRouteGroups.tsx`.
+- Kept route paths and guard semantics stable while making the registration files less visually dense.
+- Verified this pass with:
+  - targeted Vitest on `server/tests/config/apiRoutes.cacheControl.test.js`
+  - targeted Vitest on `server/tests/config/apiRoutes.resumes.smoke.test.js`
+  - targeted ESLint on the touched backend/frontend route files
+  - `npm run typecheck`
+
+## [2026-04-21] fix | propagate pipeline cache invalidation to mission and deal views
+
+- Fixed candidate-pipeline mutations so `addToPipeline`, `moveToStage`, `updatePipelineNotes`, and `removeFromPipeline` now invalidate not only the `candidatePipeline` cache namespace but also mission/deal caches and grouped mission/deal views keyed by firm.
+- This closes a stale-view class where a mission pipeline mutation returned success while mission/deal surfaces still showed an old `pipeline_count` or hidden candidate state until a hard refresh.
+- Verified with:
+  - `npx vitest run server/tests/services/candidatePipeline.service.test.js`
+  - `npx vitest run client/src/components/MissionsPage/MissionsDealsGroupedView.refresh.test.tsx`
+
+## [2026-04-21] config | replace default resume-improvement prompt
+
+- Added `server/config/prompts/resumeImprovement.prompt.js` as the new source of truth for the default resume-improvement prompt text.
+- Routed `server/config/prompts.backend.js` and `server/config/llmGovernance.js` to this dedicated module so runtime defaults and governance metadata resolve the same prompt text.
+- Bumped governance metadata for `resume.improvement.default` to version `1.9.0`.
+- Verified with:
+  - `npx vitest run server/tests/config/llmGovernance.test.js`
+  - `node -e "import('./server/config/prompts.backend.js').then(() => console.log('prompts-backend-ok'))"`
+
+## [2026-04-21] fix | align template CRUD e2e with raw textarea editor
+
+- Fixed `e2e/admin-crud-flows.spec.ts` after `validate-e2e` started failing on `fillProseMirror(...)` for template creation.
+- Root cause: `client/src/pages/NewTemplatePage.tsx` no longer renders Tiptap/`.ProseMirror` editors for template header/body/footer; it now uses raw HTML `textarea` fields:
+  - `#headerContent`
+  - `#templateContent`
+  - `#footerContent`
+- Updated the Playwright template CRUD flow to fill those textareas directly instead of using the ProseMirror helper.
+- Verified with:
+  - `npm run test:e2e -- e2e/admin-crud-flows.spec.ts`
+
+## [2026-04-21] docs | record current live frontend origin used for functional testing
+
+- Recorded in `topics/Environment and Secret Matrix.md` that the repository env files currently point production/frontend callbacks at `https://resumeconverter.net`.
+- Captured the live-domain mismatch observed during functional testing:
+  - `https://resumeconverter.net` serves the ResumeConverter SPA
+  - `https://resumeconverter.com` was not reachable over HTTPS from the test environment
+  - `http://resumeconverter.com/` redirected to `https://resumepower.com/`, which is not the app
+
+## [2026-04-21] fix | preserve renamed clients in CRM list refresh merges
+
+- Fixed `client/src/pages/ClientsPage.hooks.ts` so CRM list refreshes no longer keep a stale same-id client row when a fresher preserved client is available after create/update.
+- Before this fix, the merge helper only injected the preserved client if its `id` was absent from the refreshed page, which could leave the old name visible after a rename or make the client disappear under a new search term if the server response was stale.
+- The merge now:
+  - removes a preserved client when it no longer matches the active filter/search
+  - inserts it when missing
+  - replaces the same-id row when the refreshed row is stale or no longer matches the active search
+- Verified with:
+  - `node .\\node_modules\\vitest\\vitest.mjs run client/src/pages/ClientsPage.hooks.test.ts --config client/vitest.config.ts`
+  - `node .\\node_modules\\typescript\\bin\\tsc --noEmit -p client/tsconfig.json`
+
+## [2026-04-21] fix | allow deleting stale pending batch jobs with no active items
+
+- Fixed `server/routes/batchJobs/manageHandlers.js` so `DELETE /api/batch-jobs/:id` no longer rejects a job solely because the job row still says `pending` or `processing`.
+- The route now checks the real item states first:
+  - it still blocks deletion when any item is actually `pending` or `processing`
+  - it allows deletion when the job status is stale but all items are already terminal (`success`, `error`, etc.)
+- This addresses the live case where an adaptation was already created successfully but the batch job row still returned `pending`, causing test cleanup to fail with `400`.
+- Verified with:
+  - `node .\\node_modules\\vitest\\vitest.mjs run server/tests/routes/batchJobs.routes.test.js --config server/vitest.config.js`
+
+## [2026-04-21] ops | live functional retest after server restart
+
+- Re-tested the live app on `https://resumeconverter.net` after the server restart, explicitly excluding the Settings tab.
+- Confirmed authenticated access and rendering for the main non-settings surfaces, including:
+  - dashboard/home
+  - CVthèque
+  - upload
+  - missions
+  - adaptations
+  - CRM
+  - profile
+  - market facts
+  - guide
+  - admin
+  - metrics
+  - security logs
+  - GDPR audit
+  - backup
+  - batch import
+  - batch jobs
+- Confirmed live CRUD success for:
+  - client/contact/deal/mission
+  - templates (using the current camelCase payload contract)
+  - admin-created users (via `/api/auth/users` with required `firmId`)
+- Confirmed export readiness on an existing improved resume:
+  - export page loads
+  - template select is populated
+  - format select and export button are visible
+- Confirmed the earlier CRM visibility concern is no longer present on live: the created and renamed client was visible in the `/clients` UI during this retest.
+- Confirmed the current live blocker for resume adaptation is credit-related, not route-related:
+  - `POST /api/batch-jobs/adapt` returned `402`
+  - response details reported `available: 20`, `required: 50`, `actionType: "resume.adaptation"`
+  - the temporary mission created for this check was deleted successfully afterward.
+
+## [2026-04-22] templates | harmonized pdfjs api and worker versions for layout extraction
+
+- Fixed a concrete `pdfjs-dist` runtime mismatch that broke structured PDF layout extraction before any template analysis:
+  - observed error: API `5.5.207` vs worker `5.4.296`
+- Root cause:
+  - the app declared `pdfjs-dist@5.5.207`
+  - `pdf-parse@2.4.5` pulled its own nested `pdfjs-dist@5.4.296`
+  - the backend could therefore resolve API code and worker code from different package copies
+- Fix applied:
+  - `package.json` now overrides `pdf-parse -> pdfjs-dist` to `5.5.207`
+  - local install was cleaned so `npm ls pdfjs-dist` now reports a single deduped `5.5.207`
+  - `server/utils/pdfjs.server.js` now sets `GlobalWorkerOptions.workerSrc` to the exact `pdf.worker.mjs` resolved from the same installed package as `pdf.mjs`
+  - the temporary `disableWorker: true` workaround was removed
+- Validation:
+  - `npm ls pdfjs-dist`
+  - `node ./node_modules/vitest/vitest.mjs run --config server/vitest.config.js server/tests/utils/pdfjs.server.test.js server/tests/routes/templates.extraction.pdfLayoutTemplateBuilder.test.js server/tests/routes/templates.extraction.extractors.test.js`
+- Follow-up correction:
+  - the first fix left the committed `package-lock.json` inconsistent with the intended override
+  - a rebuild using `npm ci` could therefore still recreate the old nested worker version from the lockfile even though the local `node_modules` tree had been corrected manually
+  - the lockfile was then fully regenerated after pinning the root dependency to exact `pdfjs-dist@5.5.207` instead of `^5.5.207`
+  - final state:
+    - root `pdfjs-dist`: `5.5.207`
+    - no nested `node_modules/pdf-parse/node_modules/pdfjs-dist`
+    - `npm ls pdfjs-dist` reports a single deduped runtime version
+
+## [2026-04-22] templates | switched PDF template-page selection away from densest-page heuristic
+
+- Investigated a concrete poor extraction case on `MOREAU Luc - APTEA.pdf`.
+- Confirmed the structured extractor was selecting page 3 as the template source because it was text-denser than page 1.
+- Confirmed page 1 was actually the true visual template carrier:
+  - identity block
+  - title/subtitle
+  - section layout
+  - image slot/logo area
+- Replaced the page-selection heuristic in `pdfLayoutTemplateBuilder.js`:
+  - no longer pure text-density ranking
+  - now uses a `templateScore` that strongly biases page 1 and penalizes narrative continuation pages
+- Added candidate diagnostics:
+  - `templateScore`
+  - `templateSignals`
+- Also adjusted extraction confidence so non-primary narrative source pages are penalized instead of being reported as falsely high-confidence.
+- Validated locally:
+  - targeted layout/extractor tests pass
+  - on the concrete APTEA PDF, `sourcePageNumber` now resolves to page 1 instead of page 3
+
+## [2026-04-22] templates | recovered text colors from PDF operators for style-faithful layout extraction
+
+- Investigated why the APTEA PDF still produced poor style extraction even after page selection improved.
+- Confirmed `pdfjs` text items on the real PDF carried:
+  - positions
+  - sizes
+  - font ids
+  - but no item-level text color
+- Confirmed the underlying `operatorList` still carried the true text paint colors before `showText` operations:
+  - black body text
+  - white header text
+  - magenta section-title text (`#993366`)
+- Updated `pdfLayoutTemplateBuilder.js` so missing text colors are reconstructed from the PDF operator stream before lines are grouped.
+- Also refined the semantic palette derivation so:
+  - page background is no longer chosen as the accent color
+  - text-primary, text-secondary, and accent are separated more reliably
+- Validated locally:
+  - targeted extraction tests and lint pass
+  - on `MOREAU Luc - APTEA.pdf`, the extracted semantic palette now resolves to:
+    - background `#ffffff`
+    - text primary `#000000`
+    - accent `#993366`
+  - the structured stylesheet now preserves:
+    - white header text on magenta header chrome
+    - magenta section-title text
+    - black body text
+
+## [2026-04-22] templates | introduced MuPDF mutool as the preferred PDF template extraction engine
+
+- Product decision shifted from `pdfjs` as the main PDF-to-template layout source toward MuPDF for better maintainability and higher-fidelity HTML extraction.
+- Implemented a new server-side MuPDF extractor:
+  - `server/services/mupdfTemplateExtraction.service.js`
+  - executes `mutool draw -F html` and `mutool draw -F json` on the selected PDF page
+  - extracts:
+    - raw page HTML
+    - stylesheet from embedded `<style>` tags
+    - font families from CSS
+    - color palette from CSS
+    - basic layout metrics from MuPDF JSON / HTML text
+- Runtime behavior changed in `server/routes/templates/extraction/extractors.js`:
+  - `extractFromPDF(...)` now prefers MuPDF when `mutool` is available
+  - if `mutool` is unavailable, extraction still falls back to the existing `pdfjs` layout path
+  - successful MuPDF runs are surfaced as extraction method `pdf-mupdf-html`
+- Operational dependency added:
+  - Docker runtime now installs `mupdf-tools`
+  - `.env.example` now documents `MUPDF_COMMAND=mutool`
+- Validation:
+  - targeted MuPDF service tests pass
+  - targeted extractor/layout tests pass
+  - lint passes
+- Known current limitation:
+  - MuPDF is integrated as a high-fidelity HTML/CSS source first
+  - the old `pdfjs` region splitter still exists as a fallback and as a richer heuristic path for some diagnostics
+  - MuPDF-specific `header/content/footer` segmentation has not yet been rebuilt on top of MuPDF JSON blocks
+# 2026-04-22
+
+- Restored the CV template admin editor fragment inputs to raw `textarea` fields (`headerContent`, `templateContent`, `footerContent`) after a regression where rich-text editing broke post-save/post-load fidelity and diverged from Playwright CRUD expectations.

@@ -9,6 +9,9 @@ ResumeConverter does not stop at content analysis. It also owns resume presentat
 - Templates have CRUD routes and dedicated admin pages.
 - Admin workspace exposes template management as a first-class function.
 - Templates are part of the product surface, not an implementation detail of PDF export.
+- The admin template editor now exposes raw HTML fragment fields as plain `textarea` controls with ids `headerContent`, `templateContent`, and `footerContent`.
+- Replacing those fragment fields with a rich-text editor is a regression: it breaks the raw HTML contract expected by template extraction handoff, post-save reload fidelity, and Playwright CRUD coverage.
+- E2E automation for template CRUD must target those textareas directly instead of looking for `.ProseMirror` editors on `NewTemplatePage`.
 
 ## Template Extraction
 

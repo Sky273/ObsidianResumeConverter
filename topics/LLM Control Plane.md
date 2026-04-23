@@ -31,6 +31,7 @@ The AI layer is governed centrally through settings, provider availability, cred
 ## Prompt Governance
 
 - Default prompts exist in backend config and are surfaced through settings defaults.
+- As of 2026-04-21, the default resume-improvement prompt is sourced from a dedicated module: `server/config/prompts/resumeImprovement.prompt.js`, and governance metadata points `resume.improvement.default` to that module at version `1.9.0`.
 - Prompt text is not buried inside every feature route; there is an explicit attempt to centralize prompt governance.
 - This matters because several workflows share the same provider infrastructure but should remain behaviorally tunable without code edits.
 - The dedicated governance doc defines the intended contract between prompts and validators:
