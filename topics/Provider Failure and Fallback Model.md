@@ -109,6 +109,10 @@ ResumeConverter currently uses several different notions of fallback.
 
 - A call can retry with stricter JSON instructions.
 - Improvement can fall back from structured JSON expectations to a plain-text style recovery path.
+- As of 2026-04-24, resume improvement also performs a bounded malformed-JSON field salvage after the compact JSON retry fails:
+  - it only extracts complete string values from known output fields such as `structuredText`, `html`, `improvedText`, `content`, or `text`
+  - it returns empty improvement analysis metadata for that degraded path rather than inventing scores or tags
+  - provider/auth failures and deadline failures are still not hidden by this salvage path
 - This is an output-contract fallback, not a provider failover.
 
 ### Request-level parameter precedence

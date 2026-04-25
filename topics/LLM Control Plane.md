@@ -81,6 +81,18 @@ The AI layer is governed centrally through settings, provider availability, cred
   - timeout mismatch
 - Debugging should start from the control plane, not only from the feature route that triggered the call.
 
+## Agentic Model Readiness
+
+As of 2026-04-25, ResumeConverter supports OpenAI `gpt-5.5` as a plain premium model string through the existing provider/model control plane. The provider/model control plane, gateway dispatch, availability fallback, per-operation token budgets, upfront credit reservation, async batch jobs, and prompt/contract governance kept the adoption to a controlled model-configuration upgrade.
+
+ResumeConverter is only partially ready to exploit more advanced agentic capabilities. The current architecture is centered on governed LLM calls and product workflows, not on a first-class agent runtime. Before using model-native agentic tooling broadly, the app should add explicit support for tool definitions, tool-call execution loops, tool allowlists by operation, persisted agent state, step-level audit logs, per-tool authorization, and credit/timeout accounting for multi-step tool use.
+
+Practical stance:
+
+- adding documented OpenAI model IDs as plain premium models remains low-risk when they use the same Responses/chat-style surface and existing request parameters
+- using the future model as an autonomous workflow planner should require a dedicated agent-runtime design, not just a model dropdown entry
+- the first suitable candidates for agentic expansion are bounded workflows such as template extraction review, profile search explanation, resume adaptation planning, or admin diagnostics, because they already have explicit operation types and observable intermediate states
+
 ## Missing Mental Model To Avoid
 
 It is incorrect to think in terms of:

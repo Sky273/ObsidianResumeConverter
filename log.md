@@ -1941,3 +1941,74 @@
 # 2026-04-22
 
 - Restored the CV template admin editor fragment inputs to raw `textarea` fields (`headerContent`, `templateContent`, `footerContent`) after a regression where rich-text editing broke post-save/post-load fidelity and diverged from Playwright CRUD expectations.
+## [2026-04-24] update | OpenAI GPT-5.5 API availability note
+
+- Checked the official OpenAI API model catalog for `gpt-5.5`.
+- Recorded in [[topics/LLM Call Resolution and Runtime Selection]] that GPT-5.5 is currently documented as available in ChatGPT and Codex, with API availability coming soon, so ResumeConverter should not configure `gpt-5.5` as an OpenAI API model yet.
+- Noted the current API-side recommendation to use `gpt-5.4`, `gpt-5.4-mini`, or `gpt-5.4-nano` instead.
+
+## [2026-04-24] update | agentic model readiness assessment
+
+- Added an [[topics/LLM Control Plane]] section describing ResumeConverter's readiness for a future GPT-5.5 API release.
+- Recorded the distinction between low-risk model-string adoption through the existing provider/model gateway and higher-risk agentic exploitation that would require explicit tool execution loops, allowlists, persisted state, audit logs, authorization, and multi-step credit/timeout accounting.
+
+## [2026-04-24] templates | restored admin CV template extraction flow
+
+- Added the current-source implementation of `POST /api/templates/extract-from-cv` in `server/routes/templates/crud.routes.js`.
+- Added `server/services/templateExtraction.service.js` to build template fields from PDF text geometry, with Word-to-PDF and OCR/text fallback paths.
+- Reconnected the frontend administration templates tab with an Extract button, extraction modal, multipart client service call, and `sessionStorage` handoff into `NewTemplatePage` raw HTML fields.
+- Validated with targeted client/server tests, client typecheck, and production build.
+
+## [2026-04-24] templates | fixed null-byte save failure for extracted CV templates
+
+- Reproduced the PostgreSQL `invalid byte sequence for encoding "UTF8": 0x00` failure with a route test that posts extracted template fields containing NUL characters.
+- Added recursive NUL-byte stripping in `server/routes/templates/crud.routes.js` before template create/update payloads are mapped and inserted.
+- Validated with targeted template route/extraction tests, targeted ESLint, and `git diff --check`.
+
+## [2026-04-24] templates | fixed unusable PDF output from extracted CV templates
+
+- Reproduced the extraction-service defect where generated templates stored raw positioned PDF text such as the candidate name/body/footer instead of reusable placeholders.
+- Changed `server/services/templateExtraction.service.js` so PDF-layout and text fallback extraction return a flow-based template with `-name-`, `-title-`, `-content-`, and footer page placeholders.
+- Recorded that PDF text geometry is now used only for style hints such as fonts, font sizes, and padding, not as persisted template content.
+- Validated with targeted extraction/route tests, frontend extraction/template tests, client typecheck, targeted ESLint, and `git diff --check`.
+
+## [2026-04-24] templates | removed abandoned CV template extraction feature
+
+- Removed the admin Extract action/modal, frontend extraction client, `POST /api/templates/extract-from-cv`, deterministic extraction service, MuPDF extraction configuration, and dedicated extraction tests.
+- Kept the generic NUL-byte stripping guard on normal template create/update payloads because it protects PostgreSQL text fields independently of the removed feature.
+- Validated the remaining template CRUD/editor paths with targeted server/client tests, typecheck, targeted ESLint, and `git diff --check`.
+
+## [2026-04-24] resumes | hardened improvement malformed JSON recovery
+
+- Reproduced an improvement failure where the first response and compact retry both returned malformed JSON while still containing a complete `improvedText` field.
+- Added bounded salvage in `server/services/openai/resumeImprovement.service.js` to recover complete string values from known improvement text fields after JSON parse/retry failure.
+- The salvage path records a fallback metric and returns empty improvement analysis metadata instead of inventing scores/tags.
+- Validated with targeted resume operation/text utility tests, targeted ESLint, and `git diff --check`.
+
+## [2026-04-24] CRM | dirtied all client filter views after account mutations
+
+- Updated the CRM clients hook so create, update, and delete operations dirty all local client filters (`all`, `client`, `prospect`) while still invalidating the broader clients/deals/missions scopes.
+- The next visit to each dirty filter forces a fresh `getClients` read with its own `type` filter, preventing stale clients/prospects when the mutation happened from another CRM view.
+- Added targeted hook tests covering create, update, and delete refresh behavior across all three filters.
+
+## [2026-04-25] LLM | enabled OpenAI GPT-5.5 as a selectable model
+
+- Confirmed through the official OpenAI API model catalog that `gpt-5.5` is now a documented API model ID.
+- Added `gpt-5.5` to ResumeConverter's OpenAI admin model catalog.
+- Declared its OpenAI runtime capabilities: Responses API path, `max_completion_tokens` up to 128000, default reasoning effort `none`, and selectable reasoning efforts through `xhigh`.
+- Added provider fallback behavior from `gpt-5.5` to `gpt-5.4` when access is denied.
+- Validated with targeted LLM admin metadata and OpenAI API client tests.
+
+## [2026-04-25] resumes | diagnosed missing post-improvement skill proofs in batch flow
+
+- Investigated the recently improved CPA resume (`3bcbe42d-b87b-4556-b48b-f3785b29e4a1`, `Pateyronchristophemoa.pdf`) because the improved editor showed no skill proofs.
+- Found `analysis_details.tags.skillsEvidence`, `toolsEvidence`, and `softSkillsEvidence` persisted as literal `"[object Object]"` strings instead of proof objects.
+- Identified the likely root cause in `server/services/batchJobsWorker/processors/improvementAnalysis.js`: `mergeTagSections(...)` applies string-array normalization to all tag arrays, including evidence-object arrays.
+- Also found the batch improvement save path does not repersist improved evidence into `skill_evidence`, leaving only initial evidence rows for CPA.
+
+## [2026-04-25] resumes | fixed batch post-improvement skill proof persistence
+
+- Updated `server/services/batchJobsWorker/processors/improvementAnalysis.js` so `mergeTagSections(...)` preserves `skillsEvidence`, `toolsEvidence`, and `softSkillsEvidence` as object arrays instead of coercing them to strings.
+- Updated `server/services/batchJobsWorker/processors/improvementPersistence.js` to call `persistResumeSkillEvidence(..., phase: 'improved')` after saving improved resume data.
+- Added a regression test covering the CPA failure mode: embedded improvement evidence merged into sparse post-analysis must remain objects in `analysis_details` and must be persisted as improved skill evidence.
+- Validated with targeted backend resume evidence/improvement tests, targeted frontend proof-display tests, targeted ESLint, and `git diff --check`.

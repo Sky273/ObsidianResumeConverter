@@ -41,6 +41,7 @@ Important management routes:
 - Import jobs can create staged items after the API response, so job state management and failure settlement are important.
 - Deal export uses the same broader job framework, not a separate ad hoc implementation.
 - creation or staging failure is expected to trigger refund/settlement behavior rather than leaving credits orphaned
+- On 2026-04-25, the batch resume-improvement merge path was fixed to preserve keyword-evidence object arrays. Before the fix, `mergeTagSections(...)` in `server/services/batchJobsWorker/processors/improvementAnalysis.js` normalized every `tags` array with `String(item)`, so evidence objects under `skillsEvidence`, `toolsEvidence`, or `softSkillsEvidence` could be persisted as literal `"[object Object]"` values in `analysis_details.tags.*Evidence`. The same fix made the batch save path persist improved evidence into `skill_evidence` with `phase: 'improved'`.
 - The batch export worker is being decomposed incrementally rather than rewritten:
   - source loading for resume vs adaptation items
   - firm-logo resolution

@@ -1,4 +1,4 @@
-# Resume Presentation and Templates
+﻿# Resume Presentation and Templates
 
 ## Summary
 
@@ -14,6 +14,8 @@ ResumeConverter does not stop at content analysis. It also owns resume presentat
 - E2E automation for template CRUD must target those textareas directly instead of looking for `.ProseMirror` editors on `NewTemplatePage`.
 
 ## Template Extraction
+
+- As of 2026-04-24, the current source-restored extraction flow is available from the administration templates toolbar through an Extract button. The flow uploads a PDF/DOC/DOCX CV, returns filled raw template fragments, allows pre-save correction, then transfers the result to `NewTemplatePage` through `sessionStorage.extractedTemplate`.
 
 - The app can extract a reusable template from uploaded CV files.
 - The target is a normalized template structure containing:

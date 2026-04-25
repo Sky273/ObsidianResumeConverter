@@ -1,10 +1,31 @@
-# Template Extraction Pipeline
+﻿# Template Extraction Pipeline
 
 ## Summary
 
-Template extraction now follows a hybrid pipeline centered on deterministic PDF layout recovery before any LLM normalization.
+CV template extraction from uploaded resumes was retired on 2026-04-24 after unusable output in the admin workflow.
+
+Historical notes below describe the removed extraction experiments and should not be treated as active runtime behavior unless the feature is deliberately rebuilt.
 
 ## Current State
+
+### 2026-04-24 retirement
+
+- The admin CV-template extraction feature is intentionally removed.
+- The templates administration tab should no longer expose an Extract action or extraction modal.
+- `POST /api/templates/extract-from-cv`, `server/services/templateExtraction.service.js`, and their dedicated tests were removed.
+- `.env.example` and `Dockerfile` no longer carry MuPDF/`mutool` configuration for template extraction.
+- The generic template create/update payload guard still strips literal NUL bytes before PostgreSQL insertion because NUL characters can be introduced by imported HTML/CSS from multiple sources, not only by the removed extraction path.
+
+### 2026-04-24 current source restoration
+
+- Current source route for the restored admin extraction flow is `POST /api/templates/extract-from-cv` in `server/routes/templates/crud.routes.js`.
+- Current source service is `server/services/templateExtraction.service.js`.
+- The current deterministic implementation uses `pdfjs` text geometry only as a style/spacing signal; extracted templates collapse candidate-specific text to reusable placeholders instead of storing positioned source text.
+- DOC/DOCX inputs use LibreOffice Word-to-PDF conversion when `soffice` is available, then reuse the PDF layout path.
+- Sparse or scanned sources fall back to text/OCR flow templates using the existing PDF/Word text extraction services.
+- Both PDF-layout and text/OCR fallback outputs are expected to contain `-name-`, `-title-`, and `-content-`; saving raw CV text as absolutely positioned spans is an invalid output because it breaks post-save export rendering and leaks candidate-specific content into the template.
+- The restored frontend path adds an Extract action in the templates administration toolbar, previews/corrects the extracted fragments in `client/src/components/ExtractTemplateModal.tsx`, stores the edited payload in `sessionStorage.extractedTemplate`, and has `client/src/pages/NewTemplatePage.tsx` consume it into raw template fields after auth restoration.
+- This restored branch path does not yet perform LLM normalization, placeholder enforcement, credit reservation, MuPDF extraction, or confidence scoring despite older design notes on this page describing those target capabilities.
 
 - Entry route: `POST /api/templates/extract-from-cv`
 - Supported inputs:
@@ -227,7 +248,7 @@ Template extraction now follows a hybrid pipeline centered on deterministic PDF 
   - extraction errors now surface both values:
     - global extracted PDF text length
     - structured layout text length
-  - this helps distinguish “document really poor” from “layout extractor under-detected the document”
+  - this helps distinguish â€œdocument really poorâ€ from â€œlayout extractor under-detected the documentâ€
 - A separate runtime failure mode also exists at the `pdfjs-dist` boundary:
   - if the server-side API bundle and the resolved worker bundle are on mismatched versions, layout extraction fails before any document analysis
   - the dependency tree is now forced to a single `pdfjs-dist` version (`5.5.207`), including the copy transitively requested by `pdf-parse`
@@ -310,3 +331,10 @@ Template extraction now follows a hybrid pipeline centered on deterministic PDF 
 - `server/routes/templates/extraction/extractors.js`
 - `server/routes/templates/extraction/pdfLayoutTemplateBuilder.js`
 - `server/services/templateExtraction.service.js`
+
+
+### 2026-04-24 null-byte persistence guard
+
+- Extracted template payloads can contain literal NUL characters from PDF/Office text extraction.
+- JSON transport accepts these characters, but PostgreSQL rejects them in text fields with `invalid byte sequence for encoding "UTF8": 0x00`.
+- `server/routes/templates/crud.routes.js` now strips NUL characters recursively from template create/update payloads after alias normalization and before snake_case mapping, including tags and raw HTML/CSS fragments.

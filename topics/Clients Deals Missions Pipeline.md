@@ -10,6 +10,7 @@ ResumeConverter is not only a CV processing app. It also models the commercial a
 - A client can have multiple contacts.
 - Deletion is constrained by submission history.
 - Admin can create or move clients across firms; non-admin users remain firm-scoped.
+- The CRM clients page has three filter views: all accounts, clients, and prospects. Client/contact create, update, and delete operations must dirty all three local filter views, not only the active filter, so the next visit to each filter forces a fresh `getClients` read with the matching `type` filter.
 
 ## Deals
 

@@ -32,6 +32,8 @@ Important behavior:
 
 The configured provider comes from settings. If nothing explicit is set, the system falls back to the default provider model pair.
 
+As of 2026-04-25, OpenAI's official API model catalog exposes `gpt-5.5` as a valid API model ID and recommends it as the flagship model for complex reasoning and coding. ResumeConverter now exposes `gpt-5.5` in the OpenAI admin model catalog, runs it through the existing GPT-5 Responses API path, gives it `none`/`low`/`medium`/`high`/`xhigh` reasoning-effort controls, and falls back to `gpt-5.4` if the provider denies access to the model.
+
 Observed provider defaults include:
 
 - `openai` -> `gpt-4o`
