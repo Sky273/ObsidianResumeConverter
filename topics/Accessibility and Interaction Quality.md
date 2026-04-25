@@ -39,6 +39,10 @@ ResumeConverter has partial accessibility foundations but not yet a full accessi
 - The global CTA migration is no longer limited to auth:
   - legacy blue primaries based on `btn btn-primary` or explicit `bg-indigo-600` button styling are being normalized onto `app-primary-action`
   - editorial pages still keep their scoped CTA recipe through `cv-page-primary-action`
+- Runtime boolean controls are now standardized on a shared switch component:
+  - `client/src/components/ui/Switch.tsx` renders `role="switch"` with `aria-checked`
+  - Settings imports remain compatible through `client/src/components/SettingsPage/SettingsSwitch.tsx`
+  - `client/src/components/SwitchMigration.test.ts` guards against reintroducing native `type="checkbox"` inputs in runtime source
 
 ## Important Facts
 
@@ -93,6 +97,9 @@ ResumeConverter has partial accessibility foundations but not yet a full accessi
 - `client/src/components/HomeDashboard.sections.tsx`
 - `client/src/components/HomeDashboard.utils.ts`
 - `client/src/components/HomeDashboard.types.ts`
+- `client/src/components/ui/Switch.tsx`
+- `client/src/components/SettingsPage/SettingsSwitch.tsx`
+- `client/src/components/SwitchMigration.test.ts`
 - `client/src/styles/editorialPages.css`
 - `client/src/styles/resumesEditorial.css`
 - `client/src/styles/_base.css`

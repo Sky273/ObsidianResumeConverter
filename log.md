@@ -2012,3 +2012,25 @@
 - Updated `server/services/batchJobsWorker/processors/improvementPersistence.js` to call `persistResumeSkillEvidence(..., phase: 'improved')` after saving improved resume data.
 - Added a regression test covering the CPA failure mode: embedded improvement evidence merged into sparse post-analysis must remain objects in `analysis_details` and must be persisted as improved skill evidence.
 - Validated with targeted backend resume evidence/improvement tests, targeted frontend proof-display tests, targeted ESLint, and `git diff --check`.
+
+## [2026-04-25] settings | replaced settings checkboxes with switches
+
+- Added a shared frontend `SettingsSwitch` for boolean controls on the Settings surface.
+- Replaced Settings-page checkboxes for chatbot enablement styling, LLM presentation toggles, Ollama boolean parameters, self-service registration, pre-analysis prompt enablement, and GDPR SMTP booleans.
+- Added targeted frontend tests asserting switches replace checkboxes for those controls.
+
+## [2026-04-25] api-docs | rebuilt Swagger/OpenAPI from scratch
+
+- Removed the old hand-written `server/config/swagger*.js` OpenAPI files, the redundant `server/routes/docs.routes.js` fallback, and the CDN-backed Swagger UI initializer.
+- Added `server/config/openapi.js`, which builds an OpenAPI 3.1 document from a route catalog grouped by domain.
+- Rebuilt `/api/docs` and `/api/docs/ui` in `server/config/routeRegistry/swaggerRoutes.js` using local `swagger-ui-dist` assets instead of `unpkg`.
+- Kept `/api/docs/static/oauth-callback.js` available because calendar and GDPR OAuth callback pages still reference that CSP-safe external script path.
+- Validated with targeted OpenAPI/Swagger route tests, route-registry proxy tests, targeted ESLint, import checks, and `git diff --check`.
+
+## [2026-04-25] frontend | replaced all runtime checkboxes with switches
+
+- Added `client/src/components/ui/Switch.tsx` as the shared boolean-control primitive using `role="switch"` and `aria-checked`.
+- Kept Settings compatibility through `client/src/components/SettingsPage/SettingsSwitch.tsx`.
+- Replaced the remaining native checkbox inputs across contact forms, resume comments, sign-in, backup scheduling, batch upload options, metrics, template editing, security logs, and email-template editing.
+- Added `client/src/components/SwitchMigration.test.ts` to prevent reintroducing `type="checkbox"` in runtime client source.
+- Validated with the migration guard test, affected frontend unit tests, client typecheck, targeted ESLint on files without pre-existing lint debt, and `git diff --check`.

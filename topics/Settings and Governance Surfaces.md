@@ -50,6 +50,7 @@ Expose compliance-related controls and DPO contact information. This is importan
 ### Swagger tab
 
 Exposes API-doc visibility from the settings surface, which is another signal that settings are partly an operational console.
+The tab opens `/api/docs/ui` and `/api/docs`, backed by the generated OpenAPI document in `server/config/openapi.js` and local Swagger UI assets from `swagger-ui-dist`.
 
 ## Admin Workspace
 

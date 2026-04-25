@@ -142,6 +142,8 @@ The backend has many routes, but a small number of domains matter for orientatio
 
 - Most navigation questions can be answered from domain ownership instead of route-file names.
 - Many incidents are easier to isolate once the failing path is mapped to the right domain family.
+- The OpenAPI/Swagger implementation is now generated from `server/config/openapi.js` instead of the removed hand-written `server/config/swagger*.js` files.
+- Swagger UI is served locally from the `swagger-ui-dist` package through `server/config/routeRegistry/swaggerRoutes.js`; it no longer depends on CDN-hosted Swagger UI assets.
 
 ## Related
 
