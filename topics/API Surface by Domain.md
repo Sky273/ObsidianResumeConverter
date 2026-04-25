@@ -144,6 +144,8 @@ The backend has many routes, but a small number of domains matter for orientatio
 - Many incidents are easier to isolate once the failing path is mapped to the right domain family.
 - The OpenAPI/Swagger implementation is now generated from `server/config/openapi.js` instead of the removed hand-written `server/config/swagger*.js` files.
 - Swagger UI is served locally from the `swagger-ui-dist` package through `server/config/routeRegistry/swaggerRoutes.js`; it no longer depends on CDN-hosted Swagger UI assets.
+- Reusable OpenAPI schemas are maintained separately in `server/config/openapiSchemas.js` and are wired into request bodies via `$ref` from `server/config/openapi.js`.
+- The Swagger regression coverage now checks that the document exposes domain schemas and that request bodies such as sign-in, settings, clients, and batch jobs reference those schemas.
 
 ## Related
 
@@ -155,3 +157,6 @@ The backend has many routes, but a small number of domains matter for orientatio
 ## Sources
 
 - [[raw/sources/2026-04-16-settings-scoring-and-api-surface]]
+- `server/config/openapi.js`
+- `server/config/openapiSchemas.js`
+- `server/tests/config/openapi.test.js`

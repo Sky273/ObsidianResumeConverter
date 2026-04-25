@@ -2034,3 +2034,12 @@
 - Replaced the remaining native checkbox inputs across contact forms, resume comments, sign-in, backup scheduling, batch upload options, metrics, template editing, security logs, and email-template editing.
 - Added `client/src/components/SwitchMigration.test.ts` to prevent reintroducing `type="checkbox"` in runtime client source.
 - Validated with the migration guard test, affected frontend unit tests, client typecheck, targeted ESLint on files without pre-existing lint debt, and `git diff --check`.
+
+## [2026-04-25] api-docs | restored reusable Swagger schemas
+
+- Diagnosed the rebuilt OpenAPI document: `components.schemas` only exposed `Error`, and JSON request bodies were mostly generic `type: object` schemas.
+- Added `server/config/openapiSchemas.js` with reusable request schemas for auth, settings, resumes, templates, missions, clients, deals, pipeline, submissions, comments, batch jobs, LLM/chatbot, GDPR mail, backup, calendar, email templates, consent, and sharing.
+- Updated `server/config/openapi.js` so route catalog entries can reference schema names and request bodies render as `$ref` entries.
+- Added batch-job action paths (`/batch-jobs/improve`, `/adapt`, `/match`, `/profile-search`, `/profile-analysis`, `/deal-export`) to the OpenAPI catalog.
+- Added regression coverage in `server/tests/config/openapi.test.js` for schema count, representative schema fields, and request-body `$ref` wiring.
+- Validated the generated document has 53 schemas, no broken schema `$ref`, and no generic JSON request bodies.
