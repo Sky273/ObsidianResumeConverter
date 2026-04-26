@@ -26,6 +26,7 @@ ResumeConverter is not only a CV processing app. It also models the commercial a
 - They sit at the junction between business demand and candidate evaluation.
 - Missions are the main target object for profile matching and resume adaptation.
 - They can also be surfaced from deal context.
+- A mission cannot be associated with both a client and a deal whose `client_id` points to another client; `server/services/missions.service.js` enforces this in `validateMissionAssociations`, and the mission form synchronizes/clears deal-client choices to prevent mismatches in the UI.
 - The grouped mission-by-deal view is now isolated from the broader CRUD service: `server/services/missions.service.js` keeps cache and public service entrypoints, while `server/services/missionsGroupedView.service.js` owns the heavier deal/missions/count assembly path.
 - Attachment-count enrichment for grouped mission views is now centralized instead of duplicated separately for assigned and unassigned mission collections.
 

@@ -2043,3 +2043,9 @@
 - Added batch-job action paths (`/batch-jobs/improve`, `/adapt`, `/match`, `/profile-search`, `/profile-analysis`, `/deal-export`) to the OpenAPI catalog.
 - Added regression coverage in `server/tests/config/openapi.test.js` for schema count, representative schema fields, and request-body `$ref` wiring.
 - Validated the generated document has 53 schemas, no broken schema `$ref`, and no generic JSON request bodies.
+
+## [2026-04-26] missions | enforced deal-client coherence
+
+- Updated `server/services/missions.service.js` so mission association validation reads `deals.client_id` and rejects a mission client that differs from the selected deal client.
+- Updated the mission form to select the deal client automatically and clear the selected deal when the user changes to an incompatible client.
+- Added targeted backend and frontend regression tests for the Accord cadre 2025 / Comutitres vs CEA mismatch case.
