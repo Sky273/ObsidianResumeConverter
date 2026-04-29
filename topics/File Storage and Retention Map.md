@@ -29,6 +29,12 @@ This is important because cleanup and sharing logic assume a bounded managed tre
 - the share service treats this as a managed directory with path validation
 - share records also live in the `resumes` table through token/path/expiry fields
 
+### Firm logos
+
+- firm logos are stored durably in PostgreSQL on the `firms` record (`logo_data`, `logo_mime_type`, `logo_url`)
+- the canonical browser URL for a stored firm logo is `/api/firms/:id/logo/image`
+- legacy bare UUID values in `logo_url` must be normalized before reaching an image `src`; otherwise the browser requests `GET /:uuid` and receives the SPA fallback `index.html`
+
 ### Temp exports
 
 - batch export artifacts are created outside the main upload tree in a managed temp/export location

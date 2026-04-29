@@ -55,6 +55,8 @@ Conceptually:
 
 If the scope version changes, old entries become stale automatically because subsequent reads resolve to a new versioned key.
 
+Versioned cache loaders must also check the scope version after the loader finishes and before storing the result. A read that starts before a mutation can otherwise finish after invalidation and store old data under the newer scope version.
+
 ## Scope Version Truth
 
 Scope versions are stored in PostgreSQL in `public.cache_scope_versions`.

@@ -9,9 +9,14 @@ ResumeConverter does not stop at content analysis. It also owns resume presentat
 - Templates have CRUD routes and dedicated admin pages.
 - Admin workspace exposes template management as a first-class function.
 - Templates are part of the product surface, not an implementation detail of PDF export.
+- Global CV templates (`templates.firm_id IS NULL`) are visible to non-admin users in template lists and must also be loadable by ID through `getTemplateByIdWithAccess`; otherwise export flows can show a selectable global template and then fail when fetching its details.
+- Post-save stale template reloads can come from the shared versioned cache, not only from template CRUD mapping. A template detail/list read that starts before `invalidateTemplatesCaches()` must not be allowed to store its stale result after the templates scope version has advanced.
 - The admin template editor now exposes raw HTML fragment fields as plain `textarea` controls with ids `headerContent`, `templateContent`, and `footerContent`.
 - Replacing those fragment fields with a rich-text editor is a regression: it breaks the raw HTML contract expected by template extraction handoff, post-save reload fidelity, and Playwright CRUD coverage.
 - E2E automation for template CRUD must target those textareas directly instead of looking for `.ProseMirror` editors on `NewTemplatePage`.
+- The template editor must load and save raw `headerContent`, `templateContent`, `footerContent`, and `stylesheet` values without preview/export normalization or whitespace trimming. Resource cleanup and stylesheet normalization belong at preview/export boundaries only.
+- Template detail reads used by the editor request a fresh server read with `refresh=1`; backend detail routes and access checks support explicit cache bypass so editing cannot reopen a stale cached template after a save.
+- PDF exports render footers through Puppeteer's native `displayHeaderFooter`, which is isolated from the main document DOM. The PDF server therefore injects the normalized template stylesheet into the native `footerTemplate` as well as the main page HTML so CSS selectors used by footer markup apply during PDF generation.
 
 ## Template Extraction
 
@@ -61,6 +66,10 @@ ResumeConverter does not stop at content analysis. It also owns resume presentat
 - During export, `-logo-` is replaced with the exporting cabinet's logo when the source resume/adaptation is associated with a firm that has a stored logo.
 - The replacement prefers embedded binary logo data from `firms.logo_data`, producing a data URL in the rendered HTML so the PDF/DOCX generator does not depend on cookie-authenticated asset fetches.
 - The single-export/share path now resolves the logo from the source resume's `firm_id` on the client side, fetches `/api/firms/:id/logo/image`, converts it to a `data:` URL, and injects the resulting `<img>` markup before sending HTML to the PDF/DOCX generator.
+- Before single CV/adaptation export, frontend template fragments strip unsupported external resource attributes (`http:`, `https:`, `file:`, `blob:`, protocol-relative, etc.) from body/header/footer HTML so the PDF server guard does not reject the payload. Embedded `data:image/...` resources remain valid.
+- Template previews use the same fragment resource cleanup before building `iframe srcDoc`; this prevents legacy bare/root UUID image sources in templates from causing repeated browser requests such as `GET /:uuid` through the SPA fallback.
+- Template stylesheets are also normalized before preview/export. The frontend strips `@import` and replaces non-`data:image/...` CSS `url(...)` references with `none`, because legacy model CSS can otherwise trigger repeated `GET /:uuid` requests from preview iframes or be rejected by the PDF server.
+- The shared frontend HTML sanitizer also strips bare/root UUID resource attributes from dynamic HTML, so resume, mission, adaptation, and other rendered rich-text surfaces do not trigger `GET /:uuid` fallback requests.
 
 ## Sharing
 

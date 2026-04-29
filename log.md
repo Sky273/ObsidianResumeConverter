@@ -2049,3 +2049,91 @@
 - Updated `server/services/missions.service.js` so mission association validation reads `deals.client_id` and rejects a mission client that differs from the selected deal client.
 - Updated the mission form to select the deal client automatically and clear the selected deal when the user changes to an incompatible client.
 - Added targeted backend and frontend regression tests for the Accord cadre 2025 / Comutitres vs CEA mismatch case.
+
+## [2026-04-27] resumes | migrated CVtheque content design
+
+- Reworked the `/resumes` content surface toward the standalone CVtheque mockup while preserving the global shell and default `byDeal` mode.
+- Updated resume stats, search/action controls, result rows, deal sections, and route-scoped `resumesEditorial.css` tokens for compact light/dark CRM styling.
+- Added targeted component tests for the command bar and resume row actions, then validated existing CVtheque data, refresh, filters, grouped sections, typecheck, and diff hygiene.
+
+## [2026-04-27] design | propagated compact light app style
+
+- Extended the compact CVtheque visual language across the authenticated application shell instead of only selected editorial routes.
+- Replaced the old light blue/indigo shell treatment with warm gray app background, white compact surfaces, zinc text, fine borders, and the `#6B4EFF` accent.
+- Updated header, footer, language menu, shared app variables, and global migrated-shell CSS overrides so connected screens inherit the new compact light system.
+
+## [2026-04-27] missions | migrated Missions page visual design
+
+- Reworked `/missions` toward the standalone Missions mockup: pale lavender-gray surface, compact white stat cards, compact search/action toolbar, and horizontal mission rows.
+- Kept existing mission features intact: by-deal default, list mode, grouped search, refresh, create/edit/delete actions, pagination, and mission navigation.
+- Scoped the route styling through `missions-editorial-shell` tokens in `editorialPages.css` so it can differ from the CVtheque warm-gray variant.
+
+## [2026-04-27] design | tightened global compact page system
+
+- Harmonized authenticated pages further around the compact CVtheque visual system by tightening shared page headers, stat cards, tabs, search fields, action buttons, animated cards, and empty states.
+- Extended `editorialPages.css` overrides to reduce inherited large radii, padding, blue/indigo utility colors, and gradients on migrated routes.
+- Restored a compact dark-mode token set for migrated authenticated pages while keeping the warm-gray compact light mode.
+
+## [2026-04-27] design | removed residual blue page backgrounds
+
+- Removed remaining legacy blue/indigo page backgrounds from batch jobs, public auth, public home, shared-file, consent, legal, processing, improvement, adaptation, profile-matching, and editor transient states.
+- Updated shared theme variables so app backgrounds and dark surfaces no longer use blue radial gradients.
+- Added scan validation for blue page background patterns before typecheck/build.
+
+## [2026-04-27] auth | harmonized auth field styling
+
+- Replaced legacy blue/indigo field focus, action, link, and 2FA icon treatments on signin, register, forgot-password, reset-password, profile password-reset, 2FA verification, and 2FA setup/settings screens.
+- Aligned auth inputs and secondary actions with the compact CVtheque visual system: white light fields, navy compact dark fields, fine zinc borders, reduced radii, and the `#6B4EFF` accent.
+
+## [2026-04-28] crm | compacted CRM visual system
+
+- Added a `crm-compact-shell` scope for `/clients` and deal detail screens, aligned with the compact CVtheque operational style.
+- Tightened CRM stats, toolbars, client cards, deal cards, interviews calendar, and client/deal/contact modals with smaller radii, denser padding, white compact surfaces, and purple accent states.
+- Preserved existing clients, deals, interviews, pagination, refresh, edit, delete, and detail workflows.
+
+## [2026-04-28] design | harmonized page titles
+
+- Updated the shared `PageHeader` to match the CVtheque title treatment: unframed heading, 25px bold title, 13px muted subtitle, and compact spacing.
+- Routed CVtheque and Missions headers through the same shared component and adjusted remaining manual page headers for metiers, template editor, privacy, and terms pages.
+
+## [2026-04-28] settings | compacted Settings page
+
+- Added a `settings-compact-shell` scope for `/settings`, aligned with the compact CVtheque visual system.
+- Tightened settings header, tabs, action footer, API docs, LLM/provider controls, prompt governance/history, weights, credits, chatbot, GDPR, and DPO panels.
+- Replaced old blue/gray settings treatments with compact warm-gray light surfaces, white cards, navy dark surfaces, 13px/9px radii, and purple action/focus states.
+
+## [2026-04-28] navigation | restyled authenticated sidebar
+
+- Reworked the sidebar toward the provided compact dark navigation reference: 240px navy rail, purple active item, uppercase section labels, compact brand block, and bottom profile block.
+- Preserved route visibility rules for local admins, super admins, and standard users while improving active-route detection for nested resume/client/deal routes.
+
+## [2026-04-28] frontend | fixed bare UUID logo fallback requests
+
+- Traced repeated `GET /:uuid` requests to legacy firm logo values reaching browser image sources as bare UUID/root UUID URLs.
+- Added frontend firm-logo URL normalization so those values resolve to `/api/firms/:id/logo/image` instead of the SPA fallback.
+- Applied the normalization to firm lists, authenticated user session logo data, firm edit previews, and public consent logo rendering.
+
+## [2026-04-28] export | sanitized external template resources before PDF generation
+
+- Traced CV export failure `footerContent contains unsupported external resources` to template fragments that could still send external `src`/`href` style attributes to the guarded PDF server.
+- Added frontend export sanitization that removes unsupported external resource attributes from CV and adaptation export body/header/footer fragments before calling `/generate-pdf` or `/generate-docx`.
+- Preserved embedded `data:image/...` resources, including correctly resolved firm logos.
+- Extended the same cleanup to template preview iframes and legacy bare/root UUID resource values to stop repeated `GET /:uuid` SPA fallback requests from CV model previews.
+- Follow-up analysis found a remaining template stylesheet path: CSS `url("/uuid")` and `@import` inside model stylesheets were still injected into preview iframes. `normalizeTemplateStylesheet` now removes those references before preview/export while preserving `data:image/...`.
+- Follow-up global analysis found the same bare/root UUID resource class could appear through shared `sanitizeHtml/createSafeHtml` rich-text rendering outside templates. The sanitizer now removes bare/root UUID resource attributes globally, and the static SPA fallback skips root UUID paths instead of returning `index.html` with HTTP 200.
+## 2026-04-28 17:53 +02:00
+
+- Fixed CV template detail access consistency in `server/services/templates.service.js`: non-admin users can now load global templates (`firm_id IS NULL`) by ID, matching list visibility and batch export access rules.
+- Added a regression test in `server/tests/services/templates.service.test.js` for non-admin access to global templates.
+## 2026-04-29 08:09 +02:00
+
+- Fixed a versioned-cache race that could make CV templates appear stale after saving: `getOrLoad` no longer stores a loader result when its scope version changed while the loader was in flight.
+- Added a cache regression test proving that an old `detail:tpl-1` load finishing after `templates:all` invalidation does not poison the next template read.
+## 2026-04-29 08:36 +02:00
+
+- Fixed another CV template save/reload fidelity issue: `NewTemplatePage` now loads and saves raw HTML/CSS fragments without applying preview/export normalization.
+- Added explicit template detail cache bypass via `refresh=1` for editor loads and backend access checks, plus regressions for raw fragment preservation and cache bypass.
+## 2026-04-29 09:04 +02:00
+
+- Fixed PDF footer styling for CV exports: Puppeteer's native footer template now receives the template stylesheet, not only the main document HTML.
+- Added PDF-server regressions proving footer templates include model CSS and that `generatePdf` passes the stylesheet through to `footerTemplate`.

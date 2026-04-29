@@ -61,6 +61,8 @@ The PDF server applies request guards before generation:
 - rejection of external resources embedded in body/header/footer fragments
 - footer-height normalization
 
+The main app also strips broken bare/root UUID resource references from dynamic frontend HTML and template fragments before preview/export. These references are not valid public resources and otherwise hit the SPA fallback as `GET /:uuid`.
+
 Current important defaults:
 
 - max HTML size: 5 MB
@@ -154,4 +156,3 @@ If a feature touches export, sharing, or rendering, verify:
 ## Sources
 
 - [[raw/sources/2026-04-16-public-token-and-pdf-boundaries]]
-
