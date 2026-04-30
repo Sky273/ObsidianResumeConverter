@@ -81,6 +81,7 @@
 - [[raw/sources/2026-04-16-product-scope-priorities]]: source note for product scope guidance.
 - [[raw/sources/2026-04-16-karpathy-codex-skill-install]]: source note for the locally installed Codex adaptation of Karpathy coding guidelines.
 - [[raw/sources/2026-04-16-release-v1.9.1]]: source note for the `v1.9.1` application release bump and changelog update.
+- [[raw/sources/2026-04-30-release-v1.9.3]]: source note for the `v1.9.3` application release bump and changelog update.
 - [[raw/sources/2026-04-16-functional-workflows]]: source note for core workflows, admin flows, and integrations.
 - [[raw/sources/2026-04-16-backend-audit-and-quality]]: source note for access-control posture, validation, CI, and quality guidance.
 - [[raw/sources/2026-04-16-domain-model-and-control-plane]]: source note for business objects, control plane, compliance, and secondary modules.

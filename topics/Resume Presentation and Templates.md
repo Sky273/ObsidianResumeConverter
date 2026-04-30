@@ -16,6 +16,7 @@ ResumeConverter does not stop at content analysis. It also owns resume presentat
 - E2E automation for template CRUD must target those textareas directly instead of looking for `.ProseMirror` editors on `NewTemplatePage`.
 - The template editor must load and save raw `headerContent`, `templateContent`, `footerContent`, and `stylesheet` values without preview/export normalization or whitespace trimming. Resource cleanup and stylesheet normalization belong at preview/export boundaries only.
 - Template detail reads used by the editor request a fresh server read with `refresh=1`; backend detail routes and access checks support explicit cache bypass so editing cannot reopen a stale cached template after a save.
+- Frontend CV/adaptation export flows must also request template details with `refresh=1` immediately before generating PDF/DOCX payloads. The template list is only for selection; export rendering must use a fresh detail read so recent model edits are reflected immediately.
 - PDF exports render footers through Puppeteer's native `displayHeaderFooter`, which is isolated from the main document DOM. The PDF server therefore injects the normalized template stylesheet into the native `footerTemplate` as well as the main page HTML so CSS selectors used by footer markup apply during PDF generation.
 
 ## Template Extraction
@@ -70,6 +71,9 @@ ResumeConverter does not stop at content analysis. It also owns resume presentat
 - Template previews use the same fragment resource cleanup before building `iframe srcDoc`; this prevents legacy bare/root UUID image sources in templates from causing repeated browser requests such as `GET /:uuid` through the SPA fallback.
 - Template stylesheets are also normalized before preview/export. The frontend strips `@import` and replaces non-`data:image/...` CSS `url(...)` references with `none`, because legacy model CSS can otherwise trigger repeated `GET /:uuid` requests from preview iframes or be rejected by the PDF server.
 - The shared frontend HTML sanitizer also strips bare/root UUID resource attributes from dynamic HTML, so resume, mission, adaptation, and other rendered rich-text surfaces do not trigger `GET /:uuid` fallback requests.
+- PDF template `footerHeight` is the bottom page margin reserved for body text when a native Puppeteer footer is present. It must not be treated as a CSS height for the footer template. The accepted range is aligned at 10-250mm through the editor, backend proxy, and PDF server.
+- PDF export also overrides `break-inside: avoid` and `page-break-inside: avoid` inside `.pdf-body` for common body blocks. This prevents template CSS from pushing large CV sections to the next page and leaving excessive whitespace above the footer boundary.
+- CV analysis/improvement/adaptation pages share the compact editorial shell. Dark mode must explicitly counter compact light utility overrides (`bg-white`, `bg-gray-50`, common borders) so editor containers, comments, and resume work panels do not render large white surfaces while the app is dark.
 
 ## Sharing
 

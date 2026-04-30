@@ -2137,3 +2137,23 @@
 
 - Fixed PDF footer styling for CV exports: Puppeteer's native footer template now receives the template stylesheet, not only the main document HTML.
 - Added PDF-server regressions proving footer templates include model CSS and that `generatePdf` passes the stylesheet through to `footerTemplate`.
+## 2026-04-29 13:07 +02:00
+
+- Fixed PDF footer spacing semantics: `footerHeight` now maps directly to Puppeteer's bottom page margin, which controls the lower boundary of body text.
+- Aligned the PDF server `footerHeight` clamp with the UI/backend documented range of 10-250mm instead of silently capping at 120mm.
+## 2026-04-29 13:17 +02:00
+
+- Reduced excessive blank space above PDF footers by allowing `.pdf-body` sections, paragraphs, lists, and list items to split before the footer boundary during print layout.
+- Added regression coverage for template CSS that tries to force `break-inside: avoid` on body content.
+## 2026-04-30 08:04 +02:00
+
+- Fixed stale CV model usage in frontend exports: direct resume exports, adaptation exports, adaptation comparison exports, and email attachment generation now reload selected template details with `refresh=1` immediately before building PDF/DOCX payloads.
+- Added/updated client export regression coverage so export actions require a fresh template detail read.
+## 2026-04-30 08:17 +02:00
+
+- Improved dark-mode rendering on CV editorial pages by restoring dark surfaces for compact-shell utility classes that were forcing `bg-white`/`bg-gray-50` backgrounds.
+- Aligned the Tiptap editor wrapper/content with the compact anthracite palette so resume editing and suggestion panels no longer sit inside white UI blocks in dark mode.
+## 2026-04-30 09:00 +02:00
+
+- Prepared the `v1.9.3` release: updated application metadata, OpenAPI version expectation, and root changelog.
+- Recorded the release focus around CV template freshness, PDF footer export behavior, and broad dark-mode readability fixes.

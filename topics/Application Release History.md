@@ -6,9 +6,18 @@ This page records durable release-level milestones that matter for future mainte
 
 ## Current State
 
-- Current recorded application version: `v1.9.1`
+- Current recorded application version: `v1.9.3`
 
 ## Important Facts
+
+### v1.9.3 - 2026-04-30
+
+- Bumped the application version from `v1.9.2` to `v1.9.3`.
+- Updated the root changelog and application metadata.
+- The release consolidates recent fixes around:
+  - CV template save/reload freshness and immediate export use of the latest saved template.
+  - PDF footer stylesheet application and footer-height/body-text boundary behavior.
+  - Dark-mode readability across shared tabs, breadcrumbs, pagination, Tiptap editors, CV previews, CRM, admin, radar, jobs, security logs, GDPR journal, guide, CVtheque, and missions.
 
 ### v1.9.1 - 2026-04-16
 
@@ -23,6 +32,7 @@ This page records durable release-level milestones that matter for future mainte
 
 - [[overview]]
 - [[raw/sources/2026-04-16-release-v1.9.1]]
+- [[raw/sources/2026-04-30-release-v1.9.3]]
 
 ## Sources
 
