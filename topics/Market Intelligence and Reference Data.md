@@ -7,6 +7,7 @@ Beyond candidate processing, ResumeConverter includes a market/reference-data la
 ## Market Radar
 
 - Market radar is modularized into collection, facts, search, reference, and trends routes.
+- The France map canvas uses MapLibre's CSP build plus an explicit Vite-emitted `maplibre-gl-csp-worker` URL. It should not use the default MapLibre runtime worker because the app CSP blocks inline worker bootstrapping.
 - Facts endpoints expose:
   - filtered fact queries
   - latest facts by type

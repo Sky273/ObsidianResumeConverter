@@ -68,6 +68,7 @@ For ResumeConverter, Docker uses `/.env.docker` as the source of truth.
   - PaddleOCR / PaddlePaddle
   - LibreOffice / Pandoc
   - Google Chrome
+- The expensive PaddleOCR/PaddlePaddle Python install is isolated behind `docker/ocr-python-requirements.txt` and occurs before application source copies in the runtime stage. Normal frontend/backend edits should therefore reuse the Python dependency layer; the layer is invalidated only by base/system-package changes or OCR requirements changes.
 
 ## Startup Behavior
 

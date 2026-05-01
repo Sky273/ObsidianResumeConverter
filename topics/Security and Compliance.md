@@ -71,6 +71,7 @@ Security and compliance are built into the application architecture, not bolted 
 - The PDF server is isolated behind an internal auth token and trusted-internal-URL checks.
 - Backup, metrics, and GDPR audit are admin-only operational surfaces.
 - Default-admin bootstrap still supports the historical `DEFAULT_ADMIN_PASSWORD` fallback and is no longer protected by a startup guard that rejects default/weak values.
+- A 2026-05-01 static security review produced `security_best_practices_report.md` in the repository root. The highest-priority fixes are: reject default admin bootstrap credentials in production, require a dedicated `REFRESH_TOKEN_SECRET`, move OAuth state from process memory to Redis/PostgreSQL, sanitize or isolate DOCX preview HTML, upgrade vulnerable `nodemailer`, tighten login throttling, and restrict rich HTML image/URI allowances.
 
 ## Concrete HTTP and Session Protections
 
@@ -80,6 +81,9 @@ Security and compliance are built into the application architecture, not bolted 
 - Invalid CSRF state explicitly clears the CSRF cookie and returns `403`, which matters for debugging broken sessions.
 - CORS is intentionally scoped to `/api` and uses an explicit origin allowlist.
 - CSP is deny-by-default and explicitly opens only the sources needed by the app and integrations such as Turnstile.
+- MapLibre-based market-map rendering must use the CSP bundle and same-origin worker asset rather than relaxing `script-src` with `unsafe-inline` or runtime-generated script hashes.
+- Cloudflare JavaScript Detections injects an inline HTML bootstrap under `/cdn-cgi/challenge-platform/...`; the app emits a per-response `script-src` nonce so Cloudflare can nonce that injected script without weakening the CSP.
+- SPA HTML responses also carry `Cache-Control: no-transform` so edge proxies do not rewrite the HTML and inject extra CSP/report-only policies that can create browser console noise.
 
 ## Concrete Defensive Layers
 

@@ -2188,3 +2188,22 @@
 ## 2026-05-01 08:22 +02:00
 
 - Improved global switch visibility in light mode by giving the shared `settings-switch` off state a visible border, stronger track color, and clearer thumb separation.
+## 2026-05-01 08:34 +02:00
+
+- Optimized Docker rebuilds by moving the PaddleOCR/PaddlePaddle Python install before application source copies and pinning it through `docker/ocr-python-requirements.txt`, allowing normal code-only rebuilds to reuse the Python dependency layer.
+## 2026-05-01 08:50 +02:00
+
+- Fixed the France market map CSP violation by switching `FranceMapCanvas` to MapLibre's CSP bundle and an explicit same-origin Vite worker URL.
+- Added TypeScript module declarations and client regression coverage that asserts the CSP worker URL is configured before MapLibre map initialization.
+## 2026-05-01 08:57 +02:00
+
+- Traced the remaining cross-page CSP inline-script violations to Cloudflare JavaScript Detections injecting a dynamic bootstrap before `</body>` on all HTML pages.
+- Added a per-response `script-src` nonce in Helmet so Cloudflare can nonce injected JavaScript Detections scripts instead of relying on changing hashes or `unsafe-inline`.
+## 2026-05-01 09:01 +02:00
+
+- Traced the `connect-src 'none' alongside other source expressions` and report-only script warnings to edge-side Cloudflare JavaScript Detections behavior rather than the app CSP header.
+- Added `no-transform` to direct HTML and SPA fallback cache-control headers so Cloudflare does not rewrite app HTML or inject extra challenge/report-only policies.
+## 2026-05-01 09:20 +02:00
+
+- Completed a static security review and wrote `security_best_practices_report.md` in the repository root.
+- Key findings to prioritize: default admin fallback credentials, refresh-token secret fallback, process-local OAuth state, same-origin DOCX preview HTML, vulnerable `nodemailer`, permissive auth throttling, and broad sanitizer URI/image allowances.
