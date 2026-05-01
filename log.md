@@ -2253,3 +2253,8 @@
 - Ran a new frontend QA pass on `https://resumeconverter.net` through a visible Chrome browser on the PC, using only UI interactions.
 - Confirmed fixes: CVtheque now shows `SEHLI Dorra` as improved with `81%`, the quick preview no longer exposes raw JSON, `/crm` opens the CRM surface, and the version/changelog modal opens from the header.
 - Updated `qa_resumeconverter_live_report.md` with the corrected statuses and remaining items: legacy `/jobs` and `/dashboard/gdpr-journal` aliases missing, mission empty-submit feedback still mostly native validation, and old QA mojibake data still requiring cleanup rather than code recovery.
+## 2026-05-01 20:34 +02:00
+
+- Completed a focused audit of French i18n locale files under `client/src/i18n/locales/fr`.
+- Verified all 48 French i18n files decode as UTF-8, have no UTF-8 BOM, and JSON files parse correctly.
+- Repaired remaining unaccented French labels in batch upload, CRM interviews, resume analysis, and user administration translations.
