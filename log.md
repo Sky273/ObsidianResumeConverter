@@ -2236,3 +2236,20 @@
 - Completed a global mojibake cleanup pass across source and documentation, excluding generated/build/temp artifacts.
 - Repaired the historical `CHANGELOG.md` corruption and rewrote intentional mojibake detection markers as Unicode escapes in backend code/tests.
 - Verified the repository scan now reports no visible mojibake in tracked source/docs candidates.
+## 2026-05-01 19:45 +02:00
+
+- Ran a front-only live QA pass on `https://resumeconverter.net` using browser interactions only, marker `QA-FRONT-20260501172935`, and uploaded `CV_SEHLI_Dorra_FR.pdf`.
+- Validated prospect creation/edit, deal creation, CV upload/analyse, full analysis opening, improvement launch, completed improvement job, and improved CV detail score `72% -> 81%`.
+- Updated `qa_resumeconverter_live_report.md` with remaining front findings: CRM accent mojibake still visible, mission creation modal did not complete clearly, CV preview renders raw JSON improvements, and the CVtheque card/list state stays `ANALYSÉ`/`72%` after the improvement detail is available.
+- Live QA data for marker `QA-FRONT-20260501172935` remains pending deletion confirmation.
+## 2026-05-01 20:02 +02:00
+
+- Fixed several remaining live QA anomalies in the client code: CV list data is normalized after fetching, improved CV state is inferred from improved text/score aliases, and the CVtheque list maps statuses to lowercase keys before rendering.
+- The quick CV preview now flattens structured JSON improvement suggestions into readable bullet items instead of rendering raw JSON.
+- Mission creation/edit modal now displays a visible inline save error and disables actions while the save request is pending, so a failed create no longer looks like a silent no-op.
+- Validation run: targeted Vitest tests for resume normalization, CV preview, and mission modal passed; client typecheck and targeted ESLint passed.
+## 2026-05-01 20:20 +02:00
+
+- Ran a new frontend QA pass on `https://resumeconverter.net` through a visible Chrome browser on the PC, using only UI interactions.
+- Confirmed fixes: CVtheque now shows `SEHLI Dorra` as improved with `81%`, the quick preview no longer exposes raw JSON, `/crm` opens the CRM surface, and the version/changelog modal opens from the header.
+- Updated `qa_resumeconverter_live_report.md` with the corrected statuses and remaining items: legacy `/jobs` and `/dashboard/gdpr-journal` aliases missing, mission empty-submit feedback still mostly native validation, and old QA mojibake data still requiring cleanup rather than code recovery.
