@@ -19,6 +19,8 @@ ResumeConverter is not only a CV processing app. It also models the commercial a
 - A deal can be linked to clients, contacts, missions, and multiple resumes.
 - Resume association is explicit through `deal_resume`, which carries status and notes.
 - The app supports adding one resume to multiple deals in bulk.
+- The deal detail view lets users attach an existing CV to the current deal from a CV picker and detach an associated CV from the CV card. The frontend uses `POST /api/deals/:id/resumes` for attachment and `DELETE /api/deals/:id/resumes/:resumeId` for detachment, then refreshes the deal resume list.
+- CV cards in the deal detail view normalize SQL score fields (`global_rating`, `improved_global_rating`) as numeric API values before rendering the score gauge; otherwise associated CVs can display `0%` despite having stored scores.
 
 ## Missions
 
@@ -26,6 +28,7 @@ ResumeConverter is not only a CV processing app. It also models the commercial a
 - They sit at the junction between business demand and candidate evaluation.
 - Missions are the main target object for profile matching and resume adaptation.
 - They can also be surfaced from deal context.
+- The deal detail view lets users attach an existing mission to the current deal from a mission picker, and detach an associated mission from the mission card. The frontend uses the existing mission update route with `dealId` or `dealId: null`, then refreshes the deal's mission list; backend association validation remains the source of truth for firm/client/deal consistency.
 - A mission cannot be associated with both a client and a deal whose `client_id` points to another client; `server/services/missions.service.js` enforces this in `validateMissionAssociations`, and the mission form synchronizes/clears deal-client choices to prevent mismatches in the UI.
 - The grouped mission-by-deal view is now isolated from the broader CRUD service: `server/services/missions.service.js` keeps cache and public service entrypoints, while `server/services/missionsGroupedView.service.js` owns the heavier deal/missions/count assembly path.
 - Attachment-count enrichment for grouped mission views is now centralized instead of duplicated separately for assigned and unassigned mission collections.

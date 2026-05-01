@@ -78,6 +78,8 @@ ResumeConverter does not stop at content analysis. It also owns resume presentat
 ## Sharing
 
 - Share routes support generation of a shareable PDF for a resume.
+- The improved-resume share action lives on the export screen, below the email action, so it uses the same selected CV template and selected export format as export/email.
+- Generated share links for improved resumes now support PDF, DOCX, and DOC payloads through the shared generated-document route. The historical `/share/pdf/:token` path remains compatible for existing PDF shares, while new export-screen shares use `/share/document/:token`.
 - Public access is token-based.
 - The product also supports tokenized access to the original uploaded file.
 - Share status and revoke operations exist, which makes sharing an operationally managed feature rather than a static link.

@@ -2157,3 +2157,34 @@
 
 - Prepared the `v1.9.3` release: updated application metadata, OpenAPI version expectation, and root changelog.
 - Recorded the release focus around CV template freshness, PDF footer export behavior, and broad dark-mode readability fixes.
+## 2026-04-30 16:54 +02:00
+
+- Moved improved-CV sharing from the improvement header to the export screen under the email action.
+- Updated generated sharing so it uses the export screen's selected CV template and selected format (`pdf`, `docx`, or `doc`) instead of always using the first template and PDF.
+- Added a generated-document public share route while keeping the existing PDF share path compatible.
+## 2026-04-30 17:07 +02:00
+
+- Fixed generated DOC share delivery: shared `.doc` artifacts now use the legacy Word MIME type `application/msword` instead of the DOCX MIME type, so clients do not treat selected DOC shares as DOCX.
+- Added route coverage for `/api/share/document/:token` serving DOC files with `.doc` disposition and `nosniff` headers.
+## 2026-04-30 17:37 +02:00
+
+- Added an existing-mission attachment flow to the deal detail view: users can open a mission picker, select a mission not already linked to the deal, and attach it through the existing mission update API with `dealId`.
+- The deal detail view now refreshes its mission list after attachment and marks deal-related frontend scopes dirty so other CRM/mission surfaces reload derived counts.
+## 2026-04-30 17:40 +02:00
+
+- Added mission detachment from the deal detail view: each associated mission card now exposes a compact remove action that updates the mission with `dealId: null`, refreshes the deal mission list, and dirties deal/mission related frontend scopes.
+## 2026-04-30 17:46 +02:00
+
+- Added CV association from the deal detail view: users can open a CV picker, select a resume not already attached to the deal, and link it through `POST /api/deals/:id/resumes` before refreshing the deal resume list.
+## 2026-04-30 17:48 +02:00
+
+- Added CV detachment from the deal detail view: each associated CV card now exposes a remove action that calls `DELETE /api/deals/:id/resumes/:resumeId`, refreshes the deal resume list, and dirties deal-related frontend scopes.
+## 2026-04-30 17:56 +02:00
+
+- Fixed associated CV score rendering in the deal detail view by preserving numeric `global_rating` and `improved_global_rating` values from the deal resumes API during frontend normalization.
+## 2026-05-01 08:05 +02:00
+
+- Updated the header mode/language/version controls to use icon-only SVG buttons while preserving accessible labels, dark-mode contrast, and the version/changelog modal trigger.
+## 2026-05-01 08:22 +02:00
+
+- Improved global switch visibility in light mode by giving the shared `settings-switch` off state a visible border, stronger track color, and clearer thumb separation.
