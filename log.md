@@ -2207,3 +2207,32 @@
 
 - Completed a static security review and wrote `security_best_practices_report.md` in the repository root.
 - Key findings to prioritize: default admin fallback credentials, refresh-token secret fallback, process-local OAuth state, same-origin DOCX preview HTML, vulnerable `nodemailer`, permissive auth throttling, and broad sanitizer URI/image allowances.
+## 2026-05-01 18:32 +02:00
+
+- Ran deeper live QA on `https://resumeconverter.net` with CRUD test data marker `QA-Codex-20260501162546`, without touching settings.
+- Created and modified a CRM client, contact, deal, and mission; verified the marker on CRM, deal detail, and missions UI surfaces.
+- Observed a 500 on mission creation when client/deal associations are sent in the initial payload, UTF-8 mojibake on accented CRM/mission free-text fields, and expected `402 INSUFFICIENT_CREDITS` blocking CV upload because only 10 credits were available for a 25-credit resume upload.
+## 2026-05-01 18:36 +02:00
+
+- After user confirmation, deleted the live QA test contact, mission, deal, and client for marker `QA-Codex-20260501162546`.
+- Verified cleanup by direct API reads returning `404`, marker searches returning empty result sets, and UI checks on `/clients`, `/clients?tab=deals`, and `/missions` showing the marker absent.
+## 2026-05-01 18:52 +02:00
+
+- Started fixing the live QA P1 items, excluding the insufficient-credits upload behavior that the user confirmed as expected.
+- Fixed mission creation/update payload handling by serializing `keywords`, `required_skills`, and `preferred_skills` as JSONB-safe strings before PostgreSQL writes.
+- Added shared request text normalization for CRM, deal, and mission payload helpers so mojibake such as `CrÃ©Ã©e` is repaired before persistence.
+## 2026-05-01 19:05 +02:00
+
+- Addressed live QA P2 items except the user-confirmed expected insufficient-credit upload block.
+- Added a protected `/crm` alias redirecting to `/clients`, suppressed user-initiated fetch aborts from API error logging, made the About/version modal load the changelog through stable static imports, and raised dark-mode secondary/muted text tokens for better contrast.
+- Added targeted client tests for the `/crm` alias, fetch abort behavior, About/changelog visibility, and dark palette tokens.
+## 2026-05-01 19:08 +02:00
+
+- Addressed live QA P3 cleanup items without changing the insufficient-credit business rule.
+- Public entry pages now skip anonymous session restore probes, reducing expected `/api/auth/me` and `/api/auth/refresh` console noise for non-authenticated visitors.
+- Cleaned the remaining mojibake action labels on the insufficient-credits page.
+## 2026-05-01 19:17 +02:00
+
+- Completed a global mojibake cleanup pass across source and documentation, excluding generated/build/temp artifacts.
+- Repaired the historical `CHANGELOG.md` corruption and rewrote intentional mojibake detection markers as Unicode escapes in backend code/tests.
+- Verified the repository scan now reports no visible mojibake in tracked source/docs candidates.
