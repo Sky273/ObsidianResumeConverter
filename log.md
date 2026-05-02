@@ -2258,3 +2258,52 @@
 - Completed a focused audit of French i18n locale files under `client/src/i18n/locales/fr`.
 - Verified all 48 French i18n files decode as UTF-8, have no UTF-8 BOM, and JSON files parse correctly.
 - Repaired remaining unaccented French labels in batch upload, CRM interviews, resume analysis, and user administration translations.
+## 2026-05-01 21:05 +02:00
+
+- Externalized a broad pass of hardcoded frontend labels into French and English i18n resources across adaptation analysis, matching, pipeline modals, TipTap toolbars, market radar, settings, templates, email templates, resume AI editing, chatbot controls, and legal pages.
+- Verified locale JSON files for UTF-8 decoding, absence of BOM, and JSON validity; the hardcoded-label scan now only reports `email@example.com` placeholder examples.
+- Client typecheck passed after the i18n pass.
+
+## 2026-05-01 - Mission modal inline validation
+
+- Added explicit inline validation for required mission title and description before submit, replacing silent/native-only blocking in the add/edit mission modal.
+- Updated QA report to mark FRONT-02A as corrected locally after targeted test/typecheck/lint validation.
+
+## 2026-05-01 - TipTap proofs i18n
+
+- Replaced the hardcoded TipTap skill proof toolbar label/title with i18n keys so English displays Proofs and French keeps Preuves.
+
+## 2026-05-02 - Dark subtitle readability
+
+- Raised dark-mode muted text tokens and editorial shell subtitle/kicker colors so page subtitles and resume card subtitles remain readable on anthracite surfaces.
+- Added explicit dark-mode subtitle classes for CV and mission cards to keep their secondary titles readable despite inherited muted styles.
+
+## 2026-05-02 - Metrics dark contrast
+
+- Scoped dark-mode contrast overrides to the metrics dashboard shell so cards, labels, table cells, and inner light tiles remain readable on dark surfaces without affecting other pages.
+
+## 2026-05-02 - Pipeline interviews modal refresh
+
+- Fixed the mission pipeline interview modal refresh path after scheduling an interview: the frontend now updates the open modal immediately and then reloads interviews with `refresh=1`.
+- The backend interview list route now forwards refresh requests to bypass the per-pipeline interview cache.
+- Added targeted client and server tests for the forced interview refresh behavior.
+
+## 2026-05-02 - DOCX CV template extraction restart
+
+- Reintroduced a narrow DOCX-only CV template extraction flow: `/api/templates/extract-from-docx` validates DOCX uploads, converts them to semantic HTML with Mammoth, splits reusable header/content/footer fragments, and emits a sanitized stylesheet.
+- Added a templates-toolbar extraction modal that uploads DOCX files and opens the existing template editor with `-name-`, `-title-`, and `-content-` placeholders prefilled.
+- Added targeted backend and frontend tests for the extraction route, DOCX upload service, and extracted-template editor preload.
+
+## 2026-05-02 - DOCX template extraction fidelity pass
+
+- Reworked DOCX template extraction from Mammoth-first to OOXML-first parsing.
+- The extractor now reads Word styles, paragraph/run formatting, header/footer references, media relationships, and embeds recovered source images as base64 `data:image` URIs in extracted header/footer HTML.
+- Mammoth remains only as a fallback if structured OOXML extraction returns no usable blocks.
+## 2026-05-02
+
+- Removed the restarted DOCX CV-template extraction entry point because output quality did not meet expectations: frontend button/modal, backend route/service, client service method, session handoff, tests, and i18n labels were removed.
+- Improved the restarted DOCX template extraction path so inline images remain in their source run order when text is replaced by template placeholders.
+- Added DOCX heading-style harvesting for `Heading` / `Titre` paragraph styles and emitted matching `h2` to `h6` CSS rules in extracted templates.
+- Added DOCX image-size preservation by converting OOXML EMU dimensions into explicit image `width`, `height`, and inline CSS sizing in extracted template fragments.
+- Added visual heading-style inference for DOCX files that rely on direct paragraph/run formatting instead of named Word heading styles.
+- Fixed France Travail market trend numeric parsing so recruitment tension and employment-dynamics values with French decimal commas are stored and summarized as decimals instead of truncated integers.

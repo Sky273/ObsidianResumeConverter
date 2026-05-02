@@ -8,6 +8,40 @@ Historical notes below describe the removed extraction experiments and should no
 
 ## Current State
 
+### 2026-05-02 DOCX direct extraction removal
+
+- The DOCX-only template extraction restart was removed because the recovered visual fidelity was not acceptable for production use.
+- The CV templates administration screen no longer exposes an Extract action.
+- `POST /api/templates/extract-from-docx`, `server/services/docxTemplateExtraction.service.js`, and `client/src/components/ExtractDocxTemplateModal.tsx` were removed.
+- The new-template editor no longer consumes `sessionStorage.extractedTemplate`.
+
+### 2026-05-02 DOCX direct extraction restart
+
+- A narrow DOCX-only template extraction path has been reintroduced without restoring the former PDF/LLM extraction stack.
+- Active route: `POST /api/templates/extract-from-docx`.
+- The route accepts one `.docx` upload, validates the OOXML archive with `isValidDocxArchive`, parses the DOCX OOXML package directly, then returns editable template fragments:
+  - `headerContent`
+  - `templateContent`
+  - `footerContent`
+  - `stylesheet`
+- The direct OOXML parser reads:
+  - `word/document.xml`
+  - `word/styles.xml`
+  - document/header/footer relationships
+  - media relationships from header/footer/body parts
+- Header/footer source images are embedded into the extracted HTML as `data:image/...;base64,...` URIs so they can survive template preview/export after persistence.
+- Inline body/header/footer images are preserved as ordered run tokens during DOCX parsing, so replacing candidate-specific text with `-name-`, `-title-`, or `-content-` does not move images to the beginning of the fragment.
+- DOCX image dimensions are read from `wp:extent` / `a:ext` EMU values and converted to CSS pixels. Extracted image tags now carry explicit `width`, `height`, and inline `width` / `height` styles to preserve source sizing in the generated model.
+- DOCX paragraph styles named `Heading1` to `Heading6` or `Titre1` to `Titre6` are mapped to template CSS rules for `h2` to `h6`, preserving source heading font size, color, weight, spacing, and related run/paragraph styling where available.
+- When a DOCX uses direct formatting instead of named heading styles, the extractor now infers heading CSS from visually distinctive body paragraphs: short text with larger font, bold weight, or color different from the body baseline can seed `h2` to `h6` rules.
+- The deterministic placeholder collapse is intentionally simple:
+  - the strongest first identity-like block becomes `-name-`
+  - the following title-like block becomes `-title-`
+  - the body becomes a single `-content-` anchor
+  - likely contact/legal tail blocks are preserved as footer chrome
+- The frontend exposes this as an Extract action in the CV templates toolbar, stores the extracted payload in `sessionStorage.extractedTemplate`, and opens the existing template editor prefilled with the extracted raw fragments.
+- Mammoth is now only a fallback when structured OOXML parsing yields no usable content.
+
 ### 2026-04-24 retirement
 
 - The admin CV-template extraction feature is intentionally removed.

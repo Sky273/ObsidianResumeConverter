@@ -62,6 +62,7 @@ ResumeConverter is not only a CV processing app. It also models the commercial a
 - Interviews are first-class records under the pipeline.
 - Supported operations include scheduling, updating, completing, canceling, deleting, listing, and upcoming-interview views.
 - The service keeps activity summaries and history, which indicates the pipeline layer is intended to be auditable and operationally visible.
+- The mission pipeline interview modal and the CV analysis pipeline tab must force a fresh read when opening or refreshing interviews, and after scheduling, completing, or canceling an interview. `GET /api/pipeline/:id/interviews?refresh=1` bypasses the `interviews:${pipelineId}` cache, and the frontend should optimistically add the scheduled interview before the forced read so the open modal updates immediately.
 
 ## Submission and Candidate Progression Shape
 

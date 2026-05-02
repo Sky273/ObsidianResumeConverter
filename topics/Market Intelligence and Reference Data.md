@@ -8,6 +8,7 @@ Beyond candidate processing, ResumeConverter includes a market/reference-data la
 
 - Market radar is modularized into collection, facts, search, reference, and trends routes.
 - The France map canvas uses MapLibre's CSP build plus an explicit Vite-emitted `maplibre-gl-csp-worker` URL. It should not use the default MapLibre runtime worker because the app CSP blocks inline worker bootstrapping.
+- France Travail market trend ingestion normalizes French decimal strings before storage and summary computation. Recruitment tension and employment-dynamics metrics may arrive as values such as `12,75`, `1 234,56`, or `12,5 %`; these must be parsed as decimals rather than truncated with `parseFloat`.
 - Facts endpoints expose:
   - filtered fact queries
   - latest facts by type
