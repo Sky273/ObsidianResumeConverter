@@ -198,6 +198,7 @@ The backend audit shows that the project already invested in:
   - CRM deal visibility checks now anchor on the semantic `.cv-card` container plus its heading, instead of a historical `shadow` wrapper class
   - resume/adaptation refresh checks now avoid ambiguous `getByText(...).first()` assertions and instead use stable semantic containers where available, falling back to a less ambiguous visible text probe only on the grouped adaptations view where no article/heading card exists for the candidate row
   - targeted Playwright reruns for `admin-cache-pages`, `crm-crud-flows`, and `resumes-adaptations-refresh` are green again in both Chromium and Firefox
+  - the CVthèque by-deal check was tightened further: the spec now explicitly expands the targeted deal accordion before asserting the candidate card, because attaching a resume to a deal after initial load does not imply that deal is auto-opened on subsequent refreshes
 - As of 2026-05-04, the OpenAPI document regression test is expected to track release metadata dynamically rather than pinning a stale version string:
   - `server/config/openapi.js` derives `info.version` from the repository `package.json`
   - `server/tests/config/openapi.test.js` should assert against that package version, so release bumps like `v1.9.4` do not create false `validate-core` failures

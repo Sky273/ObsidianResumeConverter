@@ -2342,3 +2342,12 @@
 
 - 2026-05-04: Restabilized the failing validate-e2e refresh coverage by updating brittle Playwright selectors for /missions, CRM deals, and resumes/adaptations; verified targeted reruns green in Chromium and Firefox.
 - 2026-05-04: Fixed a false validate-core failure after the v1.9.4 release by making the OpenAPI version regression test read the current package.json version instead of asserting a stale hardcoded release string.
+- 2026-05-04: Fixed the remaining validate-e2e CVthèque by-deal flake by making the Playwright spec expand the targeted deal accordion before asserting the candidate resume card; verified the targeted flow green in Chromium and Firefox.
+
+- 2026-05-04: Fixed CVthèque dark-mode filter styling in both list and by-deal views by adding scoped dark overrides for shared filter chips and active-filter pills in client/src/styles/resumesEditorial.css, replacing the stale blue treatment with theme-consistent anthracite surfaces and tinted category accents.
+
+- 2026-05-04: Fixed a CVthèque first-navigation CSS regression by removing the generic editorial-migrated-shell class from /resumes and /admin in client/src/components/Layout.tsx; the page now uses only its route-specific shell, preventing lazy-loaded generic editorial CSS from overriding the resumes toolbar/search styling depending on navigation order.
+
+- 2026-05-04: Fixed the missions dark-mode side effect introduced by shell scoping cleanup: MissionCardInDeal in client/src/components/MissionsPage/MissionsDealsGroupedView.parts.tsx now uses the shared cv-card surface instead of a hardcoded light background, so /missions no longer depends on generic editorial shell overrides for list-card theming.
+
+- 2026-05-04: Fixed dark-mode readability on the cabinet credit detail page by replacing hardcoded text-slate-900 dark:text-white primary table/action labels with the editorial token text-[var(--cv-text)] in client/src/pages/FirmCreditsDetailPage.tsx; added a targeted client regression test covering the first table column and recent-transaction title styling.

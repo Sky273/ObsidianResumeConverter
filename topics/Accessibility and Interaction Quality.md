@@ -39,6 +39,17 @@ ResumeConverter has partial accessibility foundations but not yet a full accessi
 - The global CTA migration is no longer limited to auth:
   - legacy blue primaries based on `btn btn-primary` or explicit `bg-indigo-600` button styling are being normalized onto `app-primary-action`
   - editorial pages still keep their scoped CTA recipe through `cv-page-primary-action`
+- CVthèque dark-mode filter surfaces now have their own scoped styling in `client/src/styles/resumesEditorial.css`:
+  - shared filter chips and active-filter pills no longer reuse the older saturated blue recipe in dark mode
+  - list view and by-deal view now converge on anthracite surfaces with category-tinted accents, aligned with the rest of the editorial dark theme
+- Route shell scoping matters for visual stability:
+  - `/resumes` and `/admin` should render with `resumes-editorial-shell` only, not also the generic `editorial-migrated-shell`
+  - otherwise lazily loaded generic editorial CSS can override CVthèque-specific toolbar/search styling depending on navigation order
+- Mission list cards in `client/src/components/MissionsPage/MissionsDealsGroupedView.parts.tsx` should use the shared `cv-card` surface instead of hardcoded light card backgrounds, otherwise dark mode depends on unrelated generic shell overrides.
+- The cabinet credit detail page should use the editorial text token `var(--cv-text)` for table-primary cells and recent-transaction action labels:
+  - `client/src/pages/FirmCreditsDetailPage.tsx` previously mixed `text-slate-900 dark:text-white` into a variable-driven editorial surface
+  - on dark mode, the first column of the four detail tables could render nearly black on dark cards
+  - the stable fix is to bind those primary labels directly to the shell text token instead of relying on Tailwind's `dark:` variant
 - Runtime boolean controls are now standardized on a shared switch component:
   - `client/src/components/ui/Switch.tsx` renders `role="switch"` with `aria-checked`
   - Settings imports remain compatible through `client/src/components/SettingsPage/SettingsSwitch.tsx`
@@ -51,6 +62,7 @@ ResumeConverter has partial accessibility foundations but not yet a full accessi
 - Long-running workflows are a key accessibility surface because much of the product depends on async AI and batch-job states.
 - Form accessibility is still uneven outside the auth perimeter; the auth flows are now the most explicit pattern to reuse.
 - Visual hierarchy matters for interaction quality: on dense editorial pages, introducing multiple primary-looking button styles weakens the action hierarchy and increases scanning cost.
+- Dark theme consistency is a quality issue, not just a cosmetic one: legacy light-theme accents that survive in scoped dark surfaces make filters read like stale controls and break scanning coherence.
 
 ## Remaining Priorities
 
@@ -88,6 +100,8 @@ ResumeConverter has partial accessibility foundations but not yet a full accessi
 - `client/src/components/page/ViewModeToggle.tsx`
 - `client/src/components/ResumesPage/SearchAndActions.tsx`
 - `client/src/components/MissionsPage/MissionsDealsGroupedView.parts.tsx`
+- `client/src/pages/FirmCreditsDetailPage.tsx`
+- `client/src/pages/FirmCreditsDetailPage.test.tsx`
 - `client/src/pages/ProfileMatchSearchPanel.tsx`
 - `client/src/components/SignIn.tsx`
 - `client/src/components/Register.tsx`
