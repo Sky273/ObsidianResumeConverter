@@ -9,6 +9,9 @@ Beyond candidate processing, ResumeConverter includes a market/reference-data la
 - Market radar is modularized into collection, facts, search, reference, and trends routes.
 - The France map canvas uses MapLibre's CSP build plus an explicit Vite-emitted `maplibre-gl-csp-worker` URL. It should not use the default MapLibre runtime worker because the app CSP blocks inline worker bootstrapping.
 - France Travail market trend ingestion normalizes French decimal strings before storage and summary computation. Recruitment tension and employment-dynamics metrics may arrive as values such as `12,75`, `1 234,56`, or `12,5 %`; these must be parsed as decimals rather than truncated with `parseFloat`.
+- Market trend collection job progress is based on processed API attempts, including successful collections, skipped empty responses, and API failures. It must not depend only on stored trend rows, otherwise the UI can appear stuck at `0 / total` when the first endpoint fails or times out repeatedly.
+- France Travail can return HTTP 200 trend payloads with indicator metadata but no numeric value. These responses are expected for some ROME/region pairs and must be counted as skipped `no_value` items, not stored as empty trends and not reported as collection errors.
+- Recruitment tension values (`PERSP_2`) should be collected from Data Emploi national ROME data (`top/activite/demandeurs-offres-flux/PERSP_2/ROME/NAT/FR`), not from the older partner `stat-perspective-employeur` endpoint. The Data Emploi top feed exposes `statsDemandeurOffre.persp2.valPrincDec` for decimal tension scores, while the regional endpoint may return only indicator metadata for IT ROME codes.
 - Facts endpoints expose:
   - filtered fact queries
   - latest facts by type
@@ -58,3 +61,15 @@ Beyond candidate processing, ResumeConverter includes a market/reference-data la
 
 - [[raw/sources/2026-04-16-codebase-structure]]
 - [[raw/sources/2026-04-16-domain-model-and-control-plane]]
+
+## 2026-05-02 - Jobs de collecte et éléments ignorés
+
+Les jobs de collecte affichent désormais les éléments ignorés séparément des erreurs. Le compteur UI est dérivé de processed_items - success_count - error_count tant que le modèle de stockage agrégé ne persiste pas explicitement skipped_count.
+
+## 2026-05-02 - Précision décimale et erreurs critiques France Travail
+
+La table market_trends doit utiliser NUMERIC(18,6) pour value et previous_value afin de conserver les indicateurs décimaux Data Emploi/France Travail. Les erreurs OAuth France Travail 400 invalid_client ou invalid_scope sont des erreurs critiques de configuration: la collecte doit s'arrêter rapidement au lieu de produire une erreur par couple ROME/région.
+
+## 2026-05-02 - Authentification France Travail et rate limiting token
+
+Les appels au token partenaire France Travail sont mutualisés lorsqu'une demande est déjà en cours. Une erreur de récupération du token est désormais marquée comme critique via isFranceTravailTokenError, même si la réponse HTTP 400 ne contient pas de corps JSON. La collecte s'arrête alors après le premier échec d'authentification au lieu d'accumuler une erreur par couple ROME/région.

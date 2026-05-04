@@ -2307,3 +2307,38 @@
 - Added DOCX image-size preservation by converting OOXML EMU dimensions into explicit image `width`, `height`, and inline CSS sizing in extracted template fragments.
 - Added visual heading-style inference for DOCX files that rely on direct paragraph/run formatting instead of named Word heading styles.
 - Fixed France Travail market trend numeric parsing so recruitment tension and employment-dynamics values with French decimal commas are stored and summarized as decimals instead of truncated integers.
+- Fixed market trend collection progress so jobs advance on API attempts, skipped empty responses, and API failures instead of remaining at zero until a trend is stored.
+- Fixed market trend collection handling for France Travail HTTP 200 responses that contain indicator metadata but no numeric value: they are now skipped as `no_value` instead of being sent to storage and counted as errors.
+- Switched recruitment tension (`PERSP_2`) collection to Data Emploi national ROME top data so decimal `valPrincDec` scores are collected once per ROME code instead of repeatedly failing on regional partner payloads without values.
+
+- 2026-05-02: Job UI: affichage distinct des éléments ignorés dans les jobs de collecte, dérivé de processed - success - errors pour éviter de les présenter comme erreurs.
+
+- 2026-05-02: Market trends: schéma renforcé en NUMERIC(18,6) pour conserver les décimales; les erreurs France Travail 400 invalid_client/invalid_scope sont désormais critiques pour éviter des centaines d'erreurs répétées dans un job.
+
+- 2026-05-02: Market trends token handling: les erreurs d'obtention du token France Travail sont taguées critiques même sans corps de réponse; les requêtes de token concurrentes sont mutualisées pour éviter une rafale sous rate limiting.
+
+- 2026-05-03: LLM control plane: added official DeepSeek V4 support with deepseek-v4-flash as default, deepseek-v4-pro exposed in admin, legacy deepseek-chat / deepseek-reasoner aliases preserved, new 384K output caps for V4 IDs, and DeepSeek healthcheck aligned on deepseek-v4-flash.
+
+- 2026-05-03: Home hero visual: fixed the private home page resume scan animation so it remounts after route navigation by keying the shared hero visual with the React Router location key.
+
+- 2026-05-03: Home hero visual: delayed the resume scan animation until after the first paint so it reliably restarts when returning to the authenticated home page.
+
+- 2026-05-03: Home hero visual: tied the resume scan animation restart to both viewport visibility and a route-level animation trigger so the scan reliably replays when navigating back to the authenticated home page.
+
+- 2026-05-03: Home hero visual: moved the resume scan start to after the card entry animation completes, instead of triggering from mount timing alone, to better match real route-return behavior on the authenticated home page.
+
+- 2026-05-03: Home hero visual: replaced the scan-line Framer repeat animation with a DOM-driven Web Animations API sweep started only after the document card entry animation completes, to avoid missed restarts when returning from some routes.
+- 2026-05-03: Home hero scan animation debugging concluded that ResumeHeroVisual should not depend on useInView for restart semantics; the component is remounted from HomePage via location.key, so scan start should be tied to card entry completion instead of IntersectionObserver state, which can vary by route return timing.
+- 2026-05-03: Home hero scan animation issue was ultimately traced to a global override in client/src/styles/editorialPages.css on .editorial-migrated-shell .bg-gradient-to-r { background-image: none !important; }. ResumeHeroVisual used that Tailwind class for the scan line, so the animation stayed mounted but became visually invisible after navigating to routes that lazy-load editorialPages.css; CVthèque did not reproduce because it loads resumesEditorial.css instead.
+
+- 2026-05-03: Fixed home dashboard KPI icon contrast in light and dark themes by replacing derived badge background classes (color.replace('text-', 'bg-') + bg-opacity-10) with explicit per-card icon badge classes in HomeDashboard.
+
+
+- 2026-05-04: validate-core client CI was re-stabilized by updating drifted tests instead of product code: auth service tests now tolerate normalized user objects, LLMTab and resume AI-modify tests assert against current i18n-key rendering contracts, InterviewsTab fixtures now live in the active month, and AboutModal mocks the lazy markdown renderer for deterministic changelog assertions.
+
+- 2026-05-04: Reduced remaining non-blocking client CI warnings by wrapping runtime refresh test triggers in React act(...), normalizing blank/duplicate grouped tags before keyed rendering, and revalidating with npm run test:client (148 files, 635 tests).
+
+- 2026-05-04: Bumped ResumeConverter to v1.9.4, updated changelog/package metadata, aligned README badge and About modal test, and verified the version regression test.
+
+- 2026-05-04: Restabilized the failing validate-e2e refresh coverage by updating brittle Playwright selectors for /missions, CRM deals, and resumes/adaptations; verified targeted reruns green in Chromium and Firefox.
+- 2026-05-04: Fixed a false validate-core failure after the v1.9.4 release by making the OpenAPI version regression test read the current package.json version instead of asserting a stale hardcoded release string.

@@ -118,6 +118,16 @@ The backend audit shows that the project already invested in:
   - resume adaptation already prefers `resume.improved_text` over `resume.original_text`
   - `server/tests/services/resumeAdaptation.service.test.js` now asserts that mocked downstream adaptation content is built from `improved_text` when present
   - this reduces the risk of silently validating only the persistence fallback while still regressing the user-visible adaptation path
+- As of 2026-05-04, a `validate-core` client-test failure cluster was traced to test drift rather than runtime regressions:
+  - `client/src/services/authService.ts` now normalizes user objects with legacy firm/customer aliases, so strict equality tests must use partial object matching
+  - several client tests had translation mocks that returned raw i18n keys, while their assertions still expected older French copy (`LLMTab`, resume AI-modify placeholders)
+  - `InterviewsTab` calendar tests were month-sensitive because fixtures stayed in April while the runtime month had advanced to May 2026
+  - `AboutModal` was stabilized by mocking the lazy markdown renderer instead of depending on the asynchronously rendered changelog body
+- As of 2026-05-04, the remaining non-blocking client CI warning burst was reduced further without product changes:
+  - refresh-wiring hook tests now wrap `markViewScopesDirty(...)` inside React `act(...)` so runtime invalidation events no longer emit avoidable test warnings
+  - hook tests that trigger synchronous setters (`setSearchTerm`, tab switches, etc.) now use `act(...)` at the trigger point instead of wrapping whole async fetch sequences
+  - grouped-resume tag filtering now normalizes away blank and duplicate tag values before rendering keyed chips/buttons, removing the React duplicate-key warning caused by empty-string tags
+  - local verification after this cleanup was `npm run test:client`, green at `148` files / `635` tests
 - As of 2026-04-17, French UI and regression fixtures are expected to stay as real UTF-8 text without BOM:
   - accented strings in the resume-analysis and resume-improvement surfaces are preserved directly in source instead of being degraded to mojibake or ASCII fallbacks
   - the targeted regression tests around resume entry, improvement, export, and improved-text editing now use the same preserved accented fixtures
@@ -183,6 +193,14 @@ The backend audit shows that the project already invested in:
   - one rerun still hit `ERR_CONNECTION_REFUSED` in mid-spec after earlier steps had already passed
   - isolated reruns of the new coverage behave correctly, so this is not currently treated as a regression in the new helper or export assertions
 - Remaining CI warnings are now mostly non-blocking dependency/platform notices unless a fresh GitHub run proves otherwise
+- As of 2026-05-04, the failing `validate-e2e` refresh regressions on `/missions`, CRM deals, and resumes/adaptations were fixed at the spec layer rather than in product code:
+  - `/missions` now uses the real H1 contract (`Offres de Mission`) instead of assuming a generic `/missions/i` heading
+  - CRM deal visibility checks now anchor on the semantic `.cv-card` container plus its heading, instead of a historical `shadow` wrapper class
+  - resume/adaptation refresh checks now avoid ambiguous `getByText(...).first()` assertions and instead use stable semantic containers where available, falling back to a less ambiguous visible text probe only on the grouped adaptations view where no article/heading card exists for the candidate row
+  - targeted Playwright reruns for `admin-cache-pages`, `crm-crud-flows`, and `resumes-adaptations-refresh` are green again in both Chromium and Firefox
+- As of 2026-05-04, the OpenAPI document regression test is expected to track release metadata dynamically rather than pinning a stale version string:
+  - `server/config/openapi.js` derives `info.version` from the repository `package.json`
+  - `server/tests/config/openapi.test.js` should assert against that package version, so release bumps like `v1.9.4` do not create false `validate-core` failures
 
 ## Related
 

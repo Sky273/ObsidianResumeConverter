@@ -40,10 +40,12 @@ Observed provider defaults include:
 - `anthropic` -> `claude-3-5-sonnet-20241022`
 - `huggingface` -> `MiniMaxAI/MiniMax-M2.7`
 - `gemma` -> `gemma-4-31b-it`
-- `deepseek` -> `deepseek-chat`
+- `deepseek` -> `deepseek-v4-flash`
 - `glm` -> `glm-5.1`
 - `minimax` -> `MiniMax-M2.7`
 - `ollama` -> no fixed hosted default
+
+As of 2026-05-03, ResumeConverter exposes DeepSeek's new official API model IDs `deepseek-v4-flash` and `deepseek-v4-pro` in the admin model catalog. The legacy aliases `deepseek-chat` and `deepseek-reasoner` are still accepted for backward compatibility, but the control plane now defaults new DeepSeek configurations to `deepseek-v4-flash`.
 
 ## Model Normalization
 
@@ -67,7 +69,8 @@ This means:
 
 Examples of provider-specific fallback behavior include:
 
-- DeepSeek `deepseek-reasoner` -> `deepseek-chat`
+- DeepSeek `deepseek-v4-pro` -> `deepseek-v4-flash`
+- DeepSeek legacy aliases `deepseek-chat` and `deepseek-reasoner` -> `deepseek-v4-flash`
 - GLM `glm-5.1` -> `glm-5`
 - OpenAI higher-tier models -> smaller siblings
 - Anthropic higher-tier models -> lower siblings

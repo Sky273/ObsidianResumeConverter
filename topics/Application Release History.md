@@ -6,9 +6,18 @@ This page records durable release-level milestones that matter for future mainte
 
 ## Current State
 
-- Current recorded application version: `v1.9.3`
+- Current recorded application version: `v1.9.4`
 
 ## Important Facts
+
+### v1.9.4 - 2026-05-04
+
+- Bumped the application version from `v1.9.3` to `v1.9.4`.
+- Updated the root changelog and npm package metadata.
+- Updated the repository README version badge and the About modal regression test.
+- The release is focused on validation hygiene rather than product behavior:
+  - reduced non-blocking React `act(...)` warnings in client refresh/runtime-invalidations tests
+  - normalized blank/duplicate grouped tags before keyed rendering to suppress duplicate-key warnings in grouped resume filters
 
 ### v1.9.3 - 2026-04-30
 
@@ -31,9 +40,11 @@ This page records durable release-level milestones that matter for future mainte
 ## Related
 
 - [[overview]]
+- [[raw/sources/2026-05-04-release-v1.9.4]]
 - [[raw/sources/2026-04-16-release-v1.9.1]]
 - [[raw/sources/2026-04-30-release-v1.9.3]]
 
 ## Sources
 
+- [[raw/sources/2026-05-04-release-v1.9.4]]
 - [[raw/sources/2026-04-16-release-v1.9.1]]

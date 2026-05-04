@@ -56,7 +56,7 @@
 - [[topics/Operational Dashboards Map]]: where to look first across health, metrics, security logs, GDPR audit, backup, and cache views.
 - [[topics/API Surface by Domain]]: orientation map for the main backend route families.
 - [[topics/Integrations]]: external providers and platform integrations used by the app.
-- [[topics/Observability and Quality]]: tests, CI, audits, metrics, and validation strategy.
+- [[topics/Observability and Quality]]: tests, CI, audits, metrics, validation strategy, and recent client test-drift fixes.
 - [[topics/Accessibility and Interaction Quality]]: current accessibility baseline, dialog/live-region quality, and remaining guardrail priorities.
 - [[topics/Codex Agent Tooling]]: local Codex skills and agent-side workflow tooling recorded for this project workspace.
 - [[topics/Repository Documentation Map]]: map of the main Markdown docs inside the repository and which ones are authoritative.
